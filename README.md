@@ -1,0 +1,16 @@
+# EnhancedUnitFrames
+Modifies the default unit frames for better visuals.
+
+![Whoa style, texture custom made by me.](https://i.imgur.com/UjSl5R2.jpg)
+
+![Uses .blps found in the art files in retail, guess Blizzard wanted to make something like this.](https://i.imgur.com/gtHgGkE.jpg)
+
+![Both status text enabled on big health bars.](https://i.imgur.com/wCaiJWx.jpg)
+
+![Both status text enabled on whoa style.](https://i.imgur.com/QcnvyVf.jpg)
+
+![Elite player frame (custom made by me).](https://i.imgur.com/ggvHtub.jpg)
+
+![Rare player frame (custom made by me).](https://i.imgur.com/NIgy8xE.jpg)
+
+![Rare elite player frame (custom made by me).](https://i.imgur.com/uMoZ8Rz.jpg)
