@@ -1,0 +1,15 @@
+## Interface: 80200
+## Title: EnhancedUnitFrames
+## Notes: Modifies the default unit frames for better visuals.
+## Author: Michael w/ code from: Althalla, Daftwise, delabarra, Gello, KawF, SDPhantom, & whoarrior.
+## Version: 1.0
+
+Config.lua
+Modules\Auras.lua
+Modules\Boss.lua
+Modules\Focus.lua
+Modules\Player.lua
+Modules\Portraits.lua
+Modules\StatusBars.lua
+Modules\StatusText.lua
+Modules\Target.lua
