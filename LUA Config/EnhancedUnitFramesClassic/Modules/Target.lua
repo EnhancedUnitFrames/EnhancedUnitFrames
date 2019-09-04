@@ -71,13 +71,13 @@ hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalText
 
 	if cfg.bigTargetHealthBars then
 		if classification == "worldboss" or classification == "elite" then
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameElite")
 		elseif classification == "rareelite" then
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareElite")
 		elseif classification == "rare" then
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRare")
 		else
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrame")
 		end
 
 		TargetFrameBackground:SetHeight(38)
@@ -89,13 +89,13 @@ hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalText
 		TargetFrameManaBar:SetPoint("TOPLEFT", self, 7, -52)
 	else
 		if classification == "worldboss" or classification == "elite" then
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameEliteWhoa")
 		elseif classification == "rareelite" then
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareEliteWhoa")
 		elseif classification == "rare" then
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareWhoa")
 		else
-			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+			self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameWhoa")
 		end
 
 		TargetFrameBackground:SetHeight(38)
