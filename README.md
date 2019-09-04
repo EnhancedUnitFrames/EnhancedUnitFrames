@@ -1,6 +1,10 @@
 # EnhancedUnitFrames
 Modifies the default unit frames for better visuals.
 
+This is a combination of several addons to create something close to what Blizzard would make if they decided to revamp the unit frames. The LUA config version of the addon contains only one issue to my knowledge and it's not major, so try it out on live or classic.
+
+Today (Sep 3rd.) I started work again on a GUI config, but I've run into a few roadblocks that I don't know how to fix. I can't really find good documentation for these things and I really need somebody skilled to work these things out with me. I'd appreciate any and all help to resolve these things and improve the user experience of this addon.
+
 ### Whoa style, texture custom made by me.
 ![https://i.imgur.com/UjSl5R2.jpg](https://i.imgur.com/UjSl5R2.jpg)
 
