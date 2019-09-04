@@ -5,6 +5,8 @@ This is a combination of several addons to create something close to what Blizza
 
 Today (Sep 3rd.) I started work again on a GUI config, but I've run into a few roadblocks that I don't know how to fix. I can't really find good documentation for these things and I really need somebody skilled to work these things out with me. I'd appreciate any and all help to resolve these things and improve the user experience of this addon.
 
+# Screenshots
+
 ### Whoa style, texture custom made by me.
 ![https://i.imgur.com/UjSl5R2.jpg](https://i.imgur.com/UjSl5R2.jpg)
 
