@@ -1,5 +1,5 @@
 ## Interface: 11302
-## Title: EnhancedUnitFrames
+## Title: EnhancedUnitFramesClassic
 ## Notes: Modifies the default unit frames for better visuals.
 ## Author: Michael w/ code from: Althalla, Daftwise, delabarra, Gello, KawF, SDPhantom, & whoarrior.
 ## Version: 1.0
