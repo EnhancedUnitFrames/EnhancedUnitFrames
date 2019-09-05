@@ -95,7 +95,7 @@ local uniquealyzer = 1;
 
 function createCheckbutton(parent, x_loc, y_loc, displayname)
 	uniquealyzer = uniquealyzer + 1;
-	local checkbutton = CreateFrame("CheckButton", "eufCheckButton" .. uniquealyzer, parent, "ChatConfigCheckButtonTemplate");
+	local checkbutton = CreateFrame("CheckButton", "eufCheckButton" .. uniquealyzer, parent, "InterfaceOptionsCheckButtonTemplate");
 
 	checkbutton:SetPoint("TOPLEFT", x_loc, y_loc);
 	getglobal(checkbutton:GetName() .. "Text"):SetText(displayname);
@@ -125,19 +125,16 @@ function euf:CreateUI(frame)
 
 	InterfaceOptions_AddCategory(eufUI.panel);
 
-	local title = euf:CreateFont(eufUI.panel, "title", "EnhancedUnitFrames", 15, -18, font, 15)
+	local title = euf:CreateFont(eufUI.panel, "title", "EnhancedUnitFrames", 16, -16, font, 16)
 
 	title:SetFontObject(GameFontNormal) 
 	title:SetPoint("LEFT", eufUI.panel, "TOPLEFT", 0, 0)
 
-	local disclaimer = euf:CreateFont(eufUI.panel, "disclaimer", "At the moment, a reload (/rl) is necessary for the correct application of changes.", 15, -40, font, 12)
-	disclaimer:SetPoint("LEFT", eufUI.panel, "TOPLEFT", 0, 0)
-
-	local xOffset = -80;
+	local xOffset = -48;
 
 	-- Big Player Health Bar.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset, "Big Player Health Bar");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset, "Big Player Health Bar");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton2:GetChecked() then
@@ -145,11 +142,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.bigPlayerHealthBars = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Big Target Health Bar.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 30, "Big Target Health Bar");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 34, "Big Target Health Bar");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton3:GetChecked() then
@@ -157,11 +156,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.bigTargetHealthBars = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Wide Target Frame.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 60, "Wide Target Frame");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 68, "Wide Target Frame");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton4:GetChecked() then
@@ -169,11 +170,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.wideTargetFrame = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Class Color HP.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 90, "Class Color HP");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 102, "Class Color HP");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton5:GetChecked() then
@@ -181,11 +184,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.classHealthBarColor = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Reaction Color HP. 
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 120, "Reaction Color HP");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 136, "Reaction Color HP");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton6:GetChecked() then
@@ -193,11 +198,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.reactionHealthBarColor = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Elite Player Chain.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 150, "Elite Player Chain");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 170, "Elite Player Chain");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton7:GetChecked() then
@@ -205,11 +212,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.elitePlayerFrame = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Rare Player Chain.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 180, "Rare Player Chain");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 204, "Rare Player Chain");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton8:GetChecked() then
@@ -217,11 +226,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.rarePlayerFrame = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Rare Elite Player Chain.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 210, "Rare Elite Player Chain");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 238, "Rare Elite Player Chain");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton9:GetChecked() then
@@ -229,11 +240,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.rareElitePlayerFrame = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Class Icon Portraits.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 240, "Class Icon Portraits");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 272, "Class Icon Portraits");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton10:GetChecked() then
@@ -241,11 +254,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.classIconPortraits = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Hide Hit Indicators.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 270, "Hide Hit Indicators");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 306, "Hide Hit Indicators");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton11:GetChecked() then
@@ -253,11 +268,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.hideHitIndicators = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Hide Pet Status Text.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 300, "Hide Pet Status Text");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 340, "Hide Pet Status Text");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton12:GetChecked() then
@@ -265,11 +282,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.hidePetStatusText = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Hide Resting Icon.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 330, "Hide Resting Icon");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 374, "Hide Resting Icon");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton13:GetChecked() then
@@ -277,11 +296,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.hideRestingIcon = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Shaman Class Color Fix.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 360, "Shaman Class Color Fix");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 408, "Shaman Class Color Fix");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton14:GetChecked() then
@@ -289,11 +310,13 @@ function euf:CreateUI(frame)
 		else
 			cfg.shamanClassColorFix = false;
 		end
+
+		ReloadUI()
 	end);
 
 	-- Uppercase Abbreviation.
 
-	myCheckButton = createCheckbutton(eufUI.panel, 40, xOffset - 390, "Uppercase Abbreviation");
+	myCheckButton = createCheckbutton(eufUI.panel, 14, xOffset - 442, "Uppercase Abbreviation");
 
 	myCheckButton:SetScript("OnClick", function(self)
 		if eufCheckButton15:GetChecked() then
@@ -301,6 +324,8 @@ function euf:CreateUI(frame)
 		else
 			cfg.upperCaseAbbreviation = false;
 		end
+
+		ReloadUI()
 	end);
 end
 

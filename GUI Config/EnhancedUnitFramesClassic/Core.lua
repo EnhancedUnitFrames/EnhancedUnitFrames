@@ -1,6 +1,8 @@
 local f = CreateFrame("Frame")
-     
-local function IsAddOnLoaded(self, event, arg1, ...)
+
+f:RegisterEvent("ADDON_LOADED")
+
+local function IsAddOnLoaded(self, event, addon)
 	if event == "ADDON_LOADED" then
 		AuraStyling()
 		BossFrameStyling()
@@ -10,9 +12,9 @@ local function IsAddOnLoaded(self, event, arg1, ...)
 		StatusBarStyling()
 		StatusTextStyling()
 		TargetFrameStyling()
+
 		f:UnregisterEvent("ADDON_LOADED")
 	end
 end
-     
-f:RegisterEvent("ADDON_LOADED")
+
 f:SetScript("OnEvent", IsAddOnLoaded)
