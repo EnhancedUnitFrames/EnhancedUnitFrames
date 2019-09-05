@@ -1,3 +1,6 @@
+-- Source: Modern AlternatePowerBar by SDPhantom.
+-- Ports the AlternatePowerBar to Classic.
+
 ADDITIONAL_POWER_BAR_NAME = "MANA"
 ADDITIONAL_POWER_BAR_INDEX = 0
 

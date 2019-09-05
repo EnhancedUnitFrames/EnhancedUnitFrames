@@ -1,6 +1,6 @@
 ﻿function MirroredPositioning()
 	if cfg.mirroredPositioning then
-		-- Source: Focused by Arthur Corenzan.
+		-- Source: Focused by haggen.
 		-- Allows the easy mirrored positioning of the player and target frames to desirable locations.
 
 		local function SetMirroredPlayerPosition(a, b)
@@ -63,6 +63,7 @@
 		end
 
 		local FocusedFrame = CreateFrame("Frame")
+
 		FocusedFrame:SetScript("OnUpdate", FocusedFrame_OnUpdate)
 	end
 end
