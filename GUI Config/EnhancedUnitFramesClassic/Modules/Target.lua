@@ -150,6 +150,14 @@ function TargetFrameStyling()
 	TargetFrameManaBar.LeftText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 	TargetFrameManaBar.RightText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 
+	-- Disables the buffs on top option.
+
+	hooksecurefunc("TargetFrame_UpdateBuffsOnTop", function()
+		TargetFrame.buffsOnTop = false
+
+		TargetFrame_UpdateAuras(TargetFrame)
+	end)
+
 	-- Fixes the level text positioning on the focus and target frames.
 
 	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
