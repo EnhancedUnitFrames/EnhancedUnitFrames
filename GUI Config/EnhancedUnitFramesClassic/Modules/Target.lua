@@ -68,7 +68,7 @@ function TargetFrameStyling()
 	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
 		local classification = UnitClassification(self.unit)
 
-		if cfg.bigTargetHealthBars then
+		if cfg.bigTargetHealthBar then
 			if classification == "worldboss" or classification == "elite" then
 				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameElite")
 			elseif classification == "rareelite" then
@@ -155,7 +155,7 @@ function TargetFrameStyling()
 	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
 		local targetLevel = UnitLevel("target")
 
-		if cfg.bigTargetHealthBars then
+		if cfg.bigTargetHealthBar then
 			TargetFrameTextureFrameLevelText:ClearAllPoints()
 			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 		else

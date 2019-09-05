@@ -2,7 +2,7 @@ function PlayerFrameStyling()
 	-- Styles the player frame.
 
 	hooksecurefunc("PlayerFrame_ToPlayerArt", function(self)
-		if cfg.bigPlayerHealthBars then
+		if cfg.bigPlayerHealthBar then
 			if cfg.elitePlayerFrame then
 				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameElite")
 			elseif cfg.rareElitePlayerFrame then
@@ -73,7 +73,7 @@ function PlayerFrameStyling()
 	-- Fixes the level text positioning on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
-		if cfg.bigPlayerHealthBars then
+		if cfg.bigPlayerHealthBar then
 			PlayerLevelText:ClearAllPoints()
 			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
 		else
