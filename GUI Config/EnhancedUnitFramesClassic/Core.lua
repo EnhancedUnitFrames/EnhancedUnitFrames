@@ -27,6 +27,10 @@ local function SetDefaults()
 		cfg.hideHitIndicators = false
 	end
 
+	if cfg.mirroredPositioning == nil then
+		cfg.mirroredPositioning = false
+	end
+
 	if cfg.hidePetStatusText == nil then
 		cfg.hidePetStatusText = true
 	end
@@ -122,6 +126,7 @@ local function CreateOptionsPanel(frame)
 	local bigPlayerHealthBar = createCheckbox("Big Player Health Bar", "Placeholder")
 	local bigTargetHealthBar = createCheckbox("Big Target Health Bar", "Placeholder")
 	local wideTargetFrame = createCheckbox("Wide Target Frame", "Placeholder")
+	local mirroredPositioning = createCheckbox("Mirrored Positioning", "Placeholder")
 	local classHealthBarColor = createCheckbox("Class Color HP", "Placeholder")
 	local reactionHealthBarColor = createCheckbox("Reaction Color HP", "Placeholder")
 	local elitePlayerFrame = createCheckbox("Elite Player Frame", "Placeholder")
@@ -139,7 +144,8 @@ local function CreateOptionsPanel(frame)
 	bigPlayerHealthBar:SetPoint("TOPLEFT", title, "BOTTOMLEFT", -2, -16)
 	bigTargetHealthBar:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 0, -8)
 	wideTargetFrame:SetPoint("TOPLEFT", bigTargetHealthBar, "BOTTOMLEFT", 0, -8)
-	classHealthBarColor:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
+	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
+	classHealthBarColor:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
 	elitePlayerFrame:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
 	rarePlayerFrame:SetPoint("TOPLEFT", elitePlayerFrame, "BOTTOMLEFT", 0, -8)
@@ -183,6 +189,18 @@ local function CreateOptionsPanel(frame)
 			PlaySound(856)
 		else
 			cfg.wideTargetFrame = false
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	mirroredPositioning:SetScript("OnClick", function(self)
+		if mirroredPositioning:GetChecked() then
+			cfg.mirroredPositioning = true
+			PlaySound(856)
+		else
+			cfg.mirroredPositioning = false
 			PlaySound(857)
 		end
 
@@ -339,48 +357,52 @@ local function InitializeOptionsPanel(event, addon, ...)
 		eufCheckbox4:SetChecked(true)
 	end
 
-	if cfg.classHealthBarColor == true then
+	if cfg.mirroredPositioning == true then
 		eufCheckbox5:SetChecked(true)
 	end
 
-	if cfg.reactionHealthBarColor == true then
+	if cfg.classHealthBarColor == true then
 		eufCheckbox6:SetChecked(true)
 	end
 
-	if cfg.elitePlayerFrame == true then
+	if cfg.reactionHealthBarColor == true then
 		eufCheckbox7:SetChecked(true)
 	end
 
-	if cfg.rarePlayerFrame == true then
+	if cfg.elitePlayerFrame == true then
 		eufCheckbox8:SetChecked(true)
 	end
 
-	if cfg.rareElitePlayerFrame == true then
+	if cfg.rarePlayerFrame == true then
 		eufCheckbox9:SetChecked(true)
 	end
 
-	if cfg.classIconPortraits == true then
+	if cfg.rareElitePlayerFrame == true then
 		eufCheckbox10:SetChecked(true)
 	end
 
-	if cfg.hideHitIndicators == true then
+	if cfg.classIconPortraits == true then
 		eufCheckbox11:SetChecked(true)
 	end
 
-	if cfg.hidePetStatusText == true then
+	if cfg.hideHitIndicators == true then
 		eufCheckbox12:SetChecked(true)
 	end
 
-	if cfg.hideRestingIcon == true then
+	if cfg.hidePetStatusText == true then
 		eufCheckbox13:SetChecked(true)
 	end
 
-	if cfg.shamanClassColorFix == true then
+	if cfg.hideRestingIcon == true then
 		eufCheckbox14:SetChecked(true)
 	end
 
-	if cfg.upperCaseAbbreviation == true then
+	if cfg.shamanClassColorFix == true then
 		eufCheckbox15:SetChecked(true)
+	end
+
+	if cfg.upperCaseAbbreviation == true then
+		eufCheckbox16:SetChecked(true)
 	end
 end
 
@@ -396,6 +418,7 @@ local function IsAddOnLoaded(self, event, addon)
 		BossFrameStyling()
 		ClassIconPortraits()
 		InitializeOptionsPanel()
+		MirroredPositioning()
 		PlayerFrameStyling()
 		ShamanClassColorFix()
 		StatusBarStyling()

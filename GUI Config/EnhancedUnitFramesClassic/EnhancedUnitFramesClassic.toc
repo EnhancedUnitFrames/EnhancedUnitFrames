@@ -9,7 +9,6 @@ Modules\Auras.lua
 Modules\Boss.lua
 Modules\ClassColorFix.lua
 Modules\MirroredPositioning.lua
-Modules\MirroredPositioning.xml
 Modules\Player.lua
 Modules\Portraits.lua
 Modules\PowerBar.lua
