@@ -291,7 +291,7 @@ eufOptions:SetScript("OnShow", function(self)
 	playerFrameDropdown.title:SetText("Player Frame Texure")
 
 	playerFrameDropdown:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetOwner(self, "anchor", 359, 1)
 		GameTooltip:SetText("Player Frame Texture", nil, nil, nil, 1, 1)
 		GameTooltip:AddLine("Placeholder", 1, 1, 1)
 		GameTooltip:Show()
