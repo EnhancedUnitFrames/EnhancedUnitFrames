@@ -40,14 +40,14 @@ eufOptions:SetScript("OnShow", function(self)
 
 	local function createCheckbox(label, description)
 		i = i + 1
-		local eufCheckbox = CreateFrame("CheckButton", "eufCheckbox" .. i, self, "InterfaceOptionsCheckButtonTemplate")
-		eufCheckbox.label = _G[eufCheckbox:GetName() .. "Text"]
+		local checkbox = CreateFrame("CheckButton", "eufCheckbox" .. i, self, "InterfaceOptionsCheckButtonTemplate")
+		checkbox.label = _G[checkbox:GetName() .. "Text"]
 
-		eufCheckbox.label:SetText(label)
-		eufCheckbox.tooltipText = label
-		eufCheckbox.tooltipRequirement = description
+		checkbox.label:SetText(label)
+		checkbox.tooltipText = label
+		checkbox.tooltipRequirement = description
 
-		return eufCheckbox
+		return checkbox
 	end
 
 	-- Slider creation function.
@@ -71,7 +71,7 @@ eufOptions:SetScript("OnShow", function(self)
 		slider.text:SetFontObject(GameFontNormal)
 		slider.textLow:SetText(floor(minVal))
 		slider.textHigh:SetText(floor(maxVal))
-		editbox:SetSize(50,30)
+		editbox:SetSize(29,30)
 		editbox:ClearAllPoints()
 		editbox:SetPoint("TOP", slider, "BOTTOM", 0, -5)
 		editbox:SetText(slider:GetValue())
