@@ -283,12 +283,24 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Player frame texture dropdown menu.
 
-	local playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", self, "UIDropDownMenuTemplate")
+	local playerFrameDropdown = CreateFrame("Frame", "eufPlayerFrameDropdown", self, "UIDropDownMenuTemplate")
 	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("PlayerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
 
 	playerFrameDropdown:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 273, 8)
 	playerFrameDropdown.title:SetPoint("BOTTOMLEFT", playerFrameDropdown, "TOPLEFT", 15, 3)
 	playerFrameDropdown.title:SetText("Player Frame Texure")
+
+	playerFrameDropdown:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText("Player Frame Texture", nil, nil, nil, 1, 1)
+		GameTooltip:AddLine("Placeholder", 1, 1, 1)
+		GameTooltip:Show()
+	end)
+
+	playerFrameDropdown:SetScript("OnLeave", function(self)
+		GameTooltip:Hide()
+	end)
+
 	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
 
 	if cfg.elitePlayerFrame == true then
@@ -377,7 +389,7 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Target frame width slider.
 
-	local wideTargetFrame = createSlider(self, "wideTargetFrameSlider", "Target Width", 231, 400, 1, "Wide Target Frame Width", "Placeholder")
+	local wideTargetFrame = createSlider(self, "wideTargetFrameSlider", "Target Width", 231, 400, 1, "Target Frame Width", "Placeholder")
 
 	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
