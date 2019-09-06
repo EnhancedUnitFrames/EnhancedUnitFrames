@@ -83,12 +83,15 @@ SetDefaults()
 
 -- Creates the options panel.
 
-local function CreateOptionsPanel(frame)
-	eufUI = {}
-	eufUI.panel = CreateFrame("Frame", "eufUI", UIParent)
-	eufUI.panel.name = "EnhancedUnitFrames"
+eufUI = {}
+eufUI.panel = CreateFrame("Frame", "eufUI", UIParent)
+eufUI.panel.name = "EnhancedUnitFrames"
 
-	InterfaceOptions_AddCategory(eufUI.panel)
+InterfaceOptions_AddCategory(eufUI.panel)
+eufUI.panel:Hide()
+
+eufUI.panel:SetScript("OnShow", function(self)
+	-- Draws the option panel elements.
 
 	local title = eufUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
@@ -368,7 +371,7 @@ local function CreateOptionsPanel(frame)
 		UIDropDownMenu_AddButton(info)
 	end
 
-	playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
+	local playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
 	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("PlayerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
 
 	playerFrameDropdown:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 273, 8)
@@ -427,9 +430,11 @@ local function CreateOptionsPanel(frame)
 		return slider
 	end
 
-	wideTargetFrame = createSlider(eufUI.panel, "wideTargetFrameSlider", "Target Width", 231, 400, 1)
+	local wideTargetFrame = createSlider(eufUI.panel, "wideTargetFrameSlider", "Target Width", 231, 400, 1)
 
 	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
+	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
+	wideTargetFrameSliderEditBox:SetText(cfg.wideTargetFrameWidth)
 
 	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
 		value = floor(value)
@@ -437,13 +442,9 @@ local function CreateOptionsPanel(frame)
 
 		StaticPopup_Show("RELOAD_UI")
 	end)
-end
 
-CreateOptionsPanel()
+	-- Initializes the options panel with saved variables.
 
--- Initializes the options panel with saved variables.
-
-local function InitializeOptionsPanel(event, addon, ...)
 	if cfg.bigPlayerHealthBar == true then
 		eufCheckbox2:SetChecked(true)
 	end
@@ -507,7 +508,7 @@ local function InitializeOptionsPanel(event, addon, ...)
 	end
 
 	UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
-end
+end)
 
 -- Loads the addon's components and initializes the option panel.
 
@@ -520,7 +521,6 @@ local function IsAddOnLoaded(self, event, addon)
 		AuraStyling()
 		BossFrameStyling()
 		ClassIconPortraits()
-		InitializeOptionsPanel()
 		MirroredPositioning()
 		PlayerFrameStyling()
 		ShamanClassColorFix()
