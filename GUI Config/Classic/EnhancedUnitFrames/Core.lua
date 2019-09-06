@@ -1,5 +1,8 @@
 ﻿-- Sets configuration defaults if this is first-run.
 
+local addon, ns = ...
+local floor = floor
+
 cfg = {}
 
 local function SetDefaults()
@@ -373,6 +376,67 @@ local function CreateOptionsPanel(frame)
 	playerFrameDropdown.title:SetText("Player Frame Texure")
 	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
 	UIDropDownMenu_Initialize(playerFrameDropdown, PlayerFrameTextureDropdown_Menu)
+
+	-- Target frame width slider.
+
+	local createSlider = function(parent, name, title, minVal, maxVal, valStep)
+		local slider = CreateFrame("Slider", name, parent, "OptionsSliderTemplate")
+		local editbox = CreateFrame("EditBox", "$parentEditBox", slider, "InputBoxTemplate")
+		slider:SetMinMaxValues(minVal, maxVal)
+		slider:SetValue(minVal)
+		slider:SetValueStep(valStep)
+		slider:SetWidth(175)
+		slider.text = _G[name.."Text"]
+		slider.text:SetText(title)
+		slider.text:SetTextColor(1, 0.82, 0)
+		slider.textLow = _G[name.."Low"]
+		slider.textHigh = _G[name.."High"]
+		slider.textLow:SetText(floor(minVal))
+		slider.textHigh:SetText(floor(maxVal))
+		editbox:SetSize(50,30)
+		editbox:ClearAllPoints()
+		editbox:SetPoint("TOP", slider, "BOTTOM", 0, -5)
+		editbox:SetText(slider:GetValue())
+		editbox:SetAutoFocus(false)
+
+		slider:SetScript("OnValueChanged", function(self,value)
+			self.editbox:SetText(floor(value))
+		end)
+
+		editbox:SetScript("OnTextChanged", function(self)
+			local value = self:GetText()
+
+			if tonumber(value) then
+				if floor(self:GetParent():GetValue()) ~= floor(value) then
+					self:GetParent():SetValue(floor(value))
+				end
+			end
+		end)
+
+		editbox:SetScript("OnEnterPressed", function(self)
+			local value = self:GetText()
+
+			if tonumber(value) then
+				self:GetParent():SetValue(floor(value))
+				self:ClearFocus()
+			end
+		end)
+
+		slider.editbox = editbox
+
+		return slider
+	end
+
+	wideTargetFrame = createSlider(eufUI.panel, "wideTargetFrameSlider", "Target Width", 231, 400, 1)
+
+	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
+
+	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
+		value = floor(value)
+		cfg.wideTargetFrameWidth = value
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
 end
 
 CreateOptionsPanel()
