@@ -1,4 +1,4 @@
-﻿-- Sets defaults if this is first-run.
+﻿-- Sets configuration defaults if this is first-run.
 
 cfg = {}
 
@@ -129,9 +129,6 @@ local function CreateOptionsPanel(frame)
 	local mirroredPositioning = createCheckbox("Mirrored Positioning", "Placeholder")
 	local classHealthBarColor = createCheckbox("Class Color HP", "Placeholder")
 	local reactionHealthBarColor = createCheckbox("Reaction Color HP", "Placeholder")
-	local elitePlayerFrame = createCheckbox("Elite Player Frame", "Placeholder")
-	local rarePlayerFrame = createCheckbox("Rare Player Frame", "Placeholder")
-	local rareElitePlayerFrame = createCheckbox("Rare Elite Player Frame", "Placeholder")
 	local classIconPortraits = createCheckbox("Class Icon Portraits", "Placeholder")
 	local hideHitIndicators = createCheckbox("Hide Hit Indicators", "Placeholder")
 	local hidePetStatusText = createCheckbox("Hide Pet Status Text", "Placeholder")
@@ -147,10 +144,7 @@ local function CreateOptionsPanel(frame)
 	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
 	classHealthBarColor:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
-	elitePlayerFrame:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
-	rarePlayerFrame:SetPoint("TOPLEFT", elitePlayerFrame, "BOTTOMLEFT", 0, -8)
-	rareElitePlayerFrame:SetPoint("TOPLEFT", rarePlayerFrame, "BOTTOMLEFT", 0, -8)
-	classIconPortraits:SetPoint("TOPLEFT", rareElitePlayerFrame, "BOTTOMLEFT", 0, -8)
+	classIconPortraits:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
 	hidePetStatusText:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 0, -8)
@@ -231,42 +225,6 @@ local function CreateOptionsPanel(frame)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	elitePlayerFrame:SetScript("OnClick", function(self)
-		if elitePlayerFrame:GetChecked() then
-			cfg.elitePlayerFrame = true
-			PlaySound(856)
-		else
-			cfg.elitePlayerFrame = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	rarePlayerFrame:SetScript("OnClick", function(self)
-		if rarePlayerFrame:GetChecked() then
-			cfg.rarePlayerFrame = true
-			PlaySound(856)
-		else
-			cfg.rarePlayerFrame = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	rareElitePlayerFrame:SetScript("OnClick", function(self)
-		if rareElitePlayerFrame:GetChecked() then
-			cfg.rareElitePlayerFrame = true
-			PlaySound(856)
-		else
-			cfg.rareElitePlayerFrame = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
 	classIconPortraits:SetScript("OnClick", function(self)
 		if classIconPortraits:GetChecked() then
 			cfg.classIconPortraits = true
@@ -338,6 +296,51 @@ local function CreateOptionsPanel(frame)
 
 		StaticPopup_Show("RELOAD_UI")
 	end)
+
+	-- Player Frame Texture Dropdown Menu
+
+	local function PlayerFrameTextureDropdown_OnClick(self, arg1, arg2, checked)
+		if arg1 == 1 then
+			cfg.elitePlayerFrame = false
+			cfg.rarePlayerFrame = false
+			cfg.rareElitePlayerFrame = false
+
+			StaticPopup_Show("RELOAD_UI")
+		elseif arg1 == 2 then
+			cfg.elitePlayerFrame = true
+
+			StaticPopup_Show("RELOAD_UI")
+		elseif arg1 == 3 then
+			cfg.rarePlayerFrame = true
+
+			StaticPopup_Show("RELOAD_UI")
+		elseif arg1 == 4 then
+			cfg.rareElitePlayerFrame = true
+
+			StaticPopup_Show("RELOAD_UI")
+		end
+	end
+
+	function PlayerFrameTextureDropdown_Menu(frame, level, menuList)
+		local info = UIDropDownMenu_CreateInfo()
+		info.func = PlayerFrameTextureDropdown_OnClick
+
+		info.text, info.arg1 = "None", 1
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1 = "Elite Player Frame", 2
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1 = "Rare Player Frame", 3
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1 = "Rare Elite Player Frame", 4
+		UIDropDownMenu_AddButton(info)
+	end
+
+	local dropDown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
+
+	dropDown:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", -15, -10)
+	UIDropDownMenu_SetWidth(dropDown, 160)
+	UIDropDownMenu_Initialize(dropDown, PlayerFrameTextureDropdown_Menu)
+	UIDropDownMenu_SetText(dropDown, "Player Frame Texture")
 end
 
 CreateOptionsPanel()
@@ -369,40 +372,28 @@ local function InitializeOptionsPanel(event, addon, ...)
 		eufCheckbox7:SetChecked(true)
 	end
 
-	if cfg.elitePlayerFrame == true then
+	if cfg.classIconPortraits == true then
 		eufCheckbox8:SetChecked(true)
 	end
 
-	if cfg.rarePlayerFrame == true then
+	if cfg.hideHitIndicators == true then
 		eufCheckbox9:SetChecked(true)
 	end
 
-	if cfg.rareElitePlayerFrame == true then
+	if cfg.hidePetStatusText == true then
 		eufCheckbox10:SetChecked(true)
 	end
 
-	if cfg.classIconPortraits == true then
+	if cfg.hideRestingIcon == true then
 		eufCheckbox11:SetChecked(true)
 	end
 
-	if cfg.hideHitIndicators == true then
+	if cfg.shamanClassColorFix == true then
 		eufCheckbox12:SetChecked(true)
 	end
 
-	if cfg.hidePetStatusText == true then
-		eufCheckbox13:SetChecked(true)
-	end
-
-	if cfg.hideRestingIcon == true then
-		eufCheckbox14:SetChecked(true)
-	end
-
-	if cfg.shamanClassColorFix == true then
-		eufCheckbox15:SetChecked(true)
-	end
-
 	if cfg.upperCaseAbbreviation == true then
-		eufCheckbox16:SetChecked(true)
+		eufCheckbox13:SetChecked(true)
 	end
 end
 

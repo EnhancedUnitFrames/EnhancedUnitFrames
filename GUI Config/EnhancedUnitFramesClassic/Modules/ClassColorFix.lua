@@ -1,4 +1,6 @@
 function ShamanClassColorFix()
+	-- Changes the Shaman class color to reflect live.
+
 	if cfg.shamanClassColorFix then
 		RAID_CLASS_COLORS['SHAMAN']["r"] = 0
 		RAID_CLASS_COLORS['SHAMAN']["g"] = 0.44

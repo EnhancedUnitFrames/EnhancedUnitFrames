@@ -3,7 +3,7 @@ function StatusBarStyling()
 		return
 	end
 
-	-- Source: whoa UnitFrames by whoarrior & delabarra.
+	-- Source: whoa UnitFrames by whoarrior & smokked_.
 	-- Colors the unit frame health bars based on class or reaction color.
 
 	function HealthBarColor(self, unit)

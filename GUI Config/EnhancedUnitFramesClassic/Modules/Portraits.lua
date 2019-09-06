@@ -1,8 +1,7 @@
 function ClassIconPortraits()
-	-- Source: daftUITweaks by Daftwise.
-	-- Changes a player's unit frame portrait with their class icon.
-
 	if cfg.classIconPortraits then
+		-- Changes player portraits to their respective class icons.
+
 		hooksecurefunc("UnitFramePortrait_Update", function(self)
 			if self.portrait then
 				if UnitIsPlayer(self.unit) then
