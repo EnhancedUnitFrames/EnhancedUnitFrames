@@ -304,42 +304,50 @@ local function CreateOptionsPanel(frame)
 			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = false
+			isChecked = "Default Player Frame"
 			isCheckedDefault = true
 			isCheckedElite = false
 			isCheckedRare = false
 			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
 		elseif arg1 == 2 then
 			cfg.elitePlayerFrame = true
 			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = false
+			isChecked = "Elite Player Frame"
 			isCheckedDefault = false
 			isCheckedElite = true
 			isCheckedRare = false
 			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
 		elseif arg1 == 3 then
 			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = true
 			cfg.rareElitePlayerFrame = false
+			isChecked = "Rare Player Frame"
 			isCheckedDefault = false
 			isCheckedElite = false
 			isCheckedRare = true
 			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
 		elseif arg1 == 4 then
 			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = true
+			isChecked = "Rare Elite Player Frame"
 			isCheckedDefault = false
 			isCheckedElite = false
 			isCheckedRare = false
 			isCheckedRareElite = true
 
 			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
 		end
 	end
 
@@ -357,12 +365,14 @@ local function CreateOptionsPanel(frame)
 		UIDropDownMenu_AddButton(info)
 	end
 
-	local playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
+	playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
+	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("PlayerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
 
-	playerFrameDropdown:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", -15, -10)
+	playerFrameDropdown:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 273, 8)
+	playerFrameDropdown.title:SetPoint("BOTTOMLEFT", playerFrameDropdown, "TOPLEFT", 15, 3)
+	playerFrameDropdown.title:SetText("Player Frame Texure")
 	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
 	UIDropDownMenu_Initialize(playerFrameDropdown, PlayerFrameTextureDropdown_Menu)
-	UIDropDownMenu_SetText(playerFrameDropdown, "Player Frame Texture")
 end
 
 CreateOptionsPanel()
@@ -419,14 +429,20 @@ local function InitializeOptionsPanel(event, addon, ...)
 	end
 
 	if cfg.elitePlayerFrame == true then
+		isChecked = "Elite Player Frame"
 		isCheckedElite = true
 	elseif cfg.rarePlayerFrame == true then
+		isChecked = "Rare Player Frame"
 		isCheckedRare = true
 	elseif cfg.rareElitePlayerFrame == true then
+		isChecked = "Rare Elite Player Frame"
 		isCheckedRareElite = true
 	else
+		isChecked = "Default Player Frame"
 		isCheckedDefault = true
 	end
+
+	UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
 end
 
 -- Loads the addon's components and initializes the option panel.
