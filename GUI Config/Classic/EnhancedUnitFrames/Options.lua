@@ -1,5 +1,4 @@
 local addon, ns = ...
-local floor = floor
 
 -- Creates the options panel.
 
@@ -14,8 +13,13 @@ eufOptions:SetScript("OnShow", function(self)
 
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
-	title:SetPoint("TOPLEFT", 16, -16)
+	title:SetPoint("TOPLEFT", self, 16, -16)
 	title:SetText("EnhancedUnitFrames")
+
+	local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
+
+	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	description:SetText("Placeholder")
 
 	StaticPopupDialogs["RELOAD_UI"] = {
 		text = "One or more of the changes you have made require a ReloadUI.",
@@ -46,6 +50,61 @@ eufOptions:SetScript("OnShow", function(self)
 		return eufCheckbox
 	end
 
+	-- Slider creation function.
+
+	local floor = floor
+
+	local createSlider = function(parent, name, title, minVal, maxVal, valStep, label, description)
+		local slider = CreateFrame("Slider", name, parent, "OptionsSliderTemplate")
+		local editbox = CreateFrame("EditBox", "$parentEditBox", slider, "InputBoxTemplate")
+		slider.text = _G[name .."Text"]
+		slider.textLow = _G[name .."Low"]
+		slider.textHigh = _G[name .."High"]
+		slider.tooltipText = label
+		slider.tooltipRequirement = description
+
+		slider:SetMinMaxValues(minVal, maxVal)
+		slider:SetValue(minVal)
+		slider:SetValueStep(valStep)
+		slider:SetWidth(175)
+		slider.text:SetText(title)
+		slider.text:SetFontObject(GameFontNormal)
+		slider.textLow:SetText(floor(minVal))
+		slider.textHigh:SetText(floor(maxVal))
+		editbox:SetSize(50,30)
+		editbox:ClearAllPoints()
+		editbox:SetPoint("TOP", slider, "BOTTOM", 0, -5)
+		editbox:SetText(slider:GetValue())
+		editbox:SetAutoFocus(false)
+
+		slider:SetScript("OnValueChanged", function(self,value)
+			self.editbox:SetText(floor(value))
+		end)
+
+		editbox:SetScript("OnTextChanged", function(self)
+			local value = self:GetText()
+
+			if tonumber(value) then
+				if floor(self:GetParent():GetValue()) ~= floor(value) then
+					self:GetParent():SetValue(floor(value))
+				end
+			end
+		end)
+
+		editbox:SetScript("OnEnterPressed", function(self)
+			local value = self:GetText()
+
+			if tonumber(value) then
+				self:GetParent():SetValue(floor(value))
+				self:ClearFocus()
+			end
+		end)
+
+		slider.editbox = editbox
+
+		return slider
+	end
+
 	-- Creates checkboxes.
 
 	local bigPlayerHealthBar = createCheckbox("Big Player Health Bar", "Placeholder")
@@ -63,7 +122,7 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
-	bigPlayerHealthBar:SetPoint("TOPLEFT", title, "BOTTOMLEFT", -2, -16)
+	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 	bigTargetHealthBar:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 0, -8)
 	wideTargetFrame:SetPoint("TOPLEFT", bigTargetHealthBar, "BOTTOMLEFT", 0, -8)
 	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
@@ -318,55 +377,7 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Target frame width slider.
 
-	local createSlider = function(parent, name, title, minVal, maxVal, valStep)
-		local slider = CreateFrame("Slider", name, parent, "OptionsSliderTemplate")
-		local editbox = CreateFrame("EditBox", "$parentEditBox", slider, "InputBoxTemplate")
-		slider:SetMinMaxValues(minVal, maxVal)
-		slider:SetValue(minVal)
-		slider:SetValueStep(valStep)
-		slider:SetWidth(175)
-		slider.text = _G[name.."Text"]
-		slider.text:SetText(title)
-		slider.text:SetTextColor(1, 0.82, 0)
-		slider.textLow = _G[name.."Low"]
-		slider.textHigh = _G[name.."High"]
-		slider.textLow:SetText(floor(minVal))
-		slider.textHigh:SetText(floor(maxVal))
-		editbox:SetSize(50,30)
-		editbox:ClearAllPoints()
-		editbox:SetPoint("TOP", slider, "BOTTOM", 0, -5)
-		editbox:SetText(slider:GetValue())
-		editbox:SetAutoFocus(false)
-
-		slider:SetScript("OnValueChanged", function(self,value)
-			self.editbox:SetText(floor(value))
-		end)
-
-		editbox:SetScript("OnTextChanged", function(self)
-			local value = self:GetText()
-
-			if tonumber(value) then
-				if floor(self:GetParent():GetValue()) ~= floor(value) then
-					self:GetParent():SetValue(floor(value))
-				end
-			end
-		end)
-
-		editbox:SetScript("OnEnterPressed", function(self)
-			local value = self:GetText()
-
-			if tonumber(value) then
-				self:GetParent():SetValue(floor(value))
-				self:ClearFocus()
-			end
-		end)
-
-		slider.editbox = editbox
-
-		return slider
-	end
-
-	local wideTargetFrame = createSlider(self, "wideTargetFrameSlider", "Target Width", 231, 400, 1)
+	local wideTargetFrame = createSlider(self, "wideTargetFrameSlider", "Target Width", 231, 400, 1, "Wide Target Frame Width", "Placeholder")
 
 	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
