@@ -3,13 +3,13 @@ local floor = floor
 
 -- Creates the options panel.
 
-Options = CreateFrame("Frame", "OptionsPanel", UIParent)
-Options.name = "EnhancedUnitFrames"
+eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
+eufOptions.name = "EnhancedUnitFrames"
 
-InterfaceOptions_AddCategory(Options)
-Options:Hide()
+InterfaceOptions_AddCategory(eufOptions)
+eufOptions:Hide()
 
-Options:SetScript("OnShow", function(self)
+eufOptions:SetScript("OnShow", function(self)
 	-- Draws the option panel elements.
 
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")

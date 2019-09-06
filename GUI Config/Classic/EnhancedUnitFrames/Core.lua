@@ -26,8 +26,8 @@ euf:SetScript("OnEvent", IsAddOnLoaded)
 -- Creates the addon's slash command.
 
 SlashCmdList.euf = function()
-	InterfaceOptionsFrame_OpenToCategory(Options)
-	InterfaceOptionsFrame_OpenToCategory(Options)
+	InterfaceOptionsFrame_OpenToCategory(eufOptions)
+	InterfaceOptionsFrame_OpenToCategory(eufOptions)
 	PlaySound(852)
 end
 
