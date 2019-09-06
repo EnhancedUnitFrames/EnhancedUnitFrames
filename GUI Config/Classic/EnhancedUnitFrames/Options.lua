@@ -34,32 +34,32 @@ eufOptions:SetScript("OnShow", function(self)
 
 	local i = 0
 
-	local function createCheckBox(label, description)
+	local function createCheckbox(label, description)
 		i = i + 1
-		local checkBox = CreateFrame("CheckButton", "checkBox" .. i, self, "InterfaceOptionsCheckButtonTemplate")
-		checkBox.label = _G[checkBox:GetName() .. "Text"]
+		local eufCheckbox = CreateFrame("CheckButton", "eufCheckbox" .. i, self, "InterfaceOptionsCheckButtonTemplate")
+		eufCheckbox.label = _G[eufCheckbox:GetName() .. "Text"]
 
-		checkBox.label:SetText(label)
-		checkBox.tooltipText = label
-		checkBox.tooltipRequirement = description
+		eufCheckbox.label:SetText(label)
+		eufCheckbox.tooltipText = label
+		eufCheckbox.tooltipRequirement = description
 
-		return checkBox
+		return eufCheckbox
 	end
 
 	-- Creates checkboxes.
 
-	local bigPlayerHealthBar = createCheckBox("Big Player Health Bar", "Placeholder")
-	local bigTargetHealthBar = createCheckBox("Big Target Health Bar", "Placeholder")
-	local wideTargetFrame = createCheckBox("Wide Target Frame", "Placeholder")
-	local mirroredPositioning = createCheckBox("Mirrored Positioning", "Placeholder")
-	local classHealthBarColor = createCheckBox("Class Color HP", "Placeholder")
-	local reactionHealthBarColor = createCheckBox("Reaction Color HP", "Placeholder")
-	local classIconPortraits = createCheckBox("Class Icon Portraits", "Placeholder")
-	local hideHitIndicators = createCheckBox("Hide Hit Indicators", "Placeholder")
-	local hidePetStatusText = createCheckBox("Hide Pet Status Text", "Placeholder")
-	local hideRestingIcon = createCheckBox("Hide Resting Icon", "Placeholder")
-	local shamanClassColorFix = createCheckBox("Shaman Class Color Fix", "Placeholder")
-	local upperCaseAbbreviation = createCheckBox("Uppercase Abbreviation", "Placeholder")
+	local bigPlayerHealthBar = createCheckbox("Big Player Health Bar", "Placeholder")
+	local bigTargetHealthBar = createCheckbox("Big Target Health Bar", "Placeholder")
+	local wideTargetFrame = createCheckbox("Wide Target Frame", "Placeholder")
+	local mirroredPositioning = createCheckbox("Mirrored Positioning", "Placeholder")
+	local classHealthBarColor = createCheckbox("Class Color HP", "Placeholder")
+	local reactionHealthBarColor = createCheckbox("Reaction Color HP", "Placeholder")
+	local classIconPortraits = createCheckbox("Class Icon Portraits", "Placeholder")
+	local hideHitIndicators = createCheckbox("Hide Hit Indicators", "Placeholder")
+	local hidePetStatusText = createCheckbox("Hide Pet Status Text", "Placeholder")
+	local hideRestingIcon = createCheckbox("Hide Resting Icon", "Placeholder")
+	local shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Placeholder")
+	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Placeholder")
 
 	-- Positions the checkboxes created.
 
@@ -382,51 +382,51 @@ eufOptions:SetScript("OnShow", function(self)
 	-- Initializes the options panel with saved variables.
 
 	if cfg.bigPlayerHealthBar == true then
-		checkBox1:SetChecked(true)
+		eufCheckbox1:SetChecked(true)
 	end
 
 	if cfg.bigTargetHealthBar == true then
-		checkBox2:SetChecked(true)
+		eufCheckbox2:SetChecked(true)
 	end
 
 	if cfg.wideTargetFrame == true then
-		checkBox3:SetChecked(true)
+		eufCheckbox3:SetChecked(true)
 	end
 
 	if cfg.mirroredPositioning == true then
-		checkBox4:SetChecked(true)
+		eufCheckbox4:SetChecked(true)
 	end
 
 	if cfg.classHealthBarColor == true then
-		checkBox5:SetChecked(true)
+		eufCheckbox5:SetChecked(true)
 	end
 
 	if cfg.reactionHealthBarColor == true then
-		checkBox6:SetChecked(true)
+		eufCheckbox6:SetChecked(true)
 	end
 
 	if cfg.classIconPortraits == true then
-		checkBox7:SetChecked(true)
+		eufCheckbox7:SetChecked(true)
 	end
 
 	if cfg.hideHitIndicators == true then
-		checkBox8:SetChecked(true)
+		eufCheckbox8:SetChecked(true)
 	end
 
 	if cfg.hidePetStatusText == true then
-		checkBox9:SetChecked(true)
+		eufCheckbox9:SetChecked(true)
 	end
 
 	if cfg.hideRestingIcon == true then
-		checkBox10:SetChecked(true)
+		eufCheckbox10:SetChecked(true)
 	end
 
 	if cfg.shamanClassColorFix == true then
-		checkBox11:SetChecked(true)
+		eufCheckbox11:SetChecked(true)
 	end
 
 	if cfg.upperCaseAbbreviation == true then
-		checkBox12:SetChecked(true)
+		eufCheckbox12:SetChecked(true)
 	end
 
 	self:SetScript("OnShow", nil)
