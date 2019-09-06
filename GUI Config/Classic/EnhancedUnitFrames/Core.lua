@@ -79,8 +79,6 @@ local function SetDefaults()
 	end
 end
 
-SetDefaults()
-
 -- Creates the options panel.
 
 eufUI = {}
@@ -93,7 +91,7 @@ eufUI.panel:Hide()
 eufUI.panel:SetScript("OnShow", function(self)
 	-- Draws the option panel elements.
 
-	local title = eufUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
 	title:SetPoint("TOPLEFT", 16, -16)
 	title:SetText("EnhancedUnitFrames")
@@ -117,7 +115,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 
 	local function createCheckbox(label, description)
 		i = i + 1
-		local checkbox = CreateFrame("CheckButton", "eufCheckbox" .. i, eufUI.panel, "InterfaceOptionsCheckButtonTemplate")
+		local checkbox = CreateFrame("CheckButton", "eufCheckbox" .. i, self, "InterfaceOptionsCheckButtonTemplate")
 		checkbox.label = _G[checkbox:GetName() .. "Text"]
 
 		checkbox.label:SetText(label)
@@ -160,7 +158,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	-- Applies scripts when the checkboxes are clicked.
 
 	bigPlayerHealthBar:SetScript("OnClick", function(self)
-		if bigPlayerHealthBar:GetChecked() then
+		if self:GetChecked() then
 			cfg.bigPlayerHealthBar = true
 			PlaySound(856)
 		else
@@ -172,7 +170,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	bigTargetHealthBar:SetScript("OnClick", function(self)
-		if bigTargetHealthBar:GetChecked() then
+		if self:GetChecked() then
 			cfg.bigTargetHealthBar = true
 			PlaySound(856)
 		else
@@ -184,7 +182,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	wideTargetFrame:SetScript("OnClick", function(self)
-		if wideTargetFrame:GetChecked() then
+		if self:GetChecked() then
 			cfg.wideTargetFrame = true
 			PlaySound(856)
 		else
@@ -196,7 +194,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	mirroredPositioning:SetScript("OnClick", function(self)
-		if mirroredPositioning:GetChecked() then
+		if self:GetChecked() then
 			cfg.mirroredPositioning = true
 			PlaySound(856)
 		else
@@ -208,7 +206,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	classHealthBarColor:SetScript("OnClick", function(self)
-		if classHealthBarColor:GetChecked() then
+		if self:GetChecked() then
 			cfg.classHealthBarColor = true
 			PlaySound(856)
 		else
@@ -220,7 +218,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	reactionHealthBarColor:SetScript("OnClick", function(self)
-		if reactionHealthBarColor:GetChecked() then
+		if self:GetChecked() then
 			cfg.reactionHealthBarColor = true
 			PlaySound(856)
 		else
@@ -232,7 +230,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	classIconPortraits:SetScript("OnClick", function(self)
-		if classIconPortraits:GetChecked() then
+		if self:GetChecked() then
 			cfg.classIconPortraits = true
 			PlaySound(856)
 		else
@@ -244,7 +242,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	hideHitIndicators:SetScript("OnClick", function(self)
-		if hideHitIndicators:GetChecked() then
+		if self:GetChecked() then
 			cfg.hideHitIndicators = true
 			PlaySound(856)
 		else
@@ -256,7 +254,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	hidePetStatusText:SetScript("OnClick", function(self)
-		if hidePetStatusText:GetChecked() then
+		if self:GetChecked() then
 			cfg.hidePetStatusText = true
 			PlaySound(856)
 		else
@@ -268,7 +266,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	hideRestingIcon:SetScript("OnClick", function(self)
-		if hideRestingIcon:GetChecked() then
+		if self:GetChecked() then
 			cfg.hideRestingIcon = true
 			PlaySound(856)
 		else
@@ -280,7 +278,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	shamanClassColorFix:SetScript("OnClick", function(self)
-		if shamanClassColorFix:GetChecked() then
+		if self:GetChecked() then
 			cfg.shamanClassColorFix = true
 			PlaySound(856)
 		else
@@ -292,7 +290,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end)
 
 	upperCaseAbbreviation:SetScript("OnClick", function(self)
-		if upperCaseAbbreviation:GetChecked() then
+		if self:GetChecked() then
 			cfg.upperCaseAbbreviation = true
 			PlaySound(856)
 		else
@@ -371,7 +369,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 		UIDropDownMenu_AddButton(info)
 	end
 
-	local playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
+	local playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", self, "UIDropDownMenuTemplate")
 	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("PlayerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
 
 	playerFrameDropdown:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 273, 8)
@@ -430,7 +428,7 @@ eufUI.panel:SetScript("OnShow", function(self)
 		return slider
 	end
 
-	local wideTargetFrame = createSlider(eufUI.panel, "wideTargetFrameSlider", "Target Width", 231, 400, 1)
+	local wideTargetFrame = createSlider(self, "wideTargetFrameSlider", "Target Width", 231, 400, 1)
 
 	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
@@ -525,6 +523,7 @@ local function IsAddOnLoaded(self, event, addon)
 		ClassIconPortraits()
 		MirroredPositioning()
 		PlayerFrameStyling()
+		SetDefaults()
 		ShamanClassColorFix()
 		StatusBarStyling()
 		StatusTextStyling()

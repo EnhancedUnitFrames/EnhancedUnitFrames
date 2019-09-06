@@ -1,7 +1,7 @@
 ## Interface: 11302
 ## Title: EnhancedUnitFrames
 ## Notes: Modifies the default unit frames for better visuals.
-## Author: Michael w/ code from: Gello, haggen, KawF, SDPhantom, smokked_, & whoarrior.
+## Author: Michael with code from: Gello, haggen, KawF, SDPhantom, smokked_, whoarrior, and zork. 
 ## Version: 1.0.11302
 ## SavedVariables: cfg
 
