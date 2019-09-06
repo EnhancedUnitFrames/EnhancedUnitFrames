@@ -4,13 +4,13 @@ function PlayerFrameStyling()
 	hooksecurefunc("PlayerFrame_ToPlayerArt", function(self)
 		if cfg.bigPlayerHealthBar then
 			if cfg.elitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameElite")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
 			elseif cfg.rareElitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareElite")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
 			elseif cfg.rarePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRare")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
 			else
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrame")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 			end
 
 			PlayerFrameHealthBar:SetHeight(27)
@@ -19,13 +19,13 @@ function PlayerFrameStyling()
 			PlayerFrameManaBar:SetPoint("TOPLEFT", 108, -52)
 		else
 			if cfg.elitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameEliteWhoa")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
 			elseif cfg.rareElitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareEliteWhoa")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
 			elseif cfg.rarePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareWhoa")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
 			else
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameWhoa")
+				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 			end
 
 			PlayerFrameHealthBar:SetHeight(18)

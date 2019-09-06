@@ -17,10 +17,10 @@ function TargetFrameStyling()
 	TargetFrameManaBar.RightText = createStatusBarText("TextRight", "TargetFrameManaBar", TargetFrameTextureFrame, "RIGHT", -110, -8)		
 	TargetFrameManaBar.TextString = createStatusBarText("Text", "TargetFrameManaBar", TargetFrameTextureFrame, "CENTER", -50, -8)
 
-	-- Source: Wide Target by Gello.
-	-- Makes the target frame wider.
-
 	if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+		-- Source: Wide Target by Gello.
+		-- Makes the target frame wider.
+
 		local cx = 232
 		local cy = 100
 		local frame = TargetFrame.textureFrame
@@ -70,13 +70,13 @@ function TargetFrameStyling()
 
 		if cfg.bigTargetHealthBar then
 			if classification == "worldboss" or classification == "elite" then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameElite")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
 			elseif classification == "rareelite" then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareElite")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
 			elseif classification == "rare" then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRare")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
 			else
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrame")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 			end
 
 			TargetFrameBackground:SetHeight(38)
@@ -88,13 +88,13 @@ function TargetFrameStyling()
 			TargetFrameManaBar:SetPoint("TOPLEFT", self, 7, -52)
 		else
 			if classification == "worldboss" or classification == "elite" then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameEliteWhoa")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
 			elseif classification == "rareelite" then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareEliteWhoa")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
 			elseif classification == "rare" then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameRareWhoa")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
 			else
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFramesClassic\\Media\\TargetFrameWhoa")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 			end
 
 			TargetFrameBackground:SetHeight(38)

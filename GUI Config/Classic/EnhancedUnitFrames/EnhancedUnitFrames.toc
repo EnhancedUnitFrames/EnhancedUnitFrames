@@ -1,8 +1,8 @@
 ## Interface: 11302
-## Title: EnhancedUnitFramesClassic
+## Title: EnhancedUnitFrames
 ## Notes: Modifies the default unit frames for better visuals.
 ## Author: Michael w/ code from: Gello, haggen, KawF, SDPhantom, smokked_, & whoarrior.
-## Version: 1.0
+## Version: 1.0.11302
 ## SavedVariables: cfg
 
 Modules\Auras.lua
