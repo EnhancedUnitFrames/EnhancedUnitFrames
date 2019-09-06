@@ -297,50 +297,72 @@ local function CreateOptionsPanel(frame)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	-- Player Frame Texture Dropdown Menu
+	-- Player frame texture dropdown menu.
 
-	local function PlayerFrameTextureDropdown_OnClick(self, arg1, arg2, checked)
+	local function PlayerFrameTextureDropdown_OnClick(self, arg1)
 		if arg1 == 1 then
 			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = false
+			isCheckedDefault = true
+			isCheckedElite = false
+			isCheckedRare = false
+			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
 		elseif arg1 == 2 then
 			cfg.elitePlayerFrame = true
+			cfg.rarePlayerFrame = false
+			cfg.rareElitePlayerFrame = false
+			isCheckedDefault = false
+			isCheckedElite = true
+			isCheckedRare = false
+			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
 		elseif arg1 == 3 then
+			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = true
+			cfg.rareElitePlayerFrame = false
+			isCheckedDefault = false
+			isCheckedElite = false
+			isCheckedRare = true
+			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
 		elseif arg1 == 4 then
+			cfg.elitePlayerFrame = false
+			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = true
+			isCheckedDefault = false
+			isCheckedElite = false
+			isCheckedRare = false
+			isCheckedRareElite = true
 
 			StaticPopup_Show("RELOAD_UI")
 		end
 	end
 
-	function PlayerFrameTextureDropdown_Menu(frame, level, menuList)
+	local function PlayerFrameTextureDropdown_Menu(frame, level, menuList)
 		local info = UIDropDownMenu_CreateInfo()
 		info.func = PlayerFrameTextureDropdown_OnClick
 
-		info.text, info.arg1 = "None", 1
+		info.text, info.arg1, info.checked = "Default Player Frame", 1, isCheckedDefault
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1 = "Elite Player Frame", 2
+		info.text, info.arg1, info.checked = "Elite Player Frame", 2, isCheckedElite
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1 = "Rare Player Frame", 3
+		info.text, info.arg1, info.checked = "Rare Player Frame", 3, isCheckedRare
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1 = "Rare Elite Player Frame", 4
+		info.text, info.arg1, info.checked = "Rare Elite Player Frame", 4, isCheckedRareElite
 		UIDropDownMenu_AddButton(info)
 	end
 
-	local dropDown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
+	local playerFrameDropdown = CreateFrame("Frame", "PlayerFrameTextureDropdown", eufUI.panel, "UIDropDownMenuTemplate")
 
-	dropDown:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", -15, -10)
-	UIDropDownMenu_SetWidth(dropDown, 160)
-	UIDropDownMenu_Initialize(dropDown, PlayerFrameTextureDropdown_Menu)
-	UIDropDownMenu_SetText(dropDown, "Player Frame Texture")
+	playerFrameDropdown:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", -15, -10)
+	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
+	UIDropDownMenu_Initialize(playerFrameDropdown, PlayerFrameTextureDropdown_Menu)
+	UIDropDownMenu_SetText(playerFrameDropdown, "Player Frame Texture")
 end
 
 CreateOptionsPanel()
@@ -394,6 +416,16 @@ local function InitializeOptionsPanel(event, addon, ...)
 
 	if cfg.upperCaseAbbreviation == true then
 		eufCheckbox13:SetChecked(true)
+	end
+
+	if cfg.elitePlayerFrame == true then
+		isCheckedElite = true
+	elseif cfg.rarePlayerFrame == true then
+		isCheckedRare = true
+	elseif cfg.rareElitePlayerFrame == true then
+		isCheckedRareElite = true
+	else
+		isCheckedDefault = true
 	end
 end
 
