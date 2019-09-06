@@ -508,6 +508,8 @@ eufUI.panel:SetScript("OnShow", function(self)
 	end
 
 	UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
+
+	self:SetScript("OnShow", nil)
 end)
 
 -- Loads the addon's components and initializes the option panel.
