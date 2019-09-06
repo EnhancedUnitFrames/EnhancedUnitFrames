@@ -15,4 +15,6 @@ Modules\PowerBar.lua
 Modules\StatusBars.lua
 Modules\StatusText.lua
 Modules\Target.lua
+Defaults.lua
+Options.lua
 Core.lua
