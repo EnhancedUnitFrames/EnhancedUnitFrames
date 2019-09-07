@@ -48,6 +48,7 @@ eufOptions:SetScript("OnShow", function(self)
 		return checkbox
 	end
 
+	-- Source: rothUI by zork.
 	-- Slider creation function.
 
 	local floor = floor
