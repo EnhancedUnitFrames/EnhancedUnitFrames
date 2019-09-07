@@ -1,7 +1,8 @@
 ﻿function MirroredPositioning()
+	-- Source: Focused by haggen.
+	-- Allows the easy mirrored positioning of the player and target frames to desirable locations.
+
 	if cfg.mirroredPositioning then
-		-- Source: Focused by haggen.
-		-- Allows the easy mirrored positioning of the player and target frames to desirable locations.
 
 		local function SetMirroredPlayerPosition(a, b)
 			local _, _, _, offsetX, offsetY = b:GetPoint(1)

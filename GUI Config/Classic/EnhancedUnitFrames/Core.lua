@@ -6,12 +6,12 @@ euf:RegisterEvent("ADDON_LOADED")
 
 local function IsAddOnLoaded(self, event, addon)
 	if event == "ADDON_LOADED" then
+		SetDefaults()
 		AuraStyling()
 		BossFrameStyling()
 		ClassIconPortraits()
 		MirroredPositioning()
 		PlayerFrameStyling()
-		SetDefaults()
 		ShamanClassColorFix()
 		StatusBarStyling()
 		StatusTextStyling()

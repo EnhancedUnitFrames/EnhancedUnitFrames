@@ -1,7 +1,7 @@
 function PlayerFrameStyling()
-	-- Styles the player frame.
-
 	hooksecurefunc("PlayerFrame_ToPlayerArt", function(self)
+		-- Styles the player frame.
+
 		if cfg.bigPlayerHealthBar then
 			if cfg.elitePlayerFrame then
 				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
@@ -70,9 +70,9 @@ function PlayerFrameStyling()
 	PlayerFrameManaBarTextLeft:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 	PlayerFrameManaBarTextRight:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 
-	-- Fixes the level text positioning on the player frame.
-
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
+		-- Fixes the level text positioning on the player frame.
+
 		if cfg.bigPlayerHealthBar then
 			PlayerLevelText:ClearAllPoints()
 			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
@@ -82,16 +82,16 @@ function PlayerFrameStyling()
 		end
 	end)
 
-	-- Hides the damage/healing spam on player/pet frames if enabled.
-
 	if cfg.hideHitIndicators then
+		-- Fixes the level text positioning on the player frame.
+
 		hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Hide)
 		hooksecurefunc(PlayerHitIndicator, "Show", PlayerHitIndicator.Hide)
 	end
 
-	-- Hides the resting glow and resting icon on the player frame.
-
 	hooksecurefunc("PlayerFrame_UpdateStatus", function()
+		-- Hides the resting glow and resting icon on the player frame.
+
 		if cfg.hideRestingIcon then
 			PlayerRestIcon:SetAlpha(0)
 		end
@@ -100,9 +100,9 @@ function PlayerFrameStyling()
 		PlayerStatusTexture:Hide()
 	end)
 
-	-- Hides the pet frame status bar text if enabled.
-
 	if cfg.hidePetStatusText then
+		-- Hides the pet frame status bar text if enabled.
+
 		PetFrameHealthBarText:SetAlpha(0)
 		PetFrameHealthBarTextLeft:SetAlpha(0)
 		PetFrameHealthBarTextRight:SetAlpha(0)
@@ -111,9 +111,9 @@ function PlayerFrameStyling()
 		PetFrameManaBarTextRight:SetAlpha(0)
 	end
 
-	-- Hides the totem duration text if you use OmniCC or tullaCC.
-
 	if IsAddOnLoaded("OmniCC") or IsAddOnLoaded("tullaCC") then
+		-- Hides the totem duration text if you use OmniCC or tullaCC.
+
 		TotemFrameTotem1Duration:SetAlpha(0)
 		TotemFrameTotem2Duration:SetAlpha(0)
 		TotemFrameTotem3Duration:SetAlpha(0)

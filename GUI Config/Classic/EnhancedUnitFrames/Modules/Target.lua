@@ -63,9 +63,9 @@ function TargetFrameStyling()
 		TargetFrame:SetWidth(targetWidth)
 	end
 
-	-- Styles the focus and target frames.
-
 	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
+		-- Styles the focus and target frames.
+
 		local classification = UnitClassification(self.unit)
 
 		if cfg.bigTargetHealthBar then
@@ -150,17 +150,17 @@ function TargetFrameStyling()
 	TargetFrameManaBar.LeftText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 	TargetFrameManaBar.RightText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 
-	-- Disables the buffs on top option.
-
 	hooksecurefunc("TargetFrame_UpdateBuffsOnTop", function()
+		-- Disables the buffs on top option.
+
 		TargetFrame.buffsOnTop = false
 
 		TargetFrame_UpdateAuras(TargetFrame)
 	end)
 
-	-- Fixes the level text positioning on the focus and target frames.
-
 	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
+		-- Fixes the level text positioning on the focus and target frames.
+
 		local targetLevel = UnitLevel("target")
 
 		if cfg.bigTargetHealthBar then
@@ -172,9 +172,9 @@ function TargetFrameStyling()
 		end
 	end)
 
-	-- Fixes the target of target background.
-
 	hooksecurefunc("TargetofTarget_Update", function(self, elapsed)
+		-- Fixes the target of target background.
+
 		TargetFrameToTBackground:ClearAllPoints()
 		TargetFrameToTBackground:SetPoint("CENTER", TargetFrameToT, 22, -1)
 		TargetFrameToTBackground:SetSize(46, 14)

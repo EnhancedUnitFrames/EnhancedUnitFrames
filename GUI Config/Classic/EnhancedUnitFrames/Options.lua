@@ -1,5 +1,3 @@
-local addon, ns = ...
-
 -- Creates the options panel.
 
 eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
@@ -53,13 +51,15 @@ eufOptions:SetScript("OnShow", function(self)
 	-- Slider creation function.
 
 	local floor = floor
+	local i = 0
 
-	local createSlider = function(parent, name, title, minVal, maxVal, valStep, label, description)
-		local slider = CreateFrame("Slider", name, parent, "OptionsSliderTemplate")
-		local editbox = CreateFrame("EditBox", "$parentEditBox", slider, "InputBoxTemplate")
-		slider.text = _G[name .."Text"]
-		slider.textLow = _G[name .."Low"]
-		slider.textHigh = _G[name .."High"]
+	local createSlider = function(parent, title, minVal, maxVal, valStep, label, description)
+		i = i + 1
+		local slider = CreateFrame("Slider", "eufSlider" .. i, parent, "OptionsSliderTemplate")
+		local editbox = CreateFrame("Editbox", "$parentEditbox", slider, "InputBoxTemplate")
+		slider.text = _G[slider:GetName() .. "Text"]
+		slider.textLow = _G[slider:GetName() .. "Low"]
+		slider.textHigh = _G[slider:GetName() .. "High"]
 		slider.tooltipText = label
 		slider.tooltipRequirement = description
 
@@ -77,7 +77,7 @@ eufOptions:SetScript("OnShow", function(self)
 		editbox:SetText(slider:GetValue())
 		editbox:SetAutoFocus(false)
 
-		slider:SetScript("OnValueChanged", function(self,value)
+		slider:SetScript("OnValueChanged", function(self, value)
 			self.editbox:SetText(floor(value))
 		end)
 
@@ -387,13 +387,13 @@ eufOptions:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_Initialize(playerFrameDropdown, PlayerFrameTextureDropdown_Menu)
 
-	-- Target frame width slider.
+	-- Creates the target frame width slider.
 
-	local wideTargetFrame = createSlider(self, "wideTargetFrameSlider", "Target Width", 231, 400, 1, "Target Frame Width", "Placeholder")
+	local wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Target Frame Width", "Placeholder")
 
 	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
-	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
-	wideTargetFrameSliderEditBox:SetText(cfg.wideTargetFrameWidth)
+	eufSlider1:SetValue(cfg.wideTargetFrameWidth)
+	eufSlider1Editbox:SetText(cfg.wideTargetFrameWidth)
 
 	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
 		value = floor(value)

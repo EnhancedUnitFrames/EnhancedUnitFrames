@@ -1,7 +1,7 @@
 function StatusTextStyling()
-	-- Formats numbers so they are readable.
-
 	local function ReadableNumber(number)
+		-- Formats numbers so they are readable.
+
 		if cfg.upperCaseAbbreviation then
 			if not number then
 				return 0
@@ -37,9 +37,9 @@ function StatusTextStyling()
 		end
 	end
 
-	-- Formats the raid frame status text so it's readable.
-
 	hooksecurefunc("CompactUnitFrame_UpdateStatusText", function(self)
+		-- Formats the raid frame status text so it's readable.
+
 		if self and not self:IsForbidden() then
 			if not self.statusText then
 				return
@@ -82,9 +82,9 @@ function StatusTextStyling()
 		end
 	end)
 
-	-- Formats the unit frame status text so it's readable.
-
 	hooksecurefunc("TextStatusBar_UpdateTextStringWithValues", function(statusFrame, textString, value, valueMin, valueMax)
+		-- Formats the unit frame status text so it's readable.
+
 		local valueDisplay = tostring(ReadableNumber(value))
 		local valueMaxDisplay = tostring(ReadableNumber(valueMax))
 

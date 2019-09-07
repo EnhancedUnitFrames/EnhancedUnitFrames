@@ -1,10 +1,10 @@
 function StatusBarStyling()
+	-- Source: whoa UnitFrames by whoarrior & smokked_.
+	-- Colors the unit frame health bars based on class or reaction color.
+
 	if not cfg.classHealthBarColor and not cfg.reactionHealthBarColor then
 		return
 	end
-
-	-- Source: whoa UnitFrames by whoarrior & smokked_.
-	-- Colors the unit frame health bars based on class or reaction color.
 
 	function HealthBarColor(self, unit)
 		if cfg.classHealthBarColor then
