@@ -414,24 +414,39 @@ eufOptions:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	-- Creates the large aura icon size slider.
+	if isClassic() then
+		-- Creates the aura icon size slider.
 
-	local largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Placeholder")
+		local auraIconSize = createSlider(self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Placeholder")
 
-	largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
-	eufSlider2:SetValue(cfg.largeAuraIconSize)
-	eufSlider2Editbox:SetText(cfg.largeAuraIconSize)
+		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
+		eufSlider2:SetValue(cfg.largeAuraIconSize)
+		eufSlider2Editbox:SetText(cfg.largeAuraIconSize)
 
-	largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
-		value = floor(value)
-		cfg.largeAuraIconSize = value
+		auraIconSize:HookScript("OnValueChanged", function(self, value)
+			value = floor(value)
+			cfg.largeAuraIconSize = value
 
-		StaticPopup_Show("RELOAD_UI")
-	end)
+			StaticPopup_Show("RELOAD_UI")
+		end)
+	else
+		-- Creates the large aura icon size slider.
 
-	-- Creates the small aura icon size slider.
+		local largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Placeholder")
 
-	if not isClassic() then
+		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
+		eufSlider2:SetValue(cfg.largeAuraIconSize)
+		eufSlider2Editbox:SetText(cfg.largeAuraIconSize)
+
+		largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
+			value = floor(value)
+			cfg.largeAuraIconSize = value
+
+			StaticPopup_Show("RELOAD_UI")
+		end)
+
+		-- Creates the small aura icon size slider.
+
 		local smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Placeholder")
 
 		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
