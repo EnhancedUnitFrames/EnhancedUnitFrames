@@ -1,6 +1,6 @@
-function ClassIconPortraits()
-	-- Changes player portraits to their respective class icons.
+-- Changes player portraits to their respective class icons.
 
+function ClassIconPortraits()
 	if cfg.classIconPortraits then
 		hooksecurefunc("UnitFramePortrait_Update", function(self)
 			if self.portrait then

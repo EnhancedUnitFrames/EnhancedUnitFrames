@@ -118,7 +118,11 @@ eufOptions:SetScript("OnShow", function(self)
 	local hideHitIndicators = createCheckbox("Hide Hit Indicators", "Placeholder")
 	local hidePetStatusText = createCheckbox("Hide Pet Status Text", "Placeholder")
 	local hideRestingIcon = createCheckbox("Hide Resting Icon", "Placeholder")
-	local shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Placeholder")
+
+	if isClassic() then
+		local shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Placeholder")
+	end
+
 	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Placeholder")
 
 	-- Positions the checkboxes created.
@@ -133,8 +137,13 @@ eufOptions:SetScript("OnShow", function(self)
 	hideHitIndicators:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
 	hidePetStatusText:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 0, -8)
-	shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
-	upperCaseAbbreviation:SetPoint("TOPLEFT", shamanClassColorFix, "BOTTOMLEFT", 0, -8)
+
+	if isClassic() then
+		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
+		upperCaseAbbreviation:SetPoint("TOPLEFT", shamanClassColorFix, "BOTTOMLEFT", 0, -8)
+	else
+		upperCaseAbbreviation:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
+	end
 
 	-- Applies scripts when the checkboxes are clicked.
 
@@ -258,17 +267,19 @@ eufOptions:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	shamanClassColorFix:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			cfg.shamanClassColorFix = true
-			PlaySound(856)
-		else
-			cfg.shamanClassColorFix = false
-			PlaySound(857)
-		end
+	if isClassic() then
+		shamanClassColorFix:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				cfg.shamanClassColorFix = true
+				PlaySound(856)
+			else
+				cfg.shamanClassColorFix = false
+				PlaySound(857)
+			end
 
-		StaticPopup_Show("RELOAD_UI")
-	end)
+			StaticPopup_Show("RELOAD_UI")
+		end)
+	end
 
 	upperCaseAbbreviation:SetScript("OnClick", function(self)
 		if self:GetChecked() then
@@ -420,18 +431,20 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Creates the small aura icon size slider.
 
-	local smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Placeholder")
+	if not isClassic() then
+		local smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Placeholder")
 
-	smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
-	eufSlider3:SetValue(cfg.smallAuraIconSize)
-	eufSlider3Editbox:SetText(cfg.smallAuraIconSize)
+		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
+		eufSlider3:SetValue(cfg.smallAuraIconSize)
+		eufSlider3Editbox:SetText(cfg.smallAuraIconSize)
 
-	smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
-		value = floor(value)
-		cfg.smallAuraIconSize = value
+		smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
+			value = floor(value)
+			cfg.smallAuraIconSize = value
 
-		StaticPopup_Show("RELOAD_UI")
-	end)
+			StaticPopup_Show("RELOAD_UI")
+		end)
+	end
 
 	-- Initializes the options panel with saved variables.
 
@@ -475,12 +488,18 @@ eufOptions:SetScript("OnShow", function(self)
 		eufCheckbox10:SetChecked(true)
 	end
 
-	if cfg.shamanClassColorFix == true then
-		eufCheckbox11:SetChecked(true)
-	end
+	if isClassic() then
+		if cfg.shamanClassColorFix == true then
+			eufCheckbox11:SetChecked(true)
+		end
 
-	if cfg.upperCaseAbbreviation == true then
-		eufCheckbox12:SetChecked(true)
+		if cfg.upperCaseAbbreviation == true then
+			eufCheckbox12:SetChecked(true)
+		end
+	else
+		if cfg.upperCaseAbbreviation == true then
+			eufCheckbox11:SetChecked(true)
+		end
 	end
 
 	self:SetScript("OnShow", nil)

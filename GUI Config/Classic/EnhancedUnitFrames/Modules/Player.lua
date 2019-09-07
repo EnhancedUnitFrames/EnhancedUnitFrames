@@ -1,7 +1,7 @@
 function PlayerFrameStyling()
-	hooksecurefunc("PlayerFrame_ToPlayerArt", function(self)
-		-- Styles the player frame.
+	-- Styles the player frame.
 
+	hooksecurefunc("PlayerFrame_ToPlayerArt", function(self)
 		if cfg.bigPlayerHealthBar then
 			if cfg.elitePlayerFrame then
 				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
@@ -32,6 +32,25 @@ function PlayerFrameStyling()
 			PlayerFrameManaBar:SetHeight(17)
 			PlayerFrameManaBar:ClearAllPoints()
 			PlayerFrameManaBar:SetPoint("TOPLEFT", 108, -45)
+
+			if not isClassic() then
+				InsanityBarFrame.InsanitySpark:ClearAllPoints()
+				InsanityBarFrame.InsanitySpark:SetPoint("CENTER", InsanityBarFrame.InsanityOn.Tentacles, "RIGHT", 0, 9)
+				PlayerFrameManaBar.FeedbackFrame:ClearAllPoints()
+				PlayerFrameManaBar.FeedbackFrame:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
+				PlayerFrameManaBar.FeedbackFrame:SetSize(117, 17)
+				PlayerFrameManaBar.FullPowerFrame:SetSize(117, 17)
+				PlayerFrameManaBar.FullPowerFrame.PulseFrame:ClearAllPoints()
+				PlayerFrameManaBar.FullPowerFrame.PulseFrame:SetPoint("CENTER", PlayerFrameManaBar.FullPowerFrame, -6, 0)
+				PlayerFrameManaBar.FullPowerFrame.PulseFrame:SetSize(117, 17)
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame:SetSize(117, 17)
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.AlertSpikeStay:ClearAllPoints()
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.AlertSpikeStay:SetPoint("CENTER", PlayerFrameManaBar.FullPowerFrame, "RIGHT", -6, -1)
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.AlertSpikeStay:SetSize(30, 29)
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.BigSpikeGlow:ClearAllPoints()
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.BigSpikeGlow:SetPoint("CENTER", PlayerFrameManaBar.FullPowerFrame, "RIGHT", 5, -2)
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.BigSpikeGlow:SetSize(30, 50)
+			end
 		end
 
 		PlayerFrameBackground:ClearAllPoints()
@@ -61,48 +80,89 @@ function PlayerFrameStyling()
 		PlayerName:SetAlpha(0)
 	end)
 
-	-- Changes the status bar text to reflect live.
+	if isClassic() then
+		-- Changes the status bar text to reflect live.
 
-	PlayerFrameHealthBarText:SetFontObject(SystemFont_Outline_Small)
-	PlayerFrameHealthBarTextLeft:SetFontObject(SystemFont_Outline_Small)
-	PlayerFrameHealthBarTextRight:SetFontObject(SystemFont_Outline_Small)
-	PlayerFrameManaBarText:SetFontObject(SystemFont_Outline_Small)
-	PlayerFrameManaBarTextLeft:SetFontObject(SystemFont_Outline_Small)
-	PlayerFrameManaBarTextRight:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBarText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBarTextLeft:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBarTextRight:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBarText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBarTextLeft:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBarTextRight:SetFontObject(SystemFont_Outline_Small)
+	else
+		-- Fixes the vehicle frame.
+
+		hooksecurefunc("PlayerFrame_ToVehicleArt", function(self, vehicleType)
+			if vehicleType == "Natural" then
+				PlayerFrameHealthBar:SetSize(103, 12)
+				PlayerFrameHealthBar:ClearAllPoints()
+				PlayerFrameHealthBar:SetPoint("TOPLEFT", 116, -41)
+				PlayerFrameManaBar:SetSize(103, 12)
+				PlayerFrameManaBar:ClearAllPoints()
+				PlayerFrameManaBar:SetPoint("TOPLEFT", 116, -52)
+			else
+				PlayerFrameHealthBar:SetSize(100, 12)
+				PlayerFrameHealthBar:ClearAllPoints()
+				PlayerFrameHealthBar:SetPoint("TOPLEFT", 119, -41)
+				PlayerFrameManaBar:SetSize(100, 12)
+				PlayerFrameManaBar:ClearAllPoints()
+				PlayerFrameManaBar:SetPoint("TOPLEFT", 119, -52)
+			end
+
+			PlayerName:SetAlpha(1)
+			PlayerName:ClearAllPoints()
+			PlayerName:SetPoint("CENTER", 50, 23)
+		end)
+	end
+
+	-- Fixes the level text positioning on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
-		-- Fixes the level text positioning on the player frame.
-
-		if cfg.bigPlayerHealthBar then
-			PlayerLevelText:ClearAllPoints()
-			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+		if isClassic() then
+			if cfg.bigPlayerHealthBar then
+				PlayerLevelText:ClearAllPoints()
+				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+			else
+				PlayerLevelText:ClearAllPoints()
+				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+			end
 		else
-			PlayerLevelText:ClearAllPoints()
-			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+			if cfg.bigPlayerHealthBar then
+				if level < 10 then
+					PlayerLevelText:ClearAllPoints()
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+				elseif level < 100 then
+					PlayerLevelText:ClearAllPoints()
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -2.5)
+				else
+					PlayerLevelText:ClearAllPoints()
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+				end
+			else
+				if level < 10 then
+					PlayerLevelText:ClearAllPoints()
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+				elseif level < 100 then
+					PlayerLevelText:ClearAllPoints()
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -4.5)
+				else
+					PlayerLevelText:ClearAllPoints()
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+				end
+			end
 		end
 	end)
 
-	if cfg.hideHitIndicators then
-		-- Fixes the level text positioning on the player frame.
+	-- Hides the damage/healing spam on player and pet frames.
 
+	if cfg.hideHitIndicators then
 		hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Hide)
 		hooksecurefunc(PlayerHitIndicator, "Show", PlayerHitIndicator.Hide)
 	end
 
-	hooksecurefunc("PlayerFrame_UpdateStatus", function()
-		-- Hides the resting glow and resting icon on the player frame.
-
-		if cfg.hideRestingIcon then
-			PlayerRestIcon:SetAlpha(0)
-		end
-
-		PlayerRestGlow:SetAlpha(0)
-		PlayerStatusTexture:Hide()
-	end)
+	-- Hides the pet frame status bar text if enabled.
 
 	if cfg.hidePetStatusText then
-		-- Hides the pet frame status bar text if enabled.
-
 		PetFrameHealthBarText:SetAlpha(0)
 		PetFrameHealthBarTextLeft:SetAlpha(0)
 		PetFrameHealthBarTextRight:SetAlpha(0)
@@ -111,9 +171,20 @@ function PlayerFrameStyling()
 		PetFrameManaBarTextRight:SetAlpha(0)
 	end
 
-	if IsAddOnLoaded("OmniCC") or IsAddOnLoaded("tullaCC") then
-		-- Hides the totem duration text if you use OmniCC or tullaCC.
+	-- Hides the resting glow and resting icon on the player frame.
 
+	hooksecurefunc("PlayerFrame_UpdateStatus", function()
+		if cfg.hideRestingIcon then
+			PlayerRestIcon:SetAlpha(0)
+		end
+
+		PlayerRestGlow:SetAlpha(0)
+		PlayerStatusTexture:Hide()
+	end)
+
+	-- Hides the totem duration text if you use OmniCC or tullaCC.
+
+	if IsAddOnLoaded("OmniCC") or IsAddOnLoaded("tullaCC") then
 		TotemFrameTotem1Duration:SetAlpha(0)
 		TotemFrameTotem2Duration:SetAlpha(0)
 		TotemFrameTotem3Duration:SetAlpha(0)

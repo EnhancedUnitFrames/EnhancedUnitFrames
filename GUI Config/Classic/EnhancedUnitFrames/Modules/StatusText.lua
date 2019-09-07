@@ -1,7 +1,7 @@
 function StatusTextStyling()
-	local function ReadableNumber(number)
-		-- Formats numbers so they are readable.
+	-- Formats numbers so they are readable.
 
+	local function ReadableNumber(number)
 		if cfg.upperCaseAbbreviation then
 			if not number then
 				return 0
@@ -37,9 +37,9 @@ function StatusTextStyling()
 		end
 	end
 
-	hooksecurefunc("CompactUnitFrame_UpdateStatusText", function(self)
-		-- Formats the raid frame status text so it's readable.
+	-- Formats the raid frame status text so it's readable.
 
+	hooksecurefunc("CompactUnitFrame_UpdateStatusText", function(self)
 		if self and not self:IsForbidden() then
 			if not self.statusText then
 				return
@@ -82,9 +82,9 @@ function StatusTextStyling()
 		end
 	end)
 
-	hooksecurefunc("TextStatusBar_UpdateTextStringWithValues", function(statusFrame, textString, value, valueMin, valueMax)
-		-- Formats the unit frame status text so it's readable.
+	-- Formats the unit frame status text so it's readable.
 
+	hooksecurefunc("TextStatusBar_UpdateTextStringWithValues", function(statusFrame, textString, value, valueMin, valueMax)
 		local valueDisplay = tostring(ReadableNumber(value))
 		local valueMaxDisplay = tostring(ReadableNumber(valueMax))
 
@@ -103,8 +103,18 @@ function StatusTextStyling()
 				Boss3TargetFrameTextureFrameHealthBarText:SetText("")
 			elseif UnitExists("boss4") and UnitIsDead("boss4") then
 				Boss4TargetFrameTextureFrameHealthBarText:SetText("")
-			elseif UnitExists("target") and UnitIsDead("target") then
-				TargetFrameHealthBarText:SetText("")
+			end
+
+			if isClassic() then
+				if UnitExists("target") and UnitIsDead("target") then
+					TargetFrameHealthBarText:SetText("")
+				end
+			else
+				if UnitExists("focus") and UnitIsDead("focus") then
+					FocusFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("target") and UnitIsDead("target") then
+					TargetFrameTextureFrameHealthBarText:SetText("")
+				end
 			end
 		end
 	end)

@@ -8,6 +8,7 @@
 Modules\Auras.lua
 Modules\Boss.lua
 Modules\ClassColorFix.lua
+Modules\Focus.lua
 Modules\MirroredPositioning.lua
 Modules\Player.lua
 Modules\Portraits.lua

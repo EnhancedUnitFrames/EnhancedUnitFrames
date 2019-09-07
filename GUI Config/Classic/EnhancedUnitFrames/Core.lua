@@ -1,10 +1,14 @@
-﻿-- Loads the addon's components and initializes the option panel.
+﻿function isClassic()
+	return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+end
+
+-- Loads the addon's components and initializes the option panel.
 
 local euf = CreateFrame("Frame")
 
 euf:RegisterEvent("ADDON_LOADED")
 
-local function IsAddOnLoaded(self, event, addon)
+local function isAddOnLoaded(self, event, addon)
 	if event == "ADDON_LOADED" then
 		SetDefaults()
 		AuraStyling()
@@ -12,16 +16,22 @@ local function IsAddOnLoaded(self, event, addon)
 		ClassIconPortraits()
 		MirroredPositioning()
 		PlayerFrameStyling()
-		ShamanClassColorFix()
 		StatusBarStyling()
 		StatusTextStyling()
 		TargetFrameStyling()
+
+		if isClassic() then
+			DruidPowerBar()
+			ShamanClassColorFix()
+		else
+			FocusFrameStyling()
+		end
 
 		euf:UnregisterEvent("ADDON_LOADED")
 	end
 end
 
-euf:SetScript("OnEvent", IsAddOnLoaded)
+euf:SetScript("OnEvent", isAddOnLoaded)
 
 -- Creates the addon's slash command.
 

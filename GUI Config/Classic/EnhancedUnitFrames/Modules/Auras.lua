@@ -1,6 +1,6 @@
-function AuraStyling()
-	-- Changes the aura icon sizes and automatically changes their row's width based on the width of the target frame.
+-- Changes the aura icon sizes and automatically changes their row's width based on the width of the target frame.
 
+function AuraStyling()
 	if cfg.wideTargetFrames and cfg.wideTargetFramesWidth >= 231 then
 		wideTargetFramesWidth = cfg.wideTargetFramesWidth
 	else

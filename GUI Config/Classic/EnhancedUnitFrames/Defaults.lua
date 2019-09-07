@@ -55,8 +55,10 @@ function SetDefaults()
 		cfg.reactionHealthBarColor = true
 	end
 
-	if cfg.shamanClassColorFix == nil then
-		cfg.shamanClassColorFix = true
+	if isClassic() then
+		if cfg.shamanClassColorFix == nil then
+			cfg.shamanClassColorFix = true
+		end
 	end
 
 	if cfg.smallAuraIconSize == nil then

@@ -1,6 +1,6 @@
-function BossFrameStyling()
-	-- Makes the boss frame health bar bigger.
+-- Makes the boss frame health bar bigger.
 
+function BossFrameStyling()
 	for i = 1, 4 do
 		_G["Boss" .. i .. "TargetFrameHealthBar"]:SetSize(117, 27)
 		_G["Boss" .. i .. "TargetFrameHealthBar"]:ClearAllPoints()
