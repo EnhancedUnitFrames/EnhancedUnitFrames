@@ -120,7 +120,7 @@ eufOptions:SetScript("OnShow", function(self)
 	local hideRestingIcon = createCheckbox("Hide Resting Icon", "Placeholder")
 
 	if isClassic() then
-		local shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Placeholder")
+		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Placeholder")
 	end
 
 	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Placeholder")

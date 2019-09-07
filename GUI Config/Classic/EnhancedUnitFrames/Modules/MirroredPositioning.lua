@@ -1,5 +1,5 @@
 ﻿-- Source: Focused by haggen.
--- Allows the easy mirrored positioning of the player and target frames to desirable locations.
+-- Allows the easy mirrored positioning of the player and target frames.
 
 function MirroredPositioning()
 	if cfg.mirroredPositioning then
