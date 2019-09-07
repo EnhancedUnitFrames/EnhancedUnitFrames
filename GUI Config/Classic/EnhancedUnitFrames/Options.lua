@@ -390,7 +390,7 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Creates the target frame width slider.
 
-	local wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Target Frame Width", "Placeholder")
+	local wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Placeholder")
 
 	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	eufSlider1:SetValue(cfg.wideTargetFrameWidth)
@@ -399,6 +399,36 @@ eufOptions:SetScript("OnShow", function(self)
 	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
 		value = floor(value)
 		cfg.wideTargetFrameWidth = value
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	-- Creates the large aura icon size slider.
+
+	local largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Placeholder")
+
+	largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
+	eufSlider2:SetValue(cfg.largeAuraIconSize)
+	eufSlider2Editbox:SetText(cfg.largeAuraIconSize)
+
+	largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
+		value = floor(value)
+		cfg.largeAuraIconSize = value
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	-- Creates the small aura icon size slider.
+
+	local smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Placeholder")
+
+	smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
+	eufSlider3:SetValue(cfg.smallAuraIconSize)
+	eufSlider3Editbox:SetText(cfg.smallAuraIconSize)
+
+	smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
+		value = floor(value)
+		cfg.smallAuraIconSize = value
 
 		StaticPopup_Show("RELOAD_UI")
 	end)
