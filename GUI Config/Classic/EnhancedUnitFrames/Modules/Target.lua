@@ -3,7 +3,7 @@ function TargetFrameStyling()
 	-- Adds status bar text to the target frame.
 
 	function createStatusBarText(name, parentName, parent, point, x, y)
-		local fontString = parent:CreateFontString(parentName .. name, nil, "TextStatusBarText")
+		local fontString = parent:CreateFontString(parentName .. name, nil, "SystemFont_Outline_Small")
 
 		fontString:SetPoint(point, parent, point, x, y)
 
@@ -140,15 +140,6 @@ function TargetFrameStyling()
 		TargetFrameTextureFrameName:SetPoint("TOPLEFT", TargetFrame, 8, -7.5)
 		TargetFrameTextureFrameName:SetPoint("BOTTOMRIGHT", TargetFrame, "TOPRIGHT", -110, -19.5)
 	end)
-
-	-- Changes the status bar text to reflect live.
-
-	TargetFrameHealthBarText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	TargetFrameHealthBar.LeftText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	TargetFrameHealthBar.RightText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	TargetFrameManaBarText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	TargetFrameManaBar.LeftText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	TargetFrameManaBar.RightText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 
 	hooksecurefunc("TargetFrame_UpdateBuffsOnTop", function()
 		-- Disables the buffs on top option.

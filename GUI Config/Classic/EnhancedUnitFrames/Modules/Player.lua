@@ -63,12 +63,12 @@ function PlayerFrameStyling()
 
 	-- Changes the status bar text to reflect live.
 
-	PlayerFrameHealthBarText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	PlayerFrameHealthBarTextLeft:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	PlayerFrameHealthBarTextRight:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	PlayerFrameManaBarText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	PlayerFrameManaBarTextLeft:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-	PlayerFrameManaBarTextRight:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+	PlayerFrameHealthBarText:SetFontObject(SystemFont_Outline_Small)
+	PlayerFrameHealthBarTextLeft:SetFontObject(SystemFont_Outline_Small)
+	PlayerFrameHealthBarTextRight:SetFontObject(SystemFont_Outline_Small)
+	PlayerFrameManaBarText:SetFontObject(SystemFont_Outline_Small)
+	PlayerFrameManaBarTextLeft:SetFontObject(SystemFont_Outline_Small)
+	PlayerFrameManaBarTextRight:SetFontObject(SystemFont_Outline_Small)
 
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
 		-- Fixes the level text positioning on the player frame.

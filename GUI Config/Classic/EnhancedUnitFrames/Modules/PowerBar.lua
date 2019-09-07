@@ -131,6 +131,6 @@ do local bar = CreateAlternatePowerBar("$parentAlternatePowerBar", PlayerFrame)
 	bar:SetPoint("BOTTOMLEFT", 114, 23)
 end
 
-PlayerFrameAlternatePowerBarText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-PlayerFrameAlternatePowerBar.LeftText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
-PlayerFrameAlternatePowerBar.RightText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+PlayerFrameAlternatePowerBarText:SetFontObject(SystemFont_Outline_Small)
+PlayerFrameAlternatePowerBar.LeftText:SetFontObject(SystemFont_Outline_Small)
+PlayerFrameAlternatePowerBar.RightText:SetFontObject(SystemFont_Outline_Small)
