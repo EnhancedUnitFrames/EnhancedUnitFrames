@@ -1,16 +1,16 @@
 -- Changes the aura icon sizes and automatically changes their row's width based on the width of the target frame.
 
 function AuraStyling()
-	if cfg.wideTargetFrames and cfg.wideTargetFramesWidth >= 231 then
-		wideTargetFramesWidth = cfg.wideTargetFramesWidth
+	if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+		wideTargetFrameWidth = cfg.wideTargetFrameWidth
 	else
-		wideTargetFramesWidth = 230
+		wideTargetFrameWidth = 230
 	end
 
 	local LARGE_AURA_SIZE = cfg.largeAuraIconSize
 	local SMALL_AURA_SIZE = cfg.smallAuraIconSize
 	local AURA_OFFSET_Y = 3
-	local AURA_ROW_WIDTH = 90 + (wideTargetFramesWidth - 230)
+	local AURA_ROW_WIDTH = 90 + (wideTargetFrameWidth - 230)
 	local NUM_TOT_AURA_ROWS = 2
 
 	hooksecurefunc("TargetFrame_UpdateAuraPositions", function(self, auraName, numAuras, numOppositeAuras, largeAuraList, updateFunc, maxRowWidth, offsetX, mirrorAurasVertically)
@@ -18,7 +18,7 @@ function AuraStyling()
 		local offsetY = AURA_OFFSET_Y
 		local rowWidth = 0
 		local firstBuffOnRow = 1
-		local maxRowWidth = 90 + (wideTargetFramesWidth - 230)
+		local maxRowWidth = 90 + (wideTargetFrameWidth - 230)
 
 		for i = 1, numAuras do
 			if largeAuraList[i] then

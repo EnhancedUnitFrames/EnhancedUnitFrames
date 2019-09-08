@@ -330,7 +330,7 @@ function TargetFrameStyling()
 			if cfg.bigTargetHealthBar then
 				if focusLevel >= 100 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
+					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				else
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
@@ -338,7 +338,7 @@ function TargetFrameStyling()
 
 				if targetLevel >= 100 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				else
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
@@ -346,7 +346,7 @@ function TargetFrameStyling()
 			else
 				if focusLevel >= 100 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
+					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
 				else
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
@@ -354,7 +354,7 @@ function TargetFrameStyling()
 
 				if targetLevel >= 100 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
 				else
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
