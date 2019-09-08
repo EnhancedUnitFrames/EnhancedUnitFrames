@@ -1,4 +1,4 @@
--- Changes player portraits to their respective class icons.
+-- Changes the unit frame portraits to the unit's class icon.
 
 function ClassIconPortraits()
 	if cfg.classIconPortraits then

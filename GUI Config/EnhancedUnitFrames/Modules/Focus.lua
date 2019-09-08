@@ -1,5 +1,5 @@
 -- Source: Wide Target by Gello.
--- Makes the target frame wider.
+-- Makes the focus frame wider.
 
 function FocusFrameStyling()
 	if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then

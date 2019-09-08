@@ -108,22 +108,28 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
-	local bigPlayerHealthBar = createCheckbox("Big Player Health Bar", "Placeholder")
-	local bigTargetHealthBar = createCheckbox("Big Target Health Bar", "Placeholder")
-	local wideTargetFrame = createCheckbox("Wide Target Frame", "Placeholder")
-	local mirroredPositioning = createCheckbox("Mirrored Positioning", "Placeholder")
-	local classHealthBarColor = createCheckbox("Class Color HP", "Placeholder")
-	local reactionHealthBarColor = createCheckbox("Reaction Color HP", "Placeholder")
-	local classIconPortraits = createCheckbox("Class Icon Portraits", "Placeholder")
-	local hideHitIndicators = createCheckbox("Hide Hit Indicators", "Placeholder")
-	local hidePetStatusText = createCheckbox("Hide Pet Status Text", "Placeholder")
-	local hideRestingIcon = createCheckbox("Hide Resting Icon", "Placeholder")
+	local bigPlayerHealthBar = createCheckbox("Big Player Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
+	local bigTargetHealthBar = createCheckbox("Big Target Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
 
 	if isClassic() then
-		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Placeholder")
+		wideTargetFrame = createCheckbox("Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
+	else
+		wideTargetFrame = createCheckbox("Wide Target Frame", "Makes the target and focus frames wider.\nSource: Wide Target by Gello.")
 	end
 
-	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Placeholder")
+	local mirroredPositioning = createCheckbox("Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
+	local classHealthBarColor = createCheckbox("Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
+	local reactionHealthBarColor = createCheckbox("Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
+	local classIconPortraits = createCheckbox("Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
+	local hideHitIndicators = createCheckbox("Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
+	local hidePetStatusText = createCheckbox("Hide Pet Status Text", "Hides the pet frame status bar text.")
+	local hideRestingIcon = createCheckbox("Hide Resting Icon", "Hides the resting icon on the player frame.")
+
+	if isClassic() then
+		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
+	end
+
+	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
 
 	-- Positions the checkboxes created.
 
@@ -303,9 +309,9 @@ eufOptions:SetScript("OnShow", function(self)
 	playerFrameDropdown.title:SetText("Player Frame Texure")
 
 	playerFrameDropdown:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "anchor", 359, 1)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
 		GameTooltip:SetText("Player Frame Texture", nil, nil, nil, 1, 1)
-		GameTooltip:AddLine("Placeholder", 1, 1, 1)
+		GameTooltip:AddLine("Changes the player frame texture to emulate a elite, rare, or rare-elite mob.", 1, 1, 1)
 		GameTooltip:Show()
 	end)
 

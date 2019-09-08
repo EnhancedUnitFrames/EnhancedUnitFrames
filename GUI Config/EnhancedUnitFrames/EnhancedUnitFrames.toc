@@ -2,12 +2,12 @@
 ## Title: EnhancedUnitFrames
 ## Notes: Modifies the default unit frames for better visuals.
 ## Author: Michael with code from: Gello, Funkydude, haggen, KawF, SDPhantom, smokked_, whoarrior, and zork. 
-## Version: 1.0.11302
+## Version: 1.0
 ## SavedVariables: cfg
 
 Modules\Auras.lua
 Modules\Boss.lua
-Modules\ClassColorFix.lua
+Modules\ClassColor.lua
 Modules\Focus.lua
 Modules\MirroredPositioning.lua
 Modules\Player.lua

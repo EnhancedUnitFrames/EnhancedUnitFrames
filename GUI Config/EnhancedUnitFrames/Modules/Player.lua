@@ -160,7 +160,7 @@ function PlayerFrameStyling()
 		hooksecurefunc(PlayerHitIndicator, "Show", PlayerHitIndicator.Hide)
 	end
 
-	-- Hides the pet frame status bar text if enabled.
+	-- Hides the pet frame status bar text.
 
 	if cfg.hidePetStatusText then
 		PetFrameHealthBarText:SetAlpha(0)

@@ -1,5 +1,5 @@
 -- Source: whoa UnitFrames by whoarrior & smokked_.
--- Colors the unit frame health bars based on class or reaction color.
+-- Changes the unit frame health bar colors to the unit's class or reaction color.
 
 function StatusBarStyling()
 	if not cfg.classHealthBarColor and not cfg.reactionHealthBarColor then
