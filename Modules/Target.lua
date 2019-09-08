@@ -144,7 +144,7 @@ function TargetFrameStyling()
 			TargetFrameTextureFrameName:SetPoint("BOTTOMRIGHT", TargetFrame, "TOPRIGHT", -110, -19.5)
 		else
 			if classification == "minus" then
-				if cfg.bigTargetHealthBars then
+				if cfg.bigTargetHealthBar then
 					self.manabar:SetHeight(12)
 					self.manabar:ClearAllPoints()
 					self.manabar:SetPoint("TOPLEFT", self, 7, -52)
@@ -154,10 +154,10 @@ function TargetFrameStyling()
 					self.manabar:SetPoint("TOPLEFT", self, 7, -45)
 				end
 
-				if cfg.wideTargetFrames and cfg.wideTargetFramesWidth >= 231 then
-					self.Background:SetSize(cfg.wideTargetFramesWidth - 115, 8)
-					self.healthbar:SetSize(cfg.wideTargetFramesWidth - 115, 12)
-					self.manabar:SetWidth(cfg.wideTargetFramesWidth - 115)
+				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+					self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 8)
+					self.healthbar:SetSize(cfg.wideTargetFrameWidth - 115, 12)
+					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
 				else
 					self.Background:SetSize(117, 8)
 					self.healthbar:SetSize(117, 12)
@@ -271,7 +271,45 @@ function TargetFrameStyling()
 			TargetFrame_UpdateAuras(FocusFrame)
 		end)
 	end
-		
+
+	-- Disables the small focus frame option.
+
+	if not isClassic() then
+		hooksecurefunc("FocusFrame_SetSmallSize", function(smallSize, onChange)
+			local LARGE_FOCUS_SCALE = 1
+
+			if smallSize then
+				local x = FocusFrame:GetLeft()
+				local y = FocusFrame:GetTop()
+				FocusFrame.smallSize = false
+				FocusFrame.maxBuffs = nil
+				FocusFrame.maxDebuffs = nil
+				FocusFrame.TOT_AURA_ROW_WIDTH = TOT_AURA_ROW_WIDTH
+
+				FocusFrame:SetScale(LARGE_FOCUS_SCALE)
+				FocusFrameToT:SetScale(LARGE_FOCUS_SCALE)
+				FocusFrameToT:SetPoint("BOTTOMRIGHT", -35, -10)
+				FocusFrame.spellbar:SetScale(LARGE_FOCUS_SCALE)
+				FocusFrameTextureFrameName:SetFontObject(GameFontNormalSmall)
+				FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
+				FocusFrameHealthBar.TextString:SetPoint("CENTER", 0, 0)
+				FocusFrameTextureFrameName:SetWidth(100)
+
+				if onChange and not FocusFrame:IsUserPlaced() then
+					FocusFrame:ClearAllPoints()
+					FocusFrame:SetPoint("TOPLEFT", 250, -240)
+				end
+
+				FocusFrame:RegisterEvent("UNIT_CLASSIFICATION_CHANGED")
+				FocusFrame.showClassification = true
+				FocusFrame:RegisterEvent("PLAYER_FLAGS_CHANGED")
+				FocusFrame.showPVP = true
+				FocusFrame.showLeader = true
+				FocusFrame.showAuraCount = true
+				TargetFrame_Update(FocusFrame)
+			end
+		end)
+	end
 
 	-- Fixes the level text positioning on the focus and target frames.
 
@@ -290,7 +328,7 @@ function TargetFrameStyling()
 			local focusLevel = UnitLevel("focus")
 
 			if cfg.bigTargetHealthBar then
-				if focusLevel > 99 then
+				if focusLevel >= 100 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
 				else
@@ -298,7 +336,7 @@ function TargetFrameStyling()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				end
 
-				if targetLevel > 99 then
+				if targetLevel >= 100 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
 				else
@@ -306,7 +344,7 @@ function TargetFrameStyling()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				end
 			else
-				if focusLevel > 99 then
+				if focusLevel >= 100 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
 				else
@@ -314,7 +352,7 @@ function TargetFrameStyling()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
 				end
 
-				if targetLevel > 99 then
+				if targetLevel >= 100 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
 				else
