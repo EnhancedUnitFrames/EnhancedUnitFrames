@@ -1,4 +1,6 @@
-﻿function isClassic()
+﻿-- Function that determines which client the addon is running on.
+
+function isClassic()
 	return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 end
 
