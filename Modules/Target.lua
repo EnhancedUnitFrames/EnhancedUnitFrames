@@ -251,10 +251,7 @@ function TargetFrameStyling()
 			local focusLevel = UnitLevel("focus")
 
 			if cfg.bigTargetHealthBar then
-				if focusLevel < 10 then
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
-				elseif focusLevel < 100 then
+				if focusLevel < 100 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
 				else
@@ -262,10 +259,7 @@ function TargetFrameStyling()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				end
 
-				if targetLevel < 10 then
-					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
-				elseif targetLevel < 100 then
+				if targetLevel < 100 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
 				else
@@ -273,10 +267,7 @@ function TargetFrameStyling()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				end
 			else
-				if focusLevel < 10 then
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
-				elseif focusLevel < 100 then
+				if focusLevel < 100 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
 				else
@@ -284,10 +275,7 @@ function TargetFrameStyling()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
 				end
 
-				if targetLevel < 10 then
-					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
-				elseif targetLevel < 100 then
+				if targetLevel < 100 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
 				else
