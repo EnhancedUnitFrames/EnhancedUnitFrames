@@ -17,7 +17,7 @@ eufOptions:SetScript("OnShow", function(self)
 	local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
 
 	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-	description:SetText("Placeholder")
+	description:SetText("Modifies the default unit frames for better visuals.")
 
 	StaticPopupDialogs["RELOAD_UI"] = {
 		text = "One or more of the changes you have made require a ReloadUI.",
@@ -311,7 +311,7 @@ eufOptions:SetScript("OnShow", function(self)
 	playerFrameDropdown:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
 		GameTooltip:SetText("Player Frame Texture", nil, nil, nil, 1, 1)
-		GameTooltip:AddLine("Changes the player frame texture to emulate a elite, rare, or rare-elite mob.", 1, 1, 1)
+		GameTooltip:AddLine("Changes the player frame to use the default, elite, rare, or rare-elite texture.", 1, 1, 1, 1)
 		GameTooltip:Show()
 	end)
 
@@ -407,7 +407,11 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Creates the target frame width slider.
 
-	local wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Placeholder")
+	if isClassic() then
+		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked.")
+	else
+		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frames width.\nRequires \"Wide Target Frame\" to be checked.")
+	end
 
 	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	eufSlider1:SetValue(cfg.wideTargetFrameWidth)
@@ -423,7 +427,7 @@ eufOptions:SetScript("OnShow", function(self)
 	if isClassic() then
 		-- Creates the aura icon size slider.
 
-		local auraIconSize = createSlider(self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Placeholder")
+		local auraIconSize = createSlider(self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
 
 		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
 		eufSlider2:SetValue(cfg.largeAuraIconSize)
@@ -438,7 +442,7 @@ eufOptions:SetScript("OnShow", function(self)
 	else
 		-- Creates the large aura icon size slider.
 
-		local largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Placeholder")
+		local largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
 
 		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
 		eufSlider2:SetValue(cfg.largeAuraIconSize)
@@ -453,7 +457,7 @@ eufOptions:SetScript("OnShow", function(self)
 
 		-- Creates the small aura icon size slider.
 
-		local smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Placeholder")
+		local smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
 
 		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
 		eufSlider3:SetValue(cfg.smallAuraIconSize)
