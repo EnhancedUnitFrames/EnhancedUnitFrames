@@ -317,10 +317,10 @@ function TargetFrameStyling()
 		if isClassic() then
 			if cfg.bigTargetHealthBar then
 				TargetFrameTextureFrameLevelText:ClearAllPoints()
-				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
 			else
 				TargetFrameTextureFrameLevelText:ClearAllPoints()
-				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
+				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
 			end
 		else
 			if cfg.bigTargetHealthBar then

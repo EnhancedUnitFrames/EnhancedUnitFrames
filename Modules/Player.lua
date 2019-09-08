@@ -121,27 +121,27 @@ function PlayerFrameStyling()
 		if isClassic() then
 			if cfg.bigPlayerHealthBar then
 				PlayerLevelText:ClearAllPoints()
-				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -54.5, -2.5)
 			else
 				PlayerLevelText:ClearAllPoints()
-				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -54.5, -4.5)
 			end
 		else
 			if cfg.bigPlayerHealthBar then
 				if level >= 100 then
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -54.5, -2.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
 				else
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -54.5, -2.5)
 				end
 			else
 				if level >= 100 then
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -54.5, -4.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
 				else
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -54.5, -4.5)
 				end
 			end
 		end
