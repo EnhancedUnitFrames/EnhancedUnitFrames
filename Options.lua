@@ -6,6 +6,12 @@ eufOptions.name = "EnhancedUnitFrames"
 InterfaceOptions_AddCategory(eufOptions)
 eufOptions:Hide()
 
+eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions);
+eufOptions.scaling.name = "Scaling";
+eufOptions.scaling.parent = eufOptions.name
+
+InterfaceOptions_AddCategory(eufOptions.scaling)
+
 eufOptions:SetScript("OnShow", function(self)
 	-- Draws the option panel elements.
 
