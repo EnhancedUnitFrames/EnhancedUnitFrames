@@ -135,6 +135,7 @@ eufOptions:SetScript("OnShow", function(self)
 		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
 	end
 
+	local threatShowNumeric = createCheckbox("Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to show.")
 	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
 
 	-- Positions the checkboxes created.
@@ -154,7 +155,8 @@ eufOptions:SetScript("OnShow", function(self)
 		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
 		upperCaseAbbreviation:SetPoint("TOPLEFT", shamanClassColorFix, "BOTTOMLEFT", 0, -8)
 	else
-		upperCaseAbbreviation:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
+		threatShowNumeric:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
+		upperCaseAbbreviation:SetPoint("TOPLEFT", threatShowNumeric, "BOTTOMLEFT", 0, -8)
 	end
 
 	-- Applies scripts when the checkboxes are clicked.
@@ -305,6 +307,18 @@ eufOptions:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
+	if not isClassic() then
+		threatShowNumeric:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("threatShowNumeric", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("threatShowNumeric", 0)
+				PlaySound(857)
+			end
+		end)
+	end
+
 	-- Player frame texture dropdown menu.
 
 	local playerFrameDropdown = CreateFrame("Frame", "eufPlayerFrameDropdown", self, "UIDropDownMenuTemplate")
@@ -316,7 +330,7 @@ eufOptions:SetScript("OnShow", function(self)
 
 	playerFrameDropdown:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
-		GameTooltip:SetText("Player Frame Texture", nil, nil, nil, 1, 1)
+		GameTooltip:SetText("Player Frame Texture", nil, nil, nil, 1, true)
 		GameTooltip:AddLine("Changes the player frame to use the default, elite, rare, or rare-elite texture.", 1, 1, 1, 1)
 		GameTooltip:Show()
 	end)
@@ -423,8 +437,8 @@ eufOptions:SetScript("OnShow", function(self)
 
 		threatWarningDropdown:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
-			GameTooltip:SetText("Threat Warning", nil, nil, nil, 1, 1)
-			GameTooltip:AddLine("Placeholder", 1, 1, 1, 1)
+			GameTooltip:SetText("Threat Warning", nil, nil, nil, 1, true)
+			GameTooltip:AddLine("Displays a red glow around the unit frames if you have threat.", 1, 1, 1, 1)
 			GameTooltip:Show()
 		end)
 
@@ -510,10 +524,10 @@ eufOptions:SetScript("OnShow", function(self)
 	-- Creates the target frame width slider.
 
 	if isClassic() then
-		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked.")
+		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
 		wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	else
-		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frames width.\nRequires \"Wide Target Frame\" to be checked.")
+		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frames width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
 		wideTargetFrame:SetPoint("TOPLEFT", threatWarningDropdown, "BOTTOMLEFT", 18, -34)
 	end
 
@@ -625,9 +639,13 @@ eufOptions:SetScript("OnShow", function(self)
 			eufCheckbox12:SetChecked(true)
 		end
 	else
-		if cfg.upperCaseAbbreviation == true then
+		if C_CVar.GetCVar("threatShowNumeric") == "1" then
 			eufCheckbox11:SetChecked(true)
 		end
+	end
+
+	if cfg.upperCaseAbbreviation == true then
+		eufCheckbox12:SetChecked(true)
 	end
 
 	self:SetScript("OnShow", nil)
