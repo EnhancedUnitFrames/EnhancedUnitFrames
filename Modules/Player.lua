@@ -80,18 +80,20 @@ function PlayerFrameStyling()
 		PlayerName:SetAlpha(0)
 	end)
 
-	if isClassic() then
-		-- Changes the status bar text to reflect live.
+	-- Changes the status bar text to reflect live.
 
+	if isClassic() then
 		PlayerFrameHealthBarText:SetFontObject(SystemFont_Outline_Small)
 		PlayerFrameHealthBarTextLeft:SetFontObject(SystemFont_Outline_Small)
 		PlayerFrameHealthBarTextRight:SetFontObject(SystemFont_Outline_Small)
 		PlayerFrameManaBarText:SetFontObject(SystemFont_Outline_Small)
 		PlayerFrameManaBarTextLeft:SetFontObject(SystemFont_Outline_Small)
 		PlayerFrameManaBarTextRight:SetFontObject(SystemFont_Outline_Small)
-	else
-		-- Fixes the vehicle frame.
+	end
 
+	-- Fixes the vehicle frame.
+
+	if not isClassic() then
 		hooksecurefunc("PlayerFrame_ToVehicleArt", function(self, vehicleType)
 			if vehicleType == "Natural" then
 				PlayerFrameHealthBar:SetSize(103, 12)

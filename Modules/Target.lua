@@ -82,7 +82,6 @@ function TargetFrameStyling()
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 				end
 
-				TargetFrameBackground:SetHeight(38)
 				TargetFrameHealthBar:SetHeight(27)
 				TargetFrameTextureFrameHighLevelTexture:ClearAllPoints()
 				TargetFrameTextureFrameHighLevelTexture:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
@@ -100,7 +99,6 @@ function TargetFrameStyling()
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 				end
 
-				TargetFrameBackground:SetHeight(38)
 				TargetFrameHealthBar:SetHeight(18)
 				TargetFrameTextureFrameHighLevelTexture:ClearAllPoints()
 				TargetFrameTextureFrameHighLevelTexture:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
@@ -110,11 +108,11 @@ function TargetFrameStyling()
 			end
 
 			if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-				TargetFrameBackground:SetWidth(cfg.wideTargetFrameWidth - 115)
+				TargetFrameBackground:SetSize(cfg.wideTargetFrameWidth - 115, 38)
 				TargetFrameHealthBar:SetWidth(cfg.wideTargetFrameWidth - 115)
 				TargetFrameManaBar:SetWidth(cfg.wideTargetFrameWidth - 115)
 			else
-				TargetFrameBackground:SetWidth(117)
+				TargetFrameBackground:SetSize(117, 38)
 				TargetFrameHealthBar:SetWidth(117)
 				TargetFrameManaBar:SetWidth(117)
 			end
@@ -192,7 +190,6 @@ function TargetFrameStyling()
 						self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 					end
 
-					self.Background:SetHeight(38)
 					self.healthbar:SetHeight(27)
 					self.highLevelTexture:ClearAllPoints()
 					self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -2.5)
@@ -210,7 +207,6 @@ function TargetFrameStyling()
 						self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 					end
 
-					self.Background:SetHeight(38)
 					self.healthbar:SetHeight(18)
 					self.highLevelTexture:ClearAllPoints()
 					self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -4.5)
@@ -220,11 +216,11 @@ function TargetFrameStyling()
 				end
 
 				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-					self.Background:SetWidth(cfg.wideTargetFrameWidth - 115)
+					self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 38)
 					self.healthbar:SetWidth(cfg.wideTargetFrameWidth - 115)
 					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
 				else
-					self.Background:SetWidth(117)
+					self.Background:SetSize(117, 38)
 					self.healthbar:SetWidth(117)
 					self.manabar:SetWidth(117)
 				end
@@ -253,6 +249,43 @@ function TargetFrameStyling()
 				self.name:SetPoint("TOPLEFT", self, 8, -7.5)
 				self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
 			end
+
+			if forceNormalTexture then
+				self.haveElite = nil
+
+				if classification == "minus" then
+					if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+						self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 8)
+					else
+						self.Background:SetSize(117, 8)
+					end
+
+					self.Background:ClearAllPoints()
+					self.Background:SetPoint("LEFT", self, 7, 3)
+				else
+					if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+						self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 38)
+					else
+						self.Background:SetSize(117, 38)
+					end
+
+					self.Background:ClearAllPoints()
+					self.Background:SetPoint("BOTTOMRIGHT", self, -108, 38)
+				end
+			else
+				self.haveElite = true
+
+				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+					TargetFrameBackground:SetSize(cfg.wideTargetFrameWidth - 115, 38)
+					self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 38)
+				else
+					TargetFrameBackground:SetSize(117, 38)
+					self.Background:SetSize(117, 38)
+				end
+
+				self.Background:ClearAllPoints()
+				self.Background:SetPoint("BOTTOMRIGHT", self, -108, 38)
+			end
 		end
 	end)
 
@@ -277,25 +310,59 @@ function TargetFrameStyling()
 	if not isClassic() then
 		hooksecurefunc("FocusFrame_SetSmallSize", function(smallSize, onChange)
 			local LARGE_FOCUS_SCALE = 1
+			local SMALL_FOCUS_UPSCALE = 1
+			local TOT_AURA_ROW_WIDTH = 101
 
-			if smallSize then
+			if smallSize and not FocusFrame.smallsize then
 				local x = FocusFrame:GetLeft()
 				local y = FocusFrame:GetTop()
 				FocusFrame.smallSize = false
 				FocusFrame.maxBuffs = nil
 				FocusFrame.maxDebuffs = nil
-				FocusFrame.TOT_AURA_ROW_WIDTH = TOT_AURA_ROW_WIDTH
-
 				FocusFrame:SetScale(LARGE_FOCUS_SCALE)
 				FocusFrameToT:SetScale(LARGE_FOCUS_SCALE)
 				FocusFrameToT:SetPoint("BOTTOMRIGHT", -35, -10)
+				FocusFrame.TOT_AURA_ROW_WIDTH = TOT_AURA_ROW_WIDTH
 				FocusFrame.spellbar:SetScale(LARGE_FOCUS_SCALE)
 				FocusFrameTextureFrameName:SetFontObject(GameFontNormalSmall)
 				FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 				FocusFrameHealthBar.TextString:SetPoint("CENTER", 0, 0)
 				FocusFrameTextureFrameName:SetWidth(100)
 
-				if onChange and not FocusFrame:IsUserPlaced() then
+				if onChange then
+					FocusFrame:ClearAllPoints()
+					FocusFrame:SetPoint("TOPLEFT", 250, -240)
+				end
+
+				FocusFrame:RegisterEvent("UNIT_CLASSIFICATION_CHANGED")
+				FocusFrame.showClassification = true
+				FocusFrame:RegisterEvent("PLAYER_FLAGS_CHANGED")
+				FocusFrame.showLeader = true
+				FocusFrame.showPVP = true
+				FocusFrame.pvpIcon:Show()
+				FocusFrame.prestigePortrait:Show()
+				FocusFrame.prestigeBadge:Show()
+				FocusFrame.leaderIcon:Show()
+				FocusFrame.showAuraCount = true
+				TargetFrame_CheckClassification(FocusFrame, true)
+				TargetFrame_Update(FocusFrame)
+			elseif not smallSize and FocusFrame.smallSize then
+				local x = FocusFrame:GetLeft()
+				local y = FocusFrame:GetTop()
+				FocusFrame.smallSize = false
+				FocusFrame.maxBuffs = nil
+				FocusFrame.maxDebuffs = nil
+				FocusFrame:SetScale(LARGE_FOCUS_SCALE)
+				FocusFrameToT:SetScale(LARGE_FOCUS_SCALE)
+				FocusFrameToT:SetPoint("BOTTOMRIGHT", -35, -10)
+				FocusFrame.TOT_AURA_ROW_WIDTH = TOT_AURA_ROW_WIDTH
+				FocusFrame.spellbar:SetScale(LARGE_FOCUS_SCALE)
+				FocusFrameTextureFrameName:SetFontObject(GameFontNormalSmall)
+				FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
+				FocusFrameHealthBar.TextString:SetPoint("CENTER", 0, 0)
+				FocusFrameTextureFrameName:SetWidth(100)
+
+				if onChange then
 					FocusFrame:ClearAllPoints()
 					FocusFrame:SetPoint("TOPLEFT", 250, -240)
 				end
