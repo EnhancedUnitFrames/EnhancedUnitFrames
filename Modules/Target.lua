@@ -62,6 +62,65 @@ function TargetFrameStyling()
 		left:SetVertexColor(r, g, b, a)
 		mid:SetVertexColor(r, g, b, a)
 
+		local flash = TargetFrameFlash
+		flash.midFlash = TargetFrame:CreateTexture(nil, "BACKGROUND")
+		flash.rightFlash = TargetFrame:CreateTexture(nil, "BACKGROUND")
+
+		hooksecurefunc(flash, "Hide", function(self)
+			self.midFlash:Hide()
+			self.rightFlash:Hide()
+		end)
+
+		hooksecurefunc(flash, "SetTexture", function(self, texture)
+			flash.midFlash:SetTexture(texture)
+			flash.rightFlash:SetTexture(texture)
+		end)
+
+		hooksecurefunc(flash, "SetPoint", function(self, anchorPoint, relativeTo, relativePoint, xoff, yoff)
+			local cx = self:GetWidth()
+			local cy = self:GetHeight()
+			local specificXoff
+
+			self:SetWidth(cx / 2)
+			self.midFlash:SetHeight(cy)
+			self.rightFlash:SetWidth(cx / 2)
+			self.rightFlash:SetHeight(cy)
+
+			if cy < 100 then
+				self:SetTexCoord(0, 0.47265625, 0, 0.181640625)
+				self.midFlash:SetTexCoord(0.25, 0.5, 0, 0.181640625)
+				self.rightFlash:SetTexCoord(0.47265625, 0.9453125, 0, 0.181640625)
+
+				specificXoff = -38
+			elseif cx > 255 then
+				self:SetTexCoord(0, .5, 0, 1)
+				self.midFlash:SetTexCoord(0.25, 0.5, 0, 1)
+				self.rightFlash:SetTexCoord(.5, 1, 0, 1)
+
+				specificXoff = -24
+			elseif cy > 100 then
+				self:SetTexCoord(0, 0.47265625, 0.181640625, 0.400390625)
+				self.midFlash:SetTexCoord(0.19, 0.39, 0.181640625, 0.400390625)
+				self.rightFlash:SetTexCoord(0.47265625, 0.9453125, 0.181640625, 0.400390625)
+
+				specificXoff = -34
+			end
+
+			self.rightFlash:SetPoint("TOPRIGHT", TargetFrame, "TOPRIGHT", specificXoff - xoff, yoff)
+			self.midFlash:SetPoint("TOPLEFT", self, "TOPRIGHT")
+			self.midFlash:SetPoint("BOTTOMRIGHT", self.rightFlash, "BOTTOMLEFT")
+		end)
+
+		hooksecurefunc(flash, "SetVertexColor", function(self, ...)
+			self.midFlash:SetVertexColor(...)
+			self.rightFlash:SetVertexColor(...)
+		end)
+
+		hooksecurefunc(flash, "Show", function(self)
+			self.midFlash:Show()
+			self.rightFlash:Show()
+		end)
+
 		TargetFrame:SetWidth(targetWidth)
 	end
 
