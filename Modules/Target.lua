@@ -298,7 +298,10 @@ function TargetFrameStyling()
 			Styling()
 		end
 
-		FocusFrame.threatNumericIndicator:SetAlpha(0)
+		if not isClassic() then
+			FocusFrame.threatNumericIndicator:SetAlpha(0)
+		end
+
 		TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
 	end)
 
