@@ -9,7 +9,7 @@ Modules\Auras.lua
 Modules\Boss.lua
 Modules\ClassColor.lua
 Modules\Focus.lua
-Modules\MirroredPositioning.lua
+Modules\Positioning.lua
 Modules\Player.lua
 Modules\Portraits.lua
 Modules\PowerBar.lua
