@@ -133,9 +133,10 @@ eufOptions:SetScript("OnShow", function(self)
 
 	if isClassic() then
 		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
+	else
+		threatShowNumeric = createCheckbox("Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to show.")
 	end
 
-	local threatShowNumeric = createCheckbox("Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to show.")
 	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
 
 	-- Positions the checkboxes created.
@@ -293,6 +294,16 @@ eufOptions:SetScript("OnShow", function(self)
 
 			StaticPopup_Show("RELOAD_UI")
 		end)
+	else
+		threatShowNumeric:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("threatShowNumeric", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("threatShowNumeric", 0)
+				PlaySound(857)
+			end
+		end)
 	end
 
 	upperCaseAbbreviation:SetScript("OnClick", function(self)
@@ -306,18 +317,6 @@ eufOptions:SetScript("OnShow", function(self)
 
 		StaticPopup_Show("RELOAD_UI")
 	end)
-
-	if not isClassic() then
-		threatShowNumeric:SetScript("OnClick", function(self)
-			if self:GetChecked() then
-				C_CVar.SetCVar("threatShowNumeric", 1)
-				PlaySound(856)
-			else
-				C_CVar.SetCVar("threatShowNumeric", 0)
-				PlaySound(857)
-			end
-		end)
-	end
 
 	-- Player frame texture dropdown menu.
 
