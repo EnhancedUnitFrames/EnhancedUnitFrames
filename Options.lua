@@ -126,6 +126,7 @@ eufOptions:SetScript("OnShow", function(self)
 	local mirroredPositioning = createCheckbox("Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
 	local classHealthBarColor = createCheckbox("Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
 	local reactionHealthBarColor = createCheckbox("Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
+	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
 	local classIconPortraits = createCheckbox("Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
 	local hideHitIndicators = createCheckbox("Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
 	local hidePetStatusText = createCheckbox("Hide Pet Status Text", "Hides the pet frame status bar text.")
@@ -134,30 +135,33 @@ eufOptions:SetScript("OnShow", function(self)
 	if isClassic() then
 		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
 	else
-		threatShowNumeric = createCheckbox("Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to show.")
+		threatShowNumeric = createCheckbox("Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to display.")
+		predictedHealth = createCheckbox("Predicted Health", "Shows an animation when you lose health.")
+		showBuilderFeedback = createCheckbox("Show Builder Feedback", "Shows an animation when you build your class resource.")
+		showSpenderFeedback = createCheckbox("Show Spender Feedback", "Shows an animation when you spend your class resource.")
 	end
-
-	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
 
 	-- Positions the checkboxes created.
 
-	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -7)
 	bigTargetHealthBar:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 0, -8)
 	wideTargetFrame:SetPoint("TOPLEFT", bigTargetHealthBar, "BOTTOMLEFT", 0, -8)
 	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
 	classHealthBarColor:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
-	classIconPortraits:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
+	upperCaseAbbreviation:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
+	classIconPortraits:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
 	hidePetStatusText:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 0, -8)
 
 	if isClassic() then
 		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
-		upperCaseAbbreviation:SetPoint("TOPLEFT", shamanClassColorFix, "BOTTOMLEFT", 0, -8)
 	else
 		threatShowNumeric:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
-		upperCaseAbbreviation:SetPoint("TOPLEFT", threatShowNumeric, "BOTTOMLEFT", 0, -8)
+		predictedHealth:SetPoint("TOPLEFT", threatShowNumeric, "BOTTOMLEFT", 0, -8)
+		showBuilderFeedback:SetPoint("TOPLEFT", predictedHealth, "BOTTOMLEFT", 0, -8)
+		showSpenderFeedback:SetPoint("TOPLEFT", showBuilderFeedback, "BOTTOMLEFT", 0, -8)
 	end
 
 	-- Applies scripts when the checkboxes are clicked.
@@ -234,6 +238,18 @@ eufOptions:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
+	upperCaseAbbreviation:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			cfg.upperCaseAbbreviation = true
+			PlaySound(856)
+		else
+			cfg.upperCaseAbbreviation = false
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
 	classIconPortraits:SetScript("OnClick", function(self)
 		if self:GetChecked() then
 			cfg.classIconPortraits = true
@@ -304,19 +320,37 @@ eufOptions:SetScript("OnShow", function(self)
 				PlaySound(857)
 			end
 		end)
+
+		predictedHealth:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("predictedHealth", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("predictedHealth", 0)
+				PlaySound(857)
+			end
+		end)
+
+		showBuilderFeedback:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("showBuilderFeedback", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("showBuilderFeedback", 0)
+				PlaySound(857)
+			end
+		end)
+
+		showSpenderFeedback:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("showSpenderFeedback", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("showSpenderFeedback", 0)
+				PlaySound(857)
+			end
+		end)
 	end
-
-	upperCaseAbbreviation:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			cfg.upperCaseAbbreviation = true
-			PlaySound(856)
-		else
-			cfg.upperCaseAbbreviation = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
 
 	-- Player frame texture dropdown menu.
 
@@ -613,38 +647,46 @@ eufOptions:SetScript("OnShow", function(self)
 		eufCheckbox6:SetChecked(true)
 	end
 
-	if cfg.classIconPortraits == true then
+	if cfg.upperCaseAbbreviation == true then
 		eufCheckbox7:SetChecked(true)
 	end
 
-	if cfg.hideHitIndicators == true then
+	if cfg.classIconPortraits == true then
 		eufCheckbox8:SetChecked(true)
 	end
 
-	if cfg.hidePetStatusText == true then
+	if cfg.hideHitIndicators == true then
 		eufCheckbox9:SetChecked(true)
 	end
 
-	if cfg.hideRestingIcon == true then
+	if cfg.hidePetStatusText == true then
 		eufCheckbox10:SetChecked(true)
+	end
+
+	if cfg.hideRestingIcon == true then
+		eufCheckbox11:SetChecked(true)
 	end
 
 	if isClassic() then
 		if cfg.shamanClassColorFix == true then
-			eufCheckbox11:SetChecked(true)
-		end
-
-		if cfg.upperCaseAbbreviation == true then
 			eufCheckbox12:SetChecked(true)
 		end
 	else
 		if C_CVar.GetCVar("threatShowNumeric") == "1" then
-			eufCheckbox11:SetChecked(true)
+			eufCheckbox12:SetChecked(true)
 		end
-	end
 
-	if cfg.upperCaseAbbreviation == true then
-		eufCheckbox12:SetChecked(true)
+		if C_CVar.GetCVar("predictedHealth") == "1" then
+			eufCheckbox13:SetChecked(true)
+		end
+
+		if C_CVar.GetCVar("showBuilderFeedback") == "1" then
+			eufCheckbox14:SetChecked(true)
+		end
+
+		if C_CVar.GetCVar("showSpenderFeedback") == "1" then
+			eufCheckbox15:SetChecked(true)
+		end
 	end
 
 	self:SetScript("OnShow", nil)
