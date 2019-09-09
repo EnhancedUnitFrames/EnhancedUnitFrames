@@ -70,209 +70,89 @@ function TargetFrameStyling()
 	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
 		local classification = UnitClassification(self.unit)
 
-		if isClassic() then
+		if forceNormalTexture then
 			if cfg.bigTargetHealthBar then
-				if classification == "worldboss" or classification == "elite" then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
-				elseif classification == "rareelite" then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
-				elseif classification == "rare" then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
-				else
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
-				end
-
-				TargetFrameHealthBar:SetHeight(27)
-				TargetFrameTextureFrameHighLevelTexture:ClearAllPoints()
-				TargetFrameTextureFrameHighLevelTexture:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
-				TargetFrameManaBar:SetHeight(12)
-				TargetFrameManaBar:ClearAllPoints()
-				TargetFrameManaBar:SetPoint("TOPLEFT", self, 7, -52)
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 			else
-				if classification == "worldboss" or classification == "elite" then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
-				elseif classification == "rareelite" then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
-				elseif classification == "rare" then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
-				else
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
-				end
-
-				TargetFrameHealthBar:SetHeight(18)
-				TargetFrameTextureFrameHighLevelTexture:ClearAllPoints()
-				TargetFrameTextureFrameHighLevelTexture:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
-				TargetFrameManaBar:SetHeight(17)
-				TargetFrameManaBar:ClearAllPoints()
-				TargetFrameManaBar:SetPoint("TOPLEFT", TargetFrame, 7, -45)
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 			end
-
-			if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-				TargetFrameBackground:SetSize(cfg.wideTargetFrameWidth - 115, 38)
-				TargetFrameHealthBar:SetWidth(cfg.wideTargetFrameWidth - 115)
-				TargetFrameManaBar:SetWidth(cfg.wideTargetFrameWidth - 115)
+		elseif classification == "minus" then
+			self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
+		elseif classification == "worldboss" or classification == "elite" then
+			if cfg.bigTargetHealthBar then
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
 			else
-				TargetFrameBackground:SetSize(117, 38)
-				TargetFrameHealthBar:SetWidth(117)
-				TargetFrameManaBar:SetWidth(117)
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
 			end
-
-			TargetFrameBackground:ClearAllPoints()
-			TargetFrameBackground:SetPoint("BOTTOMRIGHT", TargetFrame, -108, 38)
-			TargetFrameNameBackground:Hide()
-			TargetFrameNameBackground:SetAlpha(0)
-			TargetFrameHealthBar:ClearAllPoints()
-			TargetFrameHealthBar:SetPoint("TOPLEFT", TargetFrame, 7, -24)
-			TargetFrameHealthBar.LeftText:ClearAllPoints()
-			TargetFrameHealthBar.LeftText:SetPoint("LEFT", TargetFrameHealthBar, 1, 0)
-			TargetFrameHealthBar.RightText:ClearAllPoints()
-			TargetFrameHealthBar.RightText:SetPoint("RIGHT", TargetFrameHealthBar, 0, 0)
-			TargetFrameHealthBarText:ClearAllPoints()
-			TargetFrameHealthBarText:SetPoint("CENTER", TargetFrameHealthBar, 0, 0)
-			TargetFrameManaBar.LeftText:ClearAllPoints()
-			TargetFrameManaBar.LeftText:SetPoint("LEFT", TargetFrameManaBar, 1, 0)
-			TargetFrameManaBar.RightText:ClearAllPoints()
-			TargetFrameManaBar.RightText:SetPoint("RIGHT", TargetFrameManaBar, 0, 0)
-			TargetFrameManaBarText:ClearAllPoints()
-			TargetFrameManaBarText:SetPoint("CENTER", TargetFrameManaBar, 0, 0)
-			TargetFrameTextureFrameDeadText:ClearAllPoints()
-			TargetFrameTextureFrameDeadText:SetPoint("CENTER", TargetFrameHealthBar, 0, 0)
-			TargetFrameTextureFrameName:ClearAllPoints()
-			TargetFrameTextureFrameName:SetPoint("TOPLEFT", TargetFrame, 8, -7.5)
-			TargetFrameTextureFrameName:SetPoint("BOTTOMRIGHT", TargetFrame, "TOPRIGHT", -110, -19.5)
+		elseif classification == "rareelite" then
+			if cfg.bigTargetHealthBar then
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+			else
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+			end
+		elseif classification == "rare" then
+			if cfg.bigTargetHealthBar then
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+			else
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+			end
 		else
-			if forceNormalTexture then
-				if cfg.bigTargetHealthBar then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
-				else
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
-				end
-			elseif classification == "minus" then
-				self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
-
-				forceNormalTexture = true
-			elseif classification == "worldboss" or classification == "elite" then
-				if cfg.bigTargetHealthBar then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
-				else
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
-				end
-			elseif classification == "rareelite" then
-				if cfg.bigTargetHealthBar then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
-				else
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
-				end
-			elseif classification == "rare" then
-				if cfg.bigTargetHealthBar then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
-				else
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
-				end
+			if cfg.bigTargetHealthBar then
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 			else
-				if cfg.bigTargetHealthBar then
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
-				else
-					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
-				end
-
-				forceNormalTexture = true
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 			end
+		end
 
-			if forceNormalTexture then
-				self.haveElite = nil
-
-				if classification == "minus" then
-					if cfg.bigTargetHealthBar then
-						self.manabar:SetHeight(12)
-						self.manabar:ClearAllPoints()
-						self.manabar:SetPoint("TOPLEFT", self, 7, -52)
-					else
-						self.manabar:SetHeight(17)
-						self.manabar:ClearAllPoints()
-						self.manabar:SetPoint("TOPLEFT", self, 7, -45)
-					end
-
-					if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-						self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 8)
-						self.healthbar:SetSize(cfg.wideTargetFrameWidth - 115, 12)
-						self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
-					else
-						self.Background:SetSize(117, 8)
-						self.healthbar:SetSize(117, 12)
-						self.manabar:SetWidth(117)
-					end
-
-					self.Background:ClearAllPoints()
-					self.Background:SetPoint("LEFT", self, 7, 3)
-					self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
-					self.deadText:ClearAllPoints()
-					self.deadText:SetPoint("CENTER", self.healthbar, 0, 0)
-					self.healthbar:ClearAllPoints()
-					self.healthbar:SetPoint("LEFT", 7, 3)
-					self.healthbar.TextString:ClearAllPoints()
-					self.healthbar.TextString:SetPoint("CENTER", self.healthbar, 0, 0)
-					self.healthbar.LeftText:ClearAllPoints()
-					self.healthbar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
-					self.healthbar.RightText:ClearAllPoints()
-					self.healthbar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
-					self.name:ClearAllPoints()
-					self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 8, -24.5)
-					self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -37.5)
+		if forceNormalTexture then
+			if classification == "minus" then
+				if cfg.bigTargetHealthBar then
+					self.manabar:SetHeight(12)
+					self.manabar:ClearAllPoints()
+					self.manabar:SetPoint("TOPLEFT", self, 7, -52)
 				else
-					if cfg.bigTargetHealthBar then
-						self.healthbar:SetHeight(27)
-						self.highLevelTexture:ClearAllPoints()
-						self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -2.5)
-						self.manabar:SetHeight(12)
-						self.manabar:ClearAllPoints()
-						self.manabar:SetPoint("TOPLEFT", self, 7, -52)
-					else
-						self.healthbar:SetHeight(18)
-						self.highLevelTexture:ClearAllPoints()
-						self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -4.5)
-						self.manabar:SetHeight(17)
-						self.manabar:ClearAllPoints()
-						self.manabar:SetPoint("TOPLEFT", self, 7, -45)
-					end
+					self.manabar:SetHeight(17)
+					self.manabar:ClearAllPoints()
+					self.manabar:SetPoint("TOPLEFT", self, 7, -45)
+				end
 
-					if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-						self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 38)
-						self.healthbar:SetWidth(cfg.wideTargetFrameWidth - 115)
-						self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
-					else
-						self.Background:SetSize(117, 38)
-						self.healthbar:SetWidth(117)
-						self.manabar:SetWidth(117)
-					end
+				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+					self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 8)
+					self.healthbar:SetSize(cfg.wideTargetFrameWidth - 115, 12)
+					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
+				else
+					self.Background:SetSize(117, 8)
+					self.healthbar:SetSize(117, 12)
+					self.manabar:SetWidth(117)
+				end
 
-					self.Background:ClearAllPoints()
-					self.Background:SetPoint("BOTTOMRIGHT", self, -108, 38)
-					self.healthbar:ClearAllPoints()
-					self.healthbar:SetPoint("TOPLEFT", self, 7, -24)
-					self.nameBackground:Hide()
-					self.nameBackground:SetAlpha(0)
-					self.deadText:ClearAllPoints()
-					self.deadText:SetPoint("CENTER", self.healthbar, 0, 0)
+				if isClassic() then
+					TargetFrameHealthBarText:ClearAllPoints()
+					TargetFrameHealthBarText:SetPoint("CENTER", self.healthbar, 0, 0)
+					TargetFrameHealthBar.LeftText:ClearAllPoints()
+					TargetFrameHealthBar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
+					TargetFrameHealthBar.RightText:ClearAllPoints()
+					TargetFrameHealthBar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
+				else
 					self.healthbar.TextString:ClearAllPoints()
 					self.healthbar.TextString:SetPoint("CENTER", self.healthbar, 0, 0)
 					self.healthbar.LeftText:ClearAllPoints()
 					self.healthbar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
 					self.healthbar.RightText:ClearAllPoints()
 					self.healthbar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
-					self.manabar.LeftText:ClearAllPoints()
-					self.manabar.LeftText:SetPoint("LEFT", self.manabar, 1, 0)
-					self.manabar.RightText:ClearAllPoints()
-					self.manabar.RightText:SetPoint("RIGHT", self.manabar, 0, 0)
-					self.manabar.TextString:ClearAllPoints()
-					self.manabar.TextString:SetPoint("CENTER", self.manabar, 0, 0)
-					self.name:ClearAllPoints()
-					self.name:SetPoint("TOPLEFT", self, 8, -7.5)
-					self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
 				end
-			else
-				self.haveElite = true
 
+				self.Background:ClearAllPoints()
+				self.Background:SetPoint("LEFT", self, 7, 3)
+				self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
+				self.deadText:ClearAllPoints()
+				self.deadText:SetPoint("CENTER", self.healthbar, 0, 0)
+				self.healthbar:ClearAllPoints()
+				self.healthbar:SetPoint("LEFT", 7, 3)
+				self.name:ClearAllPoints()
+				self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 8, -24.5)
+				self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -37.5)
+			else
 				if cfg.bigTargetHealthBar then
 					self.healthbar:SetHeight(27)
 					self.highLevelTexture:ClearAllPoints()
@@ -290,15 +170,41 @@ function TargetFrameStyling()
 				end
 
 				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-					TargetFrameBackground:SetSize(cfg.wideTargetFrameWidth - 115, 38)
 					self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 38)
 					self.healthbar:SetWidth(cfg.wideTargetFrameWidth - 115)
 					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
 				else
-					TargetFrameBackground:SetSize(117, 38)
 					self.Background:SetSize(117, 38)
 					self.healthbar:SetWidth(117)
 					self.manabar:SetWidth(117)
+				end
+
+				if isClassic() then
+					TargetFrameHealthBar.LeftText:ClearAllPoints()
+					TargetFrameHealthBar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
+					TargetFrameHealthBar.RightText:ClearAllPoints()
+					TargetFrameHealthBar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
+					TargetFrameHealthBarText:ClearAllPoints()
+					TargetFrameHealthBarText:SetPoint("CENTER", self.healthbar, 0, 0)
+					TargetFrameManaBar.LeftText:ClearAllPoints()
+					TargetFrameManaBar.LeftText:SetPoint("LEFT", self.manabar, 1, 0)
+					TargetFrameManaBar.RightText:ClearAllPoints()
+					TargetFrameManaBar.RightText:SetPoint("RIGHT", self.manabar, 0, 0)
+					TargetFrameManaBarText:ClearAllPoints()
+					TargetFrameManaBarText:SetPoint("CENTER", self.manabar, 0, 0)
+				else
+					self.healthbar.TextString:ClearAllPoints()
+					self.healthbar.TextString:SetPoint("CENTER", self.healthbar, 0, 0)
+					self.healthbar.LeftText:ClearAllPoints()
+					self.healthbar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
+					self.healthbar.RightText:ClearAllPoints()
+					self.healthbar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
+					self.manabar.LeftText:ClearAllPoints()
+					self.manabar.LeftText:SetPoint("LEFT", self.manabar, 1, 0)
+					self.manabar.RightText:ClearAllPoints()
+					self.manabar.RightText:SetPoint("RIGHT", self.manabar, 0, 0)
+					self.manabar.TextString:ClearAllPoints()
+					self.manabar.TextString:SetPoint("CENTER", self.manabar, 0, 0)
 				end
 
 				self.Background:ClearAllPoints()
@@ -309,6 +215,53 @@ function TargetFrameStyling()
 				self.nameBackground:SetAlpha(0)
 				self.deadText:ClearAllPoints()
 				self.deadText:SetPoint("CENTER", self.healthbar, 0, 0)
+				self.name:ClearAllPoints()
+				self.name:SetPoint("TOPLEFT", self, 8, -7.5)
+				self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
+			end
+		else
+			if cfg.bigTargetHealthBar then
+				self.healthbar:SetHeight(27)
+				self.highLevelTexture:ClearAllPoints()
+				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -2.5)
+				self.manabar:SetHeight(12)
+				self.manabar:ClearAllPoints()
+				self.manabar:SetPoint("TOPLEFT", self, 7, -52)
+			else
+				self.healthbar:SetHeight(18)
+				self.highLevelTexture:ClearAllPoints()
+				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -4.5)
+				self.manabar:SetHeight(17)
+				self.manabar:ClearAllPoints()
+				self.manabar:SetPoint("TOPLEFT", self, 7, -45)
+			end
+
+			if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+				TargetFrameBackground:SetSize(cfg.wideTargetFrameWidth - 115, 38)
+				self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 38)
+				self.healthbar:SetWidth(cfg.wideTargetFrameWidth - 115)
+				self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
+			else
+				TargetFrameBackground:SetSize(117, 38)
+				self.Background:SetSize(117, 38)
+				self.healthbar:SetWidth(117)
+				self.manabar:SetWidth(117)
+			end
+
+			if isClassic() then
+				TargetFrameHealthBar.LeftText:ClearAllPoints()
+				TargetFrameHealthBar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
+				TargetFrameHealthBar.RightText:ClearAllPoints()
+				TargetFrameHealthBar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
+				TargetFrameHealthBarText:ClearAllPoints()
+				TargetFrameHealthBarText:SetPoint("CENTER", self.healthbar, 0, 0)
+				TargetFrameManaBar.LeftText:ClearAllPoints()
+				TargetFrameManaBar.LeftText:SetPoint("LEFT", self.manabar, 1, 0)
+				TargetFrameManaBar.RightText:ClearAllPoints()
+				TargetFrameManaBar.RightText:SetPoint("RIGHT", self.manabar, 0, 0)
+				TargetFrameManaBarText:ClearAllPoints()
+				TargetFrameManaBarText:SetPoint("CENTER", self.manabar, 0, 0)
+			else
 				self.healthbar.TextString:ClearAllPoints()
 				self.healthbar.TextString:SetPoint("CENTER", self.healthbar, 0, 0)
 				self.healthbar.LeftText:ClearAllPoints()
@@ -321,10 +274,19 @@ function TargetFrameStyling()
 				self.manabar.RightText:SetPoint("RIGHT", self.manabar, 0, 0)
 				self.manabar.TextString:ClearAllPoints()
 				self.manabar.TextString:SetPoint("CENTER", self.manabar, 0, 0)
-				self.name:ClearAllPoints()
-				self.name:SetPoint("TOPLEFT", self, 8, -7.5)
-				self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
 			end
+
+			self.Background:ClearAllPoints()
+			self.Background:SetPoint("BOTTOMRIGHT", self, -108, 38)
+			self.healthbar:ClearAllPoints()
+			self.healthbar:SetPoint("TOPLEFT", self, 7, -24)
+			self.nameBackground:Hide()
+			self.nameBackground:SetAlpha(0)
+			self.deadText:ClearAllPoints()
+			self.deadText:SetPoint("CENTER", self.healthbar, 0, 0)
+			self.name:ClearAllPoints()
+			self.name:SetPoint("TOPLEFT", self, 8, -7.5)
+			self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
 		end
 	end)
 
