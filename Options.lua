@@ -136,7 +136,7 @@ eufOptions:SetScript("OnShow", function(self)
 		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
 	else
 		threatShowNumeric = createCheckbox("Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to display.")
-		predictedHealth = createCheckbox("Predicted Health", "Shows an animation when you lose health.")
+		predictedHealth = createCheckbox("Show Predicted Health", "Shows an animation when you lose health.")
 		showBuilderFeedback = createCheckbox("Show Builder Feedback", "Shows an animation when you build your class resource.")
 		showSpenderFeedback = createCheckbox("Show Spender Feedback", "Shows an animation when you spend your class resource.")
 	end
