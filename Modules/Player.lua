@@ -53,6 +53,13 @@ function PlayerFrameStyling()
 			end
 		end
 
+		if isClassic() then
+			PlayerRestIcon:ClearAllPoints()
+			PlayerRestIcon:SetPoint("TOPLEFT", 39, -50)
+			PlayerAttackIcon:ClearAllPoints()
+			PlayerAttackIcon:SetPoint("TOPLEFT", PlayerRestIcon, 1, 1)
+		end
+
 		PlayerFrameBackground:ClearAllPoints()
 		PlayerFrameBackground:SetPoint("CENTER", PlayerFrame, 51, 7)
 		PlayerFrameBackground:SetSize(117, 38)
