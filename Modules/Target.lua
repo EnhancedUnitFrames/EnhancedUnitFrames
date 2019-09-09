@@ -77,6 +77,8 @@ function TargetFrameStyling()
 				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 			end
 		elseif classification == "minus" then
+			forceNormalTexture = true
+
 			self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
 		elseif classification == "worldboss" or classification == "elite" then
 			if cfg.bigTargetHealthBar then
@@ -97,6 +99,8 @@ function TargetFrameStyling()
 				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
 			end
 		else
+			forceNormalTexture = true
+
 			if cfg.bigTargetHealthBar then
 				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 			else
@@ -105,6 +109,8 @@ function TargetFrameStyling()
 		end
 
 		if forceNormalTexture then
+			self.haveElite = nil
+
 			if classification == "minus" then
 				if cfg.bigTargetHealthBar then
 					self.manabar:SetHeight(12)
@@ -220,6 +226,8 @@ function TargetFrameStyling()
 				self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
 			end
 		else
+			self.haveElite = true
+
 			if cfg.bigTargetHealthBar then
 				self.healthbar:SetHeight(27)
 				self.highLevelTexture:ClearAllPoints()
