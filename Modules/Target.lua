@@ -88,7 +88,7 @@ function TargetFrameStyling()
 			end
 		elseif classification == "rareelite" then
 			if cfg.bigTargetHealthBar then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
 			else
 				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
 			end
