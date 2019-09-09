@@ -36,7 +36,7 @@ function SetDefaults()
 	end
 
 	if cfg.hideRestingIcon == nil then
-		cfg.hideRestingIcon = true
+		cfg.hideRestingIcon = false
 	end
 
 	if cfg.largeAuraIconSize == nil then
