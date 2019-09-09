@@ -328,70 +328,70 @@ eufOptions:SetScript("OnShow", function(self)
 	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
 
 	if cfg.elitePlayerFrame == true then
-		isChecked = "Elite Player Frame"
+		isChecked1 = "Elite Player Frame"
 		isCheckedElite = true
 	elseif cfg.rarePlayerFrame == true then
-		isChecked = "Rare Player Frame"
+		isChecked1 = "Rare Player Frame"
 		isCheckedRare = true
 	elseif cfg.rareElitePlayerFrame == true then
-		isChecked = "Rare Elite Player Frame"
+		isChecked1 = "Rare Elite Player Frame"
 		isCheckedRareElite = true
 	else
-		isChecked = "Default Player Frame"
+		isChecked1 = "Default Player Frame"
 		isCheckedDefault = true
 	end
 
-	UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
+	UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 
 	local function PlayerFrameTextureDropdown_OnClick(self, arg1)
 		if arg1 == 1 then
 			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = false
-			isChecked = "Default Player Frame"
+			isChecked1 = "Default Player Frame"
 			isCheckedDefault = true
 			isCheckedElite = false
 			isCheckedRare = false
 			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 		elseif arg1 == 2 then
 			cfg.elitePlayerFrame = true
 			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = false
-			isChecked = "Elite Player Frame"
+			isChecked1 = "Elite Player Frame"
 			isCheckedDefault = false
 			isCheckedElite = true
 			isCheckedRare = false
 			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 		elseif arg1 == 3 then
 			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = true
 			cfg.rareElitePlayerFrame = false
-			isChecked = "Rare Player Frame"
+			isChecked1 = "Rare Player Frame"
 			isCheckedDefault = false
 			isCheckedElite = false
 			isCheckedRare = true
 			isCheckedRareElite = false
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 		elseif arg1 == 4 then
 			cfg.elitePlayerFrame = false
 			cfg.rarePlayerFrame = false
 			cfg.rareElitePlayerFrame = true
-			isChecked = "Rare Elite Player Frame"
+			isChecked1 = "Rare Elite Player Frame"
 			isCheckedDefault = false
 			isCheckedElite = false
 			isCheckedRare = false
 			isCheckedRareElite = true
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked)
+			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 		end
 	end
 
@@ -411,15 +411,112 @@ eufOptions:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_Initialize(playerFrameDropdown, PlayerFrameTextureDropdown_Menu)
 
+	-- Threat warning dropdown menu.
+
+	if not isClassic() then
+		threatWarningDropdown = CreateFrame("Frame", "eufThreatWarningDropdown", self, "UIDropDownMenuTemplate")
+		threatWarningDropdown.title = threatWarningDropdown:CreateFontString("ThreatWarningDropdownLabel", "ARTWORK", "GameFontNormal")
+
+		threatWarningDropdown:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 0, -37)
+		threatWarningDropdown.title:SetPoint("BOTTOMLEFT", threatWarningDropdown, "TOPLEFT", 15, 3)
+		threatWarningDropdown.title:SetText("Threat Warning")
+
+		threatWarningDropdown:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+			GameTooltip:SetText("Threat Warning", nil, nil, nil, 1, 1)
+			GameTooltip:AddLine("Placeholder", 1, 1, 1, 1)
+			GameTooltip:Show()
+		end)
+
+		threatWarningDropdown:SetScript("OnLeave", function(self)
+			GameTooltip:Hide()
+		end)
+
+		UIDropDownMenu_SetWidth(threatWarningDropdown, 160)
+
+		if C_CVar.GetCVar("threatWarning") == "0" then
+			isChecked2 = "Off"
+			isCheckedOff = true
+		elseif C_CVar.GetCVar("threatWarning") == "1" then
+			isChecked2 = "In Dungeons"
+			isCheckedInDungeons = true
+		elseif C_CVar.GetCVar("threatWarning") == "2" then
+			isChecked2 = "In Party/Raid"
+			isCheckedPartyRaid = true
+		elseif C_CVar.GetCVar("threatWarning") == "3" then
+			isChecked2 = "Always"
+			isCheckedAlways = true
+		end
+
+		UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+
+		local function ThreatWarningDropdown_OnClick(self, arg1)
+			if arg1 == 1 then
+				C_CVar.SetCVar("threatWarning", 0)
+				isChecked2 = "Off"
+				isCheckedOff = true
+				isCheckedInDungeons = false
+				isCheckedPartyRaid = false
+				isCheckedAlways = false
+
+				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+			elseif arg1 == 2 then
+				C_CVar.SetCVar("threatWarning", 1)
+				isChecked2 = "In Dungeons"
+				isCheckedOff = false
+				isCheckedInDungeons = true
+				isCheckedPartyRaid = false
+				isCheckedAlways = false
+
+				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+			elseif arg1 == 3 then
+				C_CVar.SetCVar("threatWarning", 2)
+				isChecked2 = "In Party/Raid"
+				isCheckedOff = false
+				isCheckedInDungeons = false
+				isCheckedPartyRaid = true
+				isCheckedAlways = false
+
+				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+			elseif arg1 == 4 then
+				C_CVar.SetCVar("threatWarning", 3)
+				isChecked2 = "Always"
+				isCheckedOff = false
+				isCheckedInDungeons = false
+				isCheckedPartyRaid = false
+				isCheckedAlways = true
+
+				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+			end
+		end
+
+		local function ThreatWarningDropdown_Menu(frame, level, menuList)
+			local info = UIDropDownMenu_CreateInfo()
+			info.func = ThreatWarningDropdown_OnClick
+
+			info.text, info.arg1, info.checked = "Off", 1, isCheckedOff
+			UIDropDownMenu_AddButton(info)
+			info.text, info.arg1, info.checked = "In Dungeons", 2, isCheckedInDungeons
+			UIDropDownMenu_AddButton(info)
+			info.text, info.arg1, info.checked = "In Party/Raid", 3, isCheckedPartyRaid
+			UIDropDownMenu_AddButton(info)
+			info.text, info.arg1, info.checked = "Always", 4, isCheckedAlways
+			UIDropDownMenu_AddButton(info)
+		end
+
+		UIDropDownMenu_Initialize(threatWarningDropdown, ThreatWarningDropdown_Menu)
+	end
+
 	-- Creates the target frame width slider.
 
 	if isClassic() then
 		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked.")
+		wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	else
 		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frames width.\nRequires \"Wide Target Frame\" to be checked.")
+		wideTargetFrame:SetPoint("TOPLEFT", threatWarningDropdown, "BOTTOMLEFT", 18, -34)
 	end
 
-	wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	eufSlider1:SetValue(cfg.wideTargetFrameWidth)
 	eufSlider1Editbox:SetText(cfg.wideTargetFrameWidth)
 
