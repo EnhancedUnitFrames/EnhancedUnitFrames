@@ -297,6 +297,9 @@ function TargetFrameStyling()
 
 			Styling()
 		end
+
+		FocusFrame.threatNumericIndicator:SetAlpha(0)
+		TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
 	end)
 
 	-- Disables the buffs on top option.
