@@ -1,20 +1,152 @@
 -- Creates the options panel.
 
 eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
+eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions)
 eufOptions.name = "EnhancedUnitFrames"
-
-InterfaceOptions_AddCategory(eufOptions)
-eufOptions:Hide()
-
-eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions);
-eufOptions.scaling.name = "Frame Scaling";
+eufOptions.scaling.name = "Frame Scaling"
 eufOptions.scaling.parent = eufOptions.name
 
+InterfaceOptions_AddCategory(eufOptions)
 InterfaceOptions_AddCategory(eufOptions.scaling)
+eufOptions:Hide()
+eufOptions.scaling:Hide()
+
+-- Static ReloadUI popup.
+
+StaticPopupDialogs["RELOAD_UI"] = {
+	text = "One or more of the changes you have made require a ReloadUI.",
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = function()
+		ReloadUI()
+	end,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = true,
+	preferredIndex = 3,
+}
+
+-- Checkbox creation function.
+
+local i = 0
+
+local function createCheckbox(parent, label, description)
+	i = i + 1
+	local checkbox = CreateFrame("CheckButton", "eufCheckbox" .. i, parent, "InterfaceOptionsCheckButtonTemplate")
+	checkbox.label = _G[checkbox:GetName() .. "Text"]
+
+	checkbox.label:SetText(label)
+	checkbox.tooltipText = label
+	checkbox.tooltipRequirement = description
+
+	return checkbox
+end
+
+-- Source: rothUI by zork.
+-- Slider creation functions.
+
+local floor = floor
+local i = 0
+
+local function round(number, decimals)
+	local multiplier = 10^(decimals or 0)
+
+	return math.floor(number * multiplier + 0.5) / multiplier
+end
+
+local createSlider = function(parent, title, minVal, maxVal, valStep, label, description)
+	i = i + 1
+	local slider = CreateFrame("Slider", "eufSlider" .. i, parent, "OptionsSliderTemplate")
+	local editbox = CreateFrame("Editbox", "$parentEditbox", slider, "InputBoxTemplate")
+	slider.text = _G[slider:GetName() .. "Text"]
+	slider.textLow = _G[slider:GetName() .. "Low"]
+	slider.textHigh = _G[slider:GetName() .. "High"]
+	slider.tooltipText = label
+	slider.tooltipRequirement = description
+
+	slider:SetMinMaxValues(minVal, maxVal)
+	slider:SetValue(minVal)
+	slider:SetValueStep(valStep)
+	slider:SetWidth(175)
+	slider.text:SetText(title)
+	slider.text:SetFontObject(GameFontNormal)
+	slider.textLow:SetText(minVal)
+	slider.textHigh:SetText(maxVal)
+	editbox:SetSize(29, 30)
+	editbox:ClearAllPoints()
+	editbox:SetPoint("TOP", slider, "BOTTOM", 0, -5)
+	editbox:SetText(slider:GetValue())
+	editbox:SetAutoFocus(false)
+
+	slider:HookScript("OnMouseUp", function(self, value)
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	slider:SetScript("OnValueChanged", function(self, value)
+		self.editbox:SetText(floor(value))
+	end)
+
+	editbox:SetScript("OnEnterPressed", function(self)
+		local value = self:GetText()
+
+		if tonumber(value) then
+			self:GetParent():SetValue(floor(value))
+			self:ClearFocus()
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	slider.editbox = editbox
+
+	return slider
+end
+
+local createScaleSlider = function(parent, title, minVal, maxVal, valStep, label, description)
+	i = i + 1
+	local slider = CreateFrame("Slider", "eufScaleSlider" .. i, parent, "OptionsSliderTemplate")
+	local editbox = CreateFrame("Editbox", "$parentEditbox", slider, "InputBoxTemplate")
+	slider.text = _G[slider:GetName() .. "Text"]
+	slider.textLow = _G[slider:GetName() .. "Low"]
+	slider.textHigh = _G[slider:GetName() .. "High"]
+	slider.tooltipText = label
+	slider.tooltipRequirement = description
+
+	slider:SetMinMaxValues(minVal, maxVal)
+	slider:SetValue(minVal)
+	slider:SetValueStep(valStep)
+	slider:SetWidth(175)
+	slider.text:SetText(title)
+	slider.text:SetFontObject(GameFontNormal)
+	slider.textLow:SetText(minVal)
+	slider.textHigh:SetText(maxVal)
+	editbox:SetSize(30, 30)
+	editbox:ClearAllPoints()
+	editbox:SetPoint("TOP", slider, "BOTTOM", 0, -5)
+	editbox:SetText(slider:GetValue())
+	editbox:SetAutoFocus(false)
+
+	slider:SetScript("OnValueChanged", function(self, value)
+		self.editbox:SetText(round(value, 2))
+	end)
+
+	editbox:SetScript("OnEnterPressed", function(self)
+		local value = self:GetText()
+
+		if tonumber(value) then
+			self:GetParent():SetValue(round(value, 2))
+			self:ClearFocus()
+		end
+	end)
+
+	slider.editbox = editbox
+
+	return slider
+end
+
+-- Draws the option panel elements.
 
 eufOptions:SetScript("OnShow", function(self)
-	-- Draws the option panel elements.
-
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
 	title:SetPoint("TOPLEFT", self, 16, -16)
@@ -25,120 +157,33 @@ eufOptions:SetScript("OnShow", function(self)
 	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
 	description:SetText("Modifies the default unit frames for better visuals.")
 
-	StaticPopupDialogs["RELOAD_UI"] = {
-		text = "One or more of the changes you have made require a ReloadUI.",
-		button1 = ACCEPT,
-		button2 = CANCEL,
-		OnAccept = function()
-			ReloadUI()
-		end,
-		timeout = 0,
-		whileDead = 1,
-		hideOnEscape = true,
-		preferredIndex = 3,
-	}
-
-	-- Checkbox creation function.
-
-	local i = 0
-
-	local function createCheckbox(label, description)
-		i = i + 1
-		local checkbox = CreateFrame("CheckButton", "eufCheckbox" .. i, self, "InterfaceOptionsCheckButtonTemplate")
-		checkbox.label = _G[checkbox:GetName() .. "Text"]
-
-		checkbox.label:SetText(label)
-		checkbox.tooltipText = label
-		checkbox.tooltipRequirement = description
-
-		return checkbox
-	end
-
-	-- Source: rothUI by zork.
-	-- Slider creation function.
-
-	local floor = floor
-	local i = 0
-
-	local createSlider = function(parent, title, minVal, maxVal, valStep, label, description)
-		i = i + 1
-		local slider = CreateFrame("Slider", "eufSlider" .. i, parent, "OptionsSliderTemplate")
-		local editbox = CreateFrame("Editbox", "$parentEditbox", slider, "InputBoxTemplate")
-		slider.text = _G[slider:GetName() .. "Text"]
-		slider.textLow = _G[slider:GetName() .. "Low"]
-		slider.textHigh = _G[slider:GetName() .. "High"]
-		slider.tooltipText = label
-		slider.tooltipRequirement = description
-
-		slider:SetMinMaxValues(minVal, maxVal)
-		slider:SetValue(minVal)
-		slider:SetValueStep(valStep)
-		slider:SetWidth(175)
-		slider.text:SetText(title)
-		slider.text:SetFontObject(GameFontNormal)
-		slider.textLow:SetText(floor(minVal))
-		slider.textHigh:SetText(floor(maxVal))
-		editbox:SetSize(29,30)
-		editbox:ClearAllPoints()
-		editbox:SetPoint("TOP", slider, "BOTTOM", 0, -5)
-		editbox:SetText(slider:GetValue())
-		editbox:SetAutoFocus(false)
-
-		slider:SetScript("OnValueChanged", function(self, value)
-			self.editbox:SetText(floor(value))
-		end)
-
-		editbox:SetScript("OnTextChanged", function(self)
-			local value = self:GetText()
-
-			if tonumber(value) then
-				if floor(self:GetParent():GetValue()) ~= floor(value) then
-					self:GetParent():SetValue(floor(value))
-				end
-			end
-		end)
-
-		editbox:SetScript("OnEnterPressed", function(self)
-			local value = self:GetText()
-
-			if tonumber(value) then
-				self:GetParent():SetValue(floor(value))
-				self:ClearFocus()
-			end
-		end)
-
-		slider.editbox = editbox
-
-		return slider
-	end
-
 	-- Creates checkboxes.
 
-	local bigPlayerHealthBar = createCheckbox("Big Player Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
-	local bigTargetHealthBar = createCheckbox("Big Target Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
+	local bigPlayerHealthBar = createCheckbox(self, "Big Player Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
+	local bigTargetHealthBar = createCheckbox(self, "Big Target Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
 
 	if isClassic() then
-		wideTargetFrame = createCheckbox("Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
+		wideTargetFrame = createCheckbox(self, "Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
 	else
-		wideTargetFrame = createCheckbox("Wide Target Frame", "Makes the target and focus frames wider.\nSource: Wide Target by Gello.")
+		wideTargetFrame = createCheckbox(self, "Wide Target Frame", "Makes the target and focus frames wider.\nSource: Wide Target by Gello.")
 	end
 
-	local mirroredPositioning = createCheckbox("Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
-	local classHealthBarColor = createCheckbox("Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
-	local reactionHealthBarColor = createCheckbox("Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
-	local upperCaseAbbreviation = createCheckbox("Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
-	local classIconPortraits = createCheckbox("Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
-	local hideHitIndicators = createCheckbox("Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
-	local hidePetStatusText = createCheckbox("Hide Pet Status Text", "Hides the pet frame status bar text.")
-	local hideRestingIcon = createCheckbox("Hide Resting Icon", "Hides the resting icon on the player frame.")
+	local mirroredPositioning = createCheckbox(self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
+	local classHealthBarColor = createCheckbox(self, "Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
+	local reactionHealthBarColor = createCheckbox(self, "Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
+	local upperCaseAbbreviation = createCheckbox(self, "Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
+	local classIconPortraits = createCheckbox(self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
+	local hideHitIndicators = createCheckbox(self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
+	local hidePetStatusText = createCheckbox(self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
+	local hideRestingIcon = createCheckbox(self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
 
 	if isClassic() then
-		shamanClassColorFix = createCheckbox("Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
+		shamanClassColorFix = createCheckbox(self, "Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
 	else
-		threatShowNumeric = createCheckbox("Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to display.")
-		predictedHealth = createCheckbox("Show Predicted Health", "Shows an animation when you lose health.")
-		showBuilderFeedback = createCheckbox("Show Builder Feedback", "Shows an animation when you build your class resource.")
-		showSpenderFeedback = createCheckbox("Show Spender Feedback", "Shows an animation when you spend your class resource.")
+		predictedHealth = createCheckbox(self, "Show Predicted Health", "Shows an animation when you lose health.")
+		showBuilderFeedback = createCheckbox(self, "Show Builder Feedback", "Shows an animation when you build your class resource.")
+		showSpenderFeedback = createCheckbox(self, "Show Spender Feedback", "Shows an animation when you spend your class resource.")
+		threatShowNumeric = createCheckbox(self, "Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to display.")
 	end
 
 	-- Positions the checkboxes created.
@@ -571,14 +616,12 @@ eufOptions:SetScript("OnShow", function(self)
 	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
 		value = floor(value)
 		cfg.wideTargetFrameWidth = value
-
-		StaticPopup_Show("RELOAD_UI")
 	end)
 
 	if isClassic() then
 		-- Creates the aura icon size slider.
 
-		local auraIconSize = createSlider(self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
+		auraIconSize = createSlider(self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
 
 		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
 		eufSlider2:SetValue(cfg.largeAuraIconSize)
@@ -587,13 +630,11 @@ eufOptions:SetScript("OnShow", function(self)
 		auraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
 			cfg.largeAuraIconSize = value
-
-			StaticPopup_Show("RELOAD_UI")
 		end)
 	else
 		-- Creates the large aura icon size slider.
 
-		local largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
+		largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
 
 		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
 		eufSlider2:SetValue(cfg.largeAuraIconSize)
@@ -602,13 +643,11 @@ eufOptions:SetScript("OnShow", function(self)
 		largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
 			cfg.largeAuraIconSize = value
-
-			StaticPopup_Show("RELOAD_UI")
 		end)
 
 		-- Creates the small aura icon size slider.
 
-		local smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
+		smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
 
 		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
 		eufSlider3:SetValue(cfg.smallAuraIconSize)
@@ -617,8 +656,6 @@ eufOptions:SetScript("OnShow", function(self)
 		smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
 			cfg.smallAuraIconSize = value
-
-			StaticPopup_Show("RELOAD_UI")
 		end)
 	end
 
@@ -689,6 +726,22 @@ eufOptions:SetScript("OnShow", function(self)
 			eufCheckbox15:SetChecked(true)
 		end
 	end
+
+	self:SetScript("OnShow", nil)
+end)
+
+-- Draws the scaling option panel elements.
+
+eufOptions.scaling:SetScript("OnShow", function(self)
+	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+
+	title:SetPoint("TOPLEFT", self, 16, -16)
+	title:SetText("EnhancedUnitFrames")
+
+	local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
+
+	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	description:SetText("Modifies the default unit frames for better visuals.")
 
 	self:SetScript("OnShow", nil)
 end)
