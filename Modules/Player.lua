@@ -13,8 +13,8 @@ function PlayerFrameStyling()
 				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 			end
 
-			PlayerFrameHealthBar:SetHeight(27)
-			PlayerFrameManaBar:SetHeight(12)
+			PlayerFrameHealthBar:SetHeight(28)
+			PlayerFrameManaBar:SetHeight(13)
 			PlayerFrameManaBar:ClearAllPoints()
 			PlayerFrameManaBar:SetPoint("TOPLEFT", 108, -52)
 		else
@@ -28,8 +28,8 @@ function PlayerFrameStyling()
 				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
 			end
 
-			PlayerFrameHealthBar:SetHeight(18)
-			PlayerFrameManaBar:SetHeight(17)
+			PlayerFrameHealthBar:SetHeight(19)
+			PlayerFrameManaBar:SetHeight(18)
 			PlayerFrameManaBar:ClearAllPoints()
 			PlayerFrameManaBar:SetPoint("TOPLEFT", 108, -45)
 
@@ -38,12 +38,12 @@ function PlayerFrameStyling()
 				InsanityBarFrame.InsanitySpark:SetPoint("CENTER", InsanityBarFrame.InsanityOn.Tentacles, "RIGHT", 0, 9)
 				PlayerFrameManaBar.FeedbackFrame:ClearAllPoints()
 				PlayerFrameManaBar.FeedbackFrame:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
-				PlayerFrameManaBar.FeedbackFrame:SetSize(117, 17)
-				PlayerFrameManaBar.FullPowerFrame:SetSize(117, 17)
+				PlayerFrameManaBar.FeedbackFrame:SetSize(118, 18)
+				PlayerFrameManaBar.FullPowerFrame:SetSize(118, 18)
 				PlayerFrameManaBar.FullPowerFrame.PulseFrame:ClearAllPoints()
 				PlayerFrameManaBar.FullPowerFrame.PulseFrame:SetPoint("CENTER", PlayerFrameManaBar.FullPowerFrame, -6, 0)
-				PlayerFrameManaBar.FullPowerFrame.PulseFrame:SetSize(117, 17)
-				PlayerFrameManaBar.FullPowerFrame.SpikeFrame:SetSize(117, 17)
+				PlayerFrameManaBar.FullPowerFrame.PulseFrame:SetSize(118, 18)
+				PlayerFrameManaBar.FullPowerFrame.SpikeFrame:SetSize(118, 18)
 				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.AlertSpikeStay:ClearAllPoints()
 				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.AlertSpikeStay:SetPoint("CENTER", PlayerFrameManaBar.FullPowerFrame, "RIGHT", -6, -1)
 				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.AlertSpikeStay:SetSize(30, 29)
@@ -61,8 +61,8 @@ function PlayerFrameStyling()
 		end
 
 		PlayerFrameBackground:ClearAllPoints()
-		PlayerFrameBackground:SetPoint("CENTER", PlayerFrame, 51, 7)
-		PlayerFrameBackground:SetSize(117, 38)
+		PlayerFrameBackground:SetPoint("TOPLEFT", 108, -24)
+		PlayerFrameBackground:SetSize(118, 38)
 		PlayerFrameGroupIndicatorLeft:SetAlpha(0)
 		PlayerFrameGroupIndicatorMiddle:SetAlpha(0)
 		PlayerFrameGroupIndicatorRight:SetAlpha(0)
@@ -70,18 +70,18 @@ function PlayerFrameStyling()
 		PlayerFrameGroupIndicatorText:SetPoint("BOTTOMLEFT", PlayerFrame, "TOP", 0, -18.5)
 		PlayerFrameHealthBar:ClearAllPoints()
 		PlayerFrameHealthBar:SetPoint("TOPLEFT", 108, -24)
-		PlayerFrameHealthBar:SetWidth(117)
+		PlayerFrameHealthBar:SetWidth(118)
 		PlayerFrameHealthBar.LeftText:ClearAllPoints()
 		PlayerFrameHealthBar.LeftText:SetPoint("LEFT", PlayerFrameHealthBar, 2, 0)
 		PlayerFrameHealthBar.RightText:ClearAllPoints()
-		PlayerFrameHealthBar.RightText:SetPoint("RIGHT", PlayerFrameHealthBar, 0, 0)
+		PlayerFrameHealthBar.RightText:SetPoint("RIGHT", PlayerFrameHealthBar, -1, 0)
 		PlayerFrameHealthBarText:ClearAllPoints()
 		PlayerFrameHealthBarText:SetPoint("CENTER", PlayerFrameHealthBar, 0, 0)
-		PlayerFrameManaBar:SetWidth(117)
+		PlayerFrameManaBar:SetWidth(118)
 		PlayerFrameManaBar.LeftText:ClearAllPoints()
 		PlayerFrameManaBar.LeftText:SetPoint("LEFT", PlayerFrameManaBar, 2, 0)
 		PlayerFrameManaBar.RightText:ClearAllPoints()
-		PlayerFrameManaBar.RightText:SetPoint("RIGHT", PlayerFrameManaBar, 0, 0)
+		PlayerFrameManaBar.RightText:SetPoint("RIGHT", PlayerFrameManaBar, -1, 0)
 		PlayerFrameManaBarText:ClearAllPoints()
 		PlayerFrameManaBarText:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
 		PlayerName:SetAlpha(0)
@@ -131,36 +131,36 @@ function PlayerFrameStyling()
 			if cfg.bigPlayerHealthBar then
 				if level < 10 then
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -1.5)
 				else
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -2.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -1.5)
 				end
 			else
 				if level < 10 then
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -3.5)
 				else
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -4.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -3.5)
 				end
 			end
 		else
 			if cfg.bigPlayerHealthBar then
 				if level >= 100 or level < 10 then
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -1.5)
 				else
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -2.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -1.5)
 				end
 			else
 				if level >= 100 or level < 10 then
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -3.5)
 				else
 					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -4.5)
+					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -3.5)
 				end
 			end
 		end
