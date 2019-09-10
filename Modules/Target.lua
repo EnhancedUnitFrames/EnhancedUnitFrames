@@ -398,23 +398,7 @@ function TargetFrameStyling()
 	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
 		if isClassic() then
 			if cfg.bigTargetHealthBar then
-				TargetFrameTextureFrameLevelText:ClearAllPoints()
-				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
-			else
-				TargetFrameTextureFrameLevelText:ClearAllPoints()
-				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
-			end
-		else
-			if cfg.bigTargetHealthBar then
-				if UnitLevel("focus") >= 100 then
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
-				else
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
-				end
-
-				if UnitLevel("target") >= 100 then
+				if UnitLevel("target") < 10
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				else
@@ -422,7 +406,33 @@ function TargetFrameStyling()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
 				end
 			else
-				if UnitLevel("focus") >= 100 then
+				if UnitLevel("target") < 10
+					TargetFrameTextureFrameLevelText:ClearAllPoints()
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
+				else
+					TargetFrameTextureFrameLevelText:ClearAllPoints()
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
+				end
+			end
+		else
+			if cfg.bigTargetHealthBar then
+				if UnitLevel("focus") >= 100 or UnitLevel("target") < 10 then
+					FocusFrameTextureFrameLevelText:ClearAllPoints()
+					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+				else
+					FocusFrameTextureFrameLevelText:ClearAllPoints()
+					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
+				end
+
+				if UnitLevel("target") >= 100 or UnitLevel("target") < 10 then
+					TargetFrameTextureFrameLevelText:ClearAllPoints()
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+				else
+					TargetFrameTextureFrameLevelText:ClearAllPoints()
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 54.5, -2.5)
+				end
+			else
+				if UnitLevel("focus") >= 100 or UnitLevel("focus") < 10 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
 				else
@@ -430,7 +440,7 @@ function TargetFrameStyling()
 					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 54.5, -4.5)
 				end
 
-				if UnitLevel("target") >= 100 then
+				if UnitLevel("target") >= 100 or UnitLevel("target") < 10 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
 					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -4.5)
 				else
