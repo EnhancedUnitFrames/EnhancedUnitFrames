@@ -15,7 +15,6 @@ local function isAddOnLoaded(self, event, addon)
 	if event == "ADDON_LOADED" then
 		SetDefaults()
 		AuraStyling()
-		BossFrameStyling()
 		ClassIconPortraits()
 		MirroredPositioning()
 		PlayerFrameStyling()
@@ -27,6 +26,7 @@ local function isAddOnLoaded(self, event, addon)
 			DruidPowerBar()
 			ShamanClassColorFix()
 		else
+			BossFrameStyling()
 			FocusFrameStyling()
 		end
 
