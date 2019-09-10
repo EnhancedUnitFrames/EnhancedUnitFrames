@@ -129,7 +129,7 @@ function PlayerFrameStyling()
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
 		if isClassic() then
 			if cfg.bigPlayerHealthBar then
-				if level < 10
+				if level < 10 then
 					PlayerLevelText:ClearAllPoints()
 					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -2.5)
 				else
@@ -137,7 +137,7 @@ function PlayerFrameStyling()
 					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -2.5)
 				end
 			else
-				if level < 10
+				if level < 10 then
 					PlayerLevelText:ClearAllPoints()
 					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -53.5, -4.5)
 				else
