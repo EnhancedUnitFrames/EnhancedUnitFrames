@@ -158,10 +158,10 @@ eufOptions:SetScript("OnShow", function(self)
 	if isClassic() then
 		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
 	else
-		threatShowNumeric:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
-		predictedHealth:SetPoint("TOPLEFT", threatShowNumeric, "BOTTOMLEFT", 0, -8)
+		predictedHealth:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
 		showBuilderFeedback:SetPoint("TOPLEFT", predictedHealth, "BOTTOMLEFT", 0, -8)
 		showSpenderFeedback:SetPoint("TOPLEFT", showBuilderFeedback, "BOTTOMLEFT", 0, -8)
+		threatShowNumeric:SetPoint("TOPLEFT", showSpenderFeedback, "BOTTOMLEFT", 0, -8)
 	end
 
 	-- Applies scripts when the checkboxes are clicked.
@@ -311,16 +311,6 @@ eufOptions:SetScript("OnShow", function(self)
 			StaticPopup_Show("RELOAD_UI")
 		end)
 	else
-		threatShowNumeric:SetScript("OnClick", function(self)
-			if self:GetChecked() then
-				C_CVar.SetCVar("threatShowNumeric", 1)
-				PlaySound(856)
-			else
-				C_CVar.SetCVar("threatShowNumeric", 0)
-				PlaySound(857)
-			end
-		end)
-
 		predictedHealth:SetScript("OnClick", function(self)
 			if self:GetChecked() then
 				C_CVar.SetCVar("predictedHealth", 1)
@@ -350,6 +340,17 @@ eufOptions:SetScript("OnShow", function(self)
 				PlaySound(857)
 			end
 		end)
+
+		threatShowNumeric:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("threatShowNumeric", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("threatShowNumeric", 0)
+				PlaySound(857)
+			end
+		end)
+
 	end
 
 	-- Player frame texture dropdown menu.
@@ -672,19 +673,19 @@ eufOptions:SetScript("OnShow", function(self)
 			eufCheckbox12:SetChecked(true)
 		end
 	else
-		if C_CVar.GetCVar("threatShowNumeric") == "1" then
+		if C_CVar.GetCVar("predictedHealth") == "1" then
 			eufCheckbox12:SetChecked(true)
 		end
 
-		if C_CVar.GetCVar("predictedHealth") == "1" then
+		if C_CVar.GetCVar("showBuilderFeedback") == "1" then
 			eufCheckbox13:SetChecked(true)
 		end
 
-		if C_CVar.GetCVar("showBuilderFeedback") == "1" then
+		if C_CVar.GetCVar("showSpenderFeedback") == "1" then
 			eufCheckbox14:SetChecked(true)
 		end
 
-		if C_CVar.GetCVar("showSpenderFeedback") == "1" then
+		if C_CVar.GetCVar("threatShowNumeric") == "1" then
 			eufCheckbox15:SetChecked(true)
 		end
 	end
