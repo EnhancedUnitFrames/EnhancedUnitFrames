@@ -306,12 +306,6 @@ function TargetFrameStyling()
 
 	-- Disables the buffs on top option.
 
-	hooksecurefunc("TargetFrame_UpdateBuffsOnTop", function()
-		TargetFrame.buffsOnTop = false
-
-		TargetFrame_UpdateAuras(TargetFrame)
-	end)
-
 	if not isClassic() then
 		hooksecurefunc("FocusFrame_UpdateBuffsOnTop", function()
 			FocusFrame.buffsOnTop = false
@@ -319,6 +313,12 @@ function TargetFrameStyling()
 			TargetFrame_UpdateAuras(FocusFrame)
 		end)
 	end
+
+	hooksecurefunc("TargetFrame_UpdateBuffsOnTop", function()
+		TargetFrame.buffsOnTop = false
+
+		TargetFrame_UpdateAuras(TargetFrame)
+	end)
 
 	-- Disables the small focus frame option.
 
