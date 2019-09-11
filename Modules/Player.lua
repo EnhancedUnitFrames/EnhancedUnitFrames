@@ -166,6 +166,15 @@ function PlayerFrameStyling()
 		end
 	end)
 
+	-- Fixes the pet frame health and resource bars.
+
+	PetFrameHealthBar:ClearAllPoints()
+	PetFrameHealthBar:SetPoint("TOPLEFT", 45, -22)
+	PetFrameHealthBar:SetSize(69, 8)
+	PetFrameManaBar:ClearAllPoints()
+	PetFrameManaBar:SetPoint("TOPLEFT", 45, -29.5)
+	PetFrameManaBar:SetSize(69, 8)
+
 	-- Hides the damage/healing spam on player and pet frames.
 
 	if cfg.hideHitIndicators then
