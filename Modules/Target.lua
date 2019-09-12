@@ -135,14 +135,14 @@ function TargetFrameStyling()
 			if cfg.bigTargetHealthBar then
 				self.healthbar:SetHeight(29)
 				self.highLevelTexture:ClearAllPoints()
-				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -2.5)
+				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 52.5, -2.5)
 				self.manabar:SetHeight(12)
 				self.manabar:ClearAllPoints()
 				self.manabar:SetPoint("TOPRIGHT", -107, -52)
 			else
 				self.healthbar:SetHeight(20)
 				self.highLevelTexture:ClearAllPoints()
-				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 53.5, -4.5)
+				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 52.5, -4.5)
 				self.manabar:SetHeight(19)
 				self.manabar:ClearAllPoints()
 				self.manabar:SetPoint("TOPRIGHT", -107, -44)
@@ -246,46 +246,45 @@ function TargetFrameStyling()
 				if cfg.bigTargetHealthBar then
 					self.manabar:SetHeight(12)
 					self.manabar:ClearAllPoints()
-					self.manabar:SetPoint("TOPLEFT", self, 7, -52)
+					self.manabar:SetPoint("TOPRIGHT", -107, -52)
 				else
-					self.manabar:SetHeight(17)
+					self.manabar:SetHeight(19)
 					self.manabar:ClearAllPoints()
-					self.manabar:SetPoint("TOPLEFT", self, 7, -45)
+					self.manabar:SetPoint("TOPRIGHT", -107, -44)
 				end
 
 				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-					self.Background:SetSize(cfg.wideTargetFrameWidth - 115, 8)
-					self.healthbar:SetSize(cfg.wideTargetFrameWidth - 115, 12)
-					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 115)
+					self.Background:SetSize(cfg.wideTargetFrameWidth - 113, 10)
+					self.healthbar:SetSize(cfg.wideTargetFrameWidth - 113, 12)
+					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 113)
 				else
-					self.Background:SetSize(117, 8)
-					self.healthbar:SetSize(117, 12)
-					self.manabar:SetWidth(117)
+					self.Background:SetSize(119, 10)
+					self.healthbar:SetSize(119, 12)
+					self.manabar:SetWidth(119)
 				end
 
 				if isClassic() then
-					TargetFrameHealthBarText:ClearAllPoints()
-					TargetFrameHealthBarText:SetPoint("CENTER", self.healthbar, 0, 0)
 					TargetFrameHealthBar.LeftText:ClearAllPoints()
-					TargetFrameHealthBar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
+					TargetFrameHealthBar.LeftText:SetPoint("LEFT", self.healthbar, 1, -0.5)
 					TargetFrameHealthBar.RightText:ClearAllPoints()
-					TargetFrameHealthBar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
+					TargetFrameHealthBar.RightText:SetPoint("RIGHT", self.healthbar, -2.5, -0.5)
+					TargetFrameHealthBarText:ClearAllPoints()
+					TargetFrameHealthBarText:SetPoint("CENTER", self.healthbar, 0, -0.5)
 				else
 					self.healthbar.TextString:ClearAllPoints()
-					self.healthbar.TextString:SetPoint("CENTER", self.healthbar, 0, 0)
+					self.healthbar.TextString:SetPoint("CENTER", self.healthbar, 0, -0.5)
 					self.healthbar.LeftText:ClearAllPoints()
-					self.healthbar.LeftText:SetPoint("LEFT", self.healthbar, 1, 0)
+					self.healthbar.LeftText:SetPoint("LEFT", self.healthbar, 1, -0.5)
 					self.healthbar.RightText:ClearAllPoints()
-					self.healthbar.RightText:SetPoint("RIGHT", self.healthbar, 0, 0)
+					self.healthbar.RightText:SetPoint("RIGHT", self.healthbar, -2.5, -0.5)
 				end
 
 				self.Background:ClearAllPoints()
-				self.Background:SetPoint("LEFT", self, 7, 3)
-				self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
+				self.Background:SetPoint("TOPRIGHT", -107, -42)
 				self.deadText:ClearAllPoints()
 				self.deadText:SetPoint("CENTER", self.healthbar, 0, 0)
 				self.healthbar:ClearAllPoints()
-				self.healthbar:SetPoint("LEFT", 7, 3)
+				self.healthbar:SetPoint("TOPRIGHT", -107, -41)
 				self.name:ClearAllPoints()
 				self.name:SetPoint("TOPLEFT", self, "TOPLEFT", 8, -24.5)
 				self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -37.5)
@@ -399,7 +398,7 @@ function TargetFrameStyling()
 		if isClassic() then
 			if cfg.bigTargetHealthBar then
 				TargetFrameTextureFrameLevelText:ClearAllPoints()
-				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -1.5)
+				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 			else
 				TargetFrameTextureFrameLevelText:ClearAllPoints()
 				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -3.5)
@@ -408,18 +407,18 @@ function TargetFrameStyling()
 			if cfg.bigTargetHealthBar then
 				if UnitLevel("focus") >= 100 then
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 52.5, -1.5)
+					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 52.5, -2.5)
 				else
 					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -1.5)
+					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				end
 
 				if UnitLevel("target") >= 100 then
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -1.5)
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -2.5)
 				else
 					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -1.5)
+					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
 				end
 			else
 				if UnitLevel("focus") >= 100 then

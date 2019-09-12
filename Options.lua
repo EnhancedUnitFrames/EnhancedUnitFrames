@@ -743,5 +743,27 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
 	description:SetText("Modifies the default unit frames for better visuals.")
 
+	-- Creates the player frame scale slider.
+
+	local playerFrameScale = createScaleSlider(self, "Player Scale", 1, 1.5, 0.01, "Player Frame Scale", "Changes the scale of the player frame.")
+
+	playerFrameScale:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -21)
+
+	playerFrameScale:HookScript("OnValueChanged", function(self, value)
+		PlayerFrame:SetScale(round(value, 2))
+	end)
+
+	self:SetScript("OnShow", nil)
+
+	-- Creates the target frame scale slider.
+
+	local targetFrameScale = createScaleSlider(self, "Target Scale", 1, 1.5, 0.01, "Target Frame Scale", "Changes the scale of the target frame.")
+
+	targetFrameScale:SetPoint("TOPLEFT", playerFrameScale, "BOTTOMLEFT", 0, -70)
+
+	targetFrameScale:HookScript("OnValueChanged", function(self, value)
+		TargetFrame:SetScale(round(value, 2))
+	end)
+
 	self:SetScript("OnShow", nil)
 end)
