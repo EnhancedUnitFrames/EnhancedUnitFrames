@@ -79,11 +79,11 @@ function PlayerFrameStyling()
 		PlayerFrameHealthBarText:SetPoint("CENTER", PlayerFrameHealthBar, 0, -0.5)
 		PlayerFrameManaBar:SetWidth(119)
 		PlayerFrameManaBar.LeftText:ClearAllPoints()
-		PlayerFrameManaBar.LeftText:SetPoint("LEFT", PlayerFrameManaBar, 2.5, -0.5)
+		PlayerFrameManaBar.LeftText:SetPoint("LEFT", PlayerFrameManaBar, 2.5, 0)
 		PlayerFrameManaBar.RightText:ClearAllPoints()
-		PlayerFrameManaBar.RightText:SetPoint("RIGHT", PlayerFrameManaBar, -1, -0.5)
+		PlayerFrameManaBar.RightText:SetPoint("RIGHT", PlayerFrameManaBar, -1, 0)
 		PlayerFrameManaBarText:ClearAllPoints()
-		PlayerFrameManaBarText:SetPoint("CENTER", PlayerFrameManaBar, 0, -0.5)
+		PlayerFrameManaBarText:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
 		PlayerName:SetAlpha(0)
 	end)
 
@@ -129,25 +129,15 @@ function PlayerFrameStyling()
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
 		if isClassic() then
 			if cfg.bigPlayerHealthBar then
-				if level < 10 then
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -1.5)
-				else
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -1.5)
-				end
+				PlayerLevelText:ClearAllPoints()
+				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -1.5)
 			else
-				if level < 10 then
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -3.5)
-				else
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -3.5)
-				end
+				PlayerLevelText:ClearAllPoints()
+				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -3.5)
 			end
 		else
 			if cfg.bigPlayerHealthBar then
-				if level >= 100 or level < 10 then
+				if level >= 100 then
 					PlayerLevelText:ClearAllPoints()
 					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -1.5)
 				else
@@ -155,7 +145,7 @@ function PlayerFrameStyling()
 					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -1.5)
 				end
 			else
-				if level >= 100 or level < 10 then
+				if level >= 100 then
 					PlayerLevelText:ClearAllPoints()
 					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -3.5)
 				else

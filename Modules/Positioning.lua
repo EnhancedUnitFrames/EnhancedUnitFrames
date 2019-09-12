@@ -5,7 +5,7 @@ function MirroredPositioning()
 	if cfg.mirroredPositioning then
 		local function SetMirroredPlayerPosition(a, b)
 			local _, _, _, offsetX, offsetY = b:GetPoint(1)
-			local mirroredOffsetX = GetScreenWidth() - offsetX - b:GetWidth()
+			local mirroredOffsetX = (GetScreenWidth() / b:GetScale()) - offsetX - b:GetWidth()
 
 			a:ClearAllPoints()
 			a:SetPoint("TOPLEFT", nil, "TOPLEFT", mirroredOffsetX, offsetY)
@@ -13,8 +13,7 @@ function MirroredPositioning()
 
 		local function SetMirroredTargetPosition(a, b)
 			local _, _, _, offsetX, offsetY = b:GetPoint(1)
-			local mirroredOffsetX = GetScreenWidth() - offsetX - a:GetWidth()
-
+			local mirroredOffsetX = (GetScreenWidth() / a:GetScale()) - offsetX - a:GetWidth()
 			a:ClearAllPoints()
 			a:SetPoint("TOPLEFT", nil, "TOPLEFT", mirroredOffsetX, offsetY)
 		end
