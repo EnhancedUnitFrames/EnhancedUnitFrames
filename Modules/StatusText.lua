@@ -87,34 +87,43 @@ function StatusTextStyling()
 	hooksecurefunc("TextStatusBar_UpdateTextStringWithValues", function(statusFrame, textString, value, valueMin, valueMax)
 		local valueDisplay = tostring(ReadableNumber(value))
 		local valueMaxDisplay = tostring(ReadableNumber(valueMax))
+		local valuePercentageDisplay = math.ceil((value / valueMax) * 100) .. "%"
 
-		if statusFrame.RightText and value and valueMax > 0 and not statusFrame.showPercentage and GetCVar("statusTextDisplay") == "BOTH" then
-			statusFrame.RightText:SetText(valueDisplay)
-		end
-
-		if value and valueMax > 0 and not statusFrame.showPercentage and GetCVar("statusTextDisplay") == "NUMERIC" then
-			textString:SetText(valueDisplay)
-
-			if UnitExists("boss1") and UnitIsDead("boss1") then
-				Boss1TargetFrameTextureFrameHealthBarText:SetText("")
-			elseif UnitExists("boss2") and UnitIsDead("boss2") then
-				Boss2TargetFrameTextureFrameHealthBarText:SetText("")
-			elseif UnitExists("boss3") and UnitIsDead("boss3") then
-				Boss3TargetFrameTextureFrameHealthBarText:SetText("")
-			elseif UnitExists("boss4") and UnitIsDead("boss4") then
-				Boss4TargetFrameTextureFrameHealthBarText:SetText("")
-			end
-
+		local function isDead()
 			if isClassic() then
 				if UnitExists("target") and UnitIsDead("target") then
 					TargetFrameHealthBarText:SetText("")
 				end
 			else
-				if UnitExists("focus") and UnitIsDead("focus") then
+				if UnitExists("boss1") and UnitIsDead("boss1") then
+					Boss1TargetFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("boss2") and UnitIsDead("boss2") then
+					Boss2TargetFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("boss3") and UnitIsDead("boss3") then
+					Boss3TargetFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("boss4") and UnitIsDead("boss4") then
+					Boss4TargetFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("focus") and UnitIsDead("focus") then
 					FocusFrameTextureFrameHealthBarText:SetText("")
 				elseif UnitExists("target") and UnitIsDead("target") then
 					TargetFrameTextureFrameHealthBarText:SetText("")
 				end
+			end
+		end
+
+		if value and valueMax > 0 then
+			if GetCVar("statusTextDisplay") == "NUMERIC" then
+				textString:SetText(valueDisplay)
+			elseif GetCVar("statusTextDisplay") == "PERCENT" then
+				textString:SetText(valuePercentageDisplay)
+				isDead()
+			elseif GetCVar("statusTextDisplay") == "BOTH" then
+				statusFrame.RightText:SetText(valueDisplay)
+				textString:SetText(valueDisplay)
+				isDead()
+			elseif GetCVar("statusTextDisplay") == "NONE" or GetCVar("statusText") == "0" then
+				textString:SetText(valueDisplay)
+				isDead()
 			end
 		end
 	end)

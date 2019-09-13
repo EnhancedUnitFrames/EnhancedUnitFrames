@@ -179,7 +179,7 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
-	wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -7)
+	wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
 	upperCaseAbbreviation:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	classIconPortraits:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
@@ -681,7 +681,7 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
-	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -7)
+	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 	bigTargetHealthBar:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 0, -8)
 	classHealthBarColor:SetPoint("TOPLEFT", bigTargetHealthBar, "BOTTOMLEFT", 0, -8)
 	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
@@ -843,10 +843,10 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 
 	if isClassic() then
 		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
-		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -21)
+		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -36)
 	else
 		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
-		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -21)
+		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -36)
 	end
 
 	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
