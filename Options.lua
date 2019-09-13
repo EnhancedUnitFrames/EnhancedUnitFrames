@@ -457,8 +457,8 @@ eufOptions:SetScript("OnShow", function(self)
 			isCheckedBoth = false
 			isCheckedNone = false
 
-			C_CVar.SetCVar("statusText", 1)
-			C_CVar.SetCVar("statusTextDisplay", "NUMERIC")
+			SetCVar("statusText", 1)
+			SetCVar("statusTextDisplay", "NUMERIC")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
 		elseif arg1 == 2 then
@@ -468,8 +468,8 @@ eufOptions:SetScript("OnShow", function(self)
 			isCheckedBoth = false
 			isCheckedNone = false
 
-			C_CVar.SetCVar("statusText", 1)
-			C_CVar.SetCVar("statusTextDisplay", "PERCENT")
+			SetCVar("statusText", 1)
+			SetCVar("statusTextDisplay", "PERCENT")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
 		elseif arg1 == 3 then
@@ -479,8 +479,8 @@ eufOptions:SetScript("OnShow", function(self)
 			isCheckedBoth = true
 			isCheckedNone = false
 
-			C_CVar.SetCVar("statusText", 1)
-			C_CVar.SetCVar("statusTextDisplay", "BOTH")
+			SetCVar("statusText", 1)
+			SetCVar("statusTextDisplay", "BOTH")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
 		elseif arg1 == 4 then
@@ -490,8 +490,8 @@ eufOptions:SetScript("OnShow", function(self)
 			isCheckedBoth = false
 			isCheckedNone = true
 
-			C_CVar.SetCVar("statusText", 0)
-			C_CVar.SetCVar("statusTextDisplay", "NONE")
+			SetCVar("statusText", 0)
+			SetCVar("statusTextDisplay", "NONE")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
 		end
