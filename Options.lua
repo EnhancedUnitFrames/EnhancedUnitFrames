@@ -341,50 +341,54 @@ eufOptions:SetScript("OnShow", function(self)
 
 	local function PlayerFrameTextureDropdown_OnClick(self, arg1)
 		if arg1 == 1 then
-			cfg.elitePlayerFrame = false
-			cfg.rarePlayerFrame = false
-			cfg.rareElitePlayerFrame = false
-			isChecked1 = "Default Player Frame"
-			isCheckedDefault = true
-			isCheckedElite = false
+			isChecked1 = "Elite Player Frame"
+			isCheckedElite = true
 			isCheckedRare = false
 			isCheckedRareElite = false
+			isCheckedDefault = false
+
+			cfg.elitePlayerFrame = true
+			cfg.rarePlayerFrame = false
+			cfg.rareElitePlayerFrame = false
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 		elseif arg1 == 2 then
-			cfg.elitePlayerFrame = true
-			cfg.rarePlayerFrame = false
-			cfg.rareElitePlayerFrame = false
-			isChecked1 = "Elite Player Frame"
-			isCheckedDefault = false
-			isCheckedElite = true
-			isCheckedRare = false
+			isChecked1 = "Rare Player Frame"
+			isCheckedElite = false
+			isCheckedRare = true
 			isCheckedRareElite = false
+			isCheckedDefault = false
+
+			cfg.elitePlayerFrame = false
+			cfg.rarePlayerFrame = true
+			cfg.rareElitePlayerFrame = false
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 		elseif arg1 == 3 then
-			cfg.elitePlayerFrame = false
-			cfg.rarePlayerFrame = true
-			cfg.rareElitePlayerFrame = false
-			isChecked1 = "Rare Player Frame"
-			isCheckedDefault = false
+			isChecked1 = "Rare Elite Player Frame"
 			isCheckedElite = false
-			isCheckedRare = true
-			isCheckedRareElite = false
+			isCheckedRare = false
+			isCheckedRareElite = true
+			isCheckedDefault = false
+
+			cfg.elitePlayerFrame = false
+			cfg.rarePlayerFrame = false
+			cfg.rareElitePlayerFrame = true
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 		elseif arg1 == 4 then
-			cfg.elitePlayerFrame = false
-			cfg.rarePlayerFrame = false
-			cfg.rareElitePlayerFrame = true
-			isChecked1 = "Rare Elite Player Frame"
-			isCheckedDefault = false
+			isChecked1 = "Default Player Frame"
 			isCheckedElite = false
 			isCheckedRare = false
-			isCheckedRareElite = true
+			isCheckedRareElite = false
+			isCheckedDefault = true
+
+			cfg.elitePlayerFrame = false
+			cfg.rarePlayerFrame = false
+			cfg.rareElitePlayerFrame = false
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
@@ -395,17 +399,119 @@ eufOptions:SetScript("OnShow", function(self)
 		local info = UIDropDownMenu_CreateInfo()
 		info.func = PlayerFrameTextureDropdown_OnClick
 
-		info.text, info.arg1, info.checked = "Default Player Frame", 1, isCheckedDefault
+		info.text, info.arg1, info.checked = "Elite Player Frame", 1, isCheckedElite
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Elite Player Frame", 2, isCheckedElite
+		info.text, info.arg1, info.checked = "Rare Player Frame", 2, isCheckedRare
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Rare Player Frame", 3, isCheckedRare
+		info.text, info.arg1, info.checked = "Rare Elite Player Frame", 3, isCheckedRareElite
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Rare Elite Player Frame", 4, isCheckedRareElite
+		info.text, info.arg1, info.checked = "Default Player Frame", 4, isCheckedDefault
 		UIDropDownMenu_AddButton(info)
 	end
 
 	UIDropDownMenu_Initialize(playerFrameDropdown, PlayerFrameTextureDropdown_Menu)
+
+	-- Status text dropdown menu.
+
+	local statusTextDropdown = CreateFrame("Frame", "eufStatusTextDropdown", self, "UIDropDownMenuTemplate")
+	statusTextDropdown.title = statusTextDropdown:CreateFontString("StatusTextDropdownLabel", "ARTWORK", "GameFontNormal")
+
+	statusTextDropdown:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 0, -37)
+	statusTextDropdown.title:SetPoint("BOTTOMLEFT", statusTextDropdown, "TOPLEFT", 15, 3)
+	statusTextDropdown.title:SetText("Status Text")
+
+	statusTextDropdown:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+		GameTooltip:SetText("Status Text", nil, nil, nil, 1, true)
+		GameTooltip:AddLine("Display status text as numbers, percentage, or both.", 1, 1, 1, 1)
+		GameTooltip:Show()
+	end)
+
+	statusTextDropdown:SetScript("OnLeave", function(self)
+		GameTooltip:Hide()
+	end)
+
+	UIDropDownMenu_SetWidth(statusTextDropdown, 160)
+
+	if C_CVar.GetCVar("statusTextDisplay") == "NUMERIC" then
+		isChecked3 = "Numeric Value"
+		isCheckedNumericValue = true
+	elseif C_CVar.GetCVar("statusTextDisplay") == "PERCENT" then
+		isChecked3 = "Percentage"
+		isCheckedPercentage = true
+	elseif C_CVar.GetCVar("statusTextDisplay") == "BOTH" then
+		isChecked3 = "Both"
+		isCheckedBoth = true
+	elseif C_CVar.GetCVar("statusTextDisplay") == "NONE" then
+		isChecked3 = "None"
+		isCheckedNone = true
+	end
+
+	UIDropDownMenu_SetText(statusTextDropdown, isChecked3)
+
+	local function StatusTextDropdown_OnClick(self, arg1)
+		if arg1 == 1 then
+			isChecked2 = "Numeric Value"
+			isCheckedNumericValue = true
+			isCheckedPercentage = false
+			isCheckedBoth = false
+			isCheckedNone = false
+
+			C_CVar.SetCVar("statusText", 1)
+			C_CVar.SetCVar("statusTextDisplay", "NUMERIC")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		elseif arg1 == 2 then
+			isChecked2 = "Percentage"
+			isCheckedNumericValue = false
+			isCheckedPercentage = true
+			isCheckedBoth = false
+			isCheckedNone = false
+
+			C_CVar.SetCVar("statusText", 1)
+			C_CVar.SetCVar("statusTextDisplay", "PERCENT")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		elseif arg1 == 3 then
+			isChecked2 = "Both"
+			isCheckedNumericValue = false
+			isCheckedPercentage = false
+			isCheckedBoth = true
+			isCheckedNone = false
+
+			C_CVar.SetCVar("statusText", 1)
+			C_CVar.SetCVar("statusTextDisplay", "BOTH")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		elseif arg1 == 4 then
+			isChecked2 = "None"
+			isCheckedNumericValue = false
+			isCheckedPercentage = false
+			isCheckedBoth = false
+			isCheckedNone = true
+
+			C_CVar.SetCVar("statusText", 0)
+			C_CVar.SetCVar("statusTextDisplay", "NONE")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		end
+	end
+
+	local function StatusTextDropdown_Menu(frame, level, menuList)
+		local info = UIDropDownMenu_CreateInfo()
+		info.func = StatusTextDropdown_OnClick
+
+		info.text, info.arg1, info.checked = "Numeric Value", 1, isCheckedNumericValue
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Percentage", 2, isCheckedPercentage
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Both", 3, isCheckedBoth
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "None", 4, isCheckedNone
+		UIDropDownMenu_AddButton(info)
+	end
+
+	UIDropDownMenu_Initialize(statusTextDropdown, StatusTextDropdown_Menu)
 
 	-- Threat warning dropdown menu.
 
@@ -413,7 +519,7 @@ eufOptions:SetScript("OnShow", function(self)
 		threatWarningDropdown = CreateFrame("Frame", "eufThreatWarningDropdown", self, "UIDropDownMenuTemplate")
 		threatWarningDropdown.title = threatWarningDropdown:CreateFontString("ThreatWarningDropdownLabel", "ARTWORK", "GameFontNormal")
 
-		threatWarningDropdown:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 0, -37)
+		threatWarningDropdown:SetPoint("TOPLEFT", statusTextDropdown, "BOTTOMLEFT", 0, -37)
 		threatWarningDropdown.title:SetPoint("BOTTOMLEFT", threatWarningDropdown, "TOPLEFT", 15, 3)
 		threatWarningDropdown.title:SetText("Threat Warning")
 
@@ -448,15 +554,6 @@ eufOptions:SetScript("OnShow", function(self)
 
 		local function ThreatWarningDropdown_OnClick(self, arg1)
 			if arg1 == 1 then
-				C_CVar.SetCVar("threatWarning", 0)
-				isChecked2 = "Off"
-				isCheckedOff = true
-				isCheckedInDungeons = false
-				isCheckedPartyRaid = false
-				isCheckedAlways = false
-
-				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
-			elseif arg1 == 2 then
 				C_CVar.SetCVar("threatWarning", 1)
 				isChecked2 = "In Dungeons"
 				isCheckedOff = false
@@ -465,7 +562,7 @@ eufOptions:SetScript("OnShow", function(self)
 				isCheckedAlways = false
 
 				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
-			elseif arg1 == 3 then
+			elseif arg1 == 2 then
 				C_CVar.SetCVar("threatWarning", 2)
 				isChecked2 = "In Party/Raid"
 				isCheckedOff = false
@@ -474,13 +571,22 @@ eufOptions:SetScript("OnShow", function(self)
 				isCheckedAlways = false
 
 				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
-			elseif arg1 == 4 then
+			elseif arg1 == 3 then
 				C_CVar.SetCVar("threatWarning", 3)
 				isChecked2 = "Always"
 				isCheckedOff = false
 				isCheckedInDungeons = false
 				isCheckedPartyRaid = false
 				isCheckedAlways = true
+
+				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+			elseif arg1 == 4 then
+				C_CVar.SetCVar("threatWarning", 0)
+				isChecked2 = "Off"
+				isCheckedOff = true
+				isCheckedInDungeons = false
+				isCheckedPartyRaid = false
+				isCheckedAlways = false
 
 				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
 			end
@@ -490,76 +596,17 @@ eufOptions:SetScript("OnShow", function(self)
 			local info = UIDropDownMenu_CreateInfo()
 			info.func = ThreatWarningDropdown_OnClick
 
-			info.text, info.arg1, info.checked = "Off", 1, isCheckedOff
+			info.text, info.arg1, info.checked = "In Dungeons", 1, isCheckedInDungeons
 			UIDropDownMenu_AddButton(info)
-			info.text, info.arg1, info.checked = "In Dungeons", 2, isCheckedInDungeons
+			info.text, info.arg1, info.checked = "In Party/Raid", 2, isCheckedPartyRaid
 			UIDropDownMenu_AddButton(info)
-			info.text, info.arg1, info.checked = "In Party/Raid", 3, isCheckedPartyRaid
+			info.text, info.arg1, info.checked = "Always", 3, isCheckedAlways
 			UIDropDownMenu_AddButton(info)
-			info.text, info.arg1, info.checked = "Always", 4, isCheckedAlways
+			info.text, info.arg1, info.checked = "Off", 4, isCheckedOff
 			UIDropDownMenu_AddButton(info)
 		end
 
 		UIDropDownMenu_Initialize(threatWarningDropdown, ThreatWarningDropdown_Menu)
-	end
-
-	-- Creates the target frame width slider.
-
-	if isClassic() then
-		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
-		wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
-	else
-		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
-		wideTargetFrame:SetPoint("TOPLEFT", threatWarningDropdown, "BOTTOMLEFT", 18, -34)
-	end
-
-	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
-	wideTargetFrameSliderEditbox:SetText(cfg.wideTargetFrameWidth)
-
-	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
-		value = floor(value)
-		cfg.wideTargetFrameWidth = value
-	end)
-
-	if isClassic() then
-		-- Creates the aura icon size slider.
-
-		auraIconSize = createSlider("auraIconSize", self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
-
-		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
-		auraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
-		auraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
-
-		auraIconSize:HookScript("OnValueChanged", function(self, value)
-			value = floor(value)
-			cfg.largeAuraIconSize = value
-		end)
-	else
-		-- Creates the large aura icon size slider.
-
-		largeAuraIconSize = createSlider("largeAuraIconSize", self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
-
-		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
-		largeAuraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
-		largeAuraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
-
-		largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
-			value = floor(value)
-			cfg.largeAuraIconSize = value
-		end)
-
-		-- Creates the small aura icon size slider.
-
-		smallAuraIconSize = createSlider("smallAuraIconSize", self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
-
-		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
-		smallAuraIconSizeSlider:SetValue(cfg.smallAuraIconSize)
-		smallAuraIconSizeSliderEditbox:SetText(cfg.smallAuraIconSize)
-
-		smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
-			value = floor(value)
-			cfg.smallAuraIconSize = value
-		end)
 	end
 
 	-- Initializes the options panel with saved variables.
@@ -792,11 +839,74 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
 	description:SetText("Modifies the default unit frames for better visuals.")
 
+	-- Creates the target frame width slider.
+
+	if isClassic() then
+		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
+		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -21)
+	else
+		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
+		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -21)
+	end
+
+	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
+	wideTargetFrameSliderEditbox:SetText(cfg.wideTargetFrameWidth)
+
+	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
+		value = floor(value)
+		cfg.wideTargetFrameWidth = value
+	end)
+
+	if isClassic() then
+		-- Creates the aura icon size slider.
+
+		auraIconSize = createSlider("auraIconSize", self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
+
+		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
+		auraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
+		auraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
+
+		auraIconSize:HookScript("OnValueChanged", function(self, value)
+			value = floor(value)
+			cfg.largeAuraIconSize = value
+		end)
+	else
+		-- Creates the large aura icon size slider.
+
+		largeAuraIconSize = createSlider("largeAuraIconSize", self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
+
+		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
+		largeAuraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
+		largeAuraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
+
+		largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
+			value = floor(value)
+			cfg.largeAuraIconSize = value
+		end)
+
+		-- Creates the small aura icon size slider.
+
+		smallAuraIconSize = createSlider("smallAuraIconSize", self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
+
+		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
+		smallAuraIconSizeSlider:SetValue(cfg.smallAuraIconSize)
+		smallAuraIconSizeSliderEditbox:SetText(cfg.smallAuraIconSize)
+
+		smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
+			value = floor(value)
+			cfg.smallAuraIconSize = value
+		end)
+	end
+
 	-- Creates the player frame scale slider.
 
-	local playerFrameScale = createScaleSlider("playerFrameScale", self, "Player Scale", 1, 1.5, 0.01, "Player Frame Scale", "Changes the scale of the player frame.")
+	playerFrameScale = createScaleSlider("playerFrameScale", self, "Player Scale", 1, 1.5, 0.01, "Player Frame Scale", "Changes the scale of the player frame.")
 
-	playerFrameScale:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -21)
+	if isClassic() then
+		playerFrameScale:SetPoint("TOPLEFT", auraIconSize, "BOTTOMLEFT", 0, -70)
+	else
+		playerFrameScale:SetPoint("TOPLEFT", smallAuraIconSize, "BOTTOMLEFT", 0, -70)
+	end
 
 	playerFrameScale:HookScript("OnValueChanged", function(self, value)
 		PlayerFrame:SetScale(round(value, 2))
