@@ -120,7 +120,7 @@ function StatusTextStyling()
 			elseif GetCVar("statusTextDisplay") == "BOTH" and statusFrame.LeftText and statusFrame.RightText then
 				statusFrame.LeftText:SetText(valuePercentageDisplay)
 				statusFrame.RightText:SetText(valueDisplay)
-				textString:Hide()
+				textString:SetText(valueDisplay)
 				isDead()
 			elseif GetCVar("statusTextDisplay") == "NONE" or GetCVar("statusText") == "0" then
 				textString:SetText(valueDisplay)
@@ -128,16 +128,4 @@ function StatusTextStyling()
 			end
 		end
 	end)
-
-	if GetCVar("statusTextDisplay") == "BOTH" then
-		hooksecurefunc("ShowTextStatusBarText", function(bar)
-			if bar and bar.TextString then
-				bar.TextString:Hide()
-				PlayerFrameHealthBar.LeftText:Show()
-				PlayerFrameHealthBar.RightText:Show()
-				PlayerFrameManaBar.LeftText:Show()
-				PlayerFrameManaBar.RightText:Show()
-			end
-		end)
-	end
 end
