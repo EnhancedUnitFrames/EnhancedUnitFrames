@@ -1,6 +1,10 @@
 # EnhancedUnitFrames
 Modifies the default unit frames for better visuals.
 
+# Warning
+
+This is a work-in-progress addon for classic and live. The addon is reaching completion, but things may not always be in a 100% usable state as I add the final features.
+
 # Screenshots
 
 ### Whoa style, texture custom made by me.
