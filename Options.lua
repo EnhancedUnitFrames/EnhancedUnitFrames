@@ -1,18 +1,23 @@
 -- Creates the options panel.
 
 eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
+eufOptions.general = CreateFrame("Frame", "eufOptionsGeneral", eufOptions)
 eufOptions.healthBars = CreateFrame("Frame", "eufOptionsHealthBars", eufOptions)
 eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions)
 eufOptions.name = "EnhancedUnitFrames"
+eufOptions.general.name = "General"
 eufOptions.healthBars.name = "Health Bars"
 eufOptions.scaling.name = "Frame Scaling"
+eufOptions.general.parent = eufOptions.name
 eufOptions.healthBars.parent = eufOptions.name
 eufOptions.scaling.parent = eufOptions.name
 
 InterfaceOptions_AddCategory(eufOptions)
+InterfaceOptions_AddCategory(eufOptions.general)
 InterfaceOptions_AddCategory(eufOptions.healthBars)
 InterfaceOptions_AddCategory(eufOptions.scaling)
 eufOptions:Hide()
+eufOptions.general:Hide()
 eufOptions.healthBars:Hide()
 eufOptions.scaling:Hide()
 
@@ -146,6 +151,12 @@ end
 -- Draws the option panel elements.
 
 eufOptions:SetScript("OnShow", function(self)
+	InterfaceOptionsFrame_OpenToCategory(eufOptions.general)
+end)
+
+-- Draws the option panel elements.
+
+eufOptions.general:SetScript("OnShow", function(self)
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
 	title:SetPoint("TOPLEFT", self, 16, -16)
