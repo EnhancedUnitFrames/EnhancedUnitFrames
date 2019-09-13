@@ -328,6 +328,9 @@ function TargetFrameStyling()
 				FocusFrame.threatNumericIndicator:SetAlpha(0)
 				TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
 			end
+
+			self.questIcon:ClearAllPoints()
+			self.questIcon:SetPoint("TOPLEFT", self, "TOPRIGHT", -117, -12)
 		end
 	end)
 
