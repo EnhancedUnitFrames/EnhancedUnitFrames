@@ -324,8 +324,10 @@ function TargetFrameStyling()
 		end
 
 		if not isClassic() then
-			FocusFrame.threatNumericIndicator:SetAlpha(0)
-			TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
+			if C_CVar.GetCVar("threatShowNumeric") == "1" then
+				FocusFrame.threatNumericIndicator:SetAlpha(0)
+				TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
+			end
 		end
 	end)
 
