@@ -20,10 +20,10 @@ local function isAddOnLoaded(self, event, addon)
 		PlayerFrameStyling()
 		StatusBarStyling()
 		StatusTextStyling()
+		PowerBar()
 		TargetFrameStyling()
 
 		if isClassic() then
-			DruidPowerBar()
 			ShamanClassColorFix()
 		else
 			BossFrameStyling()

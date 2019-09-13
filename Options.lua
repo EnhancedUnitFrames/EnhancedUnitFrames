@@ -1,14 +1,19 @@
 -- Creates the options panel.
 
 eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
+eufOptions.healthBars = CreateFrame("Frame", "eufOptionsHealthBars", eufOptions)
 eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions)
 eufOptions.name = "EnhancedUnitFrames"
+eufOptions.healthBars.name = "Health Bars"
 eufOptions.scaling.name = "Frame Scaling"
+eufOptions.healthBars.parent = eufOptions.name
 eufOptions.scaling.parent = eufOptions.name
 
 InterfaceOptions_AddCategory(eufOptions)
+InterfaceOptions_AddCategory(eufOptions.healthBars)
 InterfaceOptions_AddCategory(eufOptions.scaling)
 eufOptions:Hide()
+eufOptions.healthBars:Hide()
 eufOptions.scaling:Hide()
 
 -- Static ReloadUI popup.
@@ -28,11 +33,8 @@ StaticPopupDialogs["RELOAD_UI"] = {
 
 -- Checkbox creation function.
 
-local i = 0
-
-local function createCheckbox(parent, label, description)
-	i = i + 1
-	local checkbox = CreateFrame("CheckButton", "eufCheckbox" .. i, parent, "InterfaceOptionsCheckButtonTemplate")
+local function createCheckbox(name, parent, label, description)
+	local checkbox = CreateFrame("CheckButton", name .. "Checkbox", parent, "InterfaceOptionsCheckButtonTemplate")
 	checkbox.label = _G[checkbox:GetName() .. "Text"]
 
 	checkbox.label:SetText(label)
@@ -46,7 +48,6 @@ end
 -- Slider creation functions.
 
 local floor = floor
-local i = 0
 
 local function round(number, decimals)
 	local multiplier = 10^(decimals or 0)
@@ -54,9 +55,8 @@ local function round(number, decimals)
 	return math.floor(number * multiplier + 0.5) / multiplier
 end
 
-local createSlider = function(parent, title, minVal, maxVal, valStep, label, description)
-	i = i + 1
-	local slider = CreateFrame("Slider", "eufSlider" .. i, parent, "OptionsSliderTemplate")
+local createSlider = function(name, parent, title, minVal, maxVal, valStep, label, description)
+	local slider = CreateFrame("Slider", name .. "Slider", parent, "OptionsSliderTemplate")
 	local editbox = CreateFrame("Editbox", "$parentEditbox", slider, "InputBoxTemplate")
 	slider.text = _G[slider:GetName() .. "Text"]
 	slider.textLow = _G[slider:GetName() .. "Low"]
@@ -102,9 +102,8 @@ local createSlider = function(parent, title, minVal, maxVal, valStep, label, des
 	return slider
 end
 
-local createScaleSlider = function(parent, title, minVal, maxVal, valStep, label, description)
-	i = i + 1
-	local slider = CreateFrame("Slider", "eufScaleSlider" .. i, parent, "OptionsSliderTemplate")
+local createScaleSlider = function(name, parent, title, minVal, maxVal, valStep, label, description)
+	local slider = CreateFrame("Slider", name .. "Slider", parent, "OptionsSliderTemplate")
 	local editbox = CreateFrame("Editbox", "$parentEditbox", slider, "InputBoxTemplate")
 	slider.text = _G[slider:GetName() .. "Text"]
 	slider.textLow = _G[slider:GetName() .. "Low"]
@@ -159,42 +158,30 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
-	local bigPlayerHealthBar = createCheckbox(self, "Big Player Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
-	local bigTargetHealthBar = createCheckbox(self, "Big Target Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
-
 	if isClassic() then
-		wideTargetFrame = createCheckbox(self, "Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
+		wideTargetFrame = createCheckbox("wideTargetFrame", self, "Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
 	else
-		wideTargetFrame = createCheckbox(self, "Wide Target Frame", "Makes the target and focus frames wider.\nSource: Wide Target by Gello.")
+		wideTargetFrame = createCheckbox("wideTargetFrame", self, "Wide Target Frame", "Makes the target and focus frames wider.\nSource: Wide Target by Gello.")
 	end
 
-	local mirroredPositioning = createCheckbox(self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
-	local classHealthBarColor = createCheckbox(self, "Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
-	local reactionHealthBarColor = createCheckbox(self, "Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
-	local upperCaseAbbreviation = createCheckbox(self, "Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
-	local classIconPortraits = createCheckbox(self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
-	local hideHitIndicators = createCheckbox(self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
-	local hidePetStatusText = createCheckbox(self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
-	local hideRestingIcon = createCheckbox(self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
+	local mirroredPositioning = createCheckbox("mirroredPositioning", self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
+	local upperCaseAbbreviation = createCheckbox("upperCaseAbbreviation", self, "Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
+	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
+	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
+	local hidePetStatusText = createCheckbox("hidePetStatusText", self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
+	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
 
 	if isClassic() then
-		shamanClassColorFix = createCheckbox(self, "Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
+		shamanClassColorFix = createCheckbox("shamanClassColorFix", self, "Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
 	else
-		predictedHealth = createCheckbox(self, "Show Predicted Health", "Shows an animation when you lose health.")
-		showBuilderFeedback = createCheckbox(self, "Show Builder Feedback", "Shows an animation when you build your class resource.")
-		showSpenderFeedback = createCheckbox(self, "Show Spender Feedback", "Shows an animation when you spend your class resource.")
-		threatShowNumeric = createCheckbox(self, "Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to display.")
+		threatShowNumeric = createCheckbox("threatShowNumeric", self, "Show Numeric Threat", "Shows a numerical target threat indicator on the player frame.\nRequires \"Threat Warning\" to be enabled to display.")
 	end
 
 	-- Positions the checkboxes created.
 
-	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -7)
-	bigTargetHealthBar:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 0, -8)
-	wideTargetFrame:SetPoint("TOPLEFT", bigTargetHealthBar, "BOTTOMLEFT", 0, -8)
+	wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -7)
 	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
-	classHealthBarColor:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
-	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
-	upperCaseAbbreviation:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
+	upperCaseAbbreviation:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	classIconPortraits:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
 	hidePetStatusText:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
@@ -203,37 +190,8 @@ eufOptions:SetScript("OnShow", function(self)
 	if isClassic() then
 		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
 	else
-		predictedHealth:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
-		showBuilderFeedback:SetPoint("TOPLEFT", predictedHealth, "BOTTOMLEFT", 0, -8)
-		showSpenderFeedback:SetPoint("TOPLEFT", showBuilderFeedback, "BOTTOMLEFT", 0, -8)
-		threatShowNumeric:SetPoint("TOPLEFT", showSpenderFeedback, "BOTTOMLEFT", 0, -8)
+		threatShowNumeric:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
 	end
-
-	-- Applies scripts when the checkboxes are clicked.
-
-	bigPlayerHealthBar:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			cfg.bigPlayerHealthBar = true
-			PlaySound(856)
-		else
-			cfg.bigPlayerHealthBar = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	bigTargetHealthBar:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			cfg.bigTargetHealthBar = true
-			PlaySound(856)
-		else
-			cfg.bigTargetHealthBar = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
 
 	wideTargetFrame:SetScript("OnClick", function(self)
 		if self:GetChecked() then
@@ -253,30 +211,6 @@ eufOptions:SetScript("OnShow", function(self)
 			PlaySound(856)
 		else
 			cfg.mirroredPositioning = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	classHealthBarColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			cfg.classHealthBarColor = true
-			PlaySound(856)
-		else
-			cfg.classHealthBarColor = false
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	reactionHealthBarColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			cfg.reactionHealthBarColor = true
-			PlaySound(856)
-		else
-			cfg.reactionHealthBarColor = false
 			PlaySound(857)
 		end
 
@@ -356,36 +290,6 @@ eufOptions:SetScript("OnShow", function(self)
 			StaticPopup_Show("RELOAD_UI")
 		end)
 	else
-		predictedHealth:SetScript("OnClick", function(self)
-			if self:GetChecked() then
-				C_CVar.SetCVar("predictedHealth", 1)
-				PlaySound(856)
-			else
-				C_CVar.SetCVar("predictedHealth", 0)
-				PlaySound(857)
-			end
-		end)
-
-		showBuilderFeedback:SetScript("OnClick", function(self)
-			if self:GetChecked() then
-				C_CVar.SetCVar("showBuilderFeedback", 1)
-				PlaySound(856)
-			else
-				C_CVar.SetCVar("showBuilderFeedback", 0)
-				PlaySound(857)
-			end
-		end)
-
-		showSpenderFeedback:SetScript("OnClick", function(self)
-			if self:GetChecked() then
-				C_CVar.SetCVar("showSpenderFeedback", 1)
-				PlaySound(856)
-			else
-				C_CVar.SetCVar("showSpenderFeedback", 0)
-				PlaySound(857)
-			end
-		end)
-
 		threatShowNumeric:SetScript("OnClick", function(self)
 			if self:GetChecked() then
 				C_CVar.SetCVar("threatShowNumeric", 1)
@@ -395,7 +299,6 @@ eufOptions:SetScript("OnShow", function(self)
 				PlaySound(857)
 			end
 		end)
-
 	end
 
 	-- Player frame texture dropdown menu.
@@ -403,7 +306,7 @@ eufOptions:SetScript("OnShow", function(self)
 	local playerFrameDropdown = CreateFrame("Frame", "eufPlayerFrameDropdown", self, "UIDropDownMenuTemplate")
 	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("PlayerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
 
-	playerFrameDropdown:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 273, 8)
+	playerFrameDropdown:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 273, 8)
 	playerFrameDropdown.title:SetPoint("BOTTOMLEFT", playerFrameDropdown, "TOPLEFT", 15, 3)
 	playerFrameDropdown.title:SetText("Player Frame Texure")
 
@@ -603,15 +506,15 @@ eufOptions:SetScript("OnShow", function(self)
 	-- Creates the target frame width slider.
 
 	if isClassic() then
-		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
+		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
 		wideTargetFrame:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 18, -34)
 	else
-		wideTargetFrame = createSlider(self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frames width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
+		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
 		wideTargetFrame:SetPoint("TOPLEFT", threatWarningDropdown, "BOTTOMLEFT", 18, -34)
 	end
 
-	eufSlider1:SetValue(cfg.wideTargetFrameWidth)
-	eufSlider1Editbox:SetText(cfg.wideTargetFrameWidth)
+	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
+	wideTargetFrameSliderEditbox:SetText(cfg.wideTargetFrameWidth)
 
 	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
 		value = floor(value)
@@ -621,11 +524,11 @@ eufOptions:SetScript("OnShow", function(self)
 	if isClassic() then
 		-- Creates the aura icon size slider.
 
-		auraIconSize = createSlider(self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
+		auraIconSize = createSlider("auraIconSize", self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
 
 		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
-		eufSlider2:SetValue(cfg.largeAuraIconSize)
-		eufSlider2Editbox:SetText(cfg.largeAuraIconSize)
+		auraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
+		auraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
 
 		auraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
@@ -634,11 +537,11 @@ eufOptions:SetScript("OnShow", function(self)
 	else
 		-- Creates the large aura icon size slider.
 
-		largeAuraIconSize = createSlider(self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
+		largeAuraIconSize = createSlider("largeAuraIconSize", self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
 
 		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
-		eufSlider2:SetValue(cfg.largeAuraIconSize)
-		eufSlider2Editbox:SetText(cfg.largeAuraIconSize)
+		largeAuraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
+		largeAuraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
 
 		largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
@@ -647,11 +550,11 @@ eufOptions:SetScript("OnShow", function(self)
 
 		-- Creates the small aura icon size slider.
 
-		smallAuraIconSize = createSlider(self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
+		smallAuraIconSize = createSlider("smallAuraIconSize", self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
 
 		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
-		eufSlider3:SetValue(cfg.smallAuraIconSize)
-		eufSlider3Editbox:SetText(cfg.smallAuraIconSize)
+		smallAuraIconSizeSlider:SetValue(cfg.smallAuraIconSize)
+		smallAuraIconSizeSliderEditbox:SetText(cfg.smallAuraIconSize)
 
 		smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
@@ -661,69 +564,215 @@ eufOptions:SetScript("OnShow", function(self)
 
 	-- Initializes the options panel with saved variables.
 
-	if cfg.bigPlayerHealthBar == true then
-		eufCheckbox1:SetChecked(true)
-	end
-
-	if cfg.bigTargetHealthBar == true then
-		eufCheckbox2:SetChecked(true)
-	end
-
 	if cfg.wideTargetFrame == true then
-		eufCheckbox3:SetChecked(true)
+		wideTargetFrameCheckbox:SetChecked(true)
 	end
 
 	if cfg.mirroredPositioning == true then
-		eufCheckbox4:SetChecked(true)
-	end
-
-	if cfg.classHealthBarColor == true then
-		eufCheckbox5:SetChecked(true)
-	end
-
-	if cfg.reactionHealthBarColor == true then
-		eufCheckbox6:SetChecked(true)
+		mirroredPositioningCheckbox:SetChecked(true)
 	end
 
 	if cfg.upperCaseAbbreviation == true then
-		eufCheckbox7:SetChecked(true)
+		upperCaseAbbreviationCheckbox:SetChecked(true)
 	end
 
 	if cfg.classIconPortraits == true then
-		eufCheckbox8:SetChecked(true)
+		classIconPortraitsCheckbox:SetChecked(true)
 	end
 
 	if cfg.hideHitIndicators == true then
-		eufCheckbox9:SetChecked(true)
+		hideHitIndicatorsCheckbox:SetChecked(true)
 	end
 
 	if cfg.hidePetStatusText == true then
-		eufCheckbox10:SetChecked(true)
+		hidePetStatusTextCheckbox:SetChecked(true)
 	end
 
 	if cfg.hideRestingIcon == true then
-		eufCheckbox11:SetChecked(true)
+		hideRestingIconCheckbox:SetChecked(true)
 	end
 
 	if isClassic() then
 		if cfg.shamanClassColorFix == true then
-			eufCheckbox12:SetChecked(true)
+			shamanClassColorFixCheckbox:SetChecked(true)
 		end
 	else
+		if C_CVar.GetCVar("threatShowNumeric") == "1" then
+			threatShowNumericCheckbox:SetChecked(true)
+		end
+	end
+
+	self:SetScript("OnShow", nil)
+end)
+
+-- Draws the health bar option panel elements.
+
+eufOptions.healthBars:SetScript("OnShow", function(self)
+	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+
+	title:SetPoint("TOPLEFT", self, 16, -16)
+	title:SetText("EnhancedUnitFrames")
+
+	local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
+
+	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	description:SetText("Modifies the default unit frames for better visuals.")
+
+	-- Creates checkboxes.
+
+	local bigPlayerHealthBar = createCheckbox("bigPlayerHealthBar", self, "Big Player Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
+	local bigTargetHealthBar = createCheckbox("bigTargetHealthBar", self, "Big Target Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
+	local classHealthBarColor = createCheckbox("classHealthBarColor", self, "Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
+	local reactionHealthBarColor = createCheckbox("reactionHealthBarColor", self, "Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
+	local hidePowerAnimation = createCheckbox("hidePowerAnimation", self, "Hide Power Animations", "Hides the animation when the resource bar is full.")
+	
+	if not isClassic() then
+		predictedHealth = createCheckbox("predictedHealth", self, "Show Predicted Health", "Shows an animation when you lose health.")
+		showBuilderFeedback = createCheckbox("showBuilderFeedback", self, "Show Builder Feedback", "Shows an animation when you build your class resource.")
+		showSpenderFeedback = createCheckbox("showSpenderFeedback", self, "Show Spender Feedback", "Shows an animation when you spend your class resource.")
+	end
+
+	-- Positions the checkboxes created.
+
+	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -7)
+	bigTargetHealthBar:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 0, -8)
+	classHealthBarColor:SetPoint("TOPLEFT", bigTargetHealthBar, "BOTTOMLEFT", 0, -8)
+	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
+	hidePowerAnimation:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
+
+	if not isClassic() then
+		predictedHealth:SetPoint("TOPLEFT", hidePowerAnimation, "BOTTOMLEFT", 0, -8)
+		showBuilderFeedback:SetPoint("TOPLEFT", predictedHealth, "BOTTOMLEFT", 0, -8)
+		showSpenderFeedback:SetPoint("TOPLEFT", showBuilderFeedback, "BOTTOMLEFT", 0, -8)
+	end
+
+	-- Applies scripts when the checkboxes are clicked.
+
+	bigPlayerHealthBar:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			cfg.bigPlayerHealthBar = true
+			PlaySound(856)
+		else
+			cfg.bigPlayerHealthBar = false
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	bigTargetHealthBar:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			cfg.bigTargetHealthBar = true
+			PlaySound(856)
+		else
+			cfg.bigTargetHealthBar = false
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	classHealthBarColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			cfg.classHealthBarColor = true
+			PlaySound(856)
+		else
+			cfg.classHealthBarColor = false
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionHealthBarColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			cfg.reactionHealthBarColor = true
+			PlaySound(856)
+		else
+			cfg.reactionHealthBarColor = false
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	hidePowerAnimation:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			cfg.hidePowerAnimation = true
+			PlaySound(856)
+		else
+			cfg.hidePowerAnimation = false
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	if not isClassic() then
+		predictedHealth:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("predictedHealth", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("predictedHealth", 0)
+				PlaySound(857)
+			end
+		end)
+
+		showBuilderFeedback:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("showBuilderFeedback", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("showBuilderFeedback", 0)
+				PlaySound(857)
+			end
+		end)
+
+		showSpenderFeedback:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				C_CVar.SetCVar("showSpenderFeedback", 1)
+				PlaySound(856)
+			else
+				C_CVar.SetCVar("showSpenderFeedback", 0)
+				PlaySound(857)
+			end
+		end)
+	end
+
+	-- Initializes the options panel with saved variables.
+
+	if cfg.bigPlayerHealthBar == true then
+		bigPlayerHealthBarCheckbox:SetChecked(true)
+	end
+
+	if cfg.bigTargetHealthBar == true then
+		bigTargetHealthBarCheckbox:SetChecked(true)
+	end
+
+	if cfg.classHealthBarColor == true then
+		classHealthBarColorCheckbox:SetChecked(true)
+	end
+
+	if cfg.reactionHealthBarColor == true then
+		reactionHealthBarColorCheckbox:SetChecked(true)
+	end
+
+	if cfg.hidePowerAnimation == true then
+		hidePowerAnimationCheckbox:SetChecked(true)
+	end
+
+	if not isClassic() then
 		if C_CVar.GetCVar("predictedHealth") == "1" then
-			eufCheckbox12:SetChecked(true)
+			predictedHealthCheckbox:SetChecked(true)
 		end
 
 		if C_CVar.GetCVar("showBuilderFeedback") == "1" then
-			eufCheckbox13:SetChecked(true)
+			showBuilderFeedbackCheckbox:SetChecked(true)
 		end
 
 		if C_CVar.GetCVar("showSpenderFeedback") == "1" then
-			eufCheckbox14:SetChecked(true)
-		end
-
-		if C_CVar.GetCVar("threatShowNumeric") == "1" then
-			eufCheckbox15:SetChecked(true)
+			showSpenderFeedbackCheckbox:SetChecked(true)
 		end
 	end
 
@@ -745,7 +794,7 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 
 	-- Creates the player frame scale slider.
 
-	local playerFrameScale = createScaleSlider(self, "Player Scale", 1, 1.5, 0.01, "Player Frame Scale", "Changes the scale of the player frame.")
+	local playerFrameScale = createScaleSlider("playerFrameScale", self, "Player Scale", 1, 1.5, 0.01, "Player Frame Scale", "Changes the scale of the player frame.")
 
 	playerFrameScale:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -21)
 
@@ -757,7 +806,7 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 
 	-- Creates the target frame scale slider.
 
-	local targetFrameScale = createScaleSlider(self, "Target Scale", 1, 1.5, 0.01, "Target Frame Scale", "Changes the scale of the target frame.")
+	local targetFrameScale = createScaleSlider("targetFrameScale", self, "Target Scale", 1, 1.5, 0.01, "Target Frame Scale", "Changes the scale of the target frame.")
 
 	targetFrameScale:SetPoint("TOPLEFT", playerFrameScale, "BOTTOMLEFT", 0, -70)
 

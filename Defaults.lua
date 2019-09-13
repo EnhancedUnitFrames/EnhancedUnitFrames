@@ -27,6 +27,10 @@ function SetDefaults()
 		cfg.hideHitIndicators = false
 	end
 
+	if cfg.hidePowerAnimation == nil then
+		cfg.hidePowerAnimation = false
+	end
+
 	if cfg.mirroredPositioning == nil then
 		cfg.mirroredPositioning = false
 	end
