@@ -433,16 +433,16 @@ eufOptions:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_SetWidth(statusTextDropdown, 160)
 
-	if C_CVar.GetCVar("statusTextDisplay") == "NUMERIC" then
+	if GetCVar("statusTextDisplay") == "NUMERIC" then
 		isChecked3 = "Numeric Value"
 		isCheckedNumericValue = true
-	elseif C_CVar.GetCVar("statusTextDisplay") == "PERCENT" then
+	elseif GetCVar("statusTextDisplay") == "PERCENT" then
 		isChecked3 = "Percentage"
 		isCheckedPercentage = true
-	elseif C_CVar.GetCVar("statusTextDisplay") == "BOTH" then
+	elseif GetCVar("statusTextDisplay") == "BOTH" then
 		isChecked3 = "Both"
 		isCheckedBoth = true
-	elseif C_CVar.GetCVar("statusTextDisplay") == "NONE" then
+	elseif GetCVar("statusTextDisplay") == "NONE" then
 		isChecked3 = "None"
 		isCheckedNone = true
 	end
