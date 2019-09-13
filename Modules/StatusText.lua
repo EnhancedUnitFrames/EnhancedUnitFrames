@@ -114,7 +114,7 @@ function StatusTextStyling()
 		if value and valueMax > 0 then
 			if GetCVar("statusTextDisplay") == "NUMERIC" then
 				textString:SetText(valueDisplay)
-			elseif GetCVar("statusTextDisplay") == "PERCENT" and not statusFrame.powerToken then
+			elseif GetCVar("statusTextDisplay") == "PERCENT" then
 				textString:SetText(valuePercentageDisplay)
 				isDead()
 			elseif GetCVar("statusTextDisplay") == "BOTH" then
