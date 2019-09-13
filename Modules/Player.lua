@@ -56,8 +56,13 @@ function PlayerFrameStyling()
 		if isClassic() then
 			PlayerRestIcon:ClearAllPoints()
 			PlayerRestIcon:SetPoint("TOPLEFT", 39, -50)
+			PlayerAttackGlow:SetAlpha(0)
 			PlayerAttackIcon:ClearAllPoints()
 			PlayerAttackIcon:SetPoint("TOPLEFT", PlayerRestIcon, 1, 1)
+		else
+			if C_CVar.GetCVar("threatWarning") == "0" then
+				PlayerAttackGlow:SetAlpha(0)
+			end
 		end
 
 		PlayerFrameBackground:ClearAllPoints()
