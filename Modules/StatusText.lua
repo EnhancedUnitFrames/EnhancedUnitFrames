@@ -120,7 +120,9 @@ function StatusTextStyling()
 			elseif GetCVar("statusTextDisplay") == "BOTH" and statusFrame.LeftText and statusFrame.RightText then
 				statusFrame.LeftText:SetText(valuePercentageDisplay)
 				statusFrame.RightText:SetText(valueDisplay)
-				textString:SetText(valueDisplay)
+				statusFrame.LeftText:Show()
+				statusFrame.RightText:Show()
+				textString:Hide()
 				isDead()
 			elseif GetCVar("statusTextDisplay") == "NONE" or GetCVar("statusText") == "0" then
 				textString:SetText(valueDisplay)
