@@ -36,7 +36,7 @@ function SetDefaults()
 	end
 
 	if cfg.hidePetStatusText == nil then
-		cfg.hidePetStatusText = true
+		cfg.hidePetStatusText = false
 	end
 
 	if cfg.hideRestingIcon == nil then

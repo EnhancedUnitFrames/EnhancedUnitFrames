@@ -188,12 +188,16 @@ function PlayerFrameStyling()
 		PetFrameManaBarTextLeft:SetAlpha(0)
 		PetFrameManaBarTextRight:SetAlpha(0)
 	else
+		PetFrameHealthBarText:ClearAllPoints()
+		PetFrameHealthBarText:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
 		PetFrameHealthBarTextLeft:ClearAllPoints()
-		PetFrameHealthBarTextLeft:SetPoint("CENTER", PetFrameHealthBar, 0, 0)
+		PetFrameHealthBarTextLeft:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
 		PetFrameHealthBarTextRight:SetAlpha(0)
+		PetFrameManaBarText:ClearAllPoints()
+		PetFrameManaBarText:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
 		PetFrameManaBarTextLeft:SetAlpha(0)
 		PetFrameManaBarTextRight:ClearAllPoints()
-		PetFrameManaBarTextRight:SetPoint("CENTER", PetFrameManaBar, 0, -1)
+		PetFrameManaBarTextRight:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
 	end
 
 	-- Hides the resting glow and resting icon on the player frame.
