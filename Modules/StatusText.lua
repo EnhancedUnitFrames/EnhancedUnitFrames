@@ -128,6 +128,8 @@ function StatusTextStyling()
 		local function isDead()
 			if isClassic() then
 				if UnitExists("target") and UnitIsDead("target") then
+					TargetFrameHealthBar.LeftText:SetText("")
+					TargetFrameHealthBar.RightText:SetText("")
 					TargetFrameHealthBarText:SetText("")
 				end
 			else
@@ -140,9 +142,13 @@ function StatusTextStyling()
 				elseif UnitExists("boss4") and UnitIsDead("boss4") then
 					Boss4TargetFrameTextureFrameHealthBarText:SetText("")
 				elseif UnitExists("focus") and UnitIsDead("focus") then
-					FocusFrameTextureFrameHealthBarText:SetText("")
+					FocusFrameHealthBar.LeftText:SetText("")
+					FocusFrameHealthBar.RightText:SetText("")
+					FocusFrameHealthBar.TextString:SetText("")
 				elseif UnitExists("target") and UnitIsDead("target") then
-					TargetFrameTextureFrameHealthBarText:SetText("")
+					TargetFrameHealthBar.LeftText:SetText("")
+					TargetFrameHealthBar.RightText:SetText("")
+					TargetFrameHealthBar.TextString:SetText("")
 				end
 			end
 		end
