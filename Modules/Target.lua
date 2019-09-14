@@ -226,9 +226,9 @@ function TargetFrameStyling()
 				self.midFlash:Show()
 				self.rightFlash:Show()
 			end)
-
-			TargetFrame:SetWidth(targetWidth)
 		end
+
+		TargetFrame:SetWidth(targetWidth)
 	end
 
 	if cfgCharacter.enabled then
