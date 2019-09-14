@@ -126,13 +126,63 @@ function StatusTextStyling()
 		local valuePercentageDisplay = math.ceil((value / valueMax) * 100) .. "%"
 
 		local function isDead()
-			if isClassic() then
-				if UnitExists("target") and UnitIsDead("target") then
-					TargetFrameHealthBar.LeftText:SetText("")
-					TargetFrameHealthBar.RightText:SetText("")
-					TargetFrameHealthBarText:SetText("")
+			if UnitIsDead("player") or UnitIsGhost("player") then
+				if GetCVar("statusTextDisplay") == "BOTH" then
+					PlayerFrameHealthBar.TextString:Show()
 				end
-			else
+
+				if UnitIsDead("player") then
+					PlayerFrameHealthBar.TextString:SetText("Dead")
+				elseif UnitIsGhost("player") then
+					PlayerFrameHealthBar.TextString:SetText("Ghost")
+				end
+
+				PlayerFrameHealthBar.LeftText:SetAlpha(0)
+				PlayerFrameHealthBar.RightText:SetAlpha(0)
+				PlayerFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+				PlayerFrameManaBar:SetAlpha(0)
+				PlayerFrameManaBar.LeftText:SetAlpha(0)
+				PlayerFrameManaBar.RightText:SetAlpha(0)
+				PlayerFrameManaBar.TextString:SetAlpha(0)
+			elseif not UnitIsDead("player") or not UnitIsGhost("player") then
+				PlayerFrameHealthBar.LeftText:SetAlpha(1)
+				PlayerFrameHealthBar.RightText:SetAlpha(1)
+				PlayerFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+				PlayerFrameManaBar:SetAlpha(1)
+				PlayerFrameManaBar.LeftText:SetAlpha(1)
+				PlayerFrameManaBar.RightText:SetAlpha(1)
+				PlayerFrameManaBar.TextString:SetAlpha(1)
+			end
+
+			if UnitIsDead("target") or UnitIsGhost("target") then
+				if GetCVar("statusTextDisplay") == "BOTH" then
+					TargetFrameHealthBar.TextString:Show()
+				end
+
+				if UnitIsDead("target") then
+					TargetFrameHealthBar.TextString:SetText("Dead")
+				elseif UnitIsGhost("target") then
+					TargetFrameHealthBar.TextString:SetText("Ghost")
+				end
+
+				TargetFrameHealthBar.LeftText:SetAlpha(0)
+				TargetFrameHealthBar.RightText:SetAlpha(0)
+				TargetFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+				TargetFrameManaBar:SetAlpha(0)
+				TargetFrameManaBar.LeftText:SetAlpha(0)
+				TargetFrameManaBar.RightText:SetAlpha(0)
+				TargetFrameManaBar.TextString:SetAlpha(0)
+			elseif not UnitIsDead("target") or not UnitIsGhost("target") then
+				TargetFrameHealthBar.LeftText:SetAlpha(1)
+				TargetFrameHealthBar.RightText:SetAlpha(1)
+				TargetFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+				TargetFrameManaBar:SetAlpha(1)
+				TargetFrameManaBar.LeftText:SetAlpha(1)
+				TargetFrameManaBar.RightText:SetAlpha(1)
+				TargetFrameManaBar.TextString:SetAlpha(1)
+			end
+
+			if not isClassic() then
 				if UnitExists("boss1") and UnitIsDead("boss1") then
 					Boss1TargetFrameTextureFrameHealthBarText:SetText("")
 				elseif UnitExists("boss2") and UnitIsDead("boss2") then
@@ -141,14 +191,34 @@ function StatusTextStyling()
 					Boss3TargetFrameTextureFrameHealthBarText:SetText("")
 				elseif UnitExists("boss4") and UnitIsDead("boss4") then
 					Boss4TargetFrameTextureFrameHealthBarText:SetText("")
-				elseif UnitExists("focus") and UnitIsDead("focus") then
-					FocusFrameHealthBar.LeftText:SetText("")
-					FocusFrameHealthBar.RightText:SetText("")
-					FocusFrameHealthBar.TextString:SetText("")
-				elseif UnitExists("target") and UnitIsDead("target") then
-					TargetFrameHealthBar.LeftText:SetText("")
-					TargetFrameHealthBar.RightText:SetText("")
-					TargetFrameHealthBar.TextString:SetText("")
+				end
+
+				if UnitIsDead("focus") or UnitIsGhost("focus") then
+					if GetCVar("statusTextDisplay") == "BOTH" then
+						FocusFrameHealthBar.TextString:Show()
+					end
+
+					if UnitIsDead("focus") then
+						FocusFrameHealthBar.TextString:SetText("Dead")
+					elseif UnitIsGhost("focus") then
+						FocusFrameHealthBar.TextString:SetText("Ghost")
+					end
+
+					FocusFrameHealthBar.LeftText:SetAlpha(0)
+					FocusFrameHealthBar.RightText:SetAlpha(0)
+					FocusFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+					FocusFrameManaBar:SetAlpha(0)
+					FocusFrameManaBar.LeftText:SetAlpha(0)
+					FocusFrameManaBar.RightText:SetAlpha(0)
+					FocusFrameManaBar.TextString:SetAlpha(0)
+				elseif not UnitIsDead("focus") or not UnitIsGhost("focus") then
+					FocusFrameHealthBar.LeftText:SetAlpha(1)
+					FocusFrameHealthBar.RightText:SetAlpha(1)
+					FocusFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+					FocusFrameManaBar:SetAlpha(1)
+					FocusFrameManaBar.LeftText:SetAlpha(1)
+					FocusFrameManaBar.RightText:SetAlpha(1)
+					FocusFrameManaBar.TextString:SetAlpha(1)
 				end
 			end
 		end
@@ -156,6 +226,7 @@ function StatusTextStyling()
 		if value and valueMax > 0 then
 			if GetCVar("statusTextDisplay") == "NUMERIC" then
 				textString:SetText(valueDisplay)
+				isDead()
 			elseif GetCVar("statusTextDisplay") == "PERCENT" then
 				textString:SetText(valuePercentageDisplay)
 				isDead()
