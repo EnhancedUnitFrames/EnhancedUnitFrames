@@ -154,9 +154,12 @@ function StatusTextStyling()
 				textString:SetText(valuePercentageDisplay)
 				isDead()
 			elseif GetCVar("statusTextDisplay") == "BOTH" and statusFrame.LeftText and statusFrame.RightText then
+				if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+					statusFrame.LeftText:Show()
+				end
+
 				statusFrame.LeftText:SetText(valuePercentageDisplay)
 				statusFrame.RightText:SetText(valueDisplay)
-				statusFrame.LeftText:Show()
 				statusFrame.RightText:Show()
 				textString:Hide()
 				isDead()
