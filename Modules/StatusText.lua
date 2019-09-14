@@ -137,6 +137,7 @@ function StatusTextStyling()
 					PlayerFrameHealthBar.TextString:SetText("Ghost")
 				end
 
+				PlayerFrameHealthBar:SetAlpha(0)
 				PlayerFrameHealthBar.LeftText:SetAlpha(0)
 				PlayerFrameHealthBar.RightText:SetAlpha(0)
 				PlayerFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
@@ -145,6 +146,7 @@ function StatusTextStyling()
 				PlayerFrameManaBar.RightText:SetAlpha(0)
 				PlayerFrameManaBar.TextString:SetAlpha(0)
 			elseif not UnitIsDead("player") or not UnitIsGhost("player") then
+				PlayerFrameHealthBar:SetAlpha(1)
 				PlayerFrameHealthBar.LeftText:SetAlpha(1)
 				PlayerFrameHealthBar.RightText:SetAlpha(1)
 				PlayerFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
@@ -165,6 +167,7 @@ function StatusTextStyling()
 					TargetFrameHealthBar.TextString:SetText("Ghost")
 				end
 
+				TargetFrameHealthBar:SetAlpha(0)
 				TargetFrameHealthBar.LeftText:SetAlpha(0)
 				TargetFrameHealthBar.RightText:SetAlpha(0)
 				TargetFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
@@ -173,6 +176,7 @@ function StatusTextStyling()
 				TargetFrameManaBar.RightText:SetAlpha(0)
 				TargetFrameManaBar.TextString:SetAlpha(0)
 			elseif not UnitIsDead("target") or not UnitIsGhost("target") then
+				TargetFrameHealthBar:SetAlpha(1)
 				TargetFrameHealthBar.LeftText:SetAlpha(1)
 				TargetFrameHealthBar.RightText:SetAlpha(1)
 				TargetFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
@@ -204,6 +208,7 @@ function StatusTextStyling()
 						FocusFrameHealthBar.TextString:SetText("Ghost")
 					end
 
+					FocusFrameHealthBar:SetAlpha(0)
 					FocusFrameHealthBar.LeftText:SetAlpha(0)
 					FocusFrameHealthBar.RightText:SetAlpha(0)
 					FocusFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
@@ -212,6 +217,7 @@ function StatusTextStyling()
 					FocusFrameManaBar.RightText:SetAlpha(0)
 					FocusFrameManaBar.TextString:SetAlpha(0)
 				elseif not UnitIsDead("focus") or not UnitIsGhost("focus") then
+					FocusFrameHealthBar:SetAlpha(1)
 					FocusFrameHealthBar.LeftText:SetAlpha(1)
 					FocusFrameHealthBar.RightText:SetAlpha(1)
 					FocusFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
