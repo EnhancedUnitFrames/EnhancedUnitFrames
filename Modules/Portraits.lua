@@ -1,7 +1,7 @@
 -- Changes the unit frame portraits to the unit's class icon.
 
 function ClassIconPortraits()
-	if cfg.classIconPortraits then
+	local function Portraits()
 		hooksecurefunc("UnitFramePortrait_Update", function(self)
 			if self.portrait then
 				if UnitIsPlayer(self.unit) then
@@ -16,5 +16,15 @@ function ClassIconPortraits()
 				end
 			end
 		end)
+	end
+
+	if cfgCharacter.enabled then
+		if cfgCharacter.classIconPortraits then
+			Portraits()
+		end
+	else
+		if cfg.classIconPortraits then
+			Portraits()
+		end
 	end
 end

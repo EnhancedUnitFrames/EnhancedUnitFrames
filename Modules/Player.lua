@@ -2,32 +2,14 @@ function PlayerFrameStyling()
 	-- Styles the player frame.
 
 	hooksecurefunc("PlayerFrame_ToPlayerArt", function(self)
-		if cfg.bigPlayerHealthBar then
-			if cfg.elitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
-			elseif cfg.rareElitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
-			elseif cfg.rarePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
-			else
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
-			end
-
+		local function BigStyling()
 			PlayerFrameHealthBar:SetHeight(29)
 			PlayerFrameManaBar:SetHeight(12)
 			PlayerFrameManaBar:ClearAllPoints()
 			PlayerFrameManaBar:SetPoint("TOPLEFT", 107, -52)
-		else
-			if cfg.elitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
-			elseif cfg.rareElitePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
-			elseif cfg.rarePlayerFrame then
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
-			else
-				PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
-			end
+		end
 
+		local function WhoaStyling()
 			PlayerFrameHealthBar:SetHeight(20)
 			PlayerFrameManaBar:SetHeight(19)
 			PlayerFrameManaBar:ClearAllPoints()
@@ -50,6 +32,60 @@ function PlayerFrameStyling()
 				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.BigSpikeGlow:ClearAllPoints()
 				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.BigSpikeGlow:SetPoint("CENTER", PlayerFrameManaBar.FullPowerFrame, "RIGHT", 5, -2)
 				PlayerFrameManaBar.FullPowerFrame.SpikeFrame.BigSpikeGlow:SetSize(30, 50)
+			end
+		end
+
+		if cfgCharacter.enabled then
+			if cfgCharacter.bigPlayerHealthBar then
+				if cfgCharacter.elitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+				elseif cfgCharacter.rareElitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
+				elseif cfgCharacter.rarePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+				else
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+				end
+
+				BigStyling()
+			else
+				if cfgCharacter.elitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
+				elseif cfgCharacter.rareElitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+				elseif cfgCharacter.rarePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+				else
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+				end
+
+				WhoaStyling()
+			end
+		else
+			if cfg.bigPlayerHealthBar then
+				if cfg.elitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+				elseif cfg.rareElitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
+				elseif cfg.rarePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+				else
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+				end
+
+				BigStyling()
+			else
+				if cfg.elitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
+				elseif cfg.rareElitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+				elseif cfg.rarePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+				else
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+				end
+
+				WhoaStyling()
 			end
 		end
 
@@ -100,6 +136,23 @@ function PlayerFrameStyling()
 		PlayerName:SetAlpha(0)
 	end)
 
+	-- Styles the pet frame.
+
+	PetFrameHealthBar:ClearAllPoints()
+	PetFrameHealthBar:SetPoint("TOPLEFT", 45, -22)
+	PetFrameHealthBarText:ClearAllPoints()
+	PetFrameHealthBarText:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
+	PetFrameHealthBarTextLeft:ClearAllPoints()
+	PetFrameHealthBarTextLeft:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
+	PetFrameHealthBarTextRight:SetAlpha(0)
+	PetFrameManaBar:ClearAllPoints()
+	PetFrameManaBar:SetPoint("TOPLEFT", 45, -29.5)
+	PetFrameManaBarText:ClearAllPoints()
+	PetFrameManaBarText:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
+	PetFrameManaBarTextLeft:SetAlpha(0)
+	PetFrameManaBarTextRight:ClearAllPoints()
+	PetFrameManaBarTextRight:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
+
 	-- Changes the status bar text to reflect live.
 
 	if isClassic() then
@@ -140,76 +193,106 @@ function PlayerFrameStyling()
 	-- Fixes the level text positioning on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
-		if isClassic() then
-			if cfg.bigPlayerHealthBar then
-				PlayerLevelText:ClearAllPoints()
-				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -2.5)
+		local function BigOneHundredPlus()
+			PlayerLevelText:ClearAllPoints()
+			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -2.5)
+		end
+
+		local function BigBelowOneHundred()
+			PlayerLevelText:ClearAllPoints()
+			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -2.5)
+		end
+
+		local function WhoaOneHundredPlus()
+			PlayerLevelText:ClearAllPoints()
+			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -3.5)
+		end
+
+		local function WhoaBelowOneHundred()
+			PlayerLevelText:ClearAllPoints()
+			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -3.5)
+		end
+
+		if cfgCharacter.enabled then
+			if cfgCharacter.bigPlayerHealthBar then
+				if level >= 100 then
+					BigOneHundredPlus()
+				else
+					BigBelowOneHundred()
+				end
 			else
-				PlayerLevelText:ClearAllPoints()
-				PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -3.5)
+				if level >= 100 then
+					WhoaOneHundredPlus()
+				else
+					WhoaBelowOneHundred()
+				end
 			end
 		else
 			if cfg.bigPlayerHealthBar then
 				if level >= 100 then
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -2.5)
+					BigOneHundredPlus()
 				else
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -2.5)
+					BigBelowOneHundred()
 				end
 			else
 				if level >= 100 then
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -3.5)
+					WhoaOneHundredPlus()
 				else
-					PlayerLevelText:ClearAllPoints()
-					PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -3.5)
+					WhoaBelowOneHundred()
 				end
 			end
 		end
 	end)
 
-	-- Fixes the pet frame health and resource bars.
-
-	PetFrameHealthBar:ClearAllPoints()
-	PetFrameHealthBar:SetPoint("TOPLEFT", 45, -22)
-	PetFrameManaBar:ClearAllPoints()
-	PetFrameManaBar:SetPoint("TOPLEFT", 45, -29.5)
-
 	-- Hides the damage/healing spam on player and pet frames.
 
-	if cfg.hideHitIndicators then
+	local function HitIndicators()
 		hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Hide)
 		hooksecurefunc(PlayerHitIndicator, "Show", PlayerHitIndicator.Hide)
 	end
 
+	if cfgCharacter.enabled then
+		if cfgCharacter.hideHitIndicators then
+			HitIndicators()
+		end
+	else
+		if cfg.hideHitIndicators then
+			HitIndicators()
+		end
+	end
+
 	-- Hides the pet frame status bar text.
 
-	if cfg.hidePetStatusText then
+	local function PetStatusText()
 		PetFrameHealthBarText:SetAlpha(0)
 		PetFrameHealthBarTextLeft:SetAlpha(0)
 		PetFrameHealthBarTextRight:SetAlpha(0)
 		PetFrameManaBarText:SetAlpha(0)
 		PetFrameManaBarTextLeft:SetAlpha(0)
 		PetFrameManaBarTextRight:SetAlpha(0)
+	end
+
+	if cfgCharacter.enabled then
+		if cfgCharacter.hidePetStatusText then
+			PetStatusText()
+		end
 	else
-		PetFrameHealthBarText:ClearAllPoints()
-		PetFrameHealthBarText:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
-		PetFrameHealthBarTextLeft:ClearAllPoints()
-		PetFrameHealthBarTextLeft:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
-		PetFrameHealthBarTextRight:SetAlpha(0)
-		PetFrameManaBarText:ClearAllPoints()
-		PetFrameManaBarText:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
-		PetFrameManaBarTextLeft:SetAlpha(0)
-		PetFrameManaBarTextRight:ClearAllPoints()
-		PetFrameManaBarTextRight:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
+		if cfg.hidePetStatusText then
+			PetStatusText()
+		end
 	end
 
 	-- Hides the resting glow and resting icon on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateStatus", function()
-		if cfg.hideRestingIcon then
-			PlayerRestIcon:SetAlpha(0)
+		if cfgCharacter.enabled then
+			if cfgCharacter.hideRestingIcon then
+				PlayerRestIcon:SetAlpha(0)
+			end
+		else
+			if cfg.hideRestingIcon then
+				PlayerRestIcon:SetAlpha(0)
+			end
 		end
 
 		PlayerRestGlow:SetAlpha(0)

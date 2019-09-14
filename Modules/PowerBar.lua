@@ -1,5 +1,5 @@
 function PowerBar()
-	if cfg.hidePowerAnimation then
+	local function PowerAnimation()
 		-- Disables the animation when the resource bar is full.
 
 		PowerBarColor["ENERGY"] = {
@@ -53,6 +53,16 @@ function PowerBar()
 			b = 1.00,
 			fullPowerAnim = false
 		}
+	end
+
+	if cfgCharacter.enabled then
+		if cfgCharacter.hidePowerAnimation then
+			PowerAnimation()
+		end
+	else
+		if cfg.hidePowerAnimation then
+			PowerAnimation()
+		end
 	end
 
 	-- Source: Modern AlternatePowerBar by SDPhantom.

@@ -20,15 +20,120 @@ function TargetFrameStyling()
 	end
 
 	-- Source: Wide Target by Gello.
-	-- Makes the target frame wider.
+	-- Makes the target and focus frame wider.
 
-	if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+	local function WideFocus()
+		local frame = FocusFrame.textureFrame
+		local tex = FocusFrame.borderTexture
+		local cx = 232
+		local cy = 100
+
+		tex:ClearAllPoints()
+		tex:SetPoint("TOPRIGHT", frame)
+		tex:SetSize(cx / 2, cy)
+		tex:SetTexCoord(0.546875, 1, 0, 0.78125)
+
+		local left = frame:CreateTexture(nil, "BACKGROUND")
+
+		left:SetSize(cx / 4, cy)
+		left:SetPoint("TOPLEFT")
+		left:SetTexCoord(0.09375, 0.3203125, 0, 0.78125)
+
+		local mid = frame:CreateTexture(nil, "BACKGROUND")
+
+		mid:SetPoint("TOPLEFT", left, "TOPRIGHT")
+		mid:SetPoint("BOTTOMRIGHT", tex, "BOTTOMLEFT")
+		mid:SetTexCoord(0.3203125, 0.546875, 0, 0.78125)
+
+		hooksecurefunc(tex, "SetTexture", function(self, texture)
+			left:SetTexture(texture)
+			mid:SetTexture(texture)
+		end)
+
+		hooksecurefunc(tex, "SetVertexColor", function(self, ...)
+			left:SetVertexColor(...)
+			mid:SetVertexColor(...)
+		end)
+
+		hooksecurefunc(tex, "SetGradientAlpha", function(self, ...)
+			left:SetGradientAlpha(...)
+			mid:SetGradientAlpha(...)
+		end)
+
+		local r, g, b, a = tex:GetVertexColor()
+
+		left:SetVertexColor(r, g, b, a)
+		mid:SetVertexColor(r, g, b, a)
+
+		local flash = FocusFrameFlash
+
+		flash.rightFlash = FocusFrame:CreateTexture(nil, "BACKGROUND")
+		flash.midFlash = FocusFrame:CreateTexture(nil, "BACKGROUND")
+
+		hooksecurefunc(flash, "SetTexture", function(self, texture)
+			flash.rightFlash:SetTexture(texture)
+			flash.midFlash:SetTexture(texture)
+		end)
+
+		hooksecurefunc(flash, "SetPoint", function(self, anchorPoint, relativeTo, relativePoint, xoff, yoff)
+			local cx = self:GetWidth()
+			local cy = self:GetHeight()
+			local specificXoff
+
+			self:SetWidth(cx / 2)
+			self.rightFlash:SetWidth(cx / 2)
+			self.rightFlash:SetHeight(cy)
+			self.midFlash:SetHeight(cy)
+
+			if cy < 100 then
+				self:SetTexCoord(0, 0.47265625, 0, 0.181640625)
+				self.rightFlash:SetTexCoord(0.47265625, 0.9453125, 0, 0.181640625)
+				self.midFlash:SetTexCoord(0.25, 0.5, 0, 0.181640625)
+
+				specificXoff = -38
+			elseif cx > 255 then
+				self:SetTexCoord(0, .5, 0, 1)
+				self.rightFlash:SetTexCoord(.5, 1, 0, 1)
+				self.midFlash:SetTexCoord(0.25, 0.5, 0, 1)
+
+				specificXoff = -24
+			elseif cy > 100 then
+				self:SetTexCoord(0, 0.47265625, 0.181640625, 0.400390625)
+				self.rightFlash:SetTexCoord(0.47265625, 0.9453125, 0.181640625, 0.400390625)
+				self.midFlash:SetTexCoord(0.19, 0.39, 0.181640625, 0.400390625)
+
+				specificXoff = -34
+			end
+
+			self.rightFlash:SetPoint("TOPRIGHT", FocusFrame, "TOPRIGHT", specificXoff - xoff, yoff)
+			self.midFlash:SetPoint("TOPLEFT", self,	"TOPRIGHT")
+			self.midFlash:SetPoint("BOTTOMRIGHT", self.rightFlash, "BOTTOMLEFT")
+		end)
+
+		hooksecurefunc(flash, "Show", function(self)
+			self.rightFlash:Show()
+			self.midFlash:Show()
+		end)
+
+		hooksecurefunc(flash, "Hide", function(self)
+			self.rightFlash:Hide()
+			self.midFlash:Hide()
+		end)
+
+		hooksecurefunc(flash, "SetVertexColor", function(self, ...)
+			self.rightFlash:SetVertexColor(...)
+			self.midFlash:SetVertexColor(...)
+		end)
+
+		FocusFrame:SetWidth(focusWidth)
+	end
+
+	local function WideTarget()
 		local cx = 232
 		local cy = 100
 		local frame = TargetFrame.textureFrame
 		local left = frame:CreateTexture(nil, "BACKGROUND")
 		local mid = frame:CreateTexture(nil, "BACKGROUND")
-		local targetWidth = cfg.wideTargetFrameWidth
 		local tex = TargetFrame.borderTexture
 
 		hooksecurefunc(tex, "SetGradientAlpha", function(self, ...)
@@ -121,9 +226,33 @@ function TargetFrameStyling()
 				self.midFlash:Show()
 				self.rightFlash:Show()
 			end)
-		end
 
-		TargetFrame:SetWidth(targetWidth)
+			TargetFrame:SetWidth(targetWidth)
+		end
+	end
+
+	if cfgCharacter.enabled then
+		focusWidth = cfgCharacter.wideTargetFrameWidth
+		targetWidth = cfgCharacter.wideTargetFrameWidth
+
+		if cfgCharacter.wideTargetFrame and cfgCharacter.wideTargetFrameWidth >= 231 then
+			if not isClassic() then
+				WideFocus()
+			end
+
+			WideTarget()
+		end
+	else
+		focusWidth = cfg.wideTargetFrameWidth
+		targetWidth = cfg.wideTargetFrameWidth
+
+		if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+			if not isClassic() then
+				WideFocus()
+			end
+
+			WideTarget()
+		end
 	end
 
 	-- Styles the focus and target frames.
@@ -132,14 +261,16 @@ function TargetFrameStyling()
 		local classification = UnitClassification(self.unit)
 
 		local function Styling()
-			if cfg.bigTargetHealthBar then
+			local function BigStyling()
 				self.healthbar:SetHeight(29)
 				self.highLevelTexture:ClearAllPoints()
 				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 52.5, -1.5)
 				self.manabar:SetHeight(12)
 				self.manabar:ClearAllPoints()
 				self.manabar:SetPoint("TOPRIGHT", -107, -52)
-			else
+			end
+
+			local function WhoaStyling()
 				self.healthbar:SetHeight(20)
 				self.highLevelTexture:ClearAllPoints()
 				self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 52.5, -2.5)
@@ -148,16 +279,51 @@ function TargetFrameStyling()
 				self.manabar:SetPoint("TOPRIGHT", -107, -44)
 			end
 
-			if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-				TargetFrameBackground:SetSize(cfg.wideTargetFrameWidth - 113, 40)
-				self.Background:SetSize(cfg.wideTargetFrameWidth - 113, 40)
-				self.healthbar:SetWidth(cfg.wideTargetFrameWidth - 113)
-				self.manabar:SetWidth(cfg.wideTargetFrameWidth - 113)
-			else
+			local function WideStyling()
+				if cfgCharacter.enabled then
+					TargetFrameBackground:SetSize(cfgCharacter.wideTargetFrameWidth - 113, 40)
+					self.Background:SetSize(cfgCharacter.wideTargetFrameWidth - 113, 40)
+					self.healthbar:SetWidth(cfgCharacter.wideTargetFrameWidth - 113)
+					self.manabar:SetWidth(cfgCharacter.wideTargetFrameWidth - 113)
+				else
+					TargetFrameBackground:SetSize(cfg.wideTargetFrameWidth - 113, 40)
+					self.Background:SetSize(cfg.wideTargetFrameWidth - 113, 40)
+					self.healthbar:SetWidth(cfg.wideTargetFrameWidth - 113)
+					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 113)
+				end
+			end
+
+			local function DefaultStyling()
 				TargetFrameBackground:SetSize(119, 40)
 				self.Background:SetSize(119, 40)
 				self.healthbar:SetWidth(119)
 				self.manabar:SetWidth(119)
+			end
+
+			if cfgCharacter.enabled then
+				if cfgCharacter.bigTargetHealthBar then
+					BigStyling()
+				else
+					WhoaStyling()
+				end
+
+				if cfgCharacter.wideTargetFrame and cfgCharacter.wideTargetFrameWidth >= 231 then
+					WideStyling()
+				else
+					DefaultStyling()
+				end
+			else
+				if cfg.bigTargetHealthBar then
+					BigStyling()
+				else
+					WhoaStyling()
+				end
+
+				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+					WideStyling()
+				else
+					DefaultStyling()
+				end
 			end
 
 			if isClassic() then
@@ -217,41 +383,81 @@ function TargetFrameStyling()
 			self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
 		end
 
-		if forceNormalTexture then
-			if cfg.bigTargetHealthBar then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
-			else
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
-			end
-		elseif classification == "minus" then
-			forceNormalTexture = true
+		if cfgCharacter.enabled then
+			if forceNormalTexture then
+				if cfgCharacter.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+				end
+			elseif classification == "minus" then
+				forceNormalTexture = true
 
-			self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
-		elseif classification == "worldboss" or classification == "elite" then
-			if cfg.bigTargetHealthBar then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+				self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
+			elseif classification == "worldboss" or classification == "elite" then
+				if cfgCharacter.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
+				end
+			elseif classification == "rareelite" then
+				if cfgCharacter.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+				end
+			elseif classification == "rare" then
+				if cfgCharacter.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+				end
 			else
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
-			end
-		elseif classification == "rareelite" then
-			if cfg.bigTargetHealthBar then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
-			else
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
-			end
-		elseif classification == "rare" then
-			if cfg.bigTargetHealthBar then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
-			else
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+				forceNormalTexture = true
+
+				if cfgCharacter.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+				end
 			end
 		else
-			forceNormalTexture = true
+			if forceNormalTexture then
+				if cfg.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+				end
+			elseif classification == "minus" then
+				forceNormalTexture = true
 
-			if cfg.bigTargetHealthBar then
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+				self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
+			elseif classification == "worldboss" or classification == "elite" then
+				if cfg.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
+				end
+			elseif classification == "rareelite" then
+				if cfg.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+				end
+			elseif classification == "rare" then
+				if cfg.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+				end
 			else
-				self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+				forceNormalTexture = true
+
+				if cfg.bigTargetHealthBar then
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+				else
+					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+				end
 			end
 		end
 
@@ -259,26 +465,62 @@ function TargetFrameStyling()
 			self.haveElite = nil
 
 			if classification == "minus" then
-				if cfg.bigTargetHealthBar then
+				local function MinusBigStyling()
 					self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 52.5, -1.5)
 					self.manabar:SetHeight(12)
 					self.manabar:ClearAllPoints()
 					self.manabar:SetPoint("TOPRIGHT", -107, -52)
-				else
+				end
+
+				local function MinusWhoaStyling()
 					self.highLevelTexture:SetPoint("CENTER", self.manabar, "BOTTOMRIGHT", 52.5, -2.5)
 					self.manabar:SetHeight(19)
 					self.manabar:ClearAllPoints()
 					self.manabar:SetPoint("TOPRIGHT", -107, -44)
 				end
 
-				if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-					self.Background:SetSize(cfg.wideTargetFrameWidth - 113, 10)
-					self.healthbar:SetSize(cfg.wideTargetFrameWidth - 113, 12)
-					self.manabar:SetWidth(cfg.wideTargetFrameWidth - 113)
-				else
+				local function MinusWideStyling()
+					if cfgCharacter.enabled then
+						self.Background:SetSize(cfgCharacter.wideTargetFrameWidth - 113, 10)
+						self.healthbar:SetSize(cfgCharacter.wideTargetFrameWidth - 113, 12)
+						self.manabar:SetWidth(cfgCharacter.wideTargetFrameWidth - 113)
+					else
+						self.Background:SetSize(cfg.wideTargetFrameWidth - 113, 10)
+						self.healthbar:SetSize(cfg.wideTargetFrameWidth - 113, 12)
+						self.manabar:SetWidth(cfg.wideTargetFrameWidth - 113)
+					end
+				end
+
+				local function MinusDefaultStyling()
 					self.Background:SetSize(119, 10)
 					self.healthbar:SetSize(119, 12)
 					self.manabar:SetWidth(119)
+				end
+
+				if cfgCharacter.enabled then
+					if cfgCharacter.bigTargetHealthBar then
+						MinusBigStyling()
+					else
+						MinusWhoaStyling()
+					end
+
+					if cfgCharacter.wideTargetFrame and cfgCharacter.wideTargetFrameWidth >= 231 then
+						MinusWideStyling()
+					else
+						MinusDefaultStyling()
+					end
+				else
+					if cfg.bigTargetHealthBar then
+						MinusBigStyling()
+					else
+						MinusWhoaStyling()
+					end
+
+					if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
+						MinusWideStyling()
+					else
+						MinusDefaultStyling()
+					end
 				end
 
 				if isClassic() then
@@ -426,47 +668,105 @@ function TargetFrameStyling()
 	-- Fixes the level text positioning on the focus and target frames.
 
 	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
-		if isClassic() then
-			if cfg.bigTargetHealthBar then
-				TargetFrameTextureFrameLevelText:ClearAllPoints()
-				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+		local function FocusBigOneHundredPlus()
+			FocusFrameTextureFrameLevelText:ClearAllPoints()
+			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 52.5, -2.5)
+		end
+
+		local function FocusBigBelowOneHundred()
+			FocusFrameTextureFrameLevelText:ClearAllPoints()
+			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+		end
+
+		local function FocusWhoaOneHundredPlus()
+			FocusFrameTextureFrameLevelText:ClearAllPoints()
+			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 52.5, -3.5)
+		end
+
+		local function FocusWhoaBelowOneHundred()
+			FocusFrameTextureFrameLevelText:ClearAllPoints()
+			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -3.5)
+		end
+
+		local function TargetBigOneHundredPlus()
+			TargetFrameTextureFrameLevelText:ClearAllPoints()
+			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -2.5)
+		end
+
+		local function TargetBigBelowOneHundred()
+			TargetFrameTextureFrameLevelText:ClearAllPoints()
+			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+		end
+
+		local function TargetWhoaOneHundredPlus()
+			TargetFrameTextureFrameLevelText:ClearAllPoints()
+			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -3.5)
+		end
+
+		local function TargetWhoaBelowOneHundred()
+			TargetFrameTextureFrameLevelText:ClearAllPoints()
+			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -3.5)
+		end
+
+		local function FocusBig()
+			if UnitLevel("focus") >= 100 then
+				FocusBigOneHundredPlus()
 			else
-				TargetFrameTextureFrameLevelText:ClearAllPoints()
-				TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -3.5)
+				FocusBigBelowOneHundred()
+			end
+		end
+
+		local function FocusWhoa()
+			if UnitLevel("focus") >= 100 then
+				FocusWhoaOneHundredPlus()
+			else
+				FocusWhoaBelowOneHundred()
+			end
+		end
+
+		local function TargetBig()
+			if UnitLevel("target") >= 100 then
+				TargetBigOneHundredPlus()
+			else
+				TargetBigBelowOneHundred()
+			end
+		end
+
+		local function TargetWhoa()
+			if UnitLevel("target") >= 100 then
+				TargetWhoaOneHundredPlus()
+			else
+				TargetWhoaBelowOneHundred()
+			end
+		end
+
+		if cfgCharacter.enabled then
+			if cfgCharacter.bigTargetHealthBar then
+				if not isClassic() then
+					FocusBig()
+				end
+
+				TargetBig()
+			else
+				if not isClassic() then
+					FocusWhoa()
+				end
+
+				TargetWhoa()
 			end
 		else
 			if cfg.bigTargetHealthBar then
-				if UnitLevel("focus") >= 100 then
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 52.5, -2.5)
-				else
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+				if not isClassic() then
+					FocusBig()
 				end
 
-				if UnitLevel("target") >= 100 then
-					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -2.5)
-				else
-					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
-				end
+				TargetBig()
 			else
-				if UnitLevel("focus") >= 100 then
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 52.5, -3.5)
-				else
-					FocusFrameTextureFrameLevelText:ClearAllPoints()
-					FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrameManaBar, "BOTTOMRIGHT", 53.5, -3.5)
+				if not isClassic() then
+					FocusWhoa()
 				end
 
-				if UnitLevel("target") >= 100 then
-					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -3.5)
-				else
-					TargetFrameTextureFrameLevelText:ClearAllPoints()
-					TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -3.5)
-				end
+				TargetWhoa()
 			end
 		end
 	end)

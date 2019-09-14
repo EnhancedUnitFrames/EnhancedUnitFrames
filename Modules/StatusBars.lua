@@ -2,12 +2,8 @@
 -- Changes the unit frame health bar colors to the unit's class or reaction color.
 
 function StatusBarStyling()
-	if not cfg.classHealthBarColor and not cfg.reactionHealthBarColor then
-		return
-	end
-
 	function HealthBarColor(self, unit)
-		if cfg.classHealthBarColor then
+		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(self.unit))]
 
@@ -21,7 +17,7 @@ function StatusBarStyling()
 			end
 		end
 
-		if cfg.reactionHealthBarColor then
+		local function ReactionColor()
 			if UnitExists(unit) and not UnitIsPlayer(unit) then
 				if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
 					self:SetStatusBarColor(0.5, 0.5, 0.5)
@@ -34,6 +30,24 @@ function StatusBarStyling()
 						self:SetStatusBarColor(0, 0.9, 0)
 					end
 				end
+			end
+		end
+
+		if cfgCharacter.enabled then
+			if cfgCharacter.classHealthBarColor then
+				ClassColor()
+			end
+
+			if cfgCharacter.reactionHealthBarColor then
+				ReactionColor()
+			end
+		else
+			if cfg.classHealthBarColor then
+				ClassColor()
+			end
+
+			if cfg.reactionHealthBarColor then
+				ReactionColor()
 			end
 		end
 	end

@@ -2,7 +2,7 @@
 -- Allows the easy mirrored positioning of the player and target frames.
 
 function MirroredPositioning()
-	if cfg.mirroredPositioning then
+	local function Positioning()
 		local function SetMirroredPlayerPosition(a, b)
 			local _, _, _, offsetX, offsetY = b:GetPoint(1)
 			local mirroredOffsetX = (GetScreenWidth() / b:GetScale()) - offsetX - b:GetWidth()
@@ -66,5 +66,15 @@ function MirroredPositioning()
 		local FocusedFrame = CreateFrame("Frame")
 
 		FocusedFrame:SetScript("OnUpdate", FocusedFrame_OnUpdate)
+	end
+
+	if cfgCharacter.enabled then
+		if cfgCharacter.mirroredPositioning then
+			Positioning()
+		end
+	else
+		if cfg.mirroredPositioning then
+			Positioning()
+		end
 	end
 end

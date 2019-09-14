@@ -27,7 +27,6 @@ local function isAddOnLoaded(self, event, addon)
 			ShamanClassColorFix()
 		else
 			BossFrameStyling()
-			FocusFrameStyling()
 		end
 
 		euf:UnregisterEvent("ADDON_LOADED")

@@ -169,6 +169,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
+	characterConfiguration = createCheckbox("characterConfiguration", self, "Per-Character Configuration", "If enabled, this character's configuration will not affect the global configuration.")
+
 	if isClassic() then
 		wideTargetFrame = createCheckbox("wideTargetFrame", self, "Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
 	else
@@ -190,6 +192,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
+	characterConfiguration:SetPoint("RIGHT", title, 50, 0)
 	wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
 	upperCaseAbbreviation:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
@@ -204,12 +207,36 @@ eufOptions.general:SetScript("OnShow", function(self)
 		threatShowNumeric:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
 	end
 
-	wideTargetFrame:SetScript("OnClick", function(self)
+	characterConfiguration:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.wideTargetFrame = true
+			cfgCharacter.enabled = true
+
 			PlaySound(856)
 		else
-			cfg.wideTargetFrame = false
+			cfgCharacter.enabled = false
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	wideTargetFrame:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if cfgCharacter.enabled then
+				cfgCharacter.wideTargetFrame = true
+			else
+				cfg.wideTargetFrame = false
+			end
+
+			PlaySound(856)
+		else
+			if cfgCharacter.enabled then
+				cfgCharacter.wideTargetFrame = false
+			else
+				cfg.wideTargetFrame = false
+			end
+			
 			PlaySound(857)
 		end
 
@@ -218,10 +245,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	mirroredPositioning:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.mirroredPositioning = true
+			if cfgCharacter.enabled then
+				cfgCharacter.mirroredPositioning = true
+			else
+				cfg.mirroredPositioning = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.mirroredPositioning = false
+			if cfgCharacter.enabled then
+				cfgCharacter.mirroredPositioning = false
+			else
+				cfg.mirroredPositioning = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -230,10 +267,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	upperCaseAbbreviation:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.upperCaseAbbreviation = true
+			if cfgCharacter.enabled then
+				cfgCharacter.upperCaseAbbreviation = true
+			else
+				cfg.upperCaseAbbreviation = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.upperCaseAbbreviation = false
+			if cfgCharacter.enabled then
+				cfgCharacter.upperCaseAbbreviation = false
+			else
+				cfg.upperCaseAbbreviation = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -242,10 +289,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	classIconPortraits:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.classIconPortraits = true
+			if cfgCharacter.enabled then
+				cfgCharacter.classIconPortraits = true
+			else
+				cfg.classIconPortraits = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.classIconPortraits = false
+			if cfgCharacter.enabled then
+				cfgCharacter.classIconPortraits = false
+			else
+				cfg.classIconPortraits = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -254,10 +311,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	hideHitIndicators:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.hideHitIndicators = true
+			if cfgCharacter.enabled then
+				cfgCharacter.hideHitIndicators = true
+			else
+				cfg.hideHitIndicators = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.hideHitIndicators = false
+			if cfgCharacter.enabled then
+				cfgCharacter.hideHitIndicators = false
+			else
+				cfg.hideHitIndicators = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -266,10 +333,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	hidePetStatusText:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.hidePetStatusText = true
+			if cfgCharacter.enabled then
+				cfgCharacter.hidePetStatusText = true
+			else
+				cfg.hidePetStatusText = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.hidePetStatusText = false
+			if cfgCharacter.enabled then
+				cfgCharacter.hidePetStatusText = false
+			else
+				cfg.hidePetStatusText = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -278,10 +355,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	hideRestingIcon:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.hideRestingIcon = true
+			if cfgCharacter.enabled then
+				cfgCharacter.hideRestingIcon = true
+			else
+				cfg.hideRestingIcon = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.hideRestingIcon = false
+			if cfgCharacter.enabled then
+				cfgCharacter.hideRestingIcon = false
+			else
+				cfg.hideRestingIcon = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -291,10 +378,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 	if isClassic() then
 		shamanClassColorFix:SetScript("OnClick", function(self)
 			if self:GetChecked() then
-				cfg.shamanClassColorFix = true
+				if cfgCharacter.enabled then
+					cfgCharacter.shamanClassColorFix = true
+				else
+					cfg.shamanClassColorFix = true
+				end
+
 				PlaySound(856)
 			else
-				cfg.shamanClassColorFix = false
+				if cfgCharacter.enabled then
+					cfgCharacter.shamanClassColorFix = false
+				else
+					cfg.shamanClassColorFix = false
+				end
+
 				PlaySound(857)
 			end
 
@@ -334,18 +431,34 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
 
-	if cfg.elitePlayerFrame == true then
-		isChecked1 = "Elite Player Frame"
-		isCheckedElite = true
-	elseif cfg.rarePlayerFrame == true then
-		isChecked1 = "Rare Player Frame"
-		isCheckedRare = true
-	elseif cfg.rareElitePlayerFrame == true then
-		isChecked1 = "Rare Elite Player Frame"
-		isCheckedRareElite = true
+	if cfgCharacter.enabled then
+		if cfgCharacter.elitePlayerFrame == true then
+			isChecked1 = "Elite Player Frame"
+			isCheckedElite = true
+		elseif cfgCharacter.rarePlayerFrame == true then
+			isChecked1 = "Rare Player Frame"
+			isCheckedRare = true
+		elseif cfgCharacter.rareElitePlayerFrame == true then
+			isChecked1 = "Rare Elite Player Frame"
+			isCheckedRareElite = true
+		else
+			isChecked1 = "Default Player Frame"
+			isCheckedDefault = true
+		end
 	else
-		isChecked1 = "Default Player Frame"
-		isCheckedDefault = true
+		if cfg.elitePlayerFrame == true then
+			isChecked1 = "Elite Player Frame"
+			isCheckedElite = true
+		elseif cfg.rarePlayerFrame == true then
+			isChecked1 = "Rare Player Frame"
+			isCheckedRare = true
+		elseif cfg.rareElitePlayerFrame == true then
+			isChecked1 = "Rare Elite Player Frame"
+			isCheckedRareElite = true
+		else
+			isChecked1 = "Default Player Frame"
+			isCheckedDefault = true
+		end
 	end
 
 	UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
@@ -358,9 +471,15 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = false
 			isCheckedDefault = false
 
-			cfg.elitePlayerFrame = true
-			cfg.rarePlayerFrame = false
-			cfg.rareElitePlayerFrame = false
+			if cfgCharacter.enabled then
+				cfgCharacter.elitePlayerFrame = true
+				cfgCharacter.rarePlayerFrame = false
+				cfgCharacter.rareElitePlayerFrame = false
+			else
+				cfg.elitePlayerFrame = true
+				cfg.rarePlayerFrame = false
+				cfg.rareElitePlayerFrame = false
+			end
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
@@ -371,9 +490,15 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = false
 			isCheckedDefault = false
 
-			cfg.elitePlayerFrame = false
-			cfg.rarePlayerFrame = true
-			cfg.rareElitePlayerFrame = false
+			if cfgCharacter.enabled then
+				cfgCharacter.elitePlayerFrame = false
+				cfgCharacter.rarePlayerFrame = true
+				cfgCharacter.rareElitePlayerFrame = false
+			else
+				cfg.elitePlayerFrame = false
+				cfg.rarePlayerFrame = true
+				cfg.rareElitePlayerFrame = false
+			end
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
@@ -384,9 +509,15 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = true
 			isCheckedDefault = false
 
-			cfg.elitePlayerFrame = false
-			cfg.rarePlayerFrame = false
-			cfg.rareElitePlayerFrame = true
+			if cfgCharacter.enabled then
+				cfgCharacter.elitePlayerFrame = false
+				cfgCharacter.rarePlayerFrame = false
+				cfgCharacter.rareElitePlayerFrame = true
+			else
+				cfg.elitePlayerFrame = false
+				cfg.rarePlayerFrame = false
+				cfg.rareElitePlayerFrame = true
+			end
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
@@ -397,9 +528,15 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = false
 			isCheckedDefault = true
 
-			cfg.elitePlayerFrame = false
-			cfg.rarePlayerFrame = false
-			cfg.rareElitePlayerFrame = false
+			if cfgCharacter.enabled then
+				cfgCharacter.elitePlayerFrame = false
+				cfgCharacter.rarePlayerFrame = false
+				cfgCharacter.rareElitePlayerFrame = false
+			else
+				cfg.elitePlayerFrame = false
+				cfg.rarePlayerFrame = false
+				cfg.rareElitePlayerFrame = false
+			end
 
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
@@ -622,41 +759,83 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	-- Initializes the options panel with saved variables.
 
-	if cfg.wideTargetFrame == true then
-		wideTargetFrameCheckbox:SetChecked(true)
-	end
+	if cfgCharacter.enabled then
+		characterConfigurationCheckbox:SetChecked(true)
 
-	if cfg.mirroredPositioning == true then
-		mirroredPositioningCheckbox:SetChecked(true)
-	end
+		if cfgCharacter.wideTargetFrame == true then
+			wideTargetFrameCheckbox:SetChecked(true)
+		end
 
-	if cfg.upperCaseAbbreviation == true then
-		upperCaseAbbreviationCheckbox:SetChecked(true)
-	end
+		if cfgCharacter.mirroredPositioning == true then
+			mirroredPositioningCheckbox:SetChecked(true)
+		end
 
-	if cfg.classIconPortraits == true then
-		classIconPortraitsCheckbox:SetChecked(true)
-	end
+		if cfgCharacter.upperCaseAbbreviation == true then
+			upperCaseAbbreviationCheckbox:SetChecked(true)
+		end
 
-	if cfg.hideHitIndicators == true then
-		hideHitIndicatorsCheckbox:SetChecked(true)
-	end
+		if cfgCharacter.classIconPortraits == true then
+			classIconPortraitsCheckbox:SetChecked(true)
+		end
 
-	if cfg.hidePetStatusText == true then
-		hidePetStatusTextCheckbox:SetChecked(true)
-	end
+		if cfgCharacter.hideHitIndicators == true then
+			hideHitIndicatorsCheckbox:SetChecked(true)
+		end
 
-	if cfg.hideRestingIcon == true then
-		hideRestingIconCheckbox:SetChecked(true)
-	end
+		if cfgCharacter.hidePetStatusText == true then
+			hidePetStatusTextCheckbox:SetChecked(true)
+		end
 
-	if isClassic() then
-		if cfg.shamanClassColorFix == true then
-			shamanClassColorFixCheckbox:SetChecked(true)
+		if cfgCharacter.hideRestingIcon == true then
+			hideRestingIconCheckbox:SetChecked(true)
+		end
+
+		if isClassic() then
+			if cfgCharacter.shamanClassColorFix == true then
+				shamanClassColorFixCheckbox:SetChecked(true)
+			end
+		else
+			if C_CVar.GetCVar("threatShowNumeric") == "1" then
+				threatShowNumericCheckbox:SetChecked(true)
+			end
 		end
 	else
-		if C_CVar.GetCVar("threatShowNumeric") == "1" then
-			threatShowNumericCheckbox:SetChecked(true)
+		if cfg.wideTargetFrame == true then
+			wideTargetFrameCheckbox:SetChecked(true)
+		end
+
+		if cfg.mirroredPositioning == true then
+			mirroredPositioningCheckbox:SetChecked(true)
+		end
+
+		if cfg.upperCaseAbbreviation == true then
+			upperCaseAbbreviationCheckbox:SetChecked(true)
+		end
+
+		if cfg.classIconPortraits == true then
+			classIconPortraitsCheckbox:SetChecked(true)
+		end
+
+		if cfg.hideHitIndicators == true then
+			hideHitIndicatorsCheckbox:SetChecked(true)
+		end
+
+		if cfg.hidePetStatusText == true then
+			hidePetStatusTextCheckbox:SetChecked(true)
+		end
+
+		if cfg.hideRestingIcon == true then
+			hideRestingIconCheckbox:SetChecked(true)
+		end
+
+		if isClassic() then
+			if cfg.shamanClassColorFix == true then
+				shamanClassColorFixCheckbox:SetChecked(true)
+			end
+		else
+			if C_CVar.GetCVar("threatShowNumeric") == "1" then
+				threatShowNumericCheckbox:SetChecked(true)
+			end
 		end
 	end
 
@@ -708,10 +887,20 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	bigPlayerHealthBar:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.bigPlayerHealthBar = true
+			if cfgCharacter.enabled then
+				cfgCharacter.bigPlayerHealthBar = true
+			else
+				cfg.bigPlayerHealthBar = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.bigPlayerHealthBar = false
+			if cfgCharacter.enabled then
+				cfgCharacter.bigPlayerHealthBar = false
+			else
+				cfg.bigPlayerHealthBar = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -720,10 +909,20 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	bigTargetHealthBar:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.bigTargetHealthBar = true
+			if cfgCharacter.enabled then
+				cfgCharacter.bigTargetHealthBar = true
+			else
+				cfg.bigTargetHealthBar = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.bigTargetHealthBar = false
+			if cfgCharacter.enabled then
+				cfgCharacter.bigTargetHealthBar = false
+			else
+				cfg.bigTargetHealthBar = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -732,10 +931,20 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	classHealthBarColor:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.classHealthBarColor = true
+			if cfgCharacter.enabled then
+				cfgCharacter.classHealthBarColor = true
+			else
+				cfg.classHealthBarColor = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.classHealthBarColor = false
+			if cfgCharacter.enabled then
+				cfgCharacter.classHealthBarColor = false
+			else
+				cfg.classHealthBarColor = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -744,10 +953,20 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	reactionHealthBarColor:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.reactionHealthBarColor = true
+			if cfgCharacter.enabled then
+				cfgCharacter.reactionHealthBarColor = true
+			else
+				cfg.reactionHealthBarColor = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.reactionHealthBarColor = false
+			if cfgCharacter.enabled then
+				cfgCharacter.reactionHealthBarColor = false
+			else
+				cfg.reactionHealthBarColor = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -756,10 +975,20 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	hidePowerAnimation:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			cfg.hidePowerAnimation = true
+			if cfgCharacter.enabled then
+				cfgCharacter.hidePowerAnimation = true
+			else
+				cfg.hidePowerAnimation = true
+			end
+
 			PlaySound(856)
 		else
-			cfg.hidePowerAnimation = false
+			if cfgCharacter.enabled then
+				cfgCharacter.hidePowerAnimation = false
+			else
+				cfg.hidePowerAnimation = false
+			end
+
 			PlaySound(857)
 		end
 
@@ -800,37 +1029,73 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	-- Initializes the options panel with saved variables.
 
-	if cfg.bigPlayerHealthBar == true then
-		bigPlayerHealthBarCheckbox:SetChecked(true)
-	end
-
-	if cfg.bigTargetHealthBar == true then
-		bigTargetHealthBarCheckbox:SetChecked(true)
-	end
-
-	if cfg.classHealthBarColor == true then
-		classHealthBarColorCheckbox:SetChecked(true)
-	end
-
-	if cfg.reactionHealthBarColor == true then
-		reactionHealthBarColorCheckbox:SetChecked(true)
-	end
-
-	if cfg.hidePowerAnimation == true then
-		hidePowerAnimationCheckbox:SetChecked(true)
-	end
-
-	if not isClassic() then
-		if C_CVar.GetCVar("predictedHealth") == "1" then
-			predictedHealthCheckbox:SetChecked(true)
+	if cfgCharacter.enabled then
+		if cfgCharacter.bigPlayerHealthBar == true then
+			bigPlayerHealthBarCheckbox:SetChecked(true)
 		end
 
-		if C_CVar.GetCVar("showBuilderFeedback") == "1" then
-			showBuilderFeedbackCheckbox:SetChecked(true)
+		if cfgCharacter.bigTargetHealthBar == true then
+			bigTargetHealthBarCheckbox:SetChecked(true)
 		end
 
-		if C_CVar.GetCVar("showSpenderFeedback") == "1" then
-			showSpenderFeedbackCheckbox:SetChecked(true)
+		if cfgCharacter.classHealthBarColor == true then
+			classHealthBarColorCheckbox:SetChecked(true)
+		end
+
+		if cfgCharacter.reactionHealthBarColor == true then
+			reactionHealthBarColorCheckbox:SetChecked(true)
+		end
+
+		if cfgCharacter.hidePowerAnimation == true then
+			hidePowerAnimationCheckbox:SetChecked(true)
+		end
+
+		if not isClassic() then
+			if C_CVar.GetCVar("predictedHealth") == "1" then
+				predictedHealthCheckbox:SetChecked(true)
+			end
+
+			if C_CVar.GetCVar("showBuilderFeedback") == "1" then
+				showBuilderFeedbackCheckbox:SetChecked(true)
+			end
+
+			if C_CVar.GetCVar("showSpenderFeedback") == "1" then
+				showSpenderFeedbackCheckbox:SetChecked(true)
+			end
+		end
+	else
+		if cfg.bigPlayerHealthBar == true then
+			bigPlayerHealthBarCheckbox:SetChecked(true)
+		end
+
+		if cfg.bigTargetHealthBar == true then
+			bigTargetHealthBarCheckbox:SetChecked(true)
+		end
+
+		if cfg.classHealthBarColor == true then
+			classHealthBarColorCheckbox:SetChecked(true)
+		end
+
+		if cfg.reactionHealthBarColor == true then
+			reactionHealthBarColorCheckbox:SetChecked(true)
+		end
+
+		if cfg.hidePowerAnimation == true then
+			hidePowerAnimationCheckbox:SetChecked(true)
+		end
+
+		if not isClassic() then
+			if C_CVar.GetCVar("predictedHealth") == "1" then
+				predictedHealthCheckbox:SetChecked(true)
+			end
+
+			if C_CVar.GetCVar("showBuilderFeedback") == "1" then
+				showBuilderFeedbackCheckbox:SetChecked(true)
+			end
+
+			if C_CVar.GetCVar("showSpenderFeedback") == "1" then
+				showSpenderFeedbackCheckbox:SetChecked(true)
+			end
 		end
 	end
 
@@ -860,12 +1125,22 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -36)
 	end
 
-	wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
-	wideTargetFrameSliderEditbox:SetText(cfg.wideTargetFrameWidth)
+	if cfgCharacter.enabled then
+		wideTargetFrameSlider:SetValue(cfgCharacter.wideTargetFrameWidth)
+		wideTargetFrameSliderEditbox:SetText(cfgCharacter.wideTargetFrameWidth)
+	else
+		wideTargetFrameSlider:SetValue(cfg.wideTargetFrameWidth)
+		wideTargetFrameSliderEditbox:SetText(cfg.wideTargetFrameWidth)
+	end
 
 	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
 		value = floor(value)
-		cfg.wideTargetFrameWidth = value
+
+		if cfgCharacter.enabled then
+			cfgCharacter.wideTargetFrameWidth = value
+		else
+			cfg.wideTargetFrameWidth = value
+		end
 	end)
 
 	if isClassic() then
@@ -874,12 +1149,23 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 		auraIconSize = createSlider("auraIconSize", self, "Aura Size", 17, 30, 1, "Aura Icon Size", "Changes the aura icon size on the target frame.")
 
 		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
-		auraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
-		auraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
+
+		if cfgCharacter.enabled then
+			auraIconSizeSlider:SetValue(cfgCharacter.largeAuraIconSize)
+			auraIconSizeSliderEditbox:SetText(cfgCharacter.largeAuraIconSize)
+		else
+			auraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
+			auraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
+		end
 
 		auraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
-			cfg.largeAuraIconSize = value
+
+			if cfgCharacter.enabled then
+				cfgCharacter.largeAuraIconSize = value
+			else
+				cfg.largeAuraIconSize = value
+			end
 		end)
 	else
 		-- Creates the large aura icon size slider.
@@ -887,12 +1173,23 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 		largeAuraIconSize = createSlider("largeAuraIconSize", self, "Large Aura", 17, 30, 1, "Large Aura Icon Size", "Changes the large aura icon size on the target and focus frames.")
 
 		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
-		largeAuraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
-		largeAuraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
+
+		if cfgCharacter.enabled then
+			largeAuraIconSizeSlider:SetValue(cfgCharacter.largeAuraIconSize)
+			largeAuraIconSizeSliderEditbox:SetText(cfgCharacter.largeAuraIconSize)
+		else
+			largeAuraIconSizeSlider:SetValue(cfg.largeAuraIconSize)
+			largeAuraIconSizeSliderEditbox:SetText(cfg.largeAuraIconSize)
+		end
 
 		largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
-			cfg.largeAuraIconSize = value
+
+			if cfgCharacter.enabled then
+				cfgCharacter.largeAuraIconSize = value
+			else
+				cfg.largeAuraIconSize = value
+			end
 		end)
 
 		-- Creates the small aura icon size slider.
@@ -900,38 +1197,38 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 		smallAuraIconSize = createSlider("smallAuraIconSize", self, "Small Aura", 17, 30, 1, "Small Aura Icon Size", "Changes the small aura icon size on the target and focus frames.")
 
 		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
-		smallAuraIconSizeSlider:SetValue(cfg.smallAuraIconSize)
-		smallAuraIconSizeSliderEditbox:SetText(cfg.smallAuraIconSize)
+
+		if cfgCharacter.enabled then
+			smallAuraIconSizeSlider:SetValue(cfgCharacter.smallAuraIconSize)
+			smallAuraIconSizeSliderEditbox:SetText(cfgCharacter.smallAuraIconSize)
+		else
+			smallAuraIconSizeSlider:SetValue(cfg.smallAuraIconSize)
+			smallAuraIconSizeSliderEditbox:SetText(cfg.smallAuraIconSize)
+		end
 
 		smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
-			cfg.smallAuraIconSize = value
+
+			if cfgCharacter.enabled then
+				cfgCharacter.smallAuraIconSize = value
+			else
+				cfg.smallAuraIconSize = value
+			end
 		end)
 	end
 
-	-- Creates the player frame scale slider.
+	-- Creates the player and target frame scale slider.
 
-	playerFrameScale = createScaleSlider("playerFrameScale", self, "Player Scale", 1, 1.5, 0.01, "Player Frame Scale", "Changes the scale of the player frame.")
+	playerTargetFrameScale = createScaleSlider("playerTargetFrameScale", self, "Main Scale", 1, 1.5, 0.01, "Player and Target Frame Scale", "Changes the scale of the player and target frame.")
 
 	if isClassic() then
-		playerFrameScale:SetPoint("TOPLEFT", auraIconSize, "BOTTOMLEFT", 0, -70)
+		playerTargetFrameScale:SetPoint("TOPLEFT", auraIconSize, "BOTTOMLEFT", 0, -70)
 	else
-		playerFrameScale:SetPoint("TOPLEFT", smallAuraIconSize, "BOTTOMLEFT", 0, -70)
+		playerTargetFrameScale:SetPoint("TOPLEFT", smallAuraIconSize, "BOTTOMLEFT", 0, -70)
 	end
 
-	playerFrameScale:HookScript("OnValueChanged", function(self, value)
+	playerTargetFrameScale:HookScript("OnValueChanged", function(self, value)
 		PlayerFrame:SetScale(round(value, 2))
-	end)
-
-	self:SetScript("OnShow", nil)
-
-	-- Creates the target frame scale slider.
-
-	local targetFrameScale = createScaleSlider("targetFrameScale", self, "Target Scale", 1, 1.5, 0.01, "Target Frame Scale", "Changes the scale of the target frame.")
-
-	targetFrameScale:SetPoint("TOPLEFT", playerFrameScale, "BOTTOMLEFT", 0, -70)
-
-	targetFrameScale:HookScript("OnValueChanged", function(self, value)
 		TargetFrame:SetScale(round(value, 2))
 	end)
 

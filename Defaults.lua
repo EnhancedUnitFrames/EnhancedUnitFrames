@@ -1,6 +1,7 @@
 -- Sets configuration defaults if this is first-run.
 
 cfg = {}
+cfgCharacter = {}
 
 function SetDefaults()
 	if cfg.bigPlayerHealthBar == nil then
@@ -79,5 +80,87 @@ function SetDefaults()
 
 	if cfg.wideTargetFrameWidth == nil then
 		cfg.wideTargetFrameWidth = 280
+	end
+
+	if cfgCharacter.enabled == nil then
+		cfgCharacter.enabled = false
+	end
+
+	if cfgCharacter.bigPlayerHealthBar == nil then
+		cfgCharacter.bigPlayerHealthBar = false
+	end
+
+	if cfgCharacter.bigTargetHealthBar == nil then
+		cfgCharacter.bigTargetHealthBar = false
+	end
+
+	if cfgCharacter.classHealthBarColor == nil then
+		cfgCharacter.classHealthBarColor = true
+	end
+
+	if cfgCharacter.classIconPortraits == nil then
+		cfgCharacter.classIconPortraits = false
+	end
+
+	if cfgCharacter.elitePlayerFrame == nil then
+		cfgCharacter.elitePlayerFrame = false
+	end
+
+	if cfgCharacter.hideHitIndicators == nil then
+		cfgCharacter.hideHitIndicators = false
+	end
+
+	if cfgCharacter.hidePowerAnimation == nil then
+		cfgCharacter.hidePowerAnimation = false
+	end
+
+	if cfgCharacter.mirroredPositioning == nil then
+		cfgCharacter.mirroredPositioning = false
+	end
+
+	if cfgCharacter.hidePetStatusText == nil then
+		cfgCharacter.hidePetStatusText = false
+	end
+
+	if cfgCharacter.hideRestingIcon == nil then
+		cfgCharacter.hideRestingIcon = false
+	end
+
+	if cfgCharacter.largeAuraIconSize == nil then
+		cfgCharacter.largeAuraIconSize = 25
+	end
+
+	if cfgCharacter.rarePlayerFrame == nil then
+		cfgCharacter.rarePlayerFrame = false
+	end
+
+	if cfgCharacter.rareElitePlayerFrame == nil then
+		cfgCharacter.rareElitePlayerFrame = false
+	end
+
+	if cfgCharacter.reactionHealthBarColor == nil then
+		cfgCharacter.reactionHealthBarColor = true
+	end
+
+	if isClassic() then
+		if cfgCharacter.shamanClassColorFix == nil then
+			cfgCharacter.shamanClassColorFix = true
+		end
+	end
+
+	if cfgCharacter.smallAuraIconSize == nil then
+		cfgCharacter.smallAuraIconSize = 20
+	end
+
+	if cfgCharacter.upperCaseAbbreviation == nil then
+		cfgCharacter.upperCaseAbbreviation = true
+	end
+
+	if cfgCharacter.wideTargetFrame == nil then
+		cfgCharacter.wideTargetFrame = true
+	end
+
+	if cfgCharacter.wideTargetFrameWidth == nil then
+		cfgCharacter.wideTargetFrameWidth = 280
 	end
 end

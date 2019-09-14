@@ -2,37 +2,73 @@ function StatusTextStyling()
 	-- Formats numbers so they are readable.
 
 	local function ReadableNumber(number)
-		if cfg.upperCaseAbbreviation then
-			if not number then
-				return 0
-			elseif number >= 1000000000000000 then
-				return format("%.1fQ", number / 1000000000000000)
-			elseif number >= 1000000000000 then
-				return format("%.1fT", number / 1000000000000)
-			elseif number >= 1000000000 then
-				return format("%.1fB", number / 1000000000)
-			elseif number >= 1000000 then
-				return format("%.1fM", number / 1000000)
-			elseif number >= 1000 then
-				return format("%.1fK", number / 1000)
+		if cfgCharacter.enabled then
+			if cfgCharacter.upperCaseAbbreviation then
+				if not number then
+					return 0
+				elseif number >= 1000000000000000 then
+					return format("%.1fQ", number / 1000000000000000)
+				elseif number >= 1000000000000 then
+					return format("%.1fT", number / 1000000000000)
+				elseif number >= 1000000000 then
+					return format("%.1fB", number / 1000000000)
+				elseif number >= 1000000 then
+					return format("%.1fM", number / 1000000)
+				elseif number >= 1000 then
+					return format("%.1fK", number / 1000)
+				else
+					return number
+				end
 			else
-				return number
+				if not number then
+					return 0
+				elseif number >= 1000000000000000 then
+					return format("%.1fq", number / 1000000000000000)
+				elseif number >= 1000000000000 then
+					return format("%.1ft", number / 1000000000000)
+				elseif number >= 1000000000 then
+					return format("%.1fb", number / 1000000000)
+				elseif number >= 1000000 then
+					return format("%.1fm", number / 1000000)
+				elseif number >= 1000 then
+					return format("%.1fk", number / 1000)
+				else
+					return number
+				end
 			end
 		else
-			if not number then
-				return 0
-			elseif number >= 1000000000000000 then
-				return format("%.1fq", number / 1000000000000000)
-			elseif number >= 1000000000000 then
-				return format("%.1ft", number / 1000000000000)
-			elseif number >= 1000000000 then
-				return format("%.1fb", number / 1000000000)
-			elseif number >= 1000000 then
-				return format("%.1fm", number / 1000000)
-			elseif number >= 1000 then
-				return format("%.1fk", number / 1000)
+			if cfg.upperCaseAbbreviation then
+				if not number then
+					return 0
+				elseif number >= 1000000000000000 then
+					return format("%.1fQ", number / 1000000000000000)
+				elseif number >= 1000000000000 then
+					return format("%.1fT", number / 1000000000000)
+				elseif number >= 1000000000 then
+					return format("%.1fB", number / 1000000000)
+				elseif number >= 1000000 then
+					return format("%.1fM", number / 1000000)
+				elseif number >= 1000 then
+					return format("%.1fK", number / 1000)
+				else
+					return number
+				end
 			else
-				return number
+				if not number then
+					return 0
+				elseif number >= 1000000000000000 then
+					return format("%.1fq", number / 1000000000000000)
+				elseif number >= 1000000000000 then
+					return format("%.1ft", number / 1000000000000)
+				elseif number >= 1000000000 then
+					return format("%.1fb", number / 1000000000)
+				elseif number >= 1000000 then
+					return format("%.1fm", number / 1000000)
+				elseif number >= 1000 then
+					return format("%.1fk", number / 1000)
+				else
+					return number
+				end
 			end
 		end
 	end

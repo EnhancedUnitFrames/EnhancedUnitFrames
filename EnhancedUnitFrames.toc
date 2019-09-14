@@ -3,12 +3,12 @@
 ## Notes: Modifies the default unit frames for better visuals.
 ## Author: Michael with code from: Gello, Funkydude, haggen, KawF, SDPhantom, smokked_, whoarrior, and zork. 
 ## Version: 1.0
-## SavedVariablesPerCharacter: cfg
+## SavedVariables: cfg
+## SavedVariablesPerCharacter: cfgCharacter
 
 Modules\Auras.lua
 Modules\Boss.lua
 Modules\ClassColor.lua
-Modules\Focus.lua
 Modules\Positioning.lua
 Modules\Player.lua
 Modules\Portraits.lua
@@ -17,5 +17,5 @@ Modules\StatusBars.lua
 Modules\StatusText.lua
 Modules\Target.lua
 Defaults.lua
-Options.lua
 Core.lua
+Options.lua
