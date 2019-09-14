@@ -149,7 +149,13 @@ function StatusTextStyling()
 				PlayerFrameHealthBar:SetAlpha(1)
 				PlayerFrameHealthBar.LeftText:SetAlpha(1)
 				PlayerFrameHealthBar.RightText:SetAlpha(1)
-				PlayerFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+
+				if isClassic then
+					PlayerFrameHealthBar.TextString:SetFontObject("SystemFont_Outline_Small")
+				else
+					PlayerFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+				end
+
 				PlayerFrameManaBar:SetAlpha(1)
 				PlayerFrameManaBar.LeftText:SetAlpha(1)
 				PlayerFrameManaBar.RightText:SetAlpha(1)
@@ -179,7 +185,13 @@ function StatusTextStyling()
 				TargetFrameHealthBar:SetAlpha(1)
 				TargetFrameHealthBar.LeftText:SetAlpha(1)
 				TargetFrameHealthBar.RightText:SetAlpha(1)
-				TargetFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+
+				if isClassic then
+					TargetFrameHealthBar.TextString:SetFontObject("SystemFont_Outline_Small")
+				else
+					TargetFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+				end
+
 				TargetFrameManaBar:SetAlpha(1)
 				TargetFrameManaBar.LeftText:SetAlpha(1)
 				TargetFrameManaBar.RightText:SetAlpha(1)
