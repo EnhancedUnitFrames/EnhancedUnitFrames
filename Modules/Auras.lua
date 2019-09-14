@@ -47,8 +47,8 @@ function AuraStyling()
 	end
 
 	if cfgCharacter.enabled then
-		local LARGE_AURA_SIZE = cfgCharacter.largeAuraIconSize
-		local SMALL_AURA_SIZE = cfgCharacter.smallAuraIconSize
+		LARGE_AURA_SIZE = cfgCharacter.largeAuraIconSize
+		SMALL_AURA_SIZE = cfgCharacter.smallAuraIconSize
 
 		if cfgCharacter.wideTargetFrame and cfgCharacter.wideTargetFrameWidth >= 231 then
 			wideTargetFrameWidth = cfgCharacter.wideTargetFrameWidth
@@ -58,8 +58,8 @@ function AuraStyling()
 
 		Styling()
 	else
-		local LARGE_AURA_SIZE = cfg.largeAuraIconSize
-		local SMALL_AURA_SIZE = cfg.smallAuraIconSize
+		LARGE_AURA_SIZE = cfg.largeAuraIconSize
+		SMALL_AURA_SIZE = cfg.smallAuraIconSize
 
 		if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
 			wideTargetFrameWidth = cfg.wideTargetFrameWidth
