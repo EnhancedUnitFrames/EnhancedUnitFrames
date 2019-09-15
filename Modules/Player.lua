@@ -92,11 +92,13 @@ function PlayerFrameStyling()
 		if isClassic() then
 			PlayerRestIcon:ClearAllPoints()
 			PlayerRestIcon:SetPoint("TOPLEFT", 39, -50)
+			PlayerAttackBackground:SetAlpha(0)
 			PlayerAttackGlow:SetAlpha(0)
 			PlayerAttackIcon:ClearAllPoints()
 			PlayerAttackIcon:SetPoint("TOPLEFT", PlayerRestIcon, 1, 1)
 		else
 			if C_CVar.GetCVar("threatWarning") == "0" then
+				PlayerAttackBackground:SetAlpha(0)
 				PlayerAttackGlow:SetAlpha(0)
 			end
 		end
@@ -156,12 +158,12 @@ function PlayerFrameStyling()
 	-- Changes the status bar text to reflect live.
 
 	if isClassic() then
-		PlayerFrameHealthBarText:SetFontObject("SystemFont_Outline_Small")
-		PlayerFrameHealthBarTextLeft:SetFontObject("SystemFont_Outline_Small")
-		PlayerFrameHealthBarTextRight:SetFontObject("SystemFont_Outline_Small")
-		PlayerFrameManaBarText:SetFontObject("SystemFont_Outline_Small")
-		PlayerFrameManaBarTextLeft:SetFontObject("SystemFont_Outline_Small")
-		PlayerFrameManaBarTextRight:SetFontObject("SystemFont_Outline_Small")
+		PlayerFrameHealthBarText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBarTextLeft:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBarTextRight:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBarText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBarTextLeft:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBarTextRight:SetFontObject(SystemFont_Outline_Small)
 	end
 
 	-- Fixes the vehicle frame.

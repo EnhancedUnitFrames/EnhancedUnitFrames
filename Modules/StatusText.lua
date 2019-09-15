@@ -140,7 +140,7 @@ function StatusTextStyling()
 				PlayerFrameHealthBar:SetAlpha(0)
 				PlayerFrameHealthBar.LeftText:SetAlpha(0)
 				PlayerFrameHealthBar.RightText:SetAlpha(0)
-				PlayerFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+				PlayerFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
 
 				if isClassic() then
 					PlayerFrameHealthBar.TextString:SetShadowOffset(1, -1)
@@ -153,11 +153,11 @@ function StatusTextStyling()
 				PlayerFrameManaBar.TextString:SetAlpha(0)
 			elseif not UnitIsDead("player") or not UnitIsGhost("player") then
 				if isClassic() then
-					PlayerFrameHealthBar.TextString:SetFontObject("SystemFont_Outline_Small")
+					PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
 					PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 					PlayerFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 				else
-					PlayerFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+					PlayerFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 				end
 
 				PlayerFrameHealthBar:SetAlpha(1)
@@ -183,7 +183,7 @@ function StatusTextStyling()
 				TargetFrameHealthBar:SetAlpha(0)
 				TargetFrameHealthBar.LeftText:SetAlpha(0)
 				TargetFrameHealthBar.RightText:SetAlpha(0)
-				TargetFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+				TargetFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
 
 				if isClassic() then
 					TargetFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
@@ -200,11 +200,11 @@ function StatusTextStyling()
 				TargetFrameHealthBar.RightText:SetAlpha(1)
 
 				if isClassic() then
-					TargetFrameHealthBar.TextString:SetFontObject("SystemFont_Outline_Small")
+					TargetFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
 					TargetFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 					TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				else
-					TargetFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+					TargetFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 				end
 
 				TargetFrameManaBar:SetAlpha(1)
@@ -238,7 +238,7 @@ function StatusTextStyling()
 					FocusFrameHealthBar:SetAlpha(0)
 					FocusFrameHealthBar.LeftText:SetAlpha(0)
 					FocusFrameHealthBar.RightText:SetAlpha(0)
-					FocusFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+					FocusFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
 					FocusFrameManaBar:SetAlpha(0)
 					FocusFrameManaBar.LeftText:SetAlpha(0)
 					FocusFrameManaBar.RightText:SetAlpha(0)
@@ -247,7 +247,7 @@ function StatusTextStyling()
 					FocusFrameHealthBar:SetAlpha(1)
 					FocusFrameHealthBar.LeftText:SetAlpha(1)
 					FocusFrameHealthBar.RightText:SetAlpha(1)
-					FocusFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
+					FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 					FocusFrameManaBar:SetAlpha(1)
 					FocusFrameManaBar.LeftText:SetAlpha(1)
 					FocusFrameManaBar.RightText:SetAlpha(1)
