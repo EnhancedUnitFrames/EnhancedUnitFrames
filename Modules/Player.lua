@@ -101,6 +101,8 @@ function PlayerFrameStyling()
 			end
 		end
 
+		PlayerAttackBackground:SetAlpha(0.4)
+		PlayerAttackBackground:SetVertexColor(0, 0, 0)
 		PlayerFrameBackground:ClearAllPoints()
 		PlayerFrameBackground:SetPoint("TOPLEFT", 107, -23)
 		PlayerFrameBackground:SetSize(119, 40)
