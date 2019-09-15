@@ -141,9 +141,9 @@ function StatusTextStyling()
 				PlayerFrameHealthBar.LeftText:SetAlpha(0)
 				PlayerFrameHealthBar.RightText:SetAlpha(0)
 				PlayerFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
+				PlayerFrameHealthBar.TextString:SetShadowOffset(1, -1)
 
 				if isClassic() then
-					PlayerFrameHealthBar.TextString:SetShadowOffset(1, -1)
 					PlayerFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
 				end
 
@@ -154,7 +154,6 @@ function StatusTextStyling()
 			elseif not UnitIsDead("player") or not UnitIsGhost("player") then
 				if isClassic() then
 					PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
-					PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 					PlayerFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 				else
 					PlayerFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
@@ -163,6 +162,7 @@ function StatusTextStyling()
 				PlayerFrameHealthBar:SetAlpha(1)
 				PlayerFrameHealthBar.LeftText:SetAlpha(1)
 				PlayerFrameHealthBar.RightText:SetAlpha(1)
+				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				PlayerFrameManaBar:SetAlpha(1)
 				PlayerFrameManaBar.LeftText:SetAlpha(1)
 				PlayerFrameManaBar.RightText:SetAlpha(1)
