@@ -184,10 +184,10 @@ function StatusTextStyling()
 				TargetFrameHealthBar.LeftText:SetAlpha(0)
 				TargetFrameHealthBar.RightText:SetAlpha(0)
 				TargetFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
+				TargetFrameHealthBar.TextString:SetShadowOffset(1, -1)
 
 				if isClassic() then
 					TargetFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
-					TargetFrameHealthBar.TextString:SetShadowOffset(1, -1)
 				end
 
 				TargetFrameManaBar:SetAlpha(0)
@@ -195,18 +195,17 @@ function StatusTextStyling()
 				TargetFrameManaBar.RightText:SetAlpha(0)
 				TargetFrameManaBar.TextString:SetAlpha(0)
 			elseif not UnitIsDead("target") or not UnitIsGhost("target") then
-				TargetFrameHealthBar:SetAlpha(1)
-				TargetFrameHealthBar.LeftText:SetAlpha(1)
-				TargetFrameHealthBar.RightText:SetAlpha(1)
-
 				if isClassic() then
 					TargetFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
 					TargetFrameHealthBar.TextString:SetTextColor(1, 1, 1)
-					TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				else
 					TargetFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 				end
 
+				TargetFrameHealthBar:SetAlpha(1)
+				TargetFrameHealthBar.LeftText:SetAlpha(1)
+				TargetFrameHealthBar.RightText:SetAlpha(1)
+				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				TargetFrameManaBar:SetAlpha(1)
 				TargetFrameManaBar.LeftText:SetAlpha(1)
 				TargetFrameManaBar.RightText:SetAlpha(1)
@@ -239,6 +238,7 @@ function StatusTextStyling()
 					FocusFrameHealthBar.LeftText:SetAlpha(0)
 					FocusFrameHealthBar.RightText:SetAlpha(0)
 					FocusFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
+					FocusFrameHealthBar.TextString:SetShadowOffset(1, -1)
 					FocusFrameManaBar:SetAlpha(0)
 					FocusFrameManaBar.LeftText:SetAlpha(0)
 					FocusFrameManaBar.RightText:SetAlpha(0)
@@ -248,6 +248,7 @@ function StatusTextStyling()
 					FocusFrameHealthBar.LeftText:SetAlpha(1)
 					FocusFrameHealthBar.RightText:SetAlpha(1)
 					FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
+					FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 					FocusFrameManaBar:SetAlpha(1)
 					FocusFrameManaBar.LeftText:SetAlpha(1)
 					FocusFrameManaBar.RightText:SetAlpha(1)
