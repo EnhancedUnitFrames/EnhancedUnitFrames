@@ -156,12 +156,12 @@ function PlayerFrameStyling()
 	-- Changes the status bar text to reflect live.
 
 	if isClassic() then
-		PlayerFrameHealthBarText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameHealthBarTextLeft:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameHealthBarTextRight:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBarText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBarTextLeft:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBarTextRight:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBarText:SetFontObject("SystemFont_Outline_Small")
+		PlayerFrameHealthBarTextLeft:SetFontObject("SystemFont_Outline_Small")
+		PlayerFrameHealthBarTextRight:SetFontObject("SystemFont_Outline_Small")
+		PlayerFrameManaBarText:SetFontObject("SystemFont_Outline_Small")
+		PlayerFrameManaBarTextLeft:SetFontObject("SystemFont_Outline_Small")
+		PlayerFrameManaBarTextRight:SetFontObject("SystemFont_Outline_Small")
 	end
 
 	-- Fixes the vehicle frame.

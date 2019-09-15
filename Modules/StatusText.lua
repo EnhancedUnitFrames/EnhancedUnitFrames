@@ -141,21 +141,28 @@ function StatusTextStyling()
 				PlayerFrameHealthBar.LeftText:SetAlpha(0)
 				PlayerFrameHealthBar.RightText:SetAlpha(0)
 				PlayerFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+
+				if isClassic() then
+					PlayerFrameHealthBar.TextString:SetShadowOffset(1, -1)
+					PlayerFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+				end
+
 				PlayerFrameManaBar:SetAlpha(0)
 				PlayerFrameManaBar.LeftText:SetAlpha(0)
 				PlayerFrameManaBar.RightText:SetAlpha(0)
 				PlayerFrameManaBar.TextString:SetAlpha(0)
 			elseif not UnitIsDead("player") or not UnitIsGhost("player") then
-				PlayerFrameHealthBar:SetAlpha(1)
-				PlayerFrameHealthBar.LeftText:SetAlpha(1)
-				PlayerFrameHealthBar.RightText:SetAlpha(1)
-
-				if isClassic then
+				if isClassic() then
 					PlayerFrameHealthBar.TextString:SetFontObject("SystemFont_Outline_Small")
+					PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+					PlayerFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 				else
 					PlayerFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
 				end
 
+				PlayerFrameHealthBar:SetAlpha(1)
+				PlayerFrameHealthBar.LeftText:SetAlpha(1)
+				PlayerFrameHealthBar.RightText:SetAlpha(1)
 				PlayerFrameManaBar:SetAlpha(1)
 				PlayerFrameManaBar.LeftText:SetAlpha(1)
 				PlayerFrameManaBar.RightText:SetAlpha(1)
@@ -177,6 +184,12 @@ function StatusTextStyling()
 				TargetFrameHealthBar.LeftText:SetAlpha(0)
 				TargetFrameHealthBar.RightText:SetAlpha(0)
 				TargetFrameHealthBar.TextString:SetFontObject("GameFontNormalSmall")
+
+				if isClassic() then
+					TargetFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+					TargetFrameHealthBar.TextString:SetShadowOffset(1, -1)
+				end
+
 				TargetFrameManaBar:SetAlpha(0)
 				TargetFrameManaBar.LeftText:SetAlpha(0)
 				TargetFrameManaBar.RightText:SetAlpha(0)
@@ -186,8 +199,10 @@ function StatusTextStyling()
 				TargetFrameHealthBar.LeftText:SetAlpha(1)
 				TargetFrameHealthBar.RightText:SetAlpha(1)
 
-				if isClassic then
+				if isClassic() then
 					TargetFrameHealthBar.TextString:SetFontObject("SystemFont_Outline_Small")
+					TargetFrameHealthBar.TextString:SetTextColor(1, 1, 1)
+					TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				else
 					TargetFrameHealthBar.TextString:SetFontObject("TextStatusBarText")
 				end
