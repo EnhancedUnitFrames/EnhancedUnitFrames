@@ -86,81 +86,83 @@ function SetDefaults()
 		eufCfgCharacter.enabled = false
 	end
 
-	if eufCfgCharacter.bigPlayerHealthBar == nil then
-		eufCfgCharacter.bigPlayerHealthBar = false
-	end
-
-	if eufCfgCharacter.bigTargetHealthBar == nil then
-		eufCfgCharacter.bigTargetHealthBar = false
-	end
-
-	if eufCfgCharacter.classHealthBarColor == nil then
-		eufCfgCharacter.classHealthBarColor = true
-	end
-
-	if eufCfgCharacter.classIconPortraits == nil then
-		eufCfgCharacter.classIconPortraits = false
-	end
-
-	if eufCfgCharacter.elitePlayerFrame == nil then
-		eufCfgCharacter.elitePlayerFrame = false
-	end
-
-	if eufCfgCharacter.hideHitIndicators == nil then
-		eufCfgCharacter.hideHitIndicators = false
-	end
-
-	if eufCfgCharacter.hidePowerAnimation == nil then
-		eufCfgCharacter.hidePowerAnimation = false
-	end
-
-	if eufCfgCharacter.mirroredPositioning == nil then
-		eufCfgCharacter.mirroredPositioning = false
-	end
-
-	if eufCfgCharacter.hidePetStatusText == nil then
-		eufCfgCharacter.hidePetStatusText = false
-	end
-
-	if eufCfgCharacter.hideRestingIcon == nil then
-		eufCfgCharacter.hideRestingIcon = false
-	end
-
-	if eufCfgCharacter.largeAuraIconSize == nil then
-		eufCfgCharacter.largeAuraIconSize = 25
-	end
-
-	if eufCfgCharacter.rarePlayerFrame == nil then
-		eufCfgCharacter.rarePlayerFrame = false
-	end
-
-	if eufCfgCharacter.rareElitePlayerFrame == nil then
-		eufCfgCharacter.rareElitePlayerFrame = false
-	end
-
-	if eufCfgCharacter.reactionHealthBarColor == nil then
-		eufCfgCharacter.reactionHealthBarColor = true
-	end
-
-	if isClassic() then
-		if eufCfgCharacter.shamanClassColorFix == nil then
-			eufCfgCharacter.shamanClassColorFix = true
+	if eufCfgCharacter.enabled then
+		if eufCfgCharacter.bigPlayerHealthBar == nil then
+			eufCfgCharacter.bigPlayerHealthBar = eufCfg.bigPlayerHealthBar
 		end
-	end
 
-	if eufCfgCharacter.smallAuraIconSize == nil then
-		eufCfgCharacter.smallAuraIconSize = 20
-	end
+		if eufCfgCharacter.bigTargetHealthBar == nil then
+			eufCfgCharacter.bigTargetHealthBar = eufCfg.bigTargetHealthBar
+		end
 
-	if eufCfgCharacter.upperCaseAbbreviation == nil then
-		eufCfgCharacter.upperCaseAbbreviation = true
-	end
+		if eufCfgCharacter.classHealthBarColor == nil then
+			eufCfgCharacter.classHealthBarColor = eufCfg.classHealthBarColor
+		end
 
-	if eufCfgCharacter.wideTargetFrame == nil then
-		eufCfgCharacter.wideTargetFrame = true
-	end
+		if eufCfgCharacter.classIconPortraits == nil then
+			eufCfgCharacter.classIconPortraits = eufCfg.classIconPortraits
+		end
 
-	if eufCfgCharacter.wideTargetFrameWidth == nil then
-		eufCfgCharacter.wideTargetFrameWidth = 280
+		if eufCfgCharacter.elitePlayerFrame == nil then
+			eufCfgCharacter.elitePlayerFrame = eufCfg.elitePlayerFrame
+		end
+
+		if eufCfgCharacter.hideHitIndicators == nil then
+			eufCfgCharacter.hideHitIndicators = eufCfg.hideHitIndicators
+		end
+
+		if eufCfgCharacter.hidePowerAnimation == nil then
+			eufCfgCharacter.hidePowerAnimation = eufCfg.hidePowerAnimation
+		end
+
+		if eufCfgCharacter.mirroredPositioning == nil then
+			eufCfgCharacter.mirroredPositioning = eufCfg.mirroredPositioning
+		end
+
+		if eufCfgCharacter.hidePetStatusText == nil then
+			eufCfgCharacter.hidePetStatusText = eufCfg.hidePetStatusText
+		end
+
+		if eufCfgCharacter.hideRestingIcon == nil then
+			eufCfgCharacter.hideRestingIcon = eufCfg.hideRestingIcon
+		end
+
+		if eufCfgCharacter.largeAuraIconSize == nil then
+			eufCfgCharacter.largeAuraIconSize = eufCfg.largeAuraIconSize
+		end
+
+		if eufCfgCharacter.rarePlayerFrame == nil then
+			eufCfgCharacter.rarePlayerFrame = eufCfg.rarePlayerFrame
+		end
+
+		if eufCfgCharacter.rareElitePlayerFrame == nil then
+			eufCfgCharacter.rareElitePlayerFrame = eufCfg.rareElitePlayerFrame
+		end
+
+		if eufCfgCharacter.reactionHealthBarColor == nil then
+			eufCfgCharacter.reactionHealthBarColor = eufCfg.reactionHealthBarColor
+		end
+
+		if isClassic() then
+			if eufCfgCharacter.shamanClassColorFix == nil then
+				eufCfgCharacter.shamanClassColorFix = eufCfg.shamanClassColorFix
+			end
+		end
+
+		if eufCfgCharacter.smallAuraIconSize == nil then
+			eufCfgCharacter.smallAuraIconSize = eufCfg.smallAuraIconSize
+		end
+
+		if eufCfgCharacter.upperCaseAbbreviation == nil then
+			eufCfgCharacter.upperCaseAbbreviation = eufCfg.upperCaseAbbreviation
+		end
+
+		if eufCfgCharacter.wideTargetFrame == nil then
+			eufCfgCharacter.wideTargetFrame = eufCfg.wideTargetFrame
+		end
+
+		if eufCfgCharacter.wideTargetFrameWidth == nil then
+			eufCfgCharacter.wideTargetFrameWidth = eufCfg.wideTargetFrameWidth
+		end
 	end
 end
