@@ -18,12 +18,12 @@ function ClassIconPortraits()
 		end)
 	end
 
-	if cfgCharacter.enabled then
-		if cfgCharacter.classIconPortraits then
+	if eufCfgCharacter.enabled then
+		if eufCfgCharacter.classIconPortraits then
 			Portraits()
 		end
 	else
-		if cfg.classIconPortraits then
+		if eufCfg.classIconPortraits then
 			Portraits()
 		end
 	end

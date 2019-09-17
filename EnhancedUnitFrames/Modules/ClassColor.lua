@@ -8,12 +8,12 @@ function ShamanClassColorFix()
 		RAID_CLASS_COLORS['SHAMAN']["colorStr"] = "ff0070de"
 	end
 
-	if cfgCharacter.enabled then
-		if cfgCharacter.shamanClassColorFix then
+	if eufCfgCharacter.enabled then
+		if eufCfgCharacter.shamanClassColorFix then
 			Color()
 		end
 	else
-		if cfg.shamanClassColorFix then
+		if eufCfg.shamanClassColorFix then
 			Color()
 		end
 	end

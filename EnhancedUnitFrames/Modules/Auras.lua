@@ -46,23 +46,23 @@ function AuraStyling()
 		end)
 	end
 
-	if cfgCharacter.enabled then
-		LARGE_AURA_SIZE = cfgCharacter.largeAuraIconSize
-		SMALL_AURA_SIZE = cfgCharacter.smallAuraIconSize
+	if eufCfgCharacter.enabled then
+		LARGE_AURA_SIZE = eufCfgCharacter.largeAuraIconSize
+		SMALL_AURA_SIZE = eufCfgCharacter.smallAuraIconSize
 
-		if cfgCharacter.wideTargetFrame and cfgCharacter.wideTargetFrameWidth >= 231 then
-			wideTargetFrameWidth = cfgCharacter.wideTargetFrameWidth
+		if eufCfgCharacter.wideTargetFrame and eufCfgCharacter.wideTargetFrameWidth >= 231 then
+			wideTargetFrameWidth = eufCfgCharacter.wideTargetFrameWidth
 		else
 			wideTargetFrameWidth = 230
 		end
 
 		Styling()
 	else
-		LARGE_AURA_SIZE = cfg.largeAuraIconSize
-		SMALL_AURA_SIZE = cfg.smallAuraIconSize
+		LARGE_AURA_SIZE = eufCfg.largeAuraIconSize
+		SMALL_AURA_SIZE = eufCfg.smallAuraIconSize
 
-		if cfg.wideTargetFrame and cfg.wideTargetFrameWidth >= 231 then
-			wideTargetFrameWidth = cfg.wideTargetFrameWidth
+		if eufCfg.wideTargetFrame and eufCfg.wideTargetFrameWidth >= 231 then
+			wideTargetFrameWidth = eufCfg.wideTargetFrameWidth
 		else
 			wideTargetFrameWidth = 230
 		end

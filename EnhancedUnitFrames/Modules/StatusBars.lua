@@ -33,20 +33,20 @@ function StatusBarStyling()
 			end
 		end
 
-		if cfgCharacter.enabled then
-			if cfgCharacter.classHealthBarColor then
+		if eufCfgCharacter.enabled then
+			if eufCfgCharacter.classHealthBarColor then
 				ClassColor()
 			end
 
-			if cfgCharacter.reactionHealthBarColor then
+			if eufCfgCharacter.reactionHealthBarColor then
 				ReactionColor()
 			end
 		else
-			if cfg.classHealthBarColor then
+			if eufCfg.classHealthBarColor then
 				ClassColor()
 			end
 
-			if cfg.reactionHealthBarColor then
+			if eufCfg.reactionHealthBarColor then
 				ReactionColor()
 			end
 		end

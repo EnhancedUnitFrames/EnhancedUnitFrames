@@ -4,14 +4,15 @@ function isClassic()
 	return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 end
 
--- Loads the addon's components and initializes the option panel.
+-- Loads the addon's components and loads the options panel when the interface options is shown.
 
 local euf = CreateFrame("Frame")
+local eufOptionsLoad = CreateFrame("Frame", nil, InterfaceOptionsFrame)
 
 euf:RegisterEvent("ADDON_LOADED")
 euf:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-local function isAddOnLoaded(self, event, addon)
+local function isLoaded(self, event, addon)
 	if event == "ADDON_LOADED" then
 		SetDefaults()
 		AuraStyling()
@@ -39,11 +40,21 @@ local function isAddOnLoaded(self, event, addon)
 	end
 end
 
-euf:SetScript("OnEvent", isAddOnLoaded)
+euf:SetScript("OnEvent", isLoaded)
+
+eufOptionsLoad:SetScript("OnShow", function(load)
+	LoadAddOn("EnhancedUnitFrames_Options")
+
+	load:SetScript("OnShow", nil)
+end)
 
 -- Creates the addon's slash command.
 
 SlashCmdList.euf = function()
+	if not IsAddOnLoaded("EnhancedUnitFrames_Options") then
+		LoadAddOn("EnhancedUnitFrames_Options")
+	end
+
 	InterfaceOptionsFrame_OpenToCategory(eufOptions.general)
 	InterfaceOptionsFrame_OpenToCategory(eufOptions.general)
 	PlaySound(852)

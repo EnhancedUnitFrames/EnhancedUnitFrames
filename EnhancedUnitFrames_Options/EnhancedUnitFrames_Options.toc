@@ -1,0 +1,10 @@
+## Interface: 11302
+## Title: EnhancedUnitFrames Options
+## Notes: Modifies the default unit frames for better visuals.
+## Author: Michael with code from: Gello, Funkydude, haggen, KawF, SDPhantom, smokked_, whoarrior, and zork. 
+## Version: 1.0
+## RequiredDeps: EnhancedUnitFrames
+## LoadOnDemand: 1
+
+Options.lua
+

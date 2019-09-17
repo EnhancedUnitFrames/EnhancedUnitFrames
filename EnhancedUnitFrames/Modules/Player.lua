@@ -35,13 +35,13 @@ function PlayerFrameStyling()
 			end
 		end
 
-		if cfgCharacter.enabled then
-			if cfgCharacter.bigPlayerHealthBar then
-				if cfgCharacter.elitePlayerFrame then
+		if eufCfgCharacter.enabled then
+			if eufCfgCharacter.bigPlayerHealthBar then
+				if eufCfgCharacter.elitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
-				elseif cfgCharacter.rareElitePlayerFrame then
+				elseif eufCfgCharacter.rareElitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
-				elseif cfgCharacter.rarePlayerFrame then
+				elseif eufCfgCharacter.rarePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
 				else
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
@@ -49,11 +49,11 @@ function PlayerFrameStyling()
 
 				BigStyling()
 			else
-				if cfgCharacter.elitePlayerFrame then
+				if eufCfgCharacter.elitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
-				elseif cfgCharacter.rareElitePlayerFrame then
+				elseif eufCfgCharacter.rareElitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
-				elseif cfgCharacter.rarePlayerFrame then
+				elseif eufCfgCharacter.rarePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
 				else
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
@@ -62,12 +62,12 @@ function PlayerFrameStyling()
 				WhoaStyling()
 			end
 		else
-			if cfg.bigPlayerHealthBar then
-				if cfg.elitePlayerFrame then
+			if eufCfg.bigPlayerHealthBar then
+				if eufCfg.elitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
-				elseif cfg.rareElitePlayerFrame then
+				elseif eufCfg.rareElitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
-				elseif cfg.rarePlayerFrame then
+				elseif eufCfg.rarePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
 				else
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
@@ -75,11 +75,11 @@ function PlayerFrameStyling()
 
 				BigStyling()
 			else
-				if cfg.elitePlayerFrame then
+				if eufCfg.elitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
-				elseif cfg.rareElitePlayerFrame then
+				elseif eufCfg.rareElitePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
-				elseif cfg.rarePlayerFrame then
+				elseif eufCfg.rarePlayerFrame then
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
 				else
 					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
@@ -215,8 +215,8 @@ function PlayerFrameStyling()
 			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -3.5)
 		end
 
-		if cfgCharacter.enabled then
-			if cfgCharacter.bigPlayerHealthBar then
+		if eufCfgCharacter.enabled then
+			if eufCfgCharacter.bigPlayerHealthBar then
 				if level >= 100 then
 					BigOneHundredPlus()
 				else
@@ -230,7 +230,7 @@ function PlayerFrameStyling()
 				end
 			end
 		else
-			if cfg.bigPlayerHealthBar then
+			if eufCfg.bigPlayerHealthBar then
 				if level >= 100 then
 					BigOneHundredPlus()
 				else
@@ -253,12 +253,12 @@ function PlayerFrameStyling()
 		hooksecurefunc(PlayerHitIndicator, "Show", PlayerHitIndicator.Hide)
 	end
 
-	if cfgCharacter.enabled then
-		if cfgCharacter.hideHitIndicators then
+	if eufCfgCharacter.enabled then
+		if eufCfgCharacter.hideHitIndicators then
 			HitIndicators()
 		end
 	else
-		if cfg.hideHitIndicators then
+		if eufCfg.hideHitIndicators then
 			HitIndicators()
 		end
 	end
@@ -274,12 +274,12 @@ function PlayerFrameStyling()
 		PetFrameManaBarTextRight:SetAlpha(0)
 	end
 
-	if cfgCharacter.enabled then
-		if cfgCharacter.hidePetStatusText then
+	if eufCfgCharacter.enabled then
+		if eufCfgCharacter.hidePetStatusText then
 			PetStatusText()
 		end
 	else
-		if cfg.hidePetStatusText then
+		if eufCfg.hidePetStatusText then
 			PetStatusText()
 		end
 	end
@@ -287,12 +287,12 @@ function PlayerFrameStyling()
 	-- Hides the resting glow and resting icon on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateStatus", function()
-		if cfgCharacter.enabled then
-			if cfgCharacter.hideRestingIcon then
+		if eufCfgCharacter.enabled then
+			if eufCfgCharacter.hideRestingIcon then
 				PlayerRestIcon:SetAlpha(0)
 			end
 		else
-			if cfg.hideRestingIcon then
+			if eufCfg.hideRestingIcon then
 				PlayerRestIcon:SetAlpha(0)
 			end
 		end
