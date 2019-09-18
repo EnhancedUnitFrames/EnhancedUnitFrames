@@ -55,12 +55,12 @@ function PowerBar()
 		}
 	end
 
-	if eufCfgCharacter.enabled then
-		if eufCfgCharacter.hidePowerAnimation then
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePowerAnimation then
 			PowerAnimation()
 		end
 	else
-		if eufCfg.hidePowerAnimation then
+		if eufDB.hidePowerAnimation then
 			PowerAnimation()
 		end
 	end

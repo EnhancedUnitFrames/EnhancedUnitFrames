@@ -2,11 +2,10 @@
 
 function AuraStyling()
 	local function Styling()
-		local AURA_OFFSET_Y = 3
-		local AURA_ROW_WIDTH = 90 + (wideTargetFrameWidth - 230)
-		local NUM_TOT_AURA_ROWS = 2
-
 		hooksecurefunc("TargetFrame_UpdateAuraPositions", function(self, auraName, numAuras, numOppositeAuras, largeAuraList, updateFunc, maxRowWidth, offsetX, mirrorAurasVertically)
+			local AURA_OFFSET_Y = 3
+			local AURA_ROW_WIDTH = 90 + (wideTargetFrameWidth - 230)
+			local NUM_TOT_AURA_ROWS = 2
 			local size
 			local offsetY = AURA_OFFSET_Y
 			local rowWidth = 0
@@ -46,23 +45,23 @@ function AuraStyling()
 		end)
 	end
 
-	if eufCfgCharacter.enabled then
-		LARGE_AURA_SIZE = eufCfgCharacter.largeAuraIconSize
-		SMALL_AURA_SIZE = eufCfgCharacter.smallAuraIconSize
+	if eufCharacterDB.enabled then
+		LARGE_AURA_SIZE = eufCharacterDB.largeAuraIconSize
+		SMALL_AURA_SIZE = eufCharacterDB.smallAuraIconSize
 
-		if eufCfgCharacter.wideTargetFrame and eufCfgCharacter.wideTargetFrameWidth >= 231 then
-			wideTargetFrameWidth = eufCfgCharacter.wideTargetFrameWidth
+		if eufCharacterDB.wideTargetFrame and eufCharacterDB.wideTargetFrameWidth >= 231 then
+			wideTargetFrameWidth = eufCharacterDB.wideTargetFrameWidth
 		else
 			wideTargetFrameWidth = 230
 		end
 
 		Styling()
 	else
-		LARGE_AURA_SIZE = eufCfg.largeAuraIconSize
-		SMALL_AURA_SIZE = eufCfg.smallAuraIconSize
+		LARGE_AURA_SIZE = eufDB.largeAuraIconSize
+		SMALL_AURA_SIZE = eufDB.smallAuraIconSize
 
-		if eufCfg.wideTargetFrame and eufCfg.wideTargetFrameWidth >= 231 then
-			wideTargetFrameWidth = eufCfg.wideTargetFrameWidth
+		if eufDB.wideTargetFrame and eufDB.wideTargetFrameWidth >= 231 then
+			wideTargetFrameWidth = eufDB.wideTargetFrameWidth
 		else
 			wideTargetFrameWidth = 230
 		end

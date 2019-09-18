@@ -42,10 +42,10 @@ end
 
 euf:SetScript("OnEvent", isLoaded)
 
-eufOptionsLoad:SetScript("OnShow", function(load)
+eufOptionsLoad:SetScript("OnShow", function(self)
 	LoadAddOn("EnhancedUnitFrames_Options")
 
-	load:SetScript("OnShow", nil)
+	self:SetScript("OnShow", nil)
 end)
 
 -- Creates the addon's slash command.

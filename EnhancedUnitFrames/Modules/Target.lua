@@ -231,11 +231,11 @@ function TargetFrameStyling()
 		TargetFrame:SetWidth(targetWidth)
 	end
 
-	if eufCfgCharacter.enabled then
-		focusWidth = eufCfgCharacter.wideTargetFrameWidth
-		targetWidth = eufCfgCharacter.wideTargetFrameWidth
+	if eufCharacterDB.enabled then
+		focusWidth = eufCharacterDB.wideTargetFrameWidth
+		targetWidth = eufCharacterDB.wideTargetFrameWidth
 
-		if eufCfgCharacter.wideTargetFrame and eufCfgCharacter.wideTargetFrameWidth >= 231 then
+		if eufCharacterDB.wideTargetFrame and eufCharacterDB.wideTargetFrameWidth >= 231 then
 			if not isClassic() then
 				WideFocus()
 			end
@@ -243,10 +243,10 @@ function TargetFrameStyling()
 			WideTarget()
 		end
 	else
-		focusWidth = eufCfg.wideTargetFrameWidth
-		targetWidth = eufCfg.wideTargetFrameWidth
+		focusWidth = eufDB.wideTargetFrameWidth
+		targetWidth = eufDB.wideTargetFrameWidth
 
-		if eufCfg.wideTargetFrame and eufCfg.wideTargetFrameWidth >= 231 then
+		if eufDB.wideTargetFrame and eufDB.wideTargetFrameWidth >= 231 then
 			if not isClassic() then
 				WideFocus()
 			end
@@ -280,16 +280,16 @@ function TargetFrameStyling()
 			end
 
 			local function WideStyling()
-				if eufCfgCharacter.enabled then
-					TargetFrameBackground:SetSize(eufCfgCharacter.wideTargetFrameWidth - 113, 40)
-					self.Background:SetSize(eufCfgCharacter.wideTargetFrameWidth - 113, 40)
-					self.healthbar:SetWidth(eufCfgCharacter.wideTargetFrameWidth - 113)
-					self.manabar:SetWidth(eufCfgCharacter.wideTargetFrameWidth - 113)
+				if eufCharacterDB.enabled then
+					TargetFrameBackground:SetSize(eufCharacterDB.wideTargetFrameWidth - 113, 40)
+					self.Background:SetSize(eufCharacterDB.wideTargetFrameWidth - 113, 40)
+					self.healthbar:SetWidth(eufCharacterDB.wideTargetFrameWidth - 113)
+					self.manabar:SetWidth(eufCharacterDB.wideTargetFrameWidth - 113)
 				else
-					TargetFrameBackground:SetSize(eufCfg.wideTargetFrameWidth - 113, 40)
-					self.Background:SetSize(eufCfg.wideTargetFrameWidth - 113, 40)
-					self.healthbar:SetWidth(eufCfg.wideTargetFrameWidth - 113)
-					self.manabar:SetWidth(eufCfg.wideTargetFrameWidth - 113)
+					TargetFrameBackground:SetSize(eufDB.wideTargetFrameWidth - 113, 40)
+					self.Background:SetSize(eufDB.wideTargetFrameWidth - 113, 40)
+					self.healthbar:SetWidth(eufDB.wideTargetFrameWidth - 113)
+					self.manabar:SetWidth(eufDB.wideTargetFrameWidth - 113)
 				end
 			end
 
@@ -300,26 +300,26 @@ function TargetFrameStyling()
 				self.manabar:SetWidth(119)
 			end
 
-			if eufCfgCharacter.enabled then
-				if eufCfgCharacter.bigTargetHealthBar then
+			if eufCharacterDB.enabled then
+				if eufCharacterDB.bigTargetHealthBar then
 					BigStyling()
 				else
 					WhoaStyling()
 				end
 
-				if eufCfgCharacter.wideTargetFrame and eufCfgCharacter.wideTargetFrameWidth >= 231 then
+				if eufCharacterDB.wideTargetFrame and eufCharacterDB.wideTargetFrameWidth >= 231 then
 					WideStyling()
 				else
 					DefaultStyling()
 				end
 			else
-				if eufCfg.bigTargetHealthBar then
+				if eufDB.bigTargetHealthBar then
 					BigStyling()
 				else
 					WhoaStyling()
 				end
 
-				if eufCfg.wideTargetFrame and eufCfg.wideTargetFrameWidth >= 231 then
+				if eufDB.wideTargetFrame and eufDB.wideTargetFrameWidth >= 231 then
 					WideStyling()
 				else
 					DefaultStyling()
@@ -382,9 +382,9 @@ function TargetFrameStyling()
 			self.name:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", -110, -19.5)
 		end
 
-		if eufCfgCharacter.enabled then
+		if eufCharacterDB.enabled then
 			if forceNormalTexture then
-				if eufCfgCharacter.bigTargetHealthBar then
+				if eufCharacterDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
@@ -394,19 +394,19 @@ function TargetFrameStyling()
 
 				self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
 			elseif classification == "worldboss" or classification == "elite" then
-				if eufCfgCharacter.bigTargetHealthBar then
+				if eufCharacterDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
 				end
 			elseif classification == "rareelite" then
-				if eufCfgCharacter.bigTargetHealthBar then
+				if eufCharacterDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
 				end
 			elseif classification == "rare" then
-				if eufCfgCharacter.bigTargetHealthBar then
+				if eufCharacterDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
@@ -414,7 +414,7 @@ function TargetFrameStyling()
 			else
 				forceNormalTexture = true
 
-				if eufCfgCharacter.bigTargetHealthBar then
+				if eufCharacterDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
@@ -422,7 +422,7 @@ function TargetFrameStyling()
 			end
 		else
 			if forceNormalTexture then
-				if eufCfg.bigTargetHealthBar then
+				if eufDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
@@ -432,19 +432,19 @@ function TargetFrameStyling()
 
 				self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus")
 			elseif classification == "worldboss" or classification == "elite" then
-				if eufCfg.bigTargetHealthBar then
+				if eufDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
 				end
 			elseif classification == "rareelite" then
-				if eufCfg.bigTargetHealthBar then
+				if eufDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
 				end
 			elseif classification == "rare" then
-				if eufCfg.bigTargetHealthBar then
+				if eufDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
@@ -452,7 +452,7 @@ function TargetFrameStyling()
 			else
 				forceNormalTexture = true
 
-				if eufCfg.bigTargetHealthBar then
+				if eufDB.bigTargetHealthBar then
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
 				else
 					self.borderTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
@@ -479,14 +479,14 @@ function TargetFrameStyling()
 				end
 
 				local function MinusWideStyling()
-					if eufCfgCharacter.enabled then
-						self.Background:SetSize(eufCfgCharacter.wideTargetFrameWidth - 113, 10)
-						self.healthbar:SetSize(eufCfgCharacter.wideTargetFrameWidth - 113, 12)
-						self.manabar:SetWidth(eufCfgCharacter.wideTargetFrameWidth - 113)
+					if eufCharacterDB.enabled then
+						self.Background:SetSize(eufCharacterDB.wideTargetFrameWidth - 113, 10)
+						self.healthbar:SetSize(eufCharacterDB.wideTargetFrameWidth - 113, 12)
+						self.manabar:SetWidth(eufCharacterDB.wideTargetFrameWidth - 113)
 					else
-						self.Background:SetSize(eufCfg.wideTargetFrameWidth - 113, 10)
-						self.healthbar:SetSize(eufCfg.wideTargetFrameWidth - 113, 12)
-						self.manabar:SetWidth(eufCfg.wideTargetFrameWidth - 113)
+						self.Background:SetSize(eufDB.wideTargetFrameWidth - 113, 10)
+						self.healthbar:SetSize(eufDB.wideTargetFrameWidth - 113, 12)
+						self.manabar:SetWidth(eufDB.wideTargetFrameWidth - 113)
 					end
 				end
 
@@ -496,26 +496,26 @@ function TargetFrameStyling()
 					self.manabar:SetWidth(119)
 				end
 
-				if eufCfgCharacter.enabled then
-					if eufCfgCharacter.bigTargetHealthBar then
+				if eufCharacterDB.enabled then
+					if eufCharacterDB.bigTargetHealthBar then
 						MinusBigStyling()
 					else
 						MinusWhoaStyling()
 					end
 
-					if eufCfgCharacter.wideTargetFrame and eufCfgCharacter.wideTargetFrameWidth >= 231 then
+					if eufCharacterDB.wideTargetFrame and eufCharacterDB.wideTargetFrameWidth >= 231 then
 						MinusWideStyling()
 					else
 						MinusDefaultStyling()
 					end
 				else
-					if eufCfg.bigTargetHealthBar then
+					if eufDB.bigTargetHealthBar then
 						MinusBigStyling()
 					else
 						MinusWhoaStyling()
 					end
 
-					if eufCfg.wideTargetFrame and eufCfg.wideTargetFrameWidth >= 231 then
+					if eufDB.wideTargetFrame and eufDB.wideTargetFrameWidth >= 231 then
 						MinusWideStyling()
 					else
 						MinusDefaultStyling()
@@ -665,8 +665,8 @@ function TargetFrameStyling()
 			end
 		end
 
-		if eufCfgCharacter.enabled then
-			if eufCfgCharacter.bigTargetHealthBar then
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.bigTargetHealthBar then
 				if not isClassic() then
 					FocusBig()
 				end
@@ -680,7 +680,7 @@ function TargetFrameStyling()
 				TargetWhoa()
 			end
 		else
-			if eufCfg.bigTargetHealthBar then
+			if eufDB.bigTargetHealthBar then
 				if not isClassic() then
 					FocusBig()
 				end

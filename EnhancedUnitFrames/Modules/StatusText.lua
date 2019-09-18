@@ -2,8 +2,8 @@ function StatusTextStyling()
 	-- Formats numbers so they are readable.
 
 	local function ReadableNumber(number)
-		if eufCfgCharacter.enabled then
-			if eufCfgCharacter.upperCaseAbbreviation then
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.upperCaseAbbreviation then
 				if not number then
 					return 0
 				elseif number >= 1000000000000000 then
@@ -37,7 +37,7 @@ function StatusTextStyling()
 				end
 			end
 		else
-			if eufCfg.upperCaseAbbreviation then
+			if eufDB.upperCaseAbbreviation then
 				if not number then
 					return 0
 				elseif number >= 1000000000000000 then

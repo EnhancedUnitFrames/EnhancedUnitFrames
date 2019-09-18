@@ -18,12 +18,12 @@ function ClassIconPortraits()
 		end)
 	end
 
-	if eufCfgCharacter.enabled then
-		if eufCfgCharacter.classIconPortraits then
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.classIconPortraits then
 			Portraits()
 		end
 	else
-		if eufCfg.classIconPortraits then
+		if eufDB.classIconPortraits then
 			Portraits()
 		end
 	end

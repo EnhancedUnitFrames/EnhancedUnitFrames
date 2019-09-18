@@ -68,12 +68,12 @@ function MirroredPositioning()
 		FocusedFrame:SetScript("OnUpdate", FocusedFrame_OnUpdate)
 	end
 
-	if eufCfgCharacter.enabled then
-		if eufCfgCharacter.mirroredPositioning then
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.mirroredPositioning then
 			Positioning()
 		end
 	else
-		if eufCfg.mirroredPositioning then
+		if eufDB.mirroredPositioning then
 			Positioning()
 		end
 	end

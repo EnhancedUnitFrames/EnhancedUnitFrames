@@ -4,22 +4,27 @@ eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
 eufOptions.general = CreateFrame("Frame", "eufOptionsGeneral", eufOptions)
 eufOptions.healthBars = CreateFrame("Frame", "eufOptionsHealthBars", eufOptions)
 eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions)
+eufOptions.statusText = CreateFrame("Frame", "eufOptionsPanelStatusText", eufOptions)
 eufOptions.name = "EnhancedUnitFrames"
 eufOptions.general.name = "General"
 eufOptions.healthBars.name = "Health Bars"
 eufOptions.scaling.name = "Frame Scaling"
+eufOptions.statusText.name = "Status Text"
 eufOptions.general.parent = eufOptions.name
 eufOptions.healthBars.parent = eufOptions.name
 eufOptions.scaling.parent = eufOptions.name
+eufOptions.statusText.parent = eufOptions.name
 
 InterfaceOptions_AddCategory(eufOptions)
 InterfaceOptions_AddCategory(eufOptions.general)
 InterfaceOptions_AddCategory(eufOptions.healthBars)
 InterfaceOptions_AddCategory(eufOptions.scaling)
+InterfaceOptions_AddCategory(eufOptions.statusText)
 eufOptions:Hide()
 eufOptions.general:Hide()
 eufOptions.healthBars:Hide()
 eufOptions.scaling:Hide()
+eufOptions.statusText:Hide()
 
 -- Static ReloadUI popup.
 
@@ -154,8 +159,6 @@ eufOptions:SetScript("OnShow", function(self)
 	InterfaceOptionsFrame_OpenToCategory(eufOptions.general)
 end)
 
--- Draws the option panel elements.
-
 eufOptions.general:SetScript("OnShow", function(self)
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
@@ -181,7 +184,6 @@ eufOptions.general:SetScript("OnShow", function(self)
 	local upperCaseAbbreviation = createCheckbox("upperCaseAbbreviation", self, "Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
 	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
 	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
-	local hidePetStatusText = createCheckbox("hidePetStatusText", self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
 
 	if isClassic() then
@@ -198,8 +200,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 	upperCaseAbbreviation:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	classIconPortraits:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
-	hidePetStatusText:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
-	hideRestingIcon:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 0, -8)
+	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 
 	if isClassic() then
 		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
@@ -207,13 +208,15 @@ eufOptions.general:SetScript("OnShow", function(self)
 		threatShowNumeric:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
 	end
 
+	-- Applies scripts to the checkboxes.
+
 	characterConfiguration:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			eufCfgCharacter.enabled = true
+			eufCharacterDB.enabled = true
 
 			PlaySound(856)
 		else
-			eufCfgCharacter.enabled = false
+			eufCharacterDB.enabled = false
 
 			PlaySound(857)
 		end
@@ -223,18 +226,18 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	wideTargetFrame:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.wideTargetFrame = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.wideTargetFrame = true
 			else
-				eufCfg.wideTargetFrame = false
+				eufDB.wideTargetFrame = false
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.wideTargetFrame = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.wideTargetFrame = false
 			else
-				eufCfg.wideTargetFrame = false
+				eufDB.wideTargetFrame = false
 			end
 			
 			PlaySound(857)
@@ -245,18 +248,18 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	mirroredPositioning:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.mirroredPositioning = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.mirroredPositioning = true
 			else
-				eufCfg.mirroredPositioning = true
+				eufDB.mirroredPositioning = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.mirroredPositioning = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.mirroredPositioning = false
 			else
-				eufCfg.mirroredPositioning = false
+				eufDB.mirroredPositioning = false
 			end
 
 			PlaySound(857)
@@ -267,18 +270,18 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	upperCaseAbbreviation:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.upperCaseAbbreviation = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.upperCaseAbbreviation = true
 			else
-				eufCfg.upperCaseAbbreviation = true
+				eufDB.upperCaseAbbreviation = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.upperCaseAbbreviation = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.upperCaseAbbreviation = false
 			else
-				eufCfg.upperCaseAbbreviation = false
+				eufDB.upperCaseAbbreviation = false
 			end
 
 			PlaySound(857)
@@ -289,18 +292,18 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	classIconPortraits:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.classIconPortraits = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classIconPortraits = true
 			else
-				eufCfg.classIconPortraits = true
+				eufDB.classIconPortraits = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.classIconPortraits = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classIconPortraits = false
 			else
-				eufCfg.classIconPortraits = false
+				eufDB.classIconPortraits = false
 			end
 
 			PlaySound(857)
@@ -311,40 +314,18 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	hideHitIndicators:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hideHitIndicators = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideHitIndicators = true
 			else
-				eufCfg.hideHitIndicators = true
+				eufDB.hideHitIndicators = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hideHitIndicators = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideHitIndicators = false
 			else
-				eufCfg.hideHitIndicators = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	hidePetStatusText:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hidePetStatusText = true
-			else
-				eufCfg.hidePetStatusText = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hidePetStatusText = false
-			else
-				eufCfg.hidePetStatusText = false
+				eufDB.hideHitIndicators = false
 			end
 
 			PlaySound(857)
@@ -355,18 +336,18 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	hideRestingIcon:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hideRestingIcon = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideRestingIcon = true
 			else
-				eufCfg.hideRestingIcon = true
+				eufDB.hideRestingIcon = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hideRestingIcon = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideRestingIcon = false
 			else
-				eufCfg.hideRestingIcon = false
+				eufDB.hideRestingIcon = false
 			end
 
 			PlaySound(857)
@@ -378,18 +359,18 @@ eufOptions.general:SetScript("OnShow", function(self)
 	if isClassic() then
 		shamanClassColorFix:SetScript("OnClick", function(self)
 			if self:GetChecked() then
-				if eufCfgCharacter.enabled then
-					eufCfgCharacter.shamanClassColorFix = true
+				if eufCharacterDB.enabled then
+					eufCharacterDB.shamanClassColorFix = true
 				else
-					eufCfg.shamanClassColorFix = true
+					eufDB.shamanClassColorFix = true
 				end
 
 				PlaySound(856)
 			else
-				if eufCfgCharacter.enabled then
-					eufCfgCharacter.shamanClassColorFix = false
+				if eufCharacterDB.enabled then
+					eufCharacterDB.shamanClassColorFix = false
 				else
-					eufCfg.shamanClassColorFix = false
+					eufDB.shamanClassColorFix = false
 				end
 
 				PlaySound(857)
@@ -431,14 +412,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
 
-	if eufCfgCharacter.enabled then
-		if eufCfgCharacter.elitePlayerFrame == true then
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.elitePlayerFrame == true then
 			isChecked1 = "Elite Player Frame"
 			isCheckedElite = true
-		elseif eufCfgCharacter.rarePlayerFrame == true then
+		elseif eufCharacterDB.rarePlayerFrame == true then
 			isChecked1 = "Rare Player Frame"
 			isCheckedRare = true
-		elseif eufCfgCharacter.rareElitePlayerFrame == true then
+		elseif eufCharacterDB.rareElitePlayerFrame == true then
 			isChecked1 = "Rare Elite Player Frame"
 			isCheckedRareElite = true
 		else
@@ -446,13 +427,13 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedDefault = true
 		end
 	else
-		if eufCfg.elitePlayerFrame == true then
+		if eufDB.elitePlayerFrame == true then
 			isChecked1 = "Elite Player Frame"
 			isCheckedElite = true
-		elseif eufCfg.rarePlayerFrame == true then
+		elseif eufDB.rarePlayerFrame == true then
 			isChecked1 = "Rare Player Frame"
 			isCheckedRare = true
-		elseif eufCfg.rareElitePlayerFrame == true then
+		elseif eufDB.rareElitePlayerFrame == true then
 			isChecked1 = "Rare Elite Player Frame"
 			isCheckedRareElite = true
 		else
@@ -463,7 +444,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
 
-	local function PlayerFrameTextureDropdown_OnClick(self, arg1)
+	local function playerFrameTextureDropdownMenuOnClick(self, arg1)
 		if arg1 == 1 then
 			isChecked1 = "Elite Player Frame"
 			isCheckedElite = true
@@ -471,14 +452,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = false
 			isCheckedDefault = false
 
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.elitePlayerFrame = true
-				eufCfgCharacter.rarePlayerFrame = false
-				eufCfgCharacter.rareElitePlayerFrame = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.elitePlayerFrame = true
+				eufCharacterDB.rarePlayerFrame = false
+				eufCharacterDB.rareElitePlayerFrame = false
 			else
-				eufCfg.elitePlayerFrame = true
-				eufCfg.rarePlayerFrame = false
-				eufCfg.rareElitePlayerFrame = false
+				eufDB.elitePlayerFrame = true
+				eufDB.rarePlayerFrame = false
+				eufDB.rareElitePlayerFrame = false
 			end
 
 			StaticPopup_Show("RELOAD_UI")
@@ -490,14 +471,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = false
 			isCheckedDefault = false
 
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.elitePlayerFrame = false
-				eufCfgCharacter.rarePlayerFrame = true
-				eufCfgCharacter.rareElitePlayerFrame = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.elitePlayerFrame = false
+				eufCharacterDB.rarePlayerFrame = true
+				eufCharacterDB.rareElitePlayerFrame = false
 			else
-				eufCfg.elitePlayerFrame = false
-				eufCfg.rarePlayerFrame = true
-				eufCfg.rareElitePlayerFrame = false
+				eufDB.elitePlayerFrame = false
+				eufDB.rarePlayerFrame = true
+				eufDB.rareElitePlayerFrame = false
 			end
 
 			StaticPopup_Show("RELOAD_UI")
@@ -509,14 +490,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = true
 			isCheckedDefault = false
 
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.elitePlayerFrame = false
-				eufCfgCharacter.rarePlayerFrame = false
-				eufCfgCharacter.rareElitePlayerFrame = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.elitePlayerFrame = false
+				eufCharacterDB.rarePlayerFrame = false
+				eufCharacterDB.rareElitePlayerFrame = true
 			else
-				eufCfg.elitePlayerFrame = false
-				eufCfg.rarePlayerFrame = false
-				eufCfg.rareElitePlayerFrame = true
+				eufDB.elitePlayerFrame = false
+				eufDB.rarePlayerFrame = false
+				eufDB.rareElitePlayerFrame = true
 			end
 
 			StaticPopup_Show("RELOAD_UI")
@@ -528,14 +509,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			isCheckedRareElite = false
 			isCheckedDefault = true
 
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.elitePlayerFrame = false
-				eufCfgCharacter.rarePlayerFrame = false
-				eufCfgCharacter.rareElitePlayerFrame = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.elitePlayerFrame = false
+				eufCharacterDB.rarePlayerFrame = false
+				eufCharacterDB.rareElitePlayerFrame = false
 			else
-				eufCfg.elitePlayerFrame = false
-				eufCfg.rarePlayerFrame = false
-				eufCfg.rareElitePlayerFrame = false
+				eufDB.elitePlayerFrame = false
+				eufDB.rarePlayerFrame = false
+				eufDB.rareElitePlayerFrame = false
 			end
 
 			StaticPopup_Show("RELOAD_UI")
@@ -543,9 +524,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 		end
 	end
 
-	local function PlayerFrameTextureDropdown_Menu(frame, level, menuList)
+	local function playerFrameTextureDropdownMenu(frame, level, menuList)
 		local info = UIDropDownMenu_CreateInfo()
-		info.func = PlayerFrameTextureDropdown_OnClick
+		info.func = playerFrameTextureDropdownMenuOnClick
 
 		info.text, info.arg1, info.checked = "Elite Player Frame", 1, isCheckedElite
 		UIDropDownMenu_AddButton(info)
@@ -557,109 +538,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 		UIDropDownMenu_AddButton(info)
 	end
 
-	UIDropDownMenu_Initialize(playerFrameDropdown, PlayerFrameTextureDropdown_Menu)
-
-	-- Status text dropdown menu.
-
-	local statusTextDropdown = CreateFrame("Frame", "eufStatusTextDropdown", self, "UIDropDownMenuTemplate")
-	statusTextDropdown.title = statusTextDropdown:CreateFontString("StatusTextDropdownLabel", "ARTWORK", "GameFontNormal")
-
-	statusTextDropdown:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 0, -37)
-	statusTextDropdown.title:SetPoint("BOTTOMLEFT", statusTextDropdown, "TOPLEFT", 15, 3)
-	statusTextDropdown.title:SetText("Status Text")
-
-	statusTextDropdown:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
-		GameTooltip:SetText("Status Text", nil, nil, nil, 1, true)
-		GameTooltip:AddLine("Display status text as numbers, percentage, or both.", 1, 1, 1, 1)
-		GameTooltip:Show()
-	end)
-
-	statusTextDropdown:SetScript("OnLeave", function(self)
-		GameTooltip:Hide()
-	end)
-
-	UIDropDownMenu_SetWidth(statusTextDropdown, 160)
-
-	if GetCVar("statusTextDisplay") == "NUMERIC" then
-		isChecked3 = "Numeric Value"
-		isCheckedNumericValue = true
-	elseif GetCVar("statusTextDisplay") == "PERCENT" then
-		isChecked3 = "Percentage"
-		isCheckedPercentage = true
-	elseif GetCVar("statusTextDisplay") == "BOTH" then
-		isChecked3 = "Both"
-		isCheckedBoth = true
-	elseif GetCVar("statusTextDisplay") == "NONE" then
-		isChecked3 = "None"
-		isCheckedNone = true
-	end
-
-	UIDropDownMenu_SetText(statusTextDropdown, isChecked3)
-
-	local function StatusTextDropdown_OnClick(self, arg1)
-		if arg1 == 1 then
-			isChecked2 = "Numeric Value"
-			isCheckedNumericValue = true
-			isCheckedPercentage = false
-			isCheckedBoth = false
-			isCheckedNone = false
-
-			SetCVar("statusText", 1)
-			SetCVar("statusTextDisplay", "NUMERIC")
-			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
-		elseif arg1 == 2 then
-			isChecked2 = "Percentage"
-			isCheckedNumericValue = false
-			isCheckedPercentage = true
-			isCheckedBoth = false
-			isCheckedNone = false
-
-			SetCVar("statusText", 1)
-			SetCVar("statusTextDisplay", "PERCENT")
-			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
-		elseif arg1 == 3 then
-			isChecked2 = "Both"
-			isCheckedNumericValue = false
-			isCheckedPercentage = false
-			isCheckedBoth = true
-			isCheckedNone = false
-
-			SetCVar("statusText", 1)
-			SetCVar("statusTextDisplay", "BOTH")
-			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
-		elseif arg1 == 4 then
-			isChecked2 = "None"
-			isCheckedNumericValue = false
-			isCheckedPercentage = false
-			isCheckedBoth = false
-			isCheckedNone = true
-
-			SetCVar("statusText", 0)
-			SetCVar("statusTextDisplay", "NONE")
-			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
-		end
-	end
-
-	local function StatusTextDropdown_Menu(frame, level, menuList)
-		local info = UIDropDownMenu_CreateInfo()
-		info.func = StatusTextDropdown_OnClick
-
-		info.text, info.arg1, info.checked = "Numeric Value", 1, isCheckedNumericValue
-		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Percentage", 2, isCheckedPercentage
-		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Both", 3, isCheckedBoth
-		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "None", 4, isCheckedNone
-		UIDropDownMenu_AddButton(info)
-	end
-
-	UIDropDownMenu_Initialize(statusTextDropdown, StatusTextDropdown_Menu)
+	UIDropDownMenu_Initialize(playerFrameDropdown, playerFrameTextureDropdownMenu)
 
 	-- Threat warning dropdown menu.
 
@@ -667,7 +546,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 		threatWarningDropdown = CreateFrame("Frame", "eufThreatWarningDropdown", self, "UIDropDownMenuTemplate")
 		threatWarningDropdown.title = threatWarningDropdown:CreateFontString("ThreatWarningDropdownLabel", "ARTWORK", "GameFontNormal")
 
-		threatWarningDropdown:SetPoint("TOPLEFT", statusTextDropdown, "BOTTOMLEFT", 0, -37)
+		threatWarningDropdown:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 0, -37)
 		threatWarningDropdown.title:SetPoint("BOTTOMLEFT", threatWarningDropdown, "TOPLEFT", 15, 3)
 		threatWarningDropdown.title:SetText("Threat Warning")
 
@@ -700,7 +579,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 		UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
 
-		local function ThreatWarningDropdown_OnClick(self, arg1)
+		local function threatWarningDropdownOnClick(self, arg1)
 			if arg1 == 1 then
 				C_CVar.SetCVar("threatWarning", 1)
 				isChecked2 = "In Dungeons"
@@ -740,9 +619,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 		end
 
-		local function ThreatWarningDropdown_Menu(frame, level, menuList)
+		local function threatWarningDropdownMenu(frame, level, menuList)
 			local info = UIDropDownMenu_CreateInfo()
-			info.func = ThreatWarningDropdown_OnClick
+			info.func = threatWarningDropdownOnClick
 
 			info.text, info.arg1, info.checked = "In Dungeons", 1, isCheckedInDungeons
 			UIDropDownMenu_AddButton(info)
@@ -754,44 +633,40 @@ eufOptions.general:SetScript("OnShow", function(self)
 			UIDropDownMenu_AddButton(info)
 		end
 
-		UIDropDownMenu_Initialize(threatWarningDropdown, ThreatWarningDropdown_Menu)
+		UIDropDownMenu_Initialize(threatWarningDropdown, threatWarningDropdownMenu)
 	end
 
 	-- Initializes the options panel with saved variables.
 
-	if eufCfgCharacter.enabled then
+	if eufCharacterDB.enabled then
 		characterConfigurationCheckbox:SetChecked(true)
 
-		if eufCfgCharacter.wideTargetFrame == true then
+		if eufCharacterDB.wideTargetFrame == true then
 			wideTargetFrameCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.mirroredPositioning == true then
+		if eufCharacterDB.mirroredPositioning == true then
 			mirroredPositioningCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.upperCaseAbbreviation == true then
+		if eufCharacterDB.upperCaseAbbreviation == true then
 			upperCaseAbbreviationCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.classIconPortraits == true then
+		if eufCharacterDB.classIconPortraits == true then
 			classIconPortraitsCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.hideHitIndicators == true then
+		if eufCharacterDB.hideHitIndicators == true then
 			hideHitIndicatorsCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.hidePetStatusText == true then
-			hidePetStatusTextCheckbox:SetChecked(true)
-		end
-
-		if eufCfgCharacter.hideRestingIcon == true then
+		if eufCharacterDB.hideRestingIcon == true then
 			hideRestingIconCheckbox:SetChecked(true)
 		end
 
 		if isClassic() then
-			if eufCfgCharacter.shamanClassColorFix == true then
+			if eufCharacterDB.shamanClassColorFix == true then
 				shamanClassColorFixCheckbox:SetChecked(true)
 			end
 		else
@@ -800,36 +675,32 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 		end
 	else
-		if eufCfg.wideTargetFrame == true then
+		if eufDB.wideTargetFrame == true then
 			wideTargetFrameCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.mirroredPositioning == true then
+		if eufDB.mirroredPositioning == true then
 			mirroredPositioningCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.upperCaseAbbreviation == true then
+		if eufDB.upperCaseAbbreviation == true then
 			upperCaseAbbreviationCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.classIconPortraits == true then
+		if eufDB.classIconPortraits == true then
 			classIconPortraitsCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.hideHitIndicators == true then
+		if eufDB.hideHitIndicators == true then
 			hideHitIndicatorsCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.hidePetStatusText == true then
-			hidePetStatusTextCheckbox:SetChecked(true)
-		end
-
-		if eufCfg.hideRestingIcon == true then
+		if eufDB.hideRestingIcon == true then
 			hideRestingIconCheckbox:SetChecked(true)
 		end
 
 		if isClassic() then
-			if eufCfg.shamanClassColorFix == true then
+			if eufDB.shamanClassColorFix == true then
 				shamanClassColorFixCheckbox:SetChecked(true)
 			end
 		else
@@ -883,22 +754,22 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 		showSpenderFeedback:SetPoint("TOPLEFT", showBuilderFeedback, "BOTTOMLEFT", 0, -8)
 	end
 
-	-- Applies scripts when the checkboxes are clicked.
+	-- Applies scripts to the checkboxes.
 
 	bigPlayerHealthBar:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.bigPlayerHealthBar = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.bigPlayerHealthBar = true
 			else
-				eufCfg.bigPlayerHealthBar = true
+				eufDB.bigPlayerHealthBar = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.bigPlayerHealthBar = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.bigPlayerHealthBar = false
 			else
-				eufCfg.bigPlayerHealthBar = false
+				eufDB.bigPlayerHealthBar = false
 			end
 
 			PlaySound(857)
@@ -909,18 +780,18 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	bigTargetHealthBar:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.bigTargetHealthBar = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.bigTargetHealthBar = true
 			else
-				eufCfg.bigTargetHealthBar = true
+				eufDB.bigTargetHealthBar = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.bigTargetHealthBar = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.bigTargetHealthBar = false
 			else
-				eufCfg.bigTargetHealthBar = false
+				eufDB.bigTargetHealthBar = false
 			end
 
 			PlaySound(857)
@@ -931,18 +802,18 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	classHealthBarColor:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.classHealthBarColor = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classHealthBarColor = true
 			else
-				eufCfg.classHealthBarColor = true
+				eufDB.classHealthBarColor = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.classHealthBarColor = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classHealthBarColor = false
 			else
-				eufCfg.classHealthBarColor = false
+				eufDB.classHealthBarColor = false
 			end
 
 			PlaySound(857)
@@ -953,18 +824,18 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	reactionHealthBarColor:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.reactionHealthBarColor = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionHealthBarColor = true
 			else
-				eufCfg.reactionHealthBarColor = true
+				eufDB.reactionHealthBarColor = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.reactionHealthBarColor = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionHealthBarColor = false
 			else
-				eufCfg.reactionHealthBarColor = false
+				eufDB.reactionHealthBarColor = false
 			end
 
 			PlaySound(857)
@@ -975,18 +846,18 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	hidePowerAnimation:SetScript("OnClick", function(self)
 		if self:GetChecked() then
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hidePowerAnimation = true
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePowerAnimation = true
 			else
-				eufCfg.hidePowerAnimation = true
+				eufDB.hidePowerAnimation = true
 			end
 
 			PlaySound(856)
 		else
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.hidePowerAnimation = false
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePowerAnimation = false
 			else
-				eufCfg.hidePowerAnimation = false
+				eufDB.hidePowerAnimation = false
 			end
 
 			PlaySound(857)
@@ -1029,24 +900,24 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	-- Initializes the options panel with saved variables.
 
-	if eufCfgCharacter.enabled then
-		if eufCfgCharacter.bigPlayerHealthBar == true then
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.bigPlayerHealthBar == true then
 			bigPlayerHealthBarCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.bigTargetHealthBar == true then
+		if eufCharacterDB.bigTargetHealthBar == true then
 			bigTargetHealthBarCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.classHealthBarColor == true then
+		if eufCharacterDB.classHealthBarColor == true then
 			classHealthBarColorCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.reactionHealthBarColor == true then
+		if eufCharacterDB.reactionHealthBarColor == true then
 			reactionHealthBarColorCheckbox:SetChecked(true)
 		end
 
-		if eufCfgCharacter.hidePowerAnimation == true then
+		if eufCharacterDB.hidePowerAnimation == true then
 			hidePowerAnimationCheckbox:SetChecked(true)
 		end
 
@@ -1064,23 +935,23 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 			end
 		end
 	else
-		if eufCfg.bigPlayerHealthBar == true then
+		if eufDB.bigPlayerHealthBar == true then
 			bigPlayerHealthBarCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.bigTargetHealthBar == true then
+		if eufDB.bigTargetHealthBar == true then
 			bigTargetHealthBarCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.classHealthBarColor == true then
+		if eufDB.classHealthBarColor == true then
 			classHealthBarColorCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.reactionHealthBarColor == true then
+		if eufDB.reactionHealthBarColor == true then
 			reactionHealthBarColorCheckbox:SetChecked(true)
 		end
 
-		if eufCfg.hidePowerAnimation == true then
+		if eufDB.hidePowerAnimation == true then
 			hidePowerAnimationCheckbox:SetChecked(true)
 		end
 
@@ -1125,21 +996,21 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -36)
 	end
 
-	if eufCfgCharacter.enabled then
-		wideTargetFrameSlider:SetValue(eufCfgCharacter.wideTargetFrameWidth)
-		wideTargetFrameSliderEditbox:SetText(eufCfgCharacter.wideTargetFrameWidth)
+	if eufCharacterDB.enabled then
+		wideTargetFrameSlider:SetValue(eufCharacterDB.wideTargetFrameWidth)
+		wideTargetFrameSliderEditbox:SetText(eufCharacterDB.wideTargetFrameWidth)
 	else
-		wideTargetFrameSlider:SetValue(eufCfg.wideTargetFrameWidth)
-		wideTargetFrameSliderEditbox:SetText(eufCfg.wideTargetFrameWidth)
+		wideTargetFrameSlider:SetValue(eufDB.wideTargetFrameWidth)
+		wideTargetFrameSliderEditbox:SetText(eufDB.wideTargetFrameWidth)
 	end
 
 	wideTargetFrame:HookScript("OnValueChanged", function(self, value)
 		value = floor(value)
 
-		if eufCfgCharacter.enabled then
-			eufCfgCharacter.wideTargetFrameWidth = value
+		if eufCharacterDB.enabled then
+			eufCharacterDB.wideTargetFrameWidth = value
 		else
-			eufCfg.wideTargetFrameWidth = value
+			eufDB.wideTargetFrameWidth = value
 		end
 	end)
 
@@ -1150,21 +1021,21 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 
 		auraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
 
-		if eufCfgCharacter.enabled then
-			auraIconSizeSlider:SetValue(eufCfgCharacter.largeAuraIconSize)
-			auraIconSizeSliderEditbox:SetText(eufCfgCharacter.largeAuraIconSize)
+		if eufCharacterDB.enabled then
+			auraIconSizeSlider:SetValue(eufCharacterDB.largeAuraIconSize)
+			auraIconSizeSliderEditbox:SetText(eufCharacterDB.largeAuraIconSize)
 		else
-			auraIconSizeSlider:SetValue(eufCfg.largeAuraIconSize)
-			auraIconSizeSliderEditbox:SetText(eufCfg.largeAuraIconSize)
+			auraIconSizeSlider:SetValue(eufDB.largeAuraIconSize)
+			auraIconSizeSliderEditbox:SetText(eufDB.largeAuraIconSize)
 		end
 
 		auraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
 
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.largeAuraIconSize = value
+			if eufCharacterDB.enabled then
+				eufCharacterDB.largeAuraIconSize = value
 			else
-				eufCfg.largeAuraIconSize = value
+				eufDB.largeAuraIconSize = value
 			end
 		end)
 	else
@@ -1174,21 +1045,21 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 
 		largeAuraIconSize:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -70)
 
-		if eufCfgCharacter.enabled then
-			largeAuraIconSizeSlider:SetValue(eufCfgCharacter.largeAuraIconSize)
-			largeAuraIconSizeSliderEditbox:SetText(eufCfgCharacter.largeAuraIconSize)
+		if eufCharacterDB.enabled then
+			largeAuraIconSizeSlider:SetValue(eufCharacterDB.largeAuraIconSize)
+			largeAuraIconSizeSliderEditbox:SetText(eufCharacterDB.largeAuraIconSize)
 		else
-			largeAuraIconSizeSlider:SetValue(eufCfg.largeAuraIconSize)
-			largeAuraIconSizeSliderEditbox:SetText(eufCfg.largeAuraIconSize)
+			largeAuraIconSizeSlider:SetValue(eufDB.largeAuraIconSize)
+			largeAuraIconSizeSliderEditbox:SetText(eufDB.largeAuraIconSize)
 		end
 
 		largeAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
 
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.largeAuraIconSize = value
+			if eufCharacterDB.enabled then
+				eufCharacterDB.largeAuraIconSize = value
 			else
-				eufCfg.largeAuraIconSize = value
+				eufDB.largeAuraIconSize = value
 			end
 		end)
 
@@ -1198,21 +1069,21 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 
 		smallAuraIconSize:SetPoint("TOPLEFT", largeAuraIconSize, "BOTTOMLEFT", 0, -70)
 
-		if eufCfgCharacter.enabled then
-			smallAuraIconSizeSlider:SetValue(eufCfgCharacter.smallAuraIconSize)
-			smallAuraIconSizeSliderEditbox:SetText(eufCfgCharacter.smallAuraIconSize)
+		if eufCharacterDB.enabled then
+			smallAuraIconSizeSlider:SetValue(eufCharacterDB.smallAuraIconSize)
+			smallAuraIconSizeSliderEditbox:SetText(eufCharacterDB.smallAuraIconSize)
 		else
-			smallAuraIconSizeSlider:SetValue(eufCfg.smallAuraIconSize)
-			smallAuraIconSizeSliderEditbox:SetText(eufCfg.smallAuraIconSize)
+			smallAuraIconSizeSlider:SetValue(eufDB.smallAuraIconSize)
+			smallAuraIconSizeSliderEditbox:SetText(eufDB.smallAuraIconSize)
 		end
 
 		smallAuraIconSize:HookScript("OnValueChanged", function(self, value)
 			value = floor(value)
 
-			if eufCfgCharacter.enabled then
-				eufCfgCharacter.smallAuraIconSize = value
+			if eufCharacterDB.enabled then
+				eufCharacterDB.smallAuraIconSize = value
 			else
-				eufCfg.smallAuraIconSize = value
+				eufDB.smallAuraIconSize = value
 			end
 		end)
 	end
@@ -1231,6 +1102,166 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 		PlayerFrame:SetScale(round(value, 2))
 		TargetFrame:SetScale(round(value, 2))
 	end)
+
+	self:SetScript("OnShow", nil)
+end)
+
+eufOptions.statusText:SetScript("OnShow", function(self)
+	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+
+	title:SetPoint("TOPLEFT", self, 16, -16)
+	title:SetText("EnhancedUnitFrames")
+
+	local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
+
+	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	description:SetText("Modifies the default unit frames for better visuals.")
+
+	-- Creates checkboxes.
+
+	local hidePetStatusText = createCheckbox("hidePetStatusText", self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
+
+	-- Positions the checkboxes created.
+
+	hidePetStatusText:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+
+	-- Applies scripts to the checkboxes.
+
+	hidePetStatusText:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePetStatusText = true
+			else
+				eufDB.hidePetStatusText = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePetStatusText = false
+			else
+				eufDB.hidePetStatusText = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	-- Status text dropdown menu.
+
+	local statusTextDropdown = CreateFrame("Frame", "eufStatusTextDropdown", self, "UIDropDownMenuTemplate")
+	statusTextDropdown.title = statusTextDropdown:CreateFontString("StatusTextDropdownLabel", "ARTWORK", "GameFontNormal")
+
+	statusTextDropdown:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 273, 8)
+	statusTextDropdown.title:SetPoint("BOTTOMLEFT", statusTextDropdown, "TOPLEFT", 15, 3)
+	statusTextDropdown.title:SetText("Status Text")
+
+	statusTextDropdown:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+		GameTooltip:SetText("Status Text", nil, nil, nil, 1, true)
+		GameTooltip:AddLine("Display status text as numbers, percentage, or both.", 1, 1, 1, 1)
+		GameTooltip:Show()
+	end)
+
+	statusTextDropdown:SetScript("OnLeave", function(self)
+		GameTooltip:Hide()
+	end)
+
+	UIDropDownMenu_SetWidth(statusTextDropdown, 160)
+
+	if GetCVar("statusTextDisplay") == "NUMERIC" then
+		isChecked3 = "Numeric Value"
+		isCheckedNumericValue = true
+	elseif GetCVar("statusTextDisplay") == "PERCENT" then
+		isChecked3 = "Percentage"
+		isCheckedPercentage = true
+	elseif GetCVar("statusTextDisplay") == "BOTH" then
+		isChecked3 = "Both"
+		isCheckedBoth = true
+	elseif GetCVar("statusTextDisplay") == "NONE" then
+		isChecked3 = "None"
+		isCheckedNone = true
+	end
+
+	UIDropDownMenu_SetText(statusTextDropdown, isChecked3)
+
+	local function statusTextDropdownOnClick(self, arg1)
+		if arg1 == 1 then
+			isChecked2 = "Numeric Value"
+			isCheckedNumericValue = true
+			isCheckedPercentage = false
+			isCheckedBoth = false
+			isCheckedNone = false
+
+			SetCVar("statusText", 1)
+			SetCVar("statusTextDisplay", "NUMERIC")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		elseif arg1 == 2 then
+			isChecked2 = "Percentage"
+			isCheckedNumericValue = false
+			isCheckedPercentage = true
+			isCheckedBoth = false
+			isCheckedNone = false
+
+			SetCVar("statusText", 1)
+			SetCVar("statusTextDisplay", "PERCENT")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		elseif arg1 == 3 then
+			isChecked2 = "Both"
+			isCheckedNumericValue = false
+			isCheckedPercentage = false
+			isCheckedBoth = true
+			isCheckedNone = false
+
+			SetCVar("statusText", 1)
+			SetCVar("statusTextDisplay", "BOTH")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		elseif arg1 == 4 then
+			isChecked2 = "None"
+			isCheckedNumericValue = false
+			isCheckedPercentage = false
+			isCheckedBoth = false
+			isCheckedNone = true
+
+			SetCVar("statusText", 0)
+			SetCVar("statusTextDisplay", "NONE")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+		end
+	end
+
+	local function statusTextDropdownMenu(frame, level, menuList)
+		local info = UIDropDownMenu_CreateInfo()
+		info.func = statusTextDropdownOnClick
+
+		info.text, info.arg1, info.checked = "Numeric Value", 1, isCheckedNumericValue
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Percentage", 2, isCheckedPercentage
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Both", 3, isCheckedBoth
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "None", 4, isCheckedNone
+		UIDropDownMenu_AddButton(info)
+	end
+
+	UIDropDownMenu_Initialize(statusTextDropdown, statusTextDropdownMenu)
+
+	-- Initializes the options panel with saved variables.
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePetStatusText == true then
+			hidePetStatusTextCheckbox:SetChecked(true)
+		end
+	else
+		if eufDB.hidePetStatusText == true then
+			hidePetStatusTextCheckbox:SetChecked(true)
+		end
+	end
 
 	self:SetScript("OnShow", nil)
 end)
