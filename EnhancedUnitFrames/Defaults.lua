@@ -205,7 +205,7 @@ function SetDefaults()
 			eufCharacterDB.statusTextBoth = eufDB.statusTextBoth
 		end
 
-		if eufDB.statusTextBothCondensed == nil then
+		if eufCharacterDB.statusTextBothCondensed == nil then
 			eufCharacterDB.statusTextBothCondensed = eufDB.statusTextBothCondensed
 		end
 
