@@ -282,9 +282,15 @@ function StatusTextStyling()
 		if value and valueMax > 0 then
 			if eufCharacterDB.enabled then
 				if eufCharacterDB.statusTextNumeric then
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
 					textString:SetText(valueDisplay)
+					textString:Show()
 				elseif eufCharacterDB.statusTextPercent then
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
 					textString:SetText(valuePercentageDisplay)
+					textString:Show()
 				elseif eufCharacterDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
 						statusFrame.LeftText:Show()
@@ -334,9 +340,15 @@ function StatusTextStyling()
 				end
 			else
 				if eufDB.statusTextNumeric then
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
 					textString:SetText(valueDisplay)
+					textString:Show()
 				elseif eufDB.statusTextPercent then
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
 					textString:SetText(valuePercentageDisplay)
+					textString:Show()
 				elseif eufDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
 						statusFrame.LeftText:Show()
