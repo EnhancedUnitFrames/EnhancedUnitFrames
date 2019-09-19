@@ -121,6 +121,28 @@ function StatusTextStyling()
 	-- Formats the unit frame status text so it's readable.
 
 	hooksecurefunc("TextStatusBar_UpdateTextStringWithValues", function(statusFrame, textString, value, valueMin, valueMax)
+		local petPowerType = UnitPowerType("pet")
+		local petValueHealth = UnitHealth("pet")
+		local petValueHealthMax = UnitHealthMax("pet")
+		local petValuePower = UnitPower("pet")
+		local petValuePowerMax = UnitPowerMax("pet")
+		local petValueHealthDisplay = tostring(ReadableNumber(petValueHealth))
+		local petValueHealthMaxDisplay = tostring(ReadableNumber(petValueHealthMax))
+		local petValueHealthPercentageDisplay = math.ceil((petValueHealth / petValueHealthMax) * 100) .. "%"
+		local petValuePowerDisplay = tostring(ReadableNumber(petValuePower))
+		local petValuePowerMaxDisplay = tostring(ReadableNumber(petValuePowerMax))
+		local petValuePowerPercentageDisplay = math.ceil((petValuePower / petValuePowerMax) * 100) .. "%"
+		local playerPowerType = UnitPowerType("player")
+		local playerValueHealth = UnitHealth("player")
+		local playerValueHealthMax = UnitHealthMax("player")
+		local playerValuePower = UnitPower("player")
+		local playerValuePowerMax = UnitPowerMax("player")
+		local playerValueHealthDisplay = tostring(ReadableNumber(playerValueHealth))
+		local playerValueHealthMaxDisplay = tostring(ReadableNumber(playerValueHealthMax))
+		local playerValueHealthPercentageDisplay = math.ceil((playerValueHealth / playerValueHealthMax) * 100) .. "%"
+		local playerValuePowerDisplay = tostring(ReadableNumber(playerValuePower))
+		local playerValuePowerMaxDisplay = tostring(ReadableNumber(playerValuePowerMax))
+		local playerValuePowerPercentageDisplay = math.ceil((playerValuePower / playerValuePowerMax) * 100) .. "%"
 		local valueDisplay = tostring(ReadableNumber(value))
 		local valueMaxDisplay = tostring(ReadableNumber(valueMax))
 		local valuePercentageDisplay = math.ceil((value / valueMax) * 100) .. "%"
@@ -258,26 +280,113 @@ function StatusTextStyling()
 		end
 
 		if value and valueMax > 0 then
-			if GetCVar("statusTextDisplay") == "NUMERIC" then
-				textString:SetText(valueDisplay)
-				isDead()
-			elseif GetCVar("statusTextDisplay") == "PERCENT" then
-				textString:SetText(valuePercentageDisplay)
-				isDead()
-			elseif GetCVar("statusTextDisplay") == "BOTH" and statusFrame.LeftText and statusFrame.RightText then
-				if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
-					statusFrame.LeftText:Show()
-				end
+			if eufCharacterDB.enabled then
+				if eufCharacterDB.statusTextNumeric then
+					textString:SetText(valueDisplay)
+				elseif eufCharacterDB.statusTextPercent then
+					textString:SetText(valuePercentageDisplay)
+				elseif eufCharacterDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
+					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+						statusFrame.LeftText:Show()
+					end
 
-				statusFrame.LeftText:SetText(valuePercentageDisplay)
-				statusFrame.RightText:SetText(valueDisplay)
-				statusFrame.RightText:Show()
-				textString:Hide()
-				isDead()
-			elseif GetCVar("statusTextDisplay") == "NONE" or GetCVar("statusText") == "0" then
-				textString:SetText(valueDisplay)
-				isDead()
+					statusFrame.LeftText:SetText(valuePercentageDisplay)
+					statusFrame.RightText:SetText(valueDisplay)
+					statusFrame.RightText:Show()
+					textString:Hide()
+				elseif eufCharacterDB.statusTextBothCondensed and statusFrame.LeftText and statusFrame.RightText then
+					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+						if eufCharacterDB.statusTextBothCondensedBar then
+							textString:SetText(valueDisplay .. " | " .. valuePercentageDisplay)
+						elseif eufCharacterDB.statusTextBothCondensedBrackets then
+							textString:SetText(valueDisplay .. " [" .. valuePercentageDisplay .. "]")
+						elseif eufCharacterDB.statusTextBothCondensedDash then
+							textString:SetText(valueDisplay .. " - " .. valuePercentageDisplay)
+						elseif eufCharacterDB.statusTextBothCondensedParentheses then
+							textString:SetText(valueDisplay .. " (" .. valuePercentageDisplay .. ")")
+						elseif eufCharacterDB.statusTextBothCondensedSlash then
+							textString:SetText(valueDisplay .. " / " .. valuePercentageDisplay)
+						end
+					else
+						textString:SetText(valueDisplay)
+					end
+
+					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)
+					PlayerFrameHealthBar.TextString:SetText(playerValueHealthPercentageDisplay)
+
+					if petPowerType == 0 then
+						PetFrameManaBar.TextString:SetText(petValuePowerPercentageDisplay)
+					else
+						PetFrameManaBar.TextString:SetText(petValuePowerDisplay)
+					end
+
+					if playerPowerType == 0 then
+						PlayerFrameManaBar.TextString:SetText(playerValuePowerPercentageDisplay)
+					else
+						PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay)
+					end
+
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
+					textString:Show()
+				elseif eufCharacterDB.statusTextNone then
+					textString:SetText(valueDisplay)
+				end
+			else
+				if eufDB.statusTextNumeric then
+					textString:SetText(valueDisplay)
+				elseif eufDB.statusTextPercent then
+					textString:SetText(valuePercentageDisplay)
+				elseif eufDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
+					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+						statusFrame.LeftText:Show()
+					end
+
+					statusFrame.LeftText:SetText(valuePercentageDisplay)
+					statusFrame.RightText:SetText(valueDisplay)
+					statusFrame.RightText:Show()
+					textString:Hide()
+				elseif eufDB.statusTextBothCondensed and statusFrame.LeftText and statusFrame.RightText then
+					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+						if eufDB.statusTextBothCondensedBar then
+							textString:SetText(valueDisplay .. " | " .. valuePercentageDisplay)
+						elseif eufDB.statusTextBothCondensedBrackets then
+							textString:SetText(valueDisplay .. " [" .. valuePercentageDisplay .. "]")
+						elseif eufDB.statusTextBothCondensedDash then
+							textString:SetText(valueDisplay .. " - " .. valuePercentageDisplay)
+						elseif eufDB.statusTextBothCondensedParentheses then
+							textString:SetText(valueDisplay .. " (" .. valuePercentageDisplay .. ")")
+						elseif eufDB.statusTextBothCondensedSlash then
+							textString:SetText(valueDisplay .. " / " .. valuePercentageDisplay)
+						end
+					else
+						textString:SetText(valueDisplay)
+					end
+
+					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)
+					PlayerFrameHealthBar.TextString:SetText(playerValueHealthPercentageDisplay)
+
+					if petPowerType == 0 then
+						PetFrameManaBar.TextString:SetText(petValuePowerPercentageDisplay)
+					else
+						PetFrameManaBar.TextString:SetText(petValuePowerDisplay)
+					end
+
+					if playerPowerType == 0 then
+						PlayerFrameManaBar.TextString:SetText(playerValuePowerPercentageDisplay)
+					else
+						PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay)
+					end
+
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
+					textString:Show()
+				elseif eufDB.statusTextNone then
+					textString:SetText(valueDisplay)
+				end
 			end
+
+			isDead()
 		end
 	end)
 end

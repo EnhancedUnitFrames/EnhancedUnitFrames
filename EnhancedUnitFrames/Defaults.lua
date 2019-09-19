@@ -70,6 +70,54 @@ function SetDefaults()
 		eufDB.smallAuraIconSize = 20
 	end
 
+	if eufDB.statusTextBoth == nil then
+		if GetCVar("statusTextDisplay") == "BOTH" then
+			eufDB.statusTextBoth = true
+		end
+	end
+
+	if eufDB.statusTextBothCondensed == nil then
+		eufDB.statusTextBothCondensed = false
+	end
+
+	if eufDB.statusTextBothCondensedBar == nil then
+		eufDB.statusTextBothCondensedBar = false
+	end
+
+	if eufDB.statusTextBothCondensedBrackets == nil then
+		eufDB.statusTextBothCondensedBrackets = false
+	end
+
+	if eufDB.statusTextBothCondensedDash == nil then
+		eufDB.statusTextBothCondensedDash = true
+	end
+
+	if eufDB.statusTextBothCondensedParentheses == nil then
+		eufDB.statusTextBothCondensedParentheses = false
+	end
+
+	if eufDB.statusTextBothCondensedSlash == nil then
+		eufDB.statusTextBothCondensedSlash = false
+	end
+
+	if eufDB.statusTextNone == nil then
+		if GetCVar("statusTextDisplay") == "NONE" then
+			eufDB.statusTextNone = true
+		end
+	end
+
+	if eufDB.statusTextNumeric == nil then
+		if GetCVar("statusTextDisplay") == "NUMERIC" then
+			eufDB.statusTextNumeric = true
+		end
+	end
+
+	if eufDB.statusTextPercent == nil then
+		if GetCVar("statusTextDisplay") == "PERCENT" then
+			eufDB.statusTextPercent = true
+		end
+	end
+
 	if eufDB.upperCaseAbbreviation == nil then
 		eufDB.upperCaseAbbreviation = true
 	end
@@ -151,6 +199,46 @@ function SetDefaults()
 
 		if eufCharacterDB.smallAuraIconSize == nil then
 			eufCharacterDB.smallAuraIconSize = eufDB.smallAuraIconSize
+		end
+
+		if eufCharacterDB.statusTextBoth == nil then
+			eufCharacterDB.statusTextBoth = eufDB.statusTextBoth
+		end
+
+		if eufDB.statusTextBothCondensed == nil then
+			eufCharacterDB.statusTextBothCondensed = eufDB.statusTextBothCondensed
+		end
+
+		if eufCharacterDB.statusTextBothCondensedBar == nil then
+			eufCharacterDB.statusTextBothCondensedBar = eufDB.statusTextBothCondensedBar
+		end
+
+		if eufCharacterDB.statusTextBothCondensedBrackets == nil then
+			eufCharacterDB.statusTextBothCondensedBrackets = eufDB.statusTextBothCondensedBrackets
+		end
+
+		if eufCharacterDB.statusTextBothCondensedDash == nil then
+			eufCharacterDB.statusTextBothCondensedDash = eufDB.statusTextBothCondensedDash
+		end
+
+		if eufCharacterDB.statusTextBothCondensedParentheses == nil then
+			eufCharacterDB.statusTextBothCondensedParentheses = eufDB.statusTextBothCondensedParentheses
+		end
+
+		if eufCharacterDB.statusTextBothCondensedSlash == nil then
+			eufCharacterDB.statusTextBothCondensedSlash = eufDB.statusTextBothCondensedSlash
+		end
+
+		if eufCharacterDB.statusTextNone == nil then
+			eufCharacterDB.statusTextNone = eufDB.statusTextNone
+		end
+
+		if eufCharacterDB.statusTextNumeric == nil then
+			eufCharacterDB.statusTextNumeric = eufDB.statusTextNumeric
+		end
+
+		if eufCharacterDB.statusTextPercent == nil then
+			eufCharacterDB.statusTextPercent = eufDB.statusTextPercent
 		end
 
 		if eufCharacterDB.upperCaseAbbreviation == nil then

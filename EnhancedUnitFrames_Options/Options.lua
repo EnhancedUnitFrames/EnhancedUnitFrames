@@ -393,7 +393,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 	-- Player frame texture dropdown menu.
 
 	local playerFrameDropdown = CreateFrame("Frame", "eufPlayerFrameDropdown", self, "UIDropDownMenuTemplate")
-	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("PlayerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
+	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("playerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
 
 	playerFrameDropdown:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 273, 8)
 	playerFrameDropdown.title:SetPoint("BOTTOMLEFT", playerFrameDropdown, "TOPLEFT", 15, 3)
@@ -414,39 +414,39 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	if eufCharacterDB.enabled then
 		if eufCharacterDB.elitePlayerFrame == true then
-			isChecked1 = "Elite Player Frame"
+			isCheckedPlayerFrame = "Elite Player Frame"
 			isCheckedElite = true
 		elseif eufCharacterDB.rarePlayerFrame == true then
-			isChecked1 = "Rare Player Frame"
+			isCheckedPlayerFrame = "Rare Player Frame"
 			isCheckedRare = true
 		elseif eufCharacterDB.rareElitePlayerFrame == true then
-			isChecked1 = "Rare Elite Player Frame"
+			isCheckedPlayerFrame = "Rare Elite Player Frame"
 			isCheckedRareElite = true
 		else
-			isChecked1 = "Default Player Frame"
+			isCheckedPlayerFrame = "Default Player Frame"
 			isCheckedDefault = true
 		end
 	else
 		if eufDB.elitePlayerFrame == true then
-			isChecked1 = "Elite Player Frame"
+			isCheckedPlayerFrame = "Elite Player Frame"
 			isCheckedElite = true
 		elseif eufDB.rarePlayerFrame == true then
-			isChecked1 = "Rare Player Frame"
+			isCheckedPlayerFrame = "Rare Player Frame"
 			isCheckedRare = true
 		elseif eufDB.rareElitePlayerFrame == true then
-			isChecked1 = "Rare Elite Player Frame"
+			isCheckedPlayerFrame = "Rare Elite Player Frame"
 			isCheckedRareElite = true
 		else
-			isChecked1 = "Default Player Frame"
+			isCheckedPlayerFrame = "Default Player Frame"
 			isCheckedDefault = true
 		end
 	end
 
-	UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
+	UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
 
 	local function playerFrameTextureDropdownMenuOnClick(self, arg1)
 		if arg1 == 1 then
-			isChecked1 = "Elite Player Frame"
+			isCheckedPlayerFrame = "Elite Player Frame"
 			isCheckedElite = true
 			isCheckedRare = false
 			isCheckedRareElite = false
@@ -463,9 +463,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
+			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
 		elseif arg1 == 2 then
-			isChecked1 = "Rare Player Frame"
+			isCheckedPlayerFrame = "Rare Player Frame"
 			isCheckedElite = false
 			isCheckedRare = true
 			isCheckedRareElite = false
@@ -482,9 +482,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
+			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
 		elseif arg1 == 3 then
-			isChecked1 = "Rare Elite Player Frame"
+			isCheckedPlayerFrame = "Rare Elite Player Frame"
 			isCheckedElite = false
 			isCheckedRare = false
 			isCheckedRareElite = true
@@ -501,9 +501,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
+			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
 		elseif arg1 == 4 then
-			isChecked1 = "Default Player Frame"
+			isCheckedPlayerFrame = "Default Player Frame"
 			isCheckedElite = false
 			isCheckedRare = false
 			isCheckedRareElite = false
@@ -520,7 +520,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isChecked1)
+			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
 		end
 	end
 
@@ -544,7 +544,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	if not isClassic() then
 		threatWarningDropdown = CreateFrame("Frame", "eufThreatWarningDropdown", self, "UIDropDownMenuTemplate")
-		threatWarningDropdown.title = threatWarningDropdown:CreateFontString("ThreatWarningDropdownLabel", "ARTWORK", "GameFontNormal")
+		threatWarningDropdown.title = threatWarningDropdown:CreateFontString("threatWarningDropdownLabel", "ARTWORK", "GameFontNormal")
 
 		threatWarningDropdown:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 0, -37)
 		threatWarningDropdown.title:SetPoint("BOTTOMLEFT", threatWarningDropdown, "TOPLEFT", 15, 3)
@@ -564,58 +564,58 @@ eufOptions.general:SetScript("OnShow", function(self)
 		UIDropDownMenu_SetWidth(threatWarningDropdown, 160)
 
 		if C_CVar.GetCVar("threatWarning") == "0" then
-			isChecked2 = "Off"
+			isCheckedThreatWarning = "Off"
 			isCheckedOff = true
 		elseif C_CVar.GetCVar("threatWarning") == "1" then
-			isChecked2 = "In Dungeons"
+			isCheckedThreatWarning = "In Dungeons"
 			isCheckedInDungeons = true
 		elseif C_CVar.GetCVar("threatWarning") == "2" then
-			isChecked2 = "In Party/Raid"
+			isCheckedThreatWarning = "In Party/Raid"
 			isCheckedPartyRaid = true
 		elseif C_CVar.GetCVar("threatWarning") == "3" then
-			isChecked2 = "Always"
+			isCheckedThreatWarning = "Always"
 			isCheckedAlways = true
 		end
 
-		UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+		UIDropDownMenu_SetText(threatWarningDropdown, isCheckedThreatWarning)
 
 		local function threatWarningDropdownOnClick(self, arg1)
 			if arg1 == 1 then
 				C_CVar.SetCVar("threatWarning", 1)
-				isChecked2 = "In Dungeons"
+				isCheckedThreatWarning = "In Dungeons"
 				isCheckedOff = false
 				isCheckedInDungeons = true
 				isCheckedPartyRaid = false
 				isCheckedAlways = false
 
-				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+				UIDropDownMenu_SetText(threatWarningDropdown, isCheckedThreatWarning)
 			elseif arg1 == 2 then
 				C_CVar.SetCVar("threatWarning", 2)
-				isChecked2 = "In Party/Raid"
+				isCheckedThreatWarning = "In Party/Raid"
 				isCheckedOff = false
 				isCheckedInDungeons = false
 				isCheckedPartyRaid = true
 				isCheckedAlways = false
 
-				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+				UIDropDownMenu_SetText(threatWarningDropdown, isCheckedThreatWarning)
 			elseif arg1 == 3 then
 				C_CVar.SetCVar("threatWarning", 3)
-				isChecked2 = "Always"
+				isCheckedThreatWarning = "Always"
 				isCheckedOff = false
 				isCheckedInDungeons = false
 				isCheckedPartyRaid = false
 				isCheckedAlways = true
 
-				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+				UIDropDownMenu_SetText(threatWarningDropdown, isCheckedThreatWarning)
 			elseif arg1 == 4 then
 				C_CVar.SetCVar("threatWarning", 0)
-				isChecked2 = "Off"
+				isCheckedThreatWarning = "Off"
 				isCheckedOff = true
 				isCheckedInDungeons = false
 				isCheckedPartyRaid = false
 				isCheckedAlways = false
 
-				UIDropDownMenu_SetText(threatWarningDropdown, isChecked2)
+				UIDropDownMenu_SetText(threatWarningDropdown, isCheckedThreatWarning)
 			end
 		end
 
@@ -1152,7 +1152,7 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 	-- Status text dropdown menu.
 
 	local statusTextDropdown = CreateFrame("Frame", "eufStatusTextDropdown", self, "UIDropDownMenuTemplate")
-	statusTextDropdown.title = statusTextDropdown:CreateFontString("StatusTextDropdownLabel", "ARTWORK", "GameFontNormal")
+	statusTextDropdown.title = statusTextDropdown:CreateFontString("statusTextDropdownLabel", "ARTWORK", "GameFontNormal")
 
 	statusTextDropdown:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 273, 8)
 	statusTextDropdown.title:SetPoint("BOTTOMLEFT", statusTextDropdown, "TOPLEFT", 15, 3)
@@ -1161,7 +1161,7 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 	statusTextDropdown:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
 		GameTooltip:SetText("Status Text", nil, nil, nil, 1, true)
-		GameTooltip:AddLine("Display status text as numbers, percentage, or both.", 1, 1, 1, 1)
+		GameTooltip:AddLine("Display status text as numbers, percentage, both, or both condensed.", 1, 1, 1, 1)
 		GameTooltip:Show()
 	end)
 
@@ -1171,67 +1171,175 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_SetWidth(statusTextDropdown, 160)
 
-	if GetCVar("statusTextDisplay") == "NUMERIC" then
-		isChecked3 = "Numeric Value"
-		isCheckedNumericValue = true
-	elseif GetCVar("statusTextDisplay") == "PERCENT" then
-		isChecked3 = "Percentage"
-		isCheckedPercentage = true
-	elseif GetCVar("statusTextDisplay") == "BOTH" then
-		isChecked3 = "Both"
-		isCheckedBoth = true
-	elseif GetCVar("statusTextDisplay") == "NONE" then
-		isChecked3 = "None"
-		isCheckedNone = true
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.statusTextNumeric then
+			isCheckedStatusText = "Numeric Value"
+			isCheckedNumericValue = true
+		elseif eufCharacterDB.statusTextPercent then
+			isCheckedStatusText = "Percentage"
+			isCheckedPercentage = true
+		elseif eufCharacterDB.statusTextBoth then
+			isCheckedStatusText = "Both"
+			isCheckedBoth = true
+		elseif eufCharacterDB.statusTextBothCondensed then
+			isCheckedStatusText = "Both Condensed"
+			isCheckedBothCondensed = true
+		elseif eufCharacterDB.statusTextNone then
+			isCheckedStatusText = "None"
+			isCheckedNone = true
+		end
+	else
+		if eufDB.statusTextNumeric then
+			isCheckedStatusText = "Numeric Value"
+			isCheckedNumericValue = true
+		elseif eufDB.statusTextPercent then
+			isCheckedStatusText = "Percentage"
+			isCheckedPercentage = true
+		elseif eufDB.statusTextBoth then
+			isCheckedStatusText = "Both"
+			isCheckedBoth = true
+		elseif eufDB.statusTextBothCondensed then
+			isCheckedStatusText = "Both Condensed"
+			isCheckedBothCondensed = true
+		elseif eufDB.statusTextNone then
+			isCheckedStatusText = "None"
+			isCheckedNone = true
+		end
 	end
 
-	UIDropDownMenu_SetText(statusTextDropdown, isChecked3)
+	UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 
 	local function statusTextDropdownOnClick(self, arg1)
 		if arg1 == 1 then
-			isChecked2 = "Numeric Value"
+			isCheckedStatusText = "Numeric Value"
 			isCheckedNumericValue = true
 			isCheckedPercentage = false
 			isCheckedBoth = false
+			isCheckedBothCondensed = false
 			isCheckedNone = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextNumeric = true
+				eufCharacterDB.statusTextPercent = false
+				eufCharacterDB.statusTextBoth = false
+				eufCharacterDB.statusTextBothCondensed = false
+				eufCharacterDB.statusTextNone = false
+			else
+				eufDB.statusTextNumeric = true
+				eufDB.statusTextPercent = false
+				eufDB.statusTextBoth = false
+				eufDB.statusTextBothCondensed = false
+				eufDB.statusTextNone = false
+			end
 
 			SetCVar("statusText", 1)
 			SetCVar("statusTextDisplay", "NUMERIC")
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		elseif arg1 == 2 then
-			isChecked2 = "Percentage"
+			isCheckedStatusText = "Percentage"
 			isCheckedNumericValue = false
 			isCheckedPercentage = true
 			isCheckedBoth = false
+			isCheckedBothCondensed = false
 			isCheckedNone = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextNumeric = false
+				eufCharacterDB.statusTextPercent = true
+				eufCharacterDB.statusTextBoth = false
+				eufCharacterDB.statusTextBothCondensed = false
+				eufCharacterDB.statusTextNone = false
+			else
+				eufDB.statusTextNumeric = false
+				eufDB.statusTextPercent = true
+				eufDB.statusTextBoth = false
+				eufDB.statusTextBothCondensed = false
+				eufDB.statusTextNone = false
+			end
 
 			SetCVar("statusText", 1)
 			SetCVar("statusTextDisplay", "PERCENT")
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		elseif arg1 == 3 then
-			isChecked2 = "Both"
+			isCheckedStatusText = "Both"
 			isCheckedNumericValue = false
 			isCheckedPercentage = false
 			isCheckedBoth = true
+			isCheckedBothCondensed = false
 			isCheckedNone = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextNumeric = false
+				eufCharacterDB.statusTextPercent = false
+				eufCharacterDB.statusTextBoth = true
+				eufCharacterDB.statusTextBothCondensed = false
+				eufCharacterDB.statusTextNone = false
+			else
+				eufDB.statusTextNumeric = false
+				eufDB.statusTextPercent = false
+				eufDB.statusTextBoth = true
+				eufDB.statusTextBothCondensed = false
+				eufDB.statusTextNone = false
+			end
 
 			SetCVar("statusText", 1)
 			SetCVar("statusTextDisplay", "BOTH")
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		elseif arg1 == 4 then
-			isChecked2 = "None"
+			isCheckedStatusText = "Both Condensed"
 			isCheckedNumericValue = false
 			isCheckedPercentage = false
 			isCheckedBoth = false
+			isCheckedBothCondensed = true
+			isCheckedNone = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextNumeric = false
+				eufCharacterDB.statusTextPercent = false
+				eufCharacterDB.statusTextBoth = false
+				eufCharacterDB.statusTextBothCondensed = true
+				eufCharacterDB.statusTextNone = false
+			else
+				eufDB.statusTextNumeric = false
+				eufDB.statusTextPercent = false
+				eufDB.statusTextBoth = false
+				eufDB.statusTextBothCondensed = true
+				eufDB.statusTextNone = false
+			end
+
+			SetCVar("statusText", 1)
+			SetCVar("statusTextDisplay", "BOTH")
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
+		elseif arg1 == 5 then
+			isCheckedStatusText = "None"
+			isCheckedNumericValue = false
+			isCheckedPercentage = false
+			isCheckedBoth = false
+			isCheckedBothCondensed = false
 			isCheckedNone = true
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextNumeric = false
+				eufCharacterDB.statusTextPercent = false
+				eufCharacterDB.statusTextBoth = false
+				eufCharacterDB.statusTextBothCondensed = false
+				eufCharacterDB.statusTextNone = true
+			else
+				eufDB.statusTextNumeric = false
+				eufDB.statusTextPercent = false
+				eufDB.statusTextBoth = false
+				eufDB.statusTextBothCondensed = false
+				eufDB.statusTextNone = true
+			end
 
 			SetCVar("statusText", 0)
 			SetCVar("statusTextDisplay", "NONE")
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(statusTextDropdown, isChecked2)
+			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		end
 	end
 
@@ -1245,11 +1353,215 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 		UIDropDownMenu_AddButton(info)
 		info.text, info.arg1, info.checked = "Both", 3, isCheckedBoth
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "None", 4, isCheckedNone
+		info.text, info.arg1, info.checked = "Both Condensed", 4, isCheckedBothCondensed
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "None", 5, isCheckedNone
 		UIDropDownMenu_AddButton(info)
 	end
 
 	UIDropDownMenu_Initialize(statusTextDropdown, statusTextDropdownMenu)
+
+	-- Status text "Both Condensed" dropdown menu.
+
+	local statusTextBothCondensedDropdown = CreateFrame("Frame", "eufStatusTextBothCondensedDropdown", self, "UIDropDownMenuTemplate")
+	statusTextBothCondensedDropdown.title = statusTextBothCondensedDropdown:CreateFontString("statusTextBothCondensedDropdownLabel", "ARTWORK", "GameFontNormal")
+
+	statusTextBothCondensedDropdown:SetPoint("TOPLEFT", statusTextDropdown, "BOTTOMLEFT", 0, -37)
+	statusTextBothCondensedDropdown.title:SetPoint("BOTTOMLEFT", statusTextBothCondensedDropdown, "TOPLEFT", 15, 3)
+	statusTextBothCondensedDropdown.title:SetText("Both Condensed Style")
+
+	statusTextBothCondensedDropdown:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+		GameTooltip:SetText("Both Condensed Style", nil, nil, nil, 1, true)
+		GameTooltip:AddLine("Changes the style of the \"Both Condensed\" option.", 1, 1, 1, 1)
+		GameTooltip:Show()
+	end)
+
+	statusTextBothCondensedDropdown:SetScript("OnLeave", function(self)
+		GameTooltip:Hide()
+	end)
+
+	UIDropDownMenu_SetWidth(statusTextBothCondensedDropdown, 160)
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.statusTextBothCondensedBar then
+			isCheckedStatusTextBothCondensed = "Bar"
+			isCheckedBar = true
+		elseif eufCharacterDB.statusTextBothCondensedBrackets then
+			isCheckedStatusTextBothCondensed = "Brackets"
+			isCheckedBrackets = true
+		elseif eufCharacterDB.statusTextBothCondensedDash then
+			isCheckedStatusTextBothCondensed = "Dash"
+			isCheckedDash = true
+		elseif eufCharacterDB.statusTextBothCondensedParentheses then
+			isCheckedStatusTextBothCondensed = "Parentheses"
+			isCheckedParentheses = true
+		elseif eufCharacterDB.statusTextBothCondensedSlash then
+			isCheckedStatusTextBothCondensed = "Slash"
+			isCheckedSlash = true
+		end
+	else
+		if eufDB.statusTextBothCondensedBar then
+			isCheckedStatusTextBothCondensed = "Bar"
+			isCheckedBar = true
+		elseif eufDB.statusTextBothCondensedBrackets then
+			isCheckedStatusTextBothCondensed = "Brackets"
+			isCheckedBrackets = true
+		elseif eufDB.statusTextBothCondensedDash then
+			isCheckedStatusTextBothCondensed = "Dash"
+			isCheckedDash = true
+		elseif eufDB.statusTextBothCondensedParentheses then
+			isCheckedStatusTextBothCondensed = "Parentheses"
+			isCheckedParentheses = true
+		elseif eufDB.statusTextBothCondensedSlash then
+			isCheckedStatusTextBothCondensed = "Slash"
+			isCheckedSlash = true
+		end
+	end
+
+	UIDropDownMenu_SetText(statusTextBothCondensedDropdown, isCheckedStatusTextBothCondensed)
+
+	local function statusTextBothCondensedDropdownOnClick(self, arg1)
+		if arg1 == 1 then
+			isCheckedStatusTextBothCondensed = "Bar"
+			isCheckedBar = true
+			isCheckedBrackets = false
+			isCheckedDash = false
+			isCheckedParentheses = false
+			isCheckedSlash = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextBothCondensedBar = true
+				eufCharacterDB.statusTextBothCondensedBrackets = false
+				eufCharacterDB.statusTextBothCondensedDash = false
+				eufCharacterDB.statusTextBothCondensedParentheses = false
+				eufCharacterDB.statusTextBothCondensedSlash = false
+			else
+				eufDB.statusTextBothCondensedBar = true
+				eufDB.statusTextBothCondensedBrackets = false
+				eufDB.statusTextBothCondensedDash = false
+				eufDB.statusTextBothCondensedParentheses = false
+				eufDB.statusTextBothCondensedSlash = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextBothCondensedDropdown, isCheckedStatusTextBothCondensed)
+		elseif arg1 == 2 then
+			isCheckedStatusTextBothCondensed = "Brackets"
+			isCheckedBar = false
+			isCheckedBrackets = true
+			isCheckedDash = false
+			isCheckedParentheses = false
+			isCheckedSlash = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextBothCondensedBar = false
+				eufCharacterDB.statusTextBothCondensedBrackets = true
+				eufCharacterDB.statusTextBothCondensedDash = false
+				eufCharacterDB.statusTextBothCondensedParentheses = false
+				eufCharacterDB.statusTextBothCondensedSlash = false
+			else
+				eufDB.statusTextBothCondensedBar = false
+				eufDB.statusTextBothCondensedBrackets = true
+				eufDB.statusTextBothCondensedDash = false
+				eufDB.statusTextBothCondensedParentheses = false
+				eufDB.statusTextBothCondensedSlash = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextBothCondensedDropdown, isCheckedStatusTextBothCondensed)
+		elseif arg1 == 3 then
+			isCheckedStatusTextBothCondensed = "Dash"
+			isCheckedBar = false
+			isCheckedBrackets = false
+			isCheckedDash = true
+			isCheckedParentheses = false
+			isCheckedSlash = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextBothCondensedBar = false
+				eufCharacterDB.statusTextBothCondensedBrackets = false
+				eufCharacterDB.statusTextBothCondensedDash = true
+				eufCharacterDB.statusTextBothCondensedParentheses = false
+				eufCharacterDB.statusTextBothCondensedSlash = false
+			else
+				eufDB.statusTextBothCondensedBar = false
+				eufDB.statusTextBothCondensedBrackets = false
+				eufDB.statusTextBothCondensedDash = true
+				eufDB.statusTextBothCondensedParentheses = false
+				eufDB.statusTextBothCondensedSlash = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextBothCondensedDropdown, isCheckedStatusTextBothCondensed)
+		elseif arg1 == 4 then
+			isCheckedStatusTextBothCondensed = "Parentheses"
+			isCheckedBar = false
+			isCheckedBrackets = false
+			isCheckedDash = false
+			isCheckedParentheses = true
+			isCheckedSlash = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextBothCondensedBar = false
+				eufCharacterDB.statusTextBothCondensedBrackets = false
+				eufCharacterDB.statusTextBothCondensedDash = false
+				eufCharacterDB.statusTextBothCondensedParentheses = true
+				eufCharacterDB.statusTextBothCondensedSlash = false
+			else
+				eufDB.statusTextBothCondensedBar = false
+				eufDB.statusTextBothCondensedBrackets = false
+				eufDB.statusTextBothCondensedDash = false
+				eufDB.statusTextBothCondensedParentheses = true
+				eufDB.statusTextBothCondensedSlash = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextBothCondensedDropdown, isCheckedStatusTextBothCondensed)
+		elseif arg1 == 5 then
+			isCheckedStatusTextBothCondensed = "Slash"
+			isCheckedBar = false
+			isCheckedBrackets = false
+			isCheckedDash = false
+			isCheckedParentheses = false
+			isCheckedSlash = true
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.statusTextBothCondensedBar = false
+				eufCharacterDB.statusTextBothCondensedBrackets = false
+				eufCharacterDB.statusTextBothCondensedDash = false
+				eufCharacterDB.statusTextBothCondensedParentheses = false
+				eufCharacterDB.statusTextBothCondensedSlash = true
+			else
+				eufDB.statusTextBothCondensedBar = false
+				eufDB.statusTextBothCondensedBrackets = false
+				eufDB.statusTextBothCondensedDash = false
+				eufDB.statusTextBothCondensedParentheses = false
+				eufDB.statusTextBothCondensedSlash = true
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(statusTextBothCondensedDropdown, isCheckedStatusTextBothCondensed)
+		end
+	end
+
+	local function statusTextBothCondensedDropdownMenu(frame, level, menuList)
+		local info = UIDropDownMenu_CreateInfo()
+		info.func = statusTextBothCondensedDropdownOnClick
+
+		info.text, info.arg1, info.checked = "Bar", 1, isCheckedBar
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Brackets", 2, isCheckedBrackets
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Dash", 3, isCheckedDash
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Parentheses", 4, isCheckedParentheses
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Slash", 5, isCheckedSlash
+		UIDropDownMenu_AddButton(info)
+	end
+
+	UIDropDownMenu_Initialize(statusTextBothCondensedDropdown, statusTextBothCondensedDropdownMenu)
 
 	-- Initializes the options panel with saved variables.
 
