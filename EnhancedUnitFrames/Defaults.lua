@@ -71,9 +71,7 @@ function SetDefaults()
 	end
 
 	if eufDB.statusTextBoth == nil then
-		if GetCVar("statusTextDisplay") == "BOTH" then
-			eufDB.statusTextBoth = true
-		end
+		eufDB.statusTextBoth = false
 	end
 
 	if eufDB.statusTextBothCondensed == nil then
@@ -101,21 +99,15 @@ function SetDefaults()
 	end
 
 	if eufDB.statusTextNone == nil then
-		if GetCVar("statusTextDisplay") == "NONE" then
-			eufDB.statusTextNone = true
-		end
+		eufDB.statusTextNone = false
 	end
 
 	if eufDB.statusTextNumeric == nil then
-		if GetCVar("statusTextDisplay") == "NUMERIC" then
-			eufDB.statusTextNumeric = true
-		end
+		eufDB.statusTextNumeric = true
 	end
 
 	if eufDB.statusTextPercent == nil then
-		if GetCVar("statusTextDisplay") == "PERCENT" then
-			eufDB.statusTextPercent = true
-		end
+		eufDB.statusTextPercent = false
 	end
 
 	if eufDB.upperCaseAbbreviation == nil then

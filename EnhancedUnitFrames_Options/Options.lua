@@ -211,46 +211,12 @@ eufOptions.general:SetScript("OnShow", function(self)
 	-- Applies scripts to the checkboxes.
 
 	characterDatabase:SetScript("OnClick", function(self)
-		local function updateCVars()
-			if eufCharacterDB.enabled then
-				if eufCharacterDB.statusTextNumeric then
-					SetCVar("statusText", 1)
-					SetCVar("statusTextDisplay", "NUMERIC")
-				elseif eufCharacterDB.statusTextPercent then
-					SetCVar("statusText", 1)
-					SetCVar("statusTextDisplay", "PERCENT")
-				elseif eufCharacterDB.statusTextBoth or eufCharacterDB.statusTextBothCondensed then
-					SetCVar("statusText", 1)
-					SetCVar("statusTextDisplay", "BOTH")
-				elseif eufCharacterDB.statusTextNone then
-					SetCVar("statusText", 0)
-					SetCVar("statusTextDisplay", "NONE")
-				end
-			else
-				if eufDB.statusTextNumeric then
-					SetCVar("statusText", 1)
-					SetCVar("statusTextDisplay", "NUMERIC")
-				elseif eufDB.statusTextPercent then
-					SetCVar("statusText", 1)
-					SetCVar("statusTextDisplay", "PERCENT")
-				elseif eufDB.statusTextBoth or eufDB.statusTextBothCondensed then
-					SetCVar("statusText", 1)
-					SetCVar("statusTextDisplay", "BOTH")
-				elseif eufDB.statusTextNone then
-					SetCVar("statusText", 0)
-					SetCVar("statusTextDisplay", "NONE")
-				end
-			end
-		end
-
 		if self:GetChecked() then
 			eufCharacterDB.enabled = true
-			updateCVars()
 
 			PlaySound(856)
 		else
 			eufCharacterDB.enabled = false
-			updateCVars()
 
 			PlaySound(857)
 		end
@@ -1266,8 +1232,6 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 				eufDB.statusTextNone = false
 			end
 
-			SetCVar("statusText", 1)
-			SetCVar("statusTextDisplay", "NUMERIC")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		elseif arg1 == 2 then
@@ -1292,8 +1256,6 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 				eufDB.statusTextNone = false
 			end
 
-			SetCVar("statusText", 1)
-			SetCVar("statusTextDisplay", "PERCENT")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		elseif arg1 == 3 then
@@ -1318,8 +1280,6 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 				eufDB.statusTextNone = false
 			end
 
-			SetCVar("statusText", 1)
-			SetCVar("statusTextDisplay", "BOTH")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		elseif arg1 == 4 then
@@ -1344,8 +1304,6 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 				eufDB.statusTextNone = false
 			end
 
-			SetCVar("statusText", 1)
-			SetCVar("statusTextDisplay", "BOTH")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		elseif arg1 == 5 then
@@ -1370,8 +1328,6 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 				eufDB.statusTextNone = true
 			end
 
-			SetCVar("statusText", 0)
-			SetCVar("statusTextDisplay", "NONE")
 			StaticPopup_Show("RELOAD_UI")
 			UIDropDownMenu_SetText(statusTextDropdown, isCheckedStatusText)
 		end
