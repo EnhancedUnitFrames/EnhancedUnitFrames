@@ -172,7 +172,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
-	characterConfiguration = createCheckbox("characterConfiguration", self, "Per-Character Configuration", "If enabled, this character's configuration will not affect the global configuration.")
+	characterDatabase = createCheckbox("characterDatabase", self, "Per-Character Configuration", "If enabled, this character's configuration will not affect the global configuration.")
 
 	if isClassic() then
 		wideTargetFrame = createCheckbox("wideTargetFrame", self, "Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
@@ -194,7 +194,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
-	characterConfiguration:SetPoint("RIGHT", title, 50, 0)
+	characterDatabase:SetPoint("RIGHT", title, 50, 0)
 	wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
 	upperCaseAbbreviation:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
@@ -210,13 +210,47 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	-- Applies scripts to the checkboxes.
 
-	characterConfiguration:SetScript("OnClick", function(self)
+	characterDatabase:SetScript("OnClick", function(self)
+		local function updateCVars()
+			if eufCharacterDB.enabled then
+				if eufCharacterDB.statusTextNumeric then
+					SetCVar("statusText", 1)
+					SetCVar("statusTextDisplay", "NUMERIC")
+				elseif eufCharacterDB.statusTextPercent then
+					SetCVar("statusText", 1)
+					SetCVar("statusTextDisplay", "PERCENT")
+				elseif eufCharacterDB.statusTextBoth or eufCharacterDB.statusTextBothCondensed then
+					SetCVar("statusText", 1)
+					SetCVar("statusTextDisplay", "BOTH")
+				elseif eufCharacterDB.statusTextNone then
+					SetCVar("statusText", 0)
+					SetCVar("statusTextDisplay", "NONE")
+				end
+			else
+				if eufDB.statusTextNumeric then
+					SetCVar("statusText", 1)
+					SetCVar("statusTextDisplay", "NUMERIC")
+				elseif eufDB.statusTextPercent then
+					SetCVar("statusText", 1)
+					SetCVar("statusTextDisplay", "PERCENT")
+				elseif eufDB.statusTextBoth or eufDB.statusTextBothCondensed then
+					SetCVar("statusText", 1)
+					SetCVar("statusTextDisplay", "BOTH")
+				elseif eufDB.statusTextNone then
+					SetCVar("statusText", 0)
+					SetCVar("statusTextDisplay", "NONE")
+				end
+			end
+		end
+
 		if self:GetChecked() then
 			eufCharacterDB.enabled = true
+			updateCVars()
 
 			PlaySound(856)
 		else
 			eufCharacterDB.enabled = false
+			updateCVars()
 
 			PlaySound(857)
 		end
@@ -639,7 +673,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 	-- Initializes the options panel with saved variables.
 
 	if eufCharacterDB.enabled then
-		characterConfigurationCheckbox:SetChecked(true)
+		characterDatabaseCheckbox:SetChecked(true)
 
 		if eufCharacterDB.wideTargetFrame == true then
 			wideTargetFrameCheckbox:SetChecked(true)
