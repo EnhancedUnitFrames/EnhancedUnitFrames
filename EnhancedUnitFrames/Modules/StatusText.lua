@@ -149,8 +149,14 @@ function StatusTextStyling()
 
 		local function isDead()
 			if UnitIsDead("player") or UnitIsGhost("player") then
-				if GetCVar("statusTextDisplay") == "BOTH" then
-					PlayerFrameHealthBar.TextString:Show()
+				if eufCharacterDB.enabled then
+					if eufCharacterDB.statusTextBoth
+						PlayerFrameHealthBar.TextString:Show()
+					end
+				else
+					if eufDB.statusTextBoth
+						PlayerFrameHealthBar.TextString:Show()
+					end
 				end
 
 				if UnitIsDead("player") then
@@ -192,8 +198,14 @@ function StatusTextStyling()
 			end
 
 			if UnitIsDead("target") or UnitIsGhost("target") then
-				if GetCVar("statusTextDisplay") == "BOTH" then
-					TargetFrameHealthBar.TextString:Show()
+				if eufCharacterDB.enabled then
+					if eufCharacterDB.statusTextBoth
+						TargetFrameHealthBar.TextString:Show()
+					end
+				else
+					if eufDB.statusTextBoth
+						TargetFrameHealthBar.TextString:Show()
+					end
 				end
 
 				if UnitIsDead("target") then
@@ -246,8 +258,14 @@ function StatusTextStyling()
 				end
 
 				if UnitIsDead("focus") or UnitIsGhost("focus") then
-					if GetCVar("statusTextDisplay") == "BOTH" then
-						FocusFrameHealthBar.TextString:Show()
+					if eufCharacterDB.enabled then
+						if eufCharacterDB.statusTextBoth
+							FocusFrameHealthBar.TextString:Show()
+						end
+					else
+						if eufDB.statusTextBoth
+							FocusFrameHealthBar.TextString:Show()
+						end
 					end
 
 					if UnitIsDead("focus") then
