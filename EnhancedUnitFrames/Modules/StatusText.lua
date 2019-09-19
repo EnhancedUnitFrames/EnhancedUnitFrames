@@ -150,11 +150,11 @@ function StatusTextStyling()
 		local function isDead()
 			if UnitIsDead("player") or UnitIsGhost("player") then
 				if eufCharacterDB.enabled then
-					if eufCharacterDB.statusTextBoth
+					if eufCharacterDB.statusTextBoth then
 						PlayerFrameHealthBar.TextString:Show()
 					end
 				else
-					if eufDB.statusTextBoth
+					if eufDB.statusTextBoth then
 						PlayerFrameHealthBar.TextString:Show()
 					end
 				end
@@ -199,11 +199,11 @@ function StatusTextStyling()
 
 			if UnitIsDead("target") or UnitIsGhost("target") then
 				if eufCharacterDB.enabled then
-					if eufCharacterDB.statusTextBoth
+					if eufCharacterDB.statusTextBoth then
 						TargetFrameHealthBar.TextString:Show()
 					end
 				else
-					if eufDB.statusTextBoth
+					if eufDB.statusTextBoth then
 						TargetFrameHealthBar.TextString:Show()
 					end
 				end
@@ -259,11 +259,11 @@ function StatusTextStyling()
 
 				if UnitIsDead("focus") or UnitIsGhost("focus") then
 					if eufCharacterDB.enabled then
-						if eufCharacterDB.statusTextBoth
+						if eufCharacterDB.statusTextBoth then
 							FocusFrameHealthBar.TextString:Show()
 						end
 					else
-						if eufDB.statusTextBoth
+						if eufDB.statusTextBoth then
 							FocusFrameHealthBar.TextString:Show()
 						end
 					end
