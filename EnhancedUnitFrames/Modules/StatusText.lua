@@ -147,7 +147,7 @@ function StatusTextStyling()
 		local valueMaxDisplay = tostring(ReadableNumber(valueMax))
 		local valuePercentageDisplay = math.ceil((value / valueMax) * 100) .. "%"
 
-		local function isDead()
+		local function isDeadOrGhost()
 			if UnitIsDead("player") or UnitIsGhost("player") then
 				if eufCharacterDB.enabled then
 					if eufCharacterDB.statusTextBoth then
@@ -354,6 +354,9 @@ function StatusTextStyling()
 					statusFrame.RightText:Hide()
 					textString:Show()
 				elseif eufCharacterDB.statusTextNone then
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
+					textString:Hide()
 					textString:SetText(valueDisplay)
 				end
 			else
@@ -412,11 +415,14 @@ function StatusTextStyling()
 					statusFrame.RightText:Hide()
 					textString:Show()
 				elseif eufDB.statusTextNone then
+					statusFrame.LeftText:Hide()
+					statusFrame.RightText:Hide()
+					textString:Hide()
 					textString:SetText(valueDisplay)
 				end
 			end
 
-			isDead()
+			isDeadOrGhost()
 		end
 	end)
 end
