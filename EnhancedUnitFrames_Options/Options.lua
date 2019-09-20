@@ -1119,13 +1119,125 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
+	if not isClassic() then
+		hideArenaStatusText = createCheckbox("hideArenaStatusText", self, "Hide Arena Status Text", "Hides the arena frame status bar text.")
+		hideBossStatusText = createCheckbox("hideBossStatusText", self, "Hide Boss Status Text", "Hides the boss frame status bar text.")
+		hideFocusStatusText = createCheckbox("hideFocusStatusText", self, "Hide Focus Status Text", "Hides the focus frame status bar text.")
+	end
+
+	local hidePartyStatusText = createCheckbox("hidePartyStatusText", self, "Hide Party Status Text", "Hides the party frame status bar text.")
 	local hidePetStatusText = createCheckbox("hidePetStatusText", self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
+	local hidePlayerStatusText = createCheckbox("hidePlayerStatusText", self, "Hide Player Status Text", "Hides the player frame status bar text.")
+	local hidePowerBarStatusText = createCheckbox("hidePowerBarStatusText", self, "Hide Power Bar Status Text", "Hides the alternate power bar status bar text.")
+	local hideTargetStatusText = createCheckbox("hideTargetStatusText", self, "Hide Target Status Text", "Hides the target frame status bar text.")
 
 	-- Positions the checkboxes created.
 
-	hidePetStatusText:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+	if not isClassic() then
+		hideArenaStatusText:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+		hideBossStatusText:SetPoint("TOPLEFT", hideArenaStatusText, "BOTTOMLEFT", 0, -8)
+		hideFocusStatusText:SetPoint("TOPLEFT", hideBossStatusText, "BOTTOMLEFT", 0, -8)
+		hidePartyStatusText:SetPoint("TOPLEFT", hideFocusStatusText, "BOTTOMLEFT", 0, -8)
+	else
+		hidePartyStatusText:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+	end
+
+	hidePetStatusText:SetPoint("TOPLEFT", hidePartyStatusText, "BOTTOMLEFT", 0, -8)
+	hidePlayerStatusText:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 0, -8)
+	hidePowerBarStatusText:SetPoint("TOPLEFT", hidePlayerStatusText, "BOTTOMLEFT", 0, -8)
+	hideTargetStatusText:SetPoint("TOPLEFT", hidePowerBarStatusText, "BOTTOMLEFT", 0, -8)
 
 	-- Applies scripts to the checkboxes.
+
+	if not isClassic() then
+		hideArenaStatusText:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hideArenaStatusText = true
+				else
+					eufDB.hideArenaStatusText = true
+				end
+
+				PlaySound(856)
+			else
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hideArenaStatusText = false
+				else
+					eufDB.hideArenaStatusText = false
+				end
+
+				PlaySound(857)
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+		end)
+
+		hideBossStatusText:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hideBossStatusText = true
+				else
+					eufDB.hideBossStatusText = true
+				end
+
+				PlaySound(856)
+			else
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hideBossStatusText = false
+				else
+					eufDB.hideBossStatusText = false
+				end
+
+				PlaySound(857)
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+		end)
+
+		hideFocusStatusText:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hideFocusStatusText = true
+				else
+					eufDB.hideFocusStatusText = true
+				end
+
+				PlaySound(856)
+			else
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hideFocusStatusText = false
+				else
+					eufDB.hideFocusStatusText = false
+				end
+
+				PlaySound(857)
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+		end)
+	end
+
+	hidePartyStatusText:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePartyStatusText = true
+			else
+				eufDB.hidePartyStatusText = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePartyStatusText = false
+			else
+				eufDB.hidePartyStatusText = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
 
 	hidePetStatusText:SetScript("OnClick", function(self)
 		if self:GetChecked() then
@@ -1149,12 +1261,83 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
+	hidePlayerStatusText:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePlayerStatusText = true
+			else
+				eufDB.hidePlayerStatusText = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePlayerStatusText = false
+			else
+				eufDB.hidePlayerStatusText = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	hidePowerBarStatusText:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePowerBarStatusText = true
+			else
+				eufDB.hidePowerBarStatusText = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePowerBarStatusText = false
+			else
+				eufDB.hidePowerBarStatusText = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	hideTargetStatusText:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideTargetStatusText = true
+			else
+				eufDB.hideTargetStatusText = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideTargetStatusText = false
+			else
+				eufDB.hideTargetStatusText = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
 	-- Status text dropdown menu.
 
 	local statusTextDropdown = CreateFrame("Frame", "eufStatusTextDropdown", self, "UIDropDownMenuTemplate")
 	statusTextDropdown.title = statusTextDropdown:CreateFontString("statusTextDropdownLabel", "ARTWORK", "GameFontNormal")
 
-	statusTextDropdown:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 273, 8)
+	if isClassic() then
+		statusTextDropdown:SetPoint("TOPLEFT", hidePartyStatusText, "BOTTOMLEFT", 273, 8)
+	else
+		statusTextDropdown:SetPoint("TOPLEFT", hideArenaStatusText, "BOTTOMLEFT", 273, 8)
+	end
+
 	statusTextDropdown.title:SetPoint("BOTTOMLEFT", statusTextDropdown, "TOPLEFT", 15, 3)
 	statusTextDropdown.title:SetText("Status Text")
 
@@ -1556,12 +1739,72 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 	-- Initializes the options panel with saved variables.
 
 	if eufCharacterDB.enabled then
+		if not isClassic() then
+			if eufCharacterDB.hideArenaStatusText == true then
+				hideArenaStatusTextCheckbox:SetChecked(true)
+			end
+
+			if eufCharacterDB.hideBossStatusText == true then
+				hideBossStatusTextCheckbox:SetChecked(true)
+			end
+
+			if eufCharacterDB.hideFocusStatusText == true then
+				hideFocusStatusTextCheckbox:SetChecked(true)
+			end
+		end
+
+		if eufCharacterDB.hidePartyStatusText == true then
+			hidePartyStatusTextCheckbox:SetChecked(true)
+		end
+
 		if eufCharacterDB.hidePetStatusText == true then
 			hidePetStatusTextCheckbox:SetChecked(true)
 		end
+
+		if eufCharacterDB.hidePlayerStatusText == true then
+			hidePlayerStatusTextCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.hidePowerBarStatusText == true then
+			hidePowerBarStatusTextCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.hideTargetStatusText == true then
+			hideTargetStatusTextCheckbox:SetChecked(true)
+		end
 	else
+		if not isClassic() then
+			if eufDB.hideArenaStatusText == true then
+				hideArenaStatusTextCheckbox:SetChecked(true)
+			end
+
+			if eufDB.hideBossStatusText == true then
+				hideBossStatusTextCheckbox:SetChecked(true)
+			end
+
+			if eufDB.hideFocusStatusText == true then
+				hideFocusStatusTextCheckbox:SetChecked(true)
+			end
+		end
+
+		if eufDB.hidePartyStatusText == true then
+			hidePartyStatusTextCheckbox:SetChecked(true)
+		end
+
 		if eufDB.hidePetStatusText == true then
 			hidePetStatusTextCheckbox:SetChecked(true)
+		end
+
+		if eufDB.hidePlayerStatusText == true then
+			hidePlayerStatusTextCheckbox:SetChecked(true)
+		end
+
+		if eufDB.hidePowerBarStatusText == true then
+			hidePowerBarStatusTextCheckbox:SetChecked(true)
+		end
+
+		if eufDB.hideTargetStatusText == true then
+			hideTargetStatusTextCheckbox:SetChecked(true)
 		end
 	end
 

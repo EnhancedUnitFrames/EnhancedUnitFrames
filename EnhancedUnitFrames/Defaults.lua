@@ -24,28 +24,58 @@ function SetDefaults()
 		eufDB.elitePlayerFrame = false
 	end
 
+	if not isClassic() then
+		if eufDB.hideArenaStatusText == nil then
+			eufDB.hideArenaStatusText = false
+		end
+
+		if eufDB.hideBossStatusText == nil then
+			eufDB.hideBossStatusText = false
+		end
+
+		if eufDB.hideFocusStatusText == nil then
+			eufDB.hideFocusStatusText = false
+		end
+	end
+
 	if eufDB.hideHitIndicators == nil then
 		eufDB.hideHitIndicators = false
 	end
 
-	if eufDB.hidePowerAnimation == nil then
-		eufDB.hidePowerAnimation = false
-	end
-
-	if eufDB.mirroredPositioning == nil then
-		eufDB.mirroredPositioning = false
+	if eufDB.hidePartyStatusText == nil then
+		eufDB.hidePartyStatusText = false
 	end
 
 	if eufDB.hidePetStatusText == nil then
 		eufDB.hidePetStatusText = false
 	end
 
+	if eufDB.hidePlayerStatusText == nil then
+		eufDB.hidePlayerStatusText = false
+	end
+
+	if eufDB.hidePowerAnimation == nil then
+		eufDB.hidePowerAnimation = false
+	end
+
+	if eufDB.hidePowerBarStatusText == nil then
+		eufDB.hidePowerBarStatusText = false
+	end
+
 	if eufDB.hideRestingIcon == nil then
 		eufDB.hideRestingIcon = false
 	end
 
+	if eufDB.hideTargetStatusText == nil then
+		eufDB.hideTargetStatusText = false
+	end
+
 	if eufDB.largeAuraIconSize == nil then
 		eufDB.largeAuraIconSize = 25
+	end
+
+	if eufDB.mirroredPositioning == nil then
+		eufDB.mirroredPositioning = false
 	end
 
 	if eufDB.rarePlayerFrame == nil then
@@ -147,28 +177,58 @@ function SetDefaults()
 			eufCharacterDB.elitePlayerFrame = eufDB.elitePlayerFrame
 		end
 
+		if not isClassic() then
+			if eufCharacterDB.hideArenaStatusText == nil then
+				eufCharacterDB.hideArenaStatusText = eufDB.hideArenaStatusText
+			end
+
+			if eufCharacterDB.hideBossStatusText == nil then
+				eufCharacterDB.hideBossStatusText = eufDB.hideBossStatusText
+			end
+
+			if eufCharacterDB.hideFocusStatusText == nil then
+				eufCharacterDB.hideFocusStatusText = eufDB.hideFocusStatusText
+			end
+		end
+
 		if eufCharacterDB.hideHitIndicators == nil then
 			eufCharacterDB.hideHitIndicators = eufDB.hideHitIndicators
 		end
 
-		if eufCharacterDB.hidePowerAnimation == nil then
-			eufCharacterDB.hidePowerAnimation = eufDB.hidePowerAnimation
-		end
-
-		if eufCharacterDB.mirroredPositioning == nil then
-			eufCharacterDB.mirroredPositioning = eufDB.mirroredPositioning
+		if eufCharacterDB.hidePartyStatusText == nil then
+			eufCharacterDB.hidePartyStatusText = eufDB.hidePartyStatusText
 		end
 
 		if eufCharacterDB.hidePetStatusText == nil then
 			eufCharacterDB.hidePetStatusText = eufDB.hidePetStatusText
 		end
 
+		if eufCharacterDB.hidePlayerStatusText == nil then
+			eufCharacterDB.hidePlayerStatusText = eufDB.hidePlayerStatusText
+		end
+
+		if eufCharacterDB.hidePowerAnimation == nil then
+			eufCharacterDB.hidePowerAnimation = eufDB.hidePowerAnimation
+		end
+
+		if eufCharacterDB.hidePowerBarStatusText == nil then
+			eufCharacterDB.hidePowerBarStatusText = eufDB.hidePowerBarStatusText
+		end
+
 		if eufCharacterDB.hideRestingIcon == nil then
 			eufCharacterDB.hideRestingIcon = eufDB.hideRestingIcon
 		end
 
+		if eufCharacterDB.hideTargetStatusText == nil then
+			eufCharacterDB.hideTargetStatusText = eufDB.hideTargetStatusText
+		end
+
 		if eufCharacterDB.largeAuraIconSize == nil then
 			eufCharacterDB.largeAuraIconSize = eufDB.largeAuraIconSize
+		end
+
+		if eufCharacterDB.mirroredPositioning == nil then
+			eufCharacterDB.mirroredPositioning = eufDB.mirroredPositioning
 		end
 
 		if eufCharacterDB.rarePlayerFrame == nil then
