@@ -121,28 +121,28 @@ function StatusTextStyling()
 	-- Formats the unit frame status text so it's readable.
 
 	hooksecurefunc("TextStatusBar_UpdateTextStringWithValues", function(statusFrame, textString, value, valueMin, valueMax)
-		local petPowerType = UnitPowerType("pet")
-		local petValueHealth = UnitHealth("pet")
-		local petValueHealthMax = UnitHealthMax("pet")
-		local petValuePower = UnitPower("pet")
-		local petValuePowerMax = UnitPowerMax("pet")
-		local petValueHealthDisplay = tostring(ReadableNumber(petValueHealth))
-		local petValueHealthMaxDisplay = tostring(ReadableNumber(petValueHealthMax))
-		local petValueHealthPercentageDisplay = math.ceil((petValueHealth / petValueHealthMax) * 100) .. "%"
-		local petValuePowerDisplay = tostring(ReadableNumber(petValuePower))
-		local petValuePowerMaxDisplay = tostring(ReadableNumber(petValuePowerMax))
-		local petValuePowerPercentageDisplay = math.ceil((petValuePower / petValuePowerMax) * 100) .. "%"
-		local playerPowerType = UnitPowerType("player")
-		local playerValueHealth = UnitHealth("player")
-		local playerValueHealthMax = UnitHealthMax("player")
-		local playerValuePower = UnitPower("player")
-		local playerValuePowerMax = UnitPowerMax("player")
-		local playerValueHealthDisplay = tostring(ReadableNumber(playerValueHealth))
-		local playerValueHealthMaxDisplay = tostring(ReadableNumber(playerValueHealthMax))
-		local playerValueHealthPercentageDisplay = math.ceil((playerValueHealth / playerValueHealthMax) * 100) .. "%"
-		local playerValuePowerDisplay = tostring(ReadableNumber(playerValuePower))
-		local playerValuePowerMaxDisplay = tostring(ReadableNumber(playerValuePowerMax))
-		local playerValuePowerPercentageDisplay = math.ceil((playerValuePower / playerValuePowerMax) * 100) .. "%"
+		local focusPowerType = UnitPowerType("focus")
+		local focusValueHealth = UnitHealth("focus")
+		local focusValueHealthMax = UnitHealthMax("focus")
+		local focusValuePower = UnitPower("focus")
+		local focusValuePowerMax = UnitPowerMax("focus")
+		local focusValueHealthDisplay = tostring(ReadableNumber(focusValueHealth))
+		local focusValueHealthMaxDisplay = tostring(ReadableNumber(focusValueHealthMax))
+		local focusValueHealthPercentageDisplay = math.ceil((focusValueHealth / focusValueHealthMax) * 100) .. "%"
+		local focusValuePowerDisplay = tostring(ReadableNumber(focusValuePower))
+		local focusValuePowerMaxDisplay = tostring(ReadableNumber(focusValuePowerMax))
+		local focusValuePowerPercentageDisplay = math.ceil((focusValuePower / focusValuePowerMax) * 100) .. "%"
+		local targetPowerType = UnitPowerType("target")
+		local targetValueHealth = UnitHealth("target")
+		local targetValueHealthMax = UnitHealthMax("target")
+		local targetValuePower = UnitPower("target")
+		local targetValuePowerMax = UnitPowerMax("target")
+		local targetValueHealthDisplay = tostring(ReadableNumber(targetValueHealth))
+		local targetValueHealthMaxDisplay = tostring(ReadableNumber(targetValueHealthMax))
+		local targetValueHealthPercentageDisplay = math.ceil((targetValueHealth / targetValueHealthMax) * 100) .. "%"
+		local targetValuePowerDisplay = tostring(ReadableNumber(targetValuePower))
+		local targetValuePowerMaxDisplay = tostring(ReadableNumber(targetValuePowerMax))
+		local targetValuePowerPercentageDisplay = math.ceil((targetValuePower / targetValuePowerMax) * 100) .. "%"
 		local valueDisplay = tostring(ReadableNumber(value))
 		local valueMaxDisplay = tostring(ReadableNumber(valueMax))
 		local valuePercentageDisplay = math.ceil((value / valueMax) * 100) .. "%"
@@ -320,40 +320,48 @@ function StatusTextStyling()
 					textString:Hide()
 				elseif eufCharacterDB.statusTextBothCondensed and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
-						if eufCharacterDB.statusTextBothCondensedBar then
-							textString:SetText(valueDisplay .. " | " .. valuePercentageDisplay)
-						elseif eufCharacterDB.statusTextBothCondensedBrackets then
-							textString:SetText(valueDisplay .. " [" .. valuePercentageDisplay .. "]")
-						elseif eufCharacterDB.statusTextBothCondensedDash then
-							textString:SetText(valueDisplay .. " - " .. valuePercentageDisplay)
-						elseif eufCharacterDB.statusTextBothCondensedParentheses then
-							textString:SetText(valueDisplay .. " (" .. valuePercentageDisplay .. ")")
-						elseif eufCharacterDB.statusTextBothCondensedSlash then
-							textString:SetText(valueDisplay .. " / " .. valuePercentageDisplay)
+						textString:SetText(valuePercentageDisplay)
+
+						if eufDB.statusTextBothCondensedBar then
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " | " .. focusValueHealthPercentageDisplay)
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " | " .. focusValuePowerPercentageDisplay)
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " | " .. targetValueHealthPercentageDisplay)
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " | " .. targetValuePowerPercentageDisplay)
+						elseif eufDB.statusTextBothCondensedBrackets then
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " [" .. focusValueHealthPercentageDisplay .. "]")
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " [" .. focusValuePowerPercentageDisplay .. "]")
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " [" .. targetValueHealthPercentageDisplay .. "]")
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " [" .. targetValuePowerPercentageDisplay .. "]")
+						elseif eufDB.statusTextBothCondensedDash then
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " - " .. focusValueHealthPercentageDisplay)
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " - " .. focusValuePowerPercentageDisplay)
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " - " .. targetValueHealthPercentageDisplay)
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " - " .. targetValuePowerPercentageDisplay)
+						elseif eufDB.statusTextBothCondensedParentheses then
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " (" .. focusValueHealthPercentageDisplay .. ")")
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " (" .. focusValuePowerPercentageDisplay .. ")")
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " (" .. targetValueHealthPercentageDisplay .. ")")
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " (" .. targetValuePowerPercentageDisplay .. ")")
+						elseif eufDB.statusTextBothCondensedSlash then
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " / " .. focusValueHealthPercentageDisplay)
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " / " .. focusValuePowerPercentageDisplay)
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " / " .. targetValueHealthPercentageDisplay)
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " / " .. targetValuePowerPercentageDisplay)
 						end
 					else
 						textString:SetText(valueDisplay)
 					end
 
-					if isClassic() then
-						local playerValueManaPercentageDisplay = math.ceil((playerValueMana / playerValueManaMax) * 100) .. "%"
-
-						PlayerFrameAlternatePowerBar.TextString:SetText(playerValueManaPercentageDisplay)
+					if focusPowerType == 0 then
+						FocusFrameManaBar.TextString:SetText(focusValuePowerPercentageDisplay)
+					else
+						FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay)
 					end
 
-					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)
-					PlayerFrameHealthBar.TextString:SetText(playerValueHealthPercentageDisplay)
-
-					if petPowerType == 0 then
-						PetFrameManaBar.TextString:SetText(petValuePowerPercentageDisplay)
+					if targetPowerType == 0 then
+						TargetFrameManaBar.TextString:SetText(targetValuePowerPercentageDisplay)
 					else
-						PetFrameManaBar.TextString:SetText(petValuePowerDisplay)
-					end
-
-					if playerPowerType == 0 then
-						PlayerFrameManaBar.TextString:SetText(playerValuePowerPercentageDisplay)
-					else
-						PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay)
+						TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay)
 					end
 
 					statusFrame.LeftText:Hide()
@@ -387,40 +395,48 @@ function StatusTextStyling()
 					textString:Hide()
 				elseif eufDB.statusTextBothCondensed and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+						textString:SetText(valuePercentageDisplay)
+
 						if eufDB.statusTextBothCondensedBar then
-							textString:SetText(valueDisplay .. " | " .. valuePercentageDisplay)
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " | " .. focusValueHealthPercentageDisplay)
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " | " .. focusValuePowerPercentageDisplay)
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " | " .. targetValueHealthPercentageDisplay)
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " | " .. targetValuePowerPercentageDisplay)
 						elseif eufDB.statusTextBothCondensedBrackets then
-							textString:SetText(valueDisplay .. " [" .. valuePercentageDisplay .. "]")
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " [" .. focusValueHealthPercentageDisplay .. "]")
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " [" .. focusValuePowerPercentageDisplay .. "]")
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " [" .. targetValueHealthPercentageDisplay .. "]")
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " [" .. targetValuePowerPercentageDisplay .. "]")
 						elseif eufDB.statusTextBothCondensedDash then
-							textString:SetText(valueDisplay .. " - " .. valuePercentageDisplay)
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " - " .. focusValueHealthPercentageDisplay)
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " - " .. focusValuePowerPercentageDisplay)
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " - " .. targetValueHealthPercentageDisplay)
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " - " .. targetValuePowerPercentageDisplay)
 						elseif eufDB.statusTextBothCondensedParentheses then
-							textString:SetText(valueDisplay .. " (" .. valuePercentageDisplay .. ")")
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " (" .. focusValueHealthPercentageDisplay .. ")")
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " (" .. focusValuePowerPercentageDisplay .. ")")
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " (" .. targetValueHealthPercentageDisplay .. ")")
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " (" .. targetValuePowerPercentageDisplay .. ")")
 						elseif eufDB.statusTextBothCondensedSlash then
-							textString:SetText(valueDisplay .. " / " .. valuePercentageDisplay)
+							FocusFrameHealthBar.TextString:SetText(focusValueHealthDisplay .. " / " .. focusValueHealthPercentageDisplay)
+							FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay .. " / " .. focusValuePowerPercentageDisplay)
+							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " / " .. targetValueHealthPercentageDisplay)
+							TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay .. " / " .. targetValuePowerPercentageDisplay)
 						end
 					else
 						textString:SetText(valueDisplay)
 					end
 
-					if isClassic() then
-						local playerValueManaPercentageDisplay = math.ceil((playerValueMana / playerValueManaMax) * 100) .. "%"
-
-						PlayerFrameAlternatePowerBar.TextString:SetText(playerValueManaPercentageDisplay)
+					if focusPowerType == 0 then
+						FocusFrameManaBar.TextString:SetText(focusValuePowerPercentageDisplay)
+					else
+						FocusFrameManaBar.TextString:SetText(focusValuePowerDisplay)
 					end
 
-					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)
-					PlayerFrameHealthBar.TextString:SetText(playerValueHealthPercentageDisplay)
-
-					if petPowerType == 0 then
-						PetFrameManaBar.TextString:SetText(petValuePowerPercentageDisplay)
+					if targetPowerType == 0 then
+						TargetFrameManaBar.TextString:SetText(targetValuePowerPercentageDisplay)
 					else
-						PetFrameManaBar.TextString:SetText(petValuePowerDisplay)
-					end
-
-					if playerPowerType == 0 then
-						PlayerFrameManaBar.TextString:SetText(playerValuePowerPercentageDisplay)
-					else
-						PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay)
+						TargetFrameManaBar.TextString:SetText(targetValuePowerDisplay)
 					end
 
 					statusFrame.LeftText:Hide()
