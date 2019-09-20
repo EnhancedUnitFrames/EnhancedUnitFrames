@@ -335,6 +335,12 @@ function StatusTextStyling()
 						textString:SetText(valueDisplay)
 					end
 
+					if isClassic() then
+						local playerValueManaPercentageDisplay = math.ceil((playerValueMana / playerValueManaMax) * 100) .. "%"
+
+						PlayerFrameAlternatePowerBar.TextString:SetText(playerValueManaPercentageDisplay)
+					end
+
 					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)
 					PlayerFrameHealthBar.TextString:SetText(playerValueHealthPercentageDisplay)
 
@@ -394,6 +400,12 @@ function StatusTextStyling()
 						end
 					else
 						textString:SetText(valueDisplay)
+					end
+
+					if isClassic() then
+						local playerValueManaPercentageDisplay = math.ceil((playerValueMana / playerValueManaMax) * 100) .. "%"
+
+						PlayerFrameAlternatePowerBar.TextString:SetText(playerValueManaPercentageDisplay)
 					end
 
 					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)

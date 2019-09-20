@@ -98,10 +98,12 @@ function PowerBar()
 		end
 
 		local function AlternatePowerBar_UpdateMaxValue(self)
+			playerValueManaMax = UnitPowerMax(self:GetParent().unit, self.powerIndex)
 			self:SetMinMaxValues(0, UnitPowerMax(self:GetParent().unit, self.powerIndex))
 		end
 
 		local function AlternatePowerBar_UpdateValue(self)
+			playerValueMana = UnitPower(self:GetParent().unit, self.powerIndex)
 			self:SetValue(UnitPower(self:GetParent().unit, self.powerIndex))
 		end
 
