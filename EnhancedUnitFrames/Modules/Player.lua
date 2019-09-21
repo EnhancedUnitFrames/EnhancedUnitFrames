@@ -263,27 +263,6 @@ function PlayerFrameStyling()
 		end
 	end
 
-	-- Hides the pet frame status bar text.
-
-	local function PetStatusText()
-		PetFrameHealthBarText:SetAlpha(0)
-		PetFrameHealthBarTextLeft:SetAlpha(0)
-		PetFrameHealthBarTextRight:SetAlpha(0)
-		PetFrameManaBarText:SetAlpha(0)
-		PetFrameManaBarTextLeft:SetAlpha(0)
-		PetFrameManaBarTextRight:SetAlpha(0)
-	end
-
-	if eufCharacterDB.enabled then
-		if eufCharacterDB.hidePetStatusText then
-			PetStatusText()
-		end
-	else
-		if eufDB.hidePetStatusText then
-			PetStatusText()
-		end
-	end
-
 	-- Hides the resting glow and resting icon on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateStatus", function()

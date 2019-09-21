@@ -73,6 +73,119 @@ function StatusTextStyling()
 		end
 	end
 
+	if not isClassic() then
+		-- Hides or shows the focus frame status bar text.
+
+		function HideFocusStatusText()
+			FocusFrameHealthBar.LeftText:SetAlpha(0)
+			FocusFrameHealthBar.RightText:SetAlpha(0)
+			FocusFrameHealthBar.TextString:SetAlpha(0)
+			FocusFrameManaBar.LeftText:SetAlpha(0)
+			FocusFrameManaBar.RightText:SetAlpha(0)
+			FocusFrameManaBar.TextString:SetAlpha(0)
+		end
+
+		function ShowFocusStatusText()
+			FocusFrameHealthBar.LeftText:SetAlpha(1)
+			FocusFrameHealthBar.RightText:SetAlpha(1)
+			FocusFrameHealthBar.TextString:SetAlpha(1)
+			FocusFrameManaBar.LeftText:SetAlpha(1)
+			FocusFrameManaBar.RightText:SetAlpha(1)
+			FocusFrameManaBar.TextString:SetAlpha(1)
+		end
+
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.hideFocusStatusText then
+				HideFocusStatusText()
+			end
+		else
+			if eufDB.hideFocusStatusText then
+				HideFocusStatusText()
+			end
+		end
+	end
+
+	-- Hides the pet frame status bar text.
+
+	local function HidePetStatusText()
+		PetFrameHealthBarText:SetAlpha(0)
+		PetFrameHealthBarTextLeft:SetAlpha(0)
+		PetFrameHealthBarTextRight:SetAlpha(0)
+		PetFrameManaBarText:SetAlpha(0)
+		PetFrameManaBarTextLeft:SetAlpha(0)
+		PetFrameManaBarTextRight:SetAlpha(0)
+	end
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePetStatusText then
+			HidePetStatusText()
+		end
+	else
+		if eufDB.hidePetStatusText then
+			HidePetStatusText()
+		end
+	end
+
+	-- Hides or shows the player frame status bar text.
+
+	local function HidePlayerStatusText()
+		PlayerFrameHealthBar.LeftText:SetAlpha(0)
+		PlayerFrameHealthBar.RightText:SetAlpha(0)
+		PlayerFrameHealthBar.TextString:SetAlpha(0)
+		PlayerFrameManaBar.LeftText:SetAlpha(0)
+		PlayerFrameManaBar.RightText:SetAlpha(0)
+		PlayerFrameManaBar.TextString:SetAlpha(0)
+	end
+
+	local function ShowPlayerStatusText()
+		PlayerFrameHealthBar.LeftText:SetAlpha(1)
+		PlayerFrameHealthBar.RightText:SetAlpha(1)
+		PlayerFrameHealthBar.TextString:SetAlpha(1)
+		PlayerFrameManaBar.LeftText:SetAlpha(1)
+		PlayerFrameManaBar.RightText:SetAlpha(1)
+		PlayerFrameManaBar.TextString:SetAlpha(1)
+	end
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePlayerStatusText then
+			HidePlayerStatusText()
+		end
+	else
+		if eufDB.hidePlayerStatusText then
+			HidePlayerStatusText()
+		end
+	end
+
+	-- Hides or shows the target frame status bar text.
+
+	local function HideTargetStatusText()
+		TargetFrameHealthBar.LeftText:SetAlpha(0)
+		TargetFrameHealthBar.RightText:SetAlpha(0)
+		TargetFrameHealthBar.TextString:SetAlpha(0)
+		TargetFrameManaBar.LeftText:SetAlpha(0)
+		TargetFrameManaBar.RightText:SetAlpha(0)
+		TargetFrameManaBar.TextString:SetAlpha(0)
+	end
+
+	local function ShowTargetStatusText()
+		TargetFrameHealthBar.LeftText:SetAlpha(1)
+		TargetFrameHealthBar.RightText:SetAlpha(1)
+		TargetFrameHealthBar.TextString:SetAlpha(1)
+		TargetFrameManaBar.LeftText:SetAlpha(1)
+		TargetFrameManaBar.RightText:SetAlpha(1)
+		TargetFrameManaBar.TextString:SetAlpha(1)
+	end
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hideTargetStatusText then
+			HideTargetStatusText()
+		end
+	else
+		if eufDB.hideTargetStatusText then
+			HideTargetStatusText()
+		end
+	end
+
 	-- Formats the raid frame status text so it's readable.
 
 	hooksecurefunc("CompactUnitFrame_UpdateStatusText", function(self)
@@ -171,6 +284,7 @@ function StatusTextStyling()
 				PlayerFrameHealthBar:SetAlpha(0)
 				PlayerFrameHealthBar.LeftText:SetAlpha(0)
 				PlayerFrameHealthBar.RightText:SetAlpha(0)
+				PlayerFrameHealthBar.TextString:SetAlpha(1)
 				PlayerFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
 				PlayerFrameHealthBar.TextString:SetShadowOffset(1, -1)
 
@@ -183,6 +297,20 @@ function StatusTextStyling()
 				PlayerFrameManaBar.RightText:SetAlpha(0)
 				PlayerFrameManaBar.TextString:SetAlpha(0)
 			elseif not UnitIsDead("player") or not UnitIsGhost("player") then
+				if eufCharacterDB.enabled then
+					if eufCharacterDB.hidePlayerStatusText then
+						HidePlayerStatusText()
+					else
+						ShowPlayerStatusText()
+					end
+				else
+					if eufDB.hidePlayerStatusText then
+						HidePlayerStatusText()
+					else
+						ShowPlayerStatusText()
+					end
+				end
+
 				if isClassic() then
 					PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
 					PlayerFrameHealthBar.TextString:SetTextColor(1, 1, 1)
@@ -191,13 +319,8 @@ function StatusTextStyling()
 				end
 
 				PlayerFrameHealthBar:SetAlpha(1)
-				PlayerFrameHealthBar.LeftText:SetAlpha(1)
-				PlayerFrameHealthBar.RightText:SetAlpha(1)
 				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				PlayerFrameManaBar:SetAlpha(1)
-				PlayerFrameManaBar.LeftText:SetAlpha(1)
-				PlayerFrameManaBar.RightText:SetAlpha(1)
-				PlayerFrameManaBar.TextString:SetAlpha(1)
 			end
 
 			if UnitIsDead("target") or UnitIsGhost("target") then
@@ -220,6 +343,7 @@ function StatusTextStyling()
 				TargetFrameHealthBar:SetAlpha(0)
 				TargetFrameHealthBar.LeftText:SetAlpha(0)
 				TargetFrameHealthBar.RightText:SetAlpha(0)
+				TargetFrameHealthBar.TextString:SetAlpha(1)
 				TargetFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
 				TargetFrameHealthBar.TextString:SetShadowOffset(1, -1)
 
@@ -232,6 +356,20 @@ function StatusTextStyling()
 				TargetFrameManaBar.RightText:SetAlpha(0)
 				TargetFrameManaBar.TextString:SetAlpha(0)
 			elseif not UnitIsDead("target") or not UnitIsGhost("target") then
+				if eufCharacterDB.enabled then
+					if eufCharacterDB.hideTargetStatusText then
+						HideTargetStatusText()
+					else
+						ShowTargetStatusText()
+					end
+				else
+					if eufDB.hideTargetStatusText then
+						HideTargetStatusText()
+					else
+						ShowTargetStatusText()
+					end
+				end
+
 				if isClassic() then
 					TargetFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
 					TargetFrameHealthBar.TextString:SetTextColor(1, 1, 1)
@@ -240,13 +378,8 @@ function StatusTextStyling()
 				end
 
 				TargetFrameHealthBar:SetAlpha(1)
-				TargetFrameHealthBar.LeftText:SetAlpha(1)
-				TargetFrameHealthBar.RightText:SetAlpha(1)
 				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				TargetFrameManaBar:SetAlpha(1)
-				TargetFrameManaBar.LeftText:SetAlpha(1)
-				TargetFrameManaBar.RightText:SetAlpha(1)
-				TargetFrameManaBar.TextString:SetAlpha(1)
 			end
 
 			if not isClassic() then
@@ -280,6 +413,7 @@ function StatusTextStyling()
 					FocusFrameHealthBar:SetAlpha(0)
 					FocusFrameHealthBar.LeftText:SetAlpha(0)
 					FocusFrameHealthBar.RightText:SetAlpha(0)
+					FocusFrameHealthBar.TextString:SetAlpha(1)
 					FocusFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
 					FocusFrameHealthBar.TextString:SetShadowOffset(1, -1)
 					FocusFrameManaBar:SetAlpha(0)
@@ -287,15 +421,24 @@ function StatusTextStyling()
 					FocusFrameManaBar.RightText:SetAlpha(0)
 					FocusFrameManaBar.TextString:SetAlpha(0)
 				elseif not UnitIsDead("focus") or not UnitIsGhost("focus") then
+					if eufCharacterDB.enabled then
+						if eufCharacterDB.hideFocusStatusText then
+							HideFocusStatusText()
+						else
+							ShowFocusStatusText()
+						end
+					else
+						if eufDB.hideFocusStatusText then
+							HideFocusStatusText()
+						else
+							ShowFocusStatusText()
+						end
+					end
+
 					FocusFrameHealthBar:SetAlpha(1)
-					FocusFrameHealthBar.LeftText:SetAlpha(1)
-					FocusFrameHealthBar.RightText:SetAlpha(1)
 					FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 					FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 					FocusFrameManaBar:SetAlpha(1)
-					FocusFrameManaBar.LeftText:SetAlpha(1)
-					FocusFrameManaBar.RightText:SetAlpha(1)
-					FocusFrameManaBar.TextString:SetAlpha(1)
 				end
 			end
 		end

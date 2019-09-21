@@ -20,9 +20,9 @@ local function isLoaded(self, event, addon)
 		MirroredPositioning()
 		PlayerFrameStyling()
 		StatusBarStyling()
+		TargetFrameStyling()
 		StatusTextStyling()
 		PowerBar()
-		TargetFrameStyling()
 
 		if isClassic() then
 			ShamanClassColorFix()
