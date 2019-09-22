@@ -504,7 +504,15 @@ function FocusFrameStyling()
 
 		if not isClassic() then
 			if C_CVar.GetCVar("threatShowNumeric") == "1" then
-				FocusFrame.threatNumericIndicator:SetAlpha(0)
+				if eufCharacterDB.enabled then
+					if eufCharacterDB.bigFocusFrame or eufCharacterDB.whoaFocusFrame then
+						FocusFrame.threatNumericIndicator:SetAlpha(0)
+					end
+				else
+					if eufDB.bigFocusFrame or eufDB.whoaFocusFrame then
+						FocusFrame.threatNumericIndicator:SetAlpha(0)
+					end
+				end
 			end
 
 			FocusFrame.questIcon:ClearAllPoints()

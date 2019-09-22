@@ -7,13 +7,12 @@
 ## SavedVariablesPerCharacter: eufCharacterDB
 
 Modules\Boss.lua
-Modules\ClassColor.lua
+Modules\Color.lua
 Modules\Focus.lua
 Modules\Positioning.lua
 Modules\Player.lua
 Modules\Portraits.lua
 Modules\PowerBar.lua
-Modules\StatusBars.lua
 Modules\StatusText.lua
 Modules\Target.lua
 Defaults.lua

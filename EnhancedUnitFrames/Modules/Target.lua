@@ -526,7 +526,15 @@ function TargetFrameStyling()
 
 		if not isClassic() then
 			if C_CVar.GetCVar("threatShowNumeric") == "1" then
-				TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
+				if eufCharacterDB.enabled then
+					if eufCharacterDB.bigTargetFrame or eufCharacterDB.whoaTargetFrame then
+						TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
+					end
+				else
+					if eufDB.bigTargetFrame or eufDB.whoaTargetFrame then
+						TargetFrame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21)
+					end
+				end
 			end
 
 			TargetFrame.questIcon:ClearAllPoints()

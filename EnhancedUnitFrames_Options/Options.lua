@@ -181,6 +181,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	local mirroredPositioning = createCheckbox("mirroredPositioning", self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
 	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
+	local classNameBackgroundColor = createCheckbox("classNameBackgroundColor", self, "Class Name BG Color", "Changes the unit frame name background color to the unit's class color.")
+	local reactionNameBackgroundColor = createCheckbox("reactionNameBackgroundColor", self, "Reaction Name BG Color", "Changes the unit frame name background color to the unit's reaction color.")
 	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
 
@@ -204,7 +206,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 	end
 
 	classIconPortraits:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
-	hideHitIndicators:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
+	classNameBackgroundColor:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
+	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
+	hideHitIndicators:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 
 	if isClassic() then
@@ -319,6 +323,50 @@ eufOptions.general:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
+	classNameBackgroundColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameBackgroundColor = true
+			else
+				eufDB.classNameBackgroundColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameBackgroundColor = false
+			else
+				eufDB.classNameBackgroundColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionNameBackgroundColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameBackgroundColor = true
+			else
+				eufDB.reactionNameBackgroundColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameBackgroundColor = false
+			else
+				eufDB.reactionNameBackgroundColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")		
+	end)
+
 	hideHitIndicators:SetScript("OnClick", function(self)
 		if self:GetChecked() then
 			if eufCharacterDB.enabled then
@@ -397,132 +445,12 @@ eufOptions.general:SetScript("OnShow", function(self)
 		end)
 	end
 
-	-- Player frame style dropdown menu.
-
-	local playerFrameStyleDropdown = CreateFrame("Frame", "eufPlayerFrameStyleDropdown", self, "UIDropDownMenuTemplate")
-	playerFrameStyleDropdown.title = playerFrameStyleDropdown:CreateFontString("playerFrameStyleDropdownLabel", "ARTWORK", "GameFontNormal")
-
-	playerFrameStyleDropdown:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 273, 8)
-	playerFrameStyleDropdown.title:SetPoint("BOTTOMLEFT", playerFrameStyleDropdown, "TOPLEFT", 15, 3)
-	playerFrameStyleDropdown.title:SetText("Player Frame Style")
-
-	playerFrameStyleDropdown:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
-		GameTooltip:SetText("Player Frame Style", nil, nil, nil, 1, true)
-		GameTooltip:AddLine("Changes the player frame to use the whoa, big, or default style.", 1, 1, 1, 1)
-		GameTooltip:Show()
-	end)
-
-	playerFrameStyleDropdown:SetScript("OnLeave", function(self)
-		GameTooltip:Hide()
-	end)
-
-	UIDropDownMenu_SetWidth(playerFrameStyleDropdown, 160)
-
-	if eufCharacterDB.enabled then
-		if eufCharacterDB.whoaPlayerFrame == true then
-			isCheckedPlayerFrameStyle = "Whoa Player Style"
-			isCheckedPlayerWhoaStyle = true
-		elseif eufCharacterDB.bigPlayerFrame == true then
-			isCheckedPlayerFrameStyle = "Big Player Style"
-			isCheckedPlayerBigStyle = true
-		elseif eufCharacterDB.defaultPlayerFrame == true then
-			isCheckedPlayerFrameStyle = "Default Player Style"
-			isCheckedPlayerDefaultStyle = true
-		end
-	else
-		if eufDB.whoaPlayerFrame == true then
-			isCheckedPlayerFrameStyle = "Whoa Player Style"
-			isCheckedPlayerWhoaStyle = true
-		elseif eufDB.bigPlayerFrame == true then
-			isCheckedPlayerFrameStyle = "Big Player Style"
-			isCheckedPlayerBigStyle = true
-		elseif eufDB.defaultPlayerFrame == true then
-			isCheckedPlayerFrameStyle = "Default Player Style"
-			isCheckedPlayerDefaultStyle = true
-		end
-	end
-
-	UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
-
-	local function playerFrameStyleDropdownMenuOnClick(self, arg1)
-		if arg1 == 1 then
-			isCheckedPlayerFrameStyle = "Whoa Player Style"
-			isCheckedPlayerWhoaStyle = true
-			isCheckedPlayerBigStyle = false
-			isCheckedPlayerDefaultStyle = false
-
-			if eufCharacterDB.enabled then
-				eufCharacterDB.whoaPlayerFrame = true
-				eufCharacterDB.bigPlayerFrame = false
-				eufCharacterDB.defaultPlayerFrame = false
-			else
-				eufDB.whoaPlayerFrame = true
-				eufDB.bigPlayerFrame = false
-				eufDB.defaultPlayerFrame = false
-			end
-
-			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
-		elseif arg1 == 2 then
-			isCheckedPlayerFrameStyle = "Big Player Style"
-			isCheckedPlayerWhoaStyle = false
-			isCheckedPlayerBigStyle = true
-			isCheckedPlayerDefaultStyle = false
-
-			if eufCharacterDB.enabled then
-				eufCharacterDB.whoaPlayerFrame = false
-				eufCharacterDB.bigPlayerFrame = true
-				eufCharacterDB.defaultPlayerFrame = false
-			else
-				eufDB.whoaPlayerFrame = false
-				eufDB.bigPlayerFrame = true
-				eufDB.defaultPlayerFrame = false
-			end
-
-			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
-		elseif arg1 == 3 then
-			isCheckedPlayerFrameStyle = "Default Player Style"
-			isCheckedPlayerWhoaStyle = false
-			isCheckedPlayerBigStyle = false
-			isCheckedPlayerDefaultStyle = true
-
-			if eufCharacterDB.enabled then
-				eufCharacterDB.whoaPlayerFrame = false
-				eufCharacterDB.bigPlayerFrame = false
-				eufCharacterDB.defaultPlayerFrame = true
-			else
-				eufDB.whoaPlayerFrame = false
-				eufDB.bigPlayerFrame = false
-				eufDB.defaultPlayerFrame = true
-			end
-
-			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
-		end
-	end
-
-	local function playerFrameStyleDropdownMenu(frame, level, menuList)
-		local info = UIDropDownMenu_CreateInfo()
-		info.func = playerFrameStyleDropdownMenuOnClick
-
-		info.text, info.arg1, info.checked = "Whoa Player Style", 1, isCheckedPlayerWhoaStyle
-		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Big Player Style", 2, isCheckedPlayerBigStyle
-		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Default Player Style", 3, isCheckedPlayerDefaultStyle
-		UIDropDownMenu_AddButton(info)
-	end
-
-	UIDropDownMenu_Initialize(playerFrameStyleDropdown, playerFrameStyleDropdownMenu)
-
 	-- Player frame texture dropdown menu.
 
 	local playerFrameTextureDropdown = CreateFrame("Frame", "eufPlayerFrameTextureDropdown", self, "UIDropDownMenuTemplate")
 	playerFrameTextureDropdown.title = playerFrameTextureDropdown:CreateFontString("playerFrameTextureDropdownLabel", "ARTWORK", "GameFontNormal")
 
-	playerFrameTextureDropdown:SetPoint("TOPLEFT", playerFrameStyleDropdown, "BOTTOMLEFT", 0, -37)
+	playerFrameTextureDropdown:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 273, 8)
 	playerFrameTextureDropdown.title:SetPoint("BOTTOMLEFT", playerFrameTextureDropdown, "TOPLEFT", 15, 3)
 	playerFrameTextureDropdown.title:SetText("Player Frame Texture")
 
@@ -667,12 +595,132 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	UIDropDownMenu_Initialize(playerFrameTextureDropdown, playerFrameTextureDropdownMenu)
 
+	-- Player frame style dropdown menu.
+
+	local playerFrameStyleDropdown = CreateFrame("Frame", "eufPlayerFrameStyleDropdown", self, "UIDropDownMenuTemplate")
+	playerFrameStyleDropdown.title = playerFrameStyleDropdown:CreateFontString("playerFrameStyleDropdownLabel", "ARTWORK", "GameFontNormal")
+
+	playerFrameStyleDropdown:SetPoint("TOPLEFT", playerFrameTextureDropdown, "BOTTOMLEFT", 0, -37)
+	playerFrameStyleDropdown.title:SetPoint("BOTTOMLEFT", playerFrameStyleDropdown, "TOPLEFT", 15, 3)
+	playerFrameStyleDropdown.title:SetText("Player Frame Style")
+
+	playerFrameStyleDropdown:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+		GameTooltip:SetText("Player Frame Style", nil, nil, nil, 1, true)
+		GameTooltip:AddLine("Changes the player frame to use the whoa, big, or default style.", 1, 1, 1, 1)
+		GameTooltip:Show()
+	end)
+
+	playerFrameStyleDropdown:SetScript("OnLeave", function(self)
+		GameTooltip:Hide()
+	end)
+
+	UIDropDownMenu_SetWidth(playerFrameStyleDropdown, 160)
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.whoaPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Whoa Player Style"
+			isCheckedPlayerWhoaStyle = true
+		elseif eufCharacterDB.bigPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Big Player Style"
+			isCheckedPlayerBigStyle = true
+		elseif eufCharacterDB.defaultPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Default Player Style"
+			isCheckedPlayerDefaultStyle = true
+		end
+	else
+		if eufDB.whoaPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Whoa Player Style"
+			isCheckedPlayerWhoaStyle = true
+		elseif eufDB.bigPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Big Player Style"
+			isCheckedPlayerBigStyle = true
+		elseif eufDB.defaultPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Default Player Style"
+			isCheckedPlayerDefaultStyle = true
+		end
+	end
+
+	UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+
+	local function playerFrameStyleDropdownMenuOnClick(self, arg1)
+		if arg1 == 1 then
+			isCheckedPlayerFrameStyle = "Whoa Player Style"
+			isCheckedPlayerWhoaStyle = true
+			isCheckedPlayerBigStyle = false
+			isCheckedPlayerDefaultStyle = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaPlayerFrame = true
+				eufCharacterDB.bigPlayerFrame = false
+				eufCharacterDB.defaultPlayerFrame = false
+			else
+				eufDB.whoaPlayerFrame = true
+				eufDB.bigPlayerFrame = false
+				eufDB.defaultPlayerFrame = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+		elseif arg1 == 2 then
+			isCheckedPlayerFrameStyle = "Big Player Style"
+			isCheckedPlayerWhoaStyle = false
+			isCheckedPlayerBigStyle = true
+			isCheckedPlayerDefaultStyle = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaPlayerFrame = false
+				eufCharacterDB.bigPlayerFrame = true
+				eufCharacterDB.defaultPlayerFrame = false
+			else
+				eufDB.whoaPlayerFrame = false
+				eufDB.bigPlayerFrame = true
+				eufDB.defaultPlayerFrame = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+		elseif arg1 == 3 then
+			isCheckedPlayerFrameStyle = "Default Player Style"
+			isCheckedPlayerWhoaStyle = false
+			isCheckedPlayerBigStyle = false
+			isCheckedPlayerDefaultStyle = true
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaPlayerFrame = false
+				eufCharacterDB.bigPlayerFrame = false
+				eufCharacterDB.defaultPlayerFrame = true
+			else
+				eufDB.whoaPlayerFrame = false
+				eufDB.bigPlayerFrame = false
+				eufDB.defaultPlayerFrame = true
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+		end
+	end
+
+	local function playerFrameStyleDropdownMenu(frame, level, menuList)
+		local info = UIDropDownMenu_CreateInfo()
+		info.func = playerFrameStyleDropdownMenuOnClick
+
+		info.text, info.arg1, info.checked = "Whoa Player Style", 1, isCheckedPlayerWhoaStyle
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Big Player Style", 2, isCheckedPlayerBigStyle
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Default Player Style", 3, isCheckedPlayerDefaultStyle
+		UIDropDownMenu_AddButton(info)
+	end
+
+	UIDropDownMenu_Initialize(playerFrameStyleDropdown, playerFrameStyleDropdownMenu)
+
 	-- Target frame style dropdown menu.
 
 	local targetFrameStyleDropdown = CreateFrame("Frame", "eufTargetFrameStyleDropdown", self, "UIDropDownMenuTemplate")
 	targetFrameStyleDropdown.title = targetFrameStyleDropdown:CreateFontString("targetFrameStyleDropdownLabel", "ARTWORK", "GameFontNormal")
 
-	targetFrameStyleDropdown:SetPoint("TOPLEFT", playerFrameTextureDropdown, "BOTTOMLEFT", 0, -37)
+	targetFrameStyleDropdown:SetPoint("TOPLEFT", playerFrameStyleDropdown, "BOTTOMLEFT", 0, -37)
 	targetFrameStyleDropdown.title:SetPoint("BOTTOMLEFT", targetFrameStyleDropdown, "TOPLEFT", 15, 3)
 	targetFrameStyleDropdown.title:SetText("Target Frame Style")
 
@@ -1024,6 +1072,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 		if eufCharacterDB.classIconPortraits == true then
 			classIconPortraitsCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.classNameBackgroundColor == true then
+			classNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionNameBackgroundColor == true then
+			reactionNameBackgroundColorCheckbox:SetChecked(true)
 		end
 
 		if eufCharacterDB.hideHitIndicators == true then

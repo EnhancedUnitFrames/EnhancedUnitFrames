@@ -16,14 +16,12 @@ local function isLoaded(self, event, addon)
 	if event == "ADDON_LOADED" then
 		SetDefaults()
 		ClassIconPortraits()
+		ColorStyling()
 		MirroredPositioning()
 		PlayerFrameStyling()
-		StatusBarStyling()
 		TargetFrameStyling()
 
-		if isClassic() then
-			ShamanClassColorFix()
-		else
+		if not isClassic() then
 			BossFrameStyling()
 			FocusFrameStyling()
 		end
