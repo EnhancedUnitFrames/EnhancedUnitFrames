@@ -6,9 +6,9 @@
 ## SavedVariables: eufDB
 ## SavedVariablesPerCharacter: eufCharacterDB
 
-Modules\Auras.lua
 Modules\Boss.lua
 Modules\ClassColor.lua
+Modules\Focus.lua
 Modules\Positioning.lua
 Modules\Player.lua
 Modules\Portraits.lua

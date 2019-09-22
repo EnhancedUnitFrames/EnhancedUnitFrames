@@ -4,6 +4,17 @@ function PlayerFrameStyling()
 	hooksecurefunc("PlayerFrame_ToPlayerArt", function(self)
 		local function BigStyling()
 			PlayerFrameHealthBar:SetHeight(29)
+			PlayerFrameHealthBar:ClearAllPoints()
+			PlayerFrameHealthBar:SetPoint("TOPLEFT", 107, -23)
+			PlayerFrameManaBar:SetHeight(12)
+			PlayerFrameManaBar:ClearAllPoints()
+			PlayerFrameManaBar:SetPoint("TOPLEFT", 107, -52)
+			PlayerName:SetAlpha(0)
+		end
+
+		local function DefaultStyling()
+			PlayerFrameHealthBar:ClearAllPoints()
+			PlayerFrameHealthBar:SetPoint("TOPLEFT", 107, -41)
 			PlayerFrameManaBar:SetHeight(12)
 			PlayerFrameManaBar:ClearAllPoints()
 			PlayerFrameManaBar:SetPoint("TOPLEFT", 107, -52)
@@ -11,9 +22,12 @@ function PlayerFrameStyling()
 
 		local function WhoaStyling()
 			PlayerFrameHealthBar:SetHeight(20)
+			PlayerFrameHealthBar:ClearAllPoints()
+			PlayerFrameHealthBar:SetPoint("TOPLEFT", 107, -23)
 			PlayerFrameManaBar:SetHeight(19)
 			PlayerFrameManaBar:ClearAllPoints()
 			PlayerFrameManaBar:SetPoint("TOPLEFT", 107, -44)
+			PlayerName:SetAlpha(0)
 
 			if not isClassic() then
 				InsanityBarFrame.InsanitySpark:ClearAllPoints()
@@ -36,53 +50,77 @@ function PlayerFrameStyling()
 		end
 
 		if eufCharacterDB.enabled then
-			if eufCharacterDB.bigPlayerHealthBar then
+			if eufCharacterDB.bigPlayerFrame then
 				if eufCharacterDB.elitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\BigElite")
 				elseif eufCharacterDB.rareElitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\BigRareElite")
 				elseif eufCharacterDB.rarePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\BigRare")
 				else
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\Big")
 				end
 
 				BigStyling()
-			else
+			elseif eufCharacterDB.defaultPlayerFrame then
 				if eufCharacterDB.elitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\DefaultElite")
 				elseif eufCharacterDB.rareElitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\DefaultRareElite")
 				elseif eufCharacterDB.rarePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\DefaultRare")
 				else
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\Default")
+				end
+
+				DefaultStyling()
+			elseif eufCharacterDB.whoaPlayerFrame then
+				if eufCharacterDB.elitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\WhoaElite")
+				elseif eufCharacterDB.rareElitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\WhoaRareElite")
+				elseif eufCharacterDB.rarePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\WhoaRare")
+				else
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\Whoa")
 				end
 
 				WhoaStyling()
 			end
 		else
-			if eufDB.bigPlayerHealthBar then
+			if eufDB.bigPlayerFrame then
 				if eufDB.elitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameElite")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\BigElite")
 				elseif eufDB.rareElitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareElite")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\BigRareElite")
 				elseif eufDB.rarePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRare")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\BigRare")
 				else
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrame")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\Big")
 				end
 
 				BigStyling()
-			else
+			elseif eufDB.defaultPlayerFrame then
 				if eufDB.elitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameEliteWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\DefaultElite")
 				elseif eufDB.rareElitePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareEliteWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\DefaultRareElite")
 				elseif eufDB.rarePlayerFrame then
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameRareWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\DefaultRare")
 				else
-					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\TargetFrameWhoa")
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\Default")
+				end
+
+				DefaultStyling()
+			elseif eufDB.whoaPlayerFrame then
+				if eufDB.elitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\WhoaElite")
+				elseif eufDB.rareElitePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\WhoaRareElite")
+				elseif eufDB.rarePlayerFrame then
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\WhoaRare")
+				else
+					PlayerFrameTexture:SetTexture("Interface\\AddOns\\EnhancedUnitFrames\\Media\\Whoa")
 				end
 
 				WhoaStyling()
@@ -111,8 +149,6 @@ function PlayerFrameStyling()
 		PlayerFrameGroupIndicatorRight:SetAlpha(0)
 		PlayerFrameGroupIndicatorText:ClearAllPoints()
 		PlayerFrameGroupIndicatorText:SetPoint("BOTTOMLEFT", PlayerFrame, "TOP", 0, -18.5)
-		PlayerFrameHealthBar:ClearAllPoints()
-		PlayerFrameHealthBar:SetPoint("TOPLEFT", 107, -23)
 		PlayerFrameHealthBar:SetWidth(119)
 		PlayerFrameHealthBar.LeftText:SetJustifyH("RIGHT")
 		PlayerFrameHealthBar.LeftText:SetWidth(40)
@@ -122,8 +158,8 @@ function PlayerFrameStyling()
 		PlayerFrameHealthBar.RightText:SetWidth(75)
 		PlayerFrameHealthBar.RightText:ClearAllPoints()
 		PlayerFrameHealthBar.RightText:SetPoint("RIGHT", PlayerFrameHealthBar, -3.5, -0.5)
-		PlayerFrameHealthBarText:ClearAllPoints()
-		PlayerFrameHealthBarText:SetPoint("CENTER", PlayerFrameHealthBar, 0, -0.5)
+		PlayerFrameHealthBar.TextString:ClearAllPoints()
+		PlayerFrameHealthBar.TextString:SetPoint("CENTER", PlayerFrameHealthBar, 0, -0.5)
 		PlayerFrameManaBar:SetWidth(119)
 		PlayerFrameManaBar.LeftText:SetJustifyH("RIGHT")
 		PlayerFrameManaBar.LeftText:SetWidth(40)
@@ -133,37 +169,36 @@ function PlayerFrameStyling()
 		PlayerFrameManaBar.RightText:SetWidth(75)
 		PlayerFrameManaBar.RightText:ClearAllPoints()
 		PlayerFrameManaBar.RightText:SetPoint("RIGHT", PlayerFrameManaBar, -3.5, 0)
-		PlayerFrameManaBarText:ClearAllPoints()
-		PlayerFrameManaBarText:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
-		PlayerName:SetAlpha(0)
+		PlayerFrameManaBar.TextString:ClearAllPoints()
+		PlayerFrameManaBar.TextString:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
 	end)
 
 	-- Styles the pet frame.
 
 	PetFrameHealthBar:ClearAllPoints()
 	PetFrameHealthBar:SetPoint("TOPLEFT", 45, -22)
-	PetFrameHealthBarText:ClearAllPoints()
-	PetFrameHealthBarText:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
-	PetFrameHealthBarTextLeft:ClearAllPoints()
-	PetFrameHealthBarTextLeft:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
-	PetFrameHealthBarTextRight:SetAlpha(0)
+	PetFrameHealthBar.LeftText:ClearAllPoints()
+	PetFrameHealthBar.LeftText:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
+	PetFrameHealthBar.RightText:SetAlpha(0)
+	PetFrameHealthBar.TextString:ClearAllPoints()
+	PetFrameHealthBar.TextString:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
 	PetFrameManaBar:ClearAllPoints()
 	PetFrameManaBar:SetPoint("TOPLEFT", 45, -29.5)
-	PetFrameManaBarText:ClearAllPoints()
-	PetFrameManaBarText:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
-	PetFrameManaBarTextLeft:SetAlpha(0)
-	PetFrameManaBarTextRight:ClearAllPoints()
-	PetFrameManaBarTextRight:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
+	PetFrameManaBar.LeftText:SetAlpha(0)
+	PetFrameManaBar.RightText:ClearAllPoints()
+	PetFrameManaBar.RightText:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
+	PetFrameManaBar.TextString:ClearAllPoints()
+	PetFrameManaBar.TextString:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
 
 	-- Changes the status bar text to reflect live.
 
 	if isClassic() then
-		PlayerFrameHealthBarText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameHealthBarTextLeft:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameHealthBarTextRight:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBarText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBarTextLeft:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBarTextRight:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBar.LeftText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBar.RightText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBar.LeftText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBar.RightText:SetFontObject(SystemFont_Outline_Small)
+		PlayerFrameManaBar.TextString:SetFontObject(SystemFont_Outline_Small)
 	end
 
 	-- Fixes the vehicle frame.
@@ -195,12 +230,12 @@ function PlayerFrameStyling()
 	-- Fixes the level text positioning on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateLevelTextAnchor", function(level)
-		local function BigOneHundredPlus()
+		local function OneHundredPlus()
 			PlayerLevelText:ClearAllPoints()
 			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -52.5, -2.5)
 		end
 
-		local function BigBelowOneHundred()
+		local function BelowOneHundred()
 			PlayerLevelText:ClearAllPoints()
 			PlayerLevelText:SetPoint("CENTER", PlayerFrameManaBar, "BOTTOMLEFT", -51.5, -2.5)
 		end
@@ -216,13 +251,13 @@ function PlayerFrameStyling()
 		end
 
 		if eufCharacterDB.enabled then
-			if eufCharacterDB.bigPlayerHealthBar then
+			if eufCharacterDB.bigPlayerFrame or eufCharacterDB.defaultPlayerFrame then
 				if level >= 100 then
-					BigOneHundredPlus()
+					OneHundredPlus()
 				else
-					BigBelowOneHundred()
+					BelowOneHundred()
 				end
-			else
+			elseif eufDB.whoaPlayerFrame then
 				if level >= 100 then
 					WhoaOneHundredPlus()
 				else
@@ -230,13 +265,13 @@ function PlayerFrameStyling()
 				end
 			end
 		else
-			if eufDB.bigPlayerHealthBar then
+			if eufDB.bigPlayerFrame or eufDB.defaultPlayerFrame then
 				if level >= 100 then
-					BigOneHundredPlus()
+					OneHundredPlus()
 				else
-					BigBelowOneHundred()
+					BelowOneHundred()
 				end
-			else
+			elseif eufDB.whoaPlayerFrame then
 				if level >= 100 then
 					WhoaOneHundredPlus()
 				else

@@ -173,15 +173,13 @@ eufOptions.general:SetScript("OnShow", function(self)
 	-- Creates checkboxes.
 
 	characterDatabase = createCheckbox("characterDatabase", self, "Per-Character Configuration", "If enabled, this character's configuration will not affect the global configuration.")
+	local wideTargetFrame = createCheckbox("wideTargetFrame", self, "Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
 
-	if isClassic() then
-		wideTargetFrame = createCheckbox("wideTargetFrame", self, "Wide Target Frame", "Makes the target frame wider.\nSource: Wide Target by Gello.")
-	else
-		wideTargetFrame = createCheckbox("wideTargetFrame", self, "Wide Target Frame", "Makes the target and focus frames wider.\nSource: Wide Target by Gello.")
+	if not isClassic() then
+		wideFocusFrame = createCheckbox("wideFocusFrame", self, "Wide Focus Frame", "Makes the focus frame wider.\nSource: Wide Target by Gello.")
 	end
 
 	local mirroredPositioning = createCheckbox("mirroredPositioning", self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
-	local upperCaseAbbreviation = createCheckbox("upperCaseAbbreviation", self, "Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
 	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
 	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
@@ -195,10 +193,17 @@ eufOptions.general:SetScript("OnShow", function(self)
 	-- Positions the checkboxes created.
 
 	characterDatabase:SetPoint("RIGHT", title, 50, 0)
+
 	wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
-	mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
-	upperCaseAbbreviation:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
-	classIconPortraits:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
+
+	if not isClassic() then
+		wideFocusFrame:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
+		mirroredPositioning:SetPoint("TOPLEFT", wideFocusFrame, "BOTTOMLEFT", 0, -8)
+	else
+		mirroredPositioning:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 0, -8)
+	end
+
+	classIconPortraits:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 
@@ -246,6 +251,30 @@ eufOptions.general:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
+	if not isClassic() then
+		wideFocusFrame:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				if eufCharacterDB.enabled then
+					eufCharacterDB.wideFocusFrame = true
+				else
+					eufDB.wideFocusFrame = false
+				end
+
+				PlaySound(856)
+			else
+				if eufCharacterDB.enabled then
+					eufCharacterDB.wideFocusFrame = false
+				else
+					eufDB.wideFocusFrame = false
+				end
+			
+				PlaySound(857)
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+		end)
+	end			
+
 	mirroredPositioning:SetScript("OnClick", function(self)
 		if self:GetChecked() then
 			if eufCharacterDB.enabled then
@@ -260,28 +289,6 @@ eufOptions.general:SetScript("OnShow", function(self)
 				eufCharacterDB.mirroredPositioning = false
 			else
 				eufDB.mirroredPositioning = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	upperCaseAbbreviation:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.upperCaseAbbreviation = true
-			else
-				eufDB.upperCaseAbbreviation = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.upperCaseAbbreviation = false
-			else
-				eufDB.upperCaseAbbreviation = false
 			end
 
 			PlaySound(857)
@@ -390,67 +397,187 @@ eufOptions.general:SetScript("OnShow", function(self)
 		end)
 	end
 
+	-- Player frame style dropdown menu.
+
+	local playerFrameStyleDropdown = CreateFrame("Frame", "eufPlayerFrameStyleDropdown", self, "UIDropDownMenuTemplate")
+	playerFrameStyleDropdown.title = playerFrameStyleDropdown:CreateFontString("playerFrameStyleDropdownLabel", "ARTWORK", "GameFontNormal")
+
+	playerFrameStyleDropdown:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 273, 8)
+	playerFrameStyleDropdown.title:SetPoint("BOTTOMLEFT", playerFrameStyleDropdown, "TOPLEFT", 15, 3)
+	playerFrameStyleDropdown.title:SetText("Player Frame Style")
+
+	playerFrameStyleDropdown:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+		GameTooltip:SetText("Player Frame Style", nil, nil, nil, 1, true)
+		GameTooltip:AddLine("Changes the player frame to use the whoa, big, or default style.", 1, 1, 1, 1)
+		GameTooltip:Show()
+	end)
+
+	playerFrameStyleDropdown:SetScript("OnLeave", function(self)
+		GameTooltip:Hide()
+	end)
+
+	UIDropDownMenu_SetWidth(playerFrameStyleDropdown, 160)
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.whoaPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Whoa Player Style"
+			isCheckedPlayerWhoaStyle = true
+		elseif eufCharacterDB.bigPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Big Player Style"
+			isCheckedPlayerBigStyle = true
+		elseif eufCharacterDB.defaultPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Default Player Style"
+			isCheckedPlayerDefaultStyle = true
+		end
+	else
+		if eufDB.whoaPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Whoa Player Style"
+			isCheckedPlayerWhoaStyle = true
+		elseif eufDB.bigPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Big Player Style"
+			isCheckedPlayerBigStyle = true
+		elseif eufDB.defaultPlayerFrame == true then
+			isCheckedPlayerFrameStyle = "Default Player Style"
+			isCheckedPlayerDefaultStyle = true
+		end
+	end
+
+	UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+
+	local function playerFrameStyleDropdownMenuOnClick(self, arg1)
+		if arg1 == 1 then
+			isCheckedPlayerFrameStyle = "Whoa Player Style"
+			isCheckedPlayerWhoaStyle = true
+			isCheckedPlayerBigStyle = false
+			isCheckedPlayerDefaultStyle = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaPlayerFrame = true
+				eufCharacterDB.bigPlayerFrame = false
+				eufCharacterDB.defaultPlayerFrame = false
+			else
+				eufDB.whoaPlayerFrame = true
+				eufDB.bigPlayerFrame = false
+				eufDB.defaultPlayerFrame = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+		elseif arg1 == 2 then
+			isCheckedPlayerFrameStyle = "Big Player Style"
+			isCheckedPlayerWhoaStyle = false
+			isCheckedPlayerBigStyle = true
+			isCheckedPlayerDefaultStyle = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaPlayerFrame = false
+				eufCharacterDB.bigPlayerFrame = true
+				eufCharacterDB.defaultPlayerFrame = false
+			else
+				eufDB.whoaPlayerFrame = false
+				eufDB.bigPlayerFrame = true
+				eufDB.defaultPlayerFrame = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+		elseif arg1 == 3 then
+			isCheckedPlayerFrameStyle = "Default Player Style"
+			isCheckedPlayerWhoaStyle = false
+			isCheckedPlayerBigStyle = false
+			isCheckedPlayerDefaultStyle = true
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaPlayerFrame = false
+				eufCharacterDB.bigPlayerFrame = false
+				eufCharacterDB.defaultPlayerFrame = true
+			else
+				eufDB.whoaPlayerFrame = false
+				eufDB.bigPlayerFrame = false
+				eufDB.defaultPlayerFrame = true
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(playerFrameStyleDropdown, isCheckedPlayerFrameStyle)
+		end
+	end
+
+	local function playerFrameStyleDropdownMenu(frame, level, menuList)
+		local info = UIDropDownMenu_CreateInfo()
+		info.func = playerFrameStyleDropdownMenuOnClick
+
+		info.text, info.arg1, info.checked = "Whoa Player Style", 1, isCheckedPlayerWhoaStyle
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Big Player Style", 2, isCheckedPlayerBigStyle
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Default Player Style", 3, isCheckedPlayerDefaultStyle
+		UIDropDownMenu_AddButton(info)
+	end
+
+	UIDropDownMenu_Initialize(playerFrameStyleDropdown, playerFrameStyleDropdownMenu)
+
 	-- Player frame texture dropdown menu.
 
-	local playerFrameDropdown = CreateFrame("Frame", "eufPlayerFrameDropdown", self, "UIDropDownMenuTemplate")
-	playerFrameDropdown.title = playerFrameDropdown:CreateFontString("playerFrameDropdownLabel", "ARTWORK", "GameFontNormal")
+	local playerFrameTextureDropdown = CreateFrame("Frame", "eufPlayerFrameTextureDropdown", self, "UIDropDownMenuTemplate")
+	playerFrameTextureDropdown.title = playerFrameTextureDropdown:CreateFontString("playerFrameTextureDropdownLabel", "ARTWORK", "GameFontNormal")
 
-	playerFrameDropdown:SetPoint("TOPLEFT", wideTargetFrame, "BOTTOMLEFT", 273, 8)
-	playerFrameDropdown.title:SetPoint("BOTTOMLEFT", playerFrameDropdown, "TOPLEFT", 15, 3)
-	playerFrameDropdown.title:SetText("Player Frame Texure")
+	playerFrameTextureDropdown:SetPoint("TOPLEFT", playerFrameStyleDropdown, "BOTTOMLEFT", 0, -37)
+	playerFrameTextureDropdown.title:SetPoint("BOTTOMLEFT", playerFrameTextureDropdown, "TOPLEFT", 15, 3)
+	playerFrameTextureDropdown.title:SetText("Player Frame Texture")
 
-	playerFrameDropdown:SetScript("OnEnter", function(self)
+	playerFrameTextureDropdown:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
 		GameTooltip:SetText("Player Frame Texture", nil, nil, nil, 1, true)
 		GameTooltip:AddLine("Changes the player frame to use the default, elite, rare, or rare-elite texture.", 1, 1, 1, 1)
 		GameTooltip:Show()
 	end)
 
-	playerFrameDropdown:SetScript("OnLeave", function(self)
+	playerFrameTextureDropdown:SetScript("OnLeave", function(self)
 		GameTooltip:Hide()
 	end)
 
-	UIDropDownMenu_SetWidth(playerFrameDropdown, 160)
+	UIDropDownMenu_SetWidth(playerFrameTextureDropdown, 160)
 
 	if eufCharacterDB.enabled then
 		if eufCharacterDB.elitePlayerFrame == true then
-			isCheckedPlayerFrame = "Elite Player Frame"
-			isCheckedElite = true
+			isCheckedPlayerFrameTexture = "Elite Player Texture"
+			isCheckedEliteTexture = true
 		elseif eufCharacterDB.rarePlayerFrame == true then
-			isCheckedPlayerFrame = "Rare Player Frame"
-			isCheckedRare = true
+			isCheckedPlayerFrameTexture = "Rare Player Texture"
+			isCheckedRareTexture = true
 		elseif eufCharacterDB.rareElitePlayerFrame == true then
-			isCheckedPlayerFrame = "Rare Elite Player Frame"
-			isCheckedRareElite = true
+			isCheckedPlayerFrameTexture = "Rare Elite Player Texture"
+			isCheckedRareEliteTexture = true
 		else
-			isCheckedPlayerFrame = "Default Player Frame"
-			isCheckedDefault = true
+			isCheckedPlayerFrameTexture = "Default Player Texture"
+			isCheckedDefaultTexture = true
 		end
 	else
 		if eufDB.elitePlayerFrame == true then
-			isCheckedPlayerFrame = "Elite Player Frame"
-			isCheckedElite = true
+			isCheckedPlayerFrameTexture = "Elite Player Texture"
+			isCheckedEliteTexture = true
 		elseif eufDB.rarePlayerFrame == true then
-			isCheckedPlayerFrame = "Rare Player Frame"
-			isCheckedRare = true
+			isCheckedPlayerFrameTexture = "Rare Player Texture"
+			isCheckedRareTexture = true
 		elseif eufDB.rareElitePlayerFrame == true then
-			isCheckedPlayerFrame = "Rare Elite Player Frame"
-			isCheckedRareElite = true
+			isCheckedPlayerFrameTexture = "Rare Elite Player Texture"
+			isCheckedRareEliteTexture = true
 		else
-			isCheckedPlayerFrame = "Default Player Frame"
-			isCheckedDefault = true
+			isCheckedPlayerFrameTexture = "Default Player Texture"
+			isCheckedDefaultTexture = true
 		end
 	end
 
-	UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
+	UIDropDownMenu_SetText(playerFrameTextureDropdown, isCheckedPlayerFrameTexture)
 
 	local function playerFrameTextureDropdownMenuOnClick(self, arg1)
 		if arg1 == 1 then
-			isCheckedPlayerFrame = "Elite Player Frame"
-			isCheckedElite = true
-			isCheckedRare = false
-			isCheckedRareElite = false
-			isCheckedDefault = false
+			isCheckedPlayerFrameTexture = "Elite Player Texture"
+			isCheckedEliteTexture = true
+			isCheckedRareTexture = false
+			isCheckedRareEliteTexture = false
+			isCheckedDefaultTexture = false
 
 			if eufCharacterDB.enabled then
 				eufCharacterDB.elitePlayerFrame = true
@@ -463,13 +590,13 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
+			UIDropDownMenu_SetText(playerFrameTextureDropdown, isCheckedPlayerFrameTexture)
 		elseif arg1 == 2 then
-			isCheckedPlayerFrame = "Rare Player Frame"
-			isCheckedElite = false
-			isCheckedRare = true
-			isCheckedRareElite = false
-			isCheckedDefault = false
+			isCheckedPlayerFrameTexture = "Rare Player Texture"
+			isCheckedEliteTexture = false
+			isCheckedRareTexture = true
+			isCheckedRareEliteTexture = false
+			isCheckedDefaultTexture = false
 
 			if eufCharacterDB.enabled then
 				eufCharacterDB.elitePlayerFrame = false
@@ -482,13 +609,13 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
+			UIDropDownMenu_SetText(playerFrameTextureDropdown, isCheckedPlayerFrameTexture)
 		elseif arg1 == 3 then
-			isCheckedPlayerFrame = "Rare Elite Player Frame"
-			isCheckedElite = false
-			isCheckedRare = false
-			isCheckedRareElite = true
-			isCheckedDefault = false
+			isCheckedPlayerFrameTexture = "Rare Elite Player Texture"
+			isCheckedEliteTexture = false
+			isCheckedRareTexture = false
+			isCheckedRareEliteTexture = true
+			isCheckedDefaultTexture = false
 
 			if eufCharacterDB.enabled then
 				eufCharacterDB.elitePlayerFrame = false
@@ -501,13 +628,13 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
+			UIDropDownMenu_SetText(playerFrameTextureDropdown, isCheckedPlayerFrameTexture)
 		elseif arg1 == 4 then
-			isCheckedPlayerFrame = "Default Player Frame"
-			isCheckedElite = false
-			isCheckedRare = false
-			isCheckedRareElite = false
-			isCheckedDefault = true
+			isCheckedPlayerFrameTexture = "Default Player Texture"
+			isCheckedEliteTexture = false
+			isCheckedRareTexture = false
+			isCheckedRareEliteTexture = false
+			isCheckedDefaultTexture = true
 
 			if eufCharacterDB.enabled then
 				eufCharacterDB.elitePlayerFrame = false
@@ -520,7 +647,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 			end
 
 			StaticPopup_Show("RELOAD_UI")
-			UIDropDownMenu_SetText(playerFrameDropdown, isCheckedPlayerFrame)
+			UIDropDownMenu_SetText(playerFrameTextureDropdown, isCheckedPlayerFrameTexture)
 		end
 	end
 
@@ -528,25 +655,265 @@ eufOptions.general:SetScript("OnShow", function(self)
 		local info = UIDropDownMenu_CreateInfo()
 		info.func = playerFrameTextureDropdownMenuOnClick
 
-		info.text, info.arg1, info.checked = "Elite Player Frame", 1, isCheckedElite
+		info.text, info.arg1, info.checked = "Elite Player Texture", 1, isCheckedEliteTexture
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Rare Player Frame", 2, isCheckedRare
+		info.text, info.arg1, info.checked = "Rare Player Texture", 2, isCheckedRareTexture
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Rare Elite Player Frame", 3, isCheckedRareElite
+		info.text, info.arg1, info.checked = "Rare Elite Player Texture", 3, isCheckedRareEliteTexture
 		UIDropDownMenu_AddButton(info)
-		info.text, info.arg1, info.checked = "Default Player Frame", 4, isCheckedDefault
+		info.text, info.arg1, info.checked = "Default Player Texture", 4, isCheckedDefaultTexture
 		UIDropDownMenu_AddButton(info)
 	end
 
-	UIDropDownMenu_Initialize(playerFrameDropdown, playerFrameTextureDropdownMenu)
+	UIDropDownMenu_Initialize(playerFrameTextureDropdown, playerFrameTextureDropdownMenu)
 
-	-- Threat warning dropdown menu.
+	-- Target frame style dropdown menu.
+
+	local targetFrameStyleDropdown = CreateFrame("Frame", "eufTargetFrameStyleDropdown", self, "UIDropDownMenuTemplate")
+	targetFrameStyleDropdown.title = targetFrameStyleDropdown:CreateFontString("targetFrameStyleDropdownLabel", "ARTWORK", "GameFontNormal")
+
+	targetFrameStyleDropdown:SetPoint("TOPLEFT", playerFrameTextureDropdown, "BOTTOMLEFT", 0, -37)
+	targetFrameStyleDropdown.title:SetPoint("BOTTOMLEFT", targetFrameStyleDropdown, "TOPLEFT", 15, 3)
+	targetFrameStyleDropdown.title:SetText("Target Frame Style")
+
+	targetFrameStyleDropdown:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+		GameTooltip:SetText("Target Frame Style", nil, nil, nil, 1, true)
+		GameTooltip:AddLine("Changes the target frame to use the whoa, big, or default style.", 1, 1, 1, 1)
+		GameTooltip:Show()
+	end)
+
+	targetFrameStyleDropdown:SetScript("OnLeave", function(self)
+		GameTooltip:Hide()
+	end)
+
+	UIDropDownMenu_SetWidth(targetFrameStyleDropdown, 160)
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.whoaTargetFrame == true then
+			isCheckedTargetFrameStyle = "Whoa Target Style"
+			isCheckedTargetWhoaStyle = true
+		elseif eufCharacterDB.bigTargetFrame == true then
+			isCheckedTargetFrameStyle = "Big Target Style"
+			isCheckedTargetBigStyle = true
+		elseif eufCharacterDB.defaultTargetFrame == true then
+			isCheckedTargetFrameStyle = "Default Target Style"
+			isCheckedTargetDefaultStyle = true
+		end
+	else
+		if eufDB.whoaTargetFrame == true then
+			isCheckedTargetFrameStyle = "Whoa Target Style"
+			isCheckedTargetWhoaStyle = true
+		elseif eufDB.bigTargetFrame == true then
+			isCheckedTargetFrameStyle = "Big Target Style"
+			isCheckedTargetBigStyle = true
+		elseif eufDB.defaultTargetFrame == true then
+			isCheckedTargetFrameStyle = "Default Target Style"
+			isCheckedTargetDefaultStyle = true
+		end
+	end
+
+	UIDropDownMenu_SetText(targetFrameStyleDropdown, isCheckedTargetFrameStyle)
+
+	local function targetFrameStyleDropdownMenuOnClick(self, arg1)
+		if arg1 == 1 then
+			isCheckedTargetFrameStyle = "Whoa Target Style"
+			isCheckedTargetWhoaStyle = true
+			isCheckedTargetBigStyle = false
+			isCheckedTargetDefaultStyle = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaTargetFrame = true
+				eufCharacterDB.bigTargetFrame = false
+				eufCharacterDB.defaultTargetFrame = false
+			else
+				eufDB.whoaTargetFrame = true
+				eufDB.bigTargetFrame = false
+				eufDB.defaultTargetFrame = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(targetFrameStyleDropdown, isCheckedTargetFrameStyle)
+		elseif arg1 == 2 then
+			isCheckedTargetFrameStyle = "Big Target Style"
+			isCheckedTargetWhoaStyle = false
+			isCheckedTargetBigStyle = true
+			isCheckedTargetDefaultStyle = false
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaTargetFrame = false
+				eufCharacterDB.bigTargetFrame = true
+				eufCharacterDB.defaultTargetFrame = false
+			else
+				eufDB.whoaTargetFrame = false
+				eufDB.bigTargetFrame = true
+				eufDB.defaultTargetFrame = false
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(targetFrameStyleDropdown, isCheckedTargetFrameStyle)
+		elseif arg1 == 3 then
+			isCheckedTargetFrameStyle = "Default Target Style"
+			isCheckedTargetWhoaStyle = false
+			isCheckedTargetBigStyle = false
+			isCheckedTargetDefaultStyle = true
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.whoaTargetFrame = false
+				eufCharacterDB.bigTargetFrame = false
+				eufCharacterDB.defaultTargetFrame = true
+			else
+				eufDB.whoaTargetFrame = false
+				eufDB.bigTargetFrame = false
+				eufDB.defaultTargetFrame = true
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+			UIDropDownMenu_SetText(targetFrameStyleDropdown, isCheckedTargetFrameStyle)
+		end
+	end
+
+	local function targetFrameStyleDropdownMenu(frame, level, menuList)
+		local info = UIDropDownMenu_CreateInfo()
+		info.func = targetFrameStyleDropdownMenuOnClick
+
+		info.text, info.arg1, info.checked = "Whoa Target Style", 1, isCheckedTargetWhoaStyle
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Big Target Style", 2, isCheckedTargetBigStyle
+		UIDropDownMenu_AddButton(info)
+		info.text, info.arg1, info.checked = "Default Target Style", 3, isCheckedTargetDefaultStyle
+		UIDropDownMenu_AddButton(info)
+	end
+
+	UIDropDownMenu_Initialize(targetFrameStyleDropdown, targetFrameStyleDropdownMenu)
 
 	if not isClassic() then
+		-- Focus frame style dropdown menu.
+
+		local focusFrameStyleDropdown = CreateFrame("Frame", "eufFocusFrameStyleDropdown", self, "UIDropDownMenuTemplate")
+		focusFrameStyleDropdown.title = focusFrameStyleDropdown:CreateFontString("focusFrameStyleDropdownLabel", "ARTWORK", "GameFontNormal")
+
+		focusFrameStyleDropdown:SetPoint("TOPLEFT", targetFrameStyleDropdown, "BOTTOMLEFT", 0, -37)
+		focusFrameStyleDropdown.title:SetPoint("BOTTOMLEFT", focusFrameStyleDropdown, "TOPLEFT", 15, 3)
+		focusFrameStyleDropdown.title:SetText("Focus Frame Style")
+
+		focusFrameStyleDropdown:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -17, 1)
+			GameTooltip:SetText("Focus Frame Style", nil, nil, nil, 1, true)
+			GameTooltip:AddLine("Changes the focus frame to use the whoa, big, or default style.", 1, 1, 1, 1)
+			GameTooltip:Show()
+		end)
+
+		focusFrameStyleDropdown:SetScript("OnLeave", function(self)
+			GameTooltip:Hide()
+		end)
+
+		UIDropDownMenu_SetWidth(focusFrameStyleDropdown, 160)
+
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.whoaFocusFrame == true then
+				isCheckedFocusFrameStyle = "Whoa Focus Style"
+				isCheckedFocusWhoaStyle = true
+			elseif eufCharacterDB.bigFocusFrame == true then
+				isCheckedFocusFrameStyle = "Big Focus Style"
+				isCheckedFocusBigStyle = true
+			elseif eufCharacterDB.defaultFocusFrame == true then
+				isCheckedFocusFrameStyle = "Default Focus Style"
+				isCheckedFocusDefaultStyle = true
+			end
+		else
+			if eufDB.whoaFocusFrame == true then
+				isCheckedFocusFrameStyle = "Whoa Focus Style"
+				isCheckedFocusWhoaStyle = true
+			elseif eufDB.bigFocusFrame == true then
+				isCheckedFocusFrameStyle = "Big Focus Style"
+				isCheckedFocusBigStyle = true
+			elseif eufDB.defaultFocusFrame == true then
+				isCheckedFocusFrameStyle = "Default Focus Style"
+				isCheckedFocusDefaultStyle = true
+			end
+		end
+
+		UIDropDownMenu_SetText(focusFrameStyleDropdown, isCheckedFocusFrameStyle)
+
+		local function focusFrameStyleDropdownMenuOnClick(self, arg1)
+			if arg1 == 1 then
+				isCheckedFocusFrameStyle = "Whoa Focus Style"
+				isCheckedFocusWhoaStyle = true
+				isCheckedFocusBigStyle = false
+				isCheckedFocusDefaultStyle = false
+
+				if eufCharacterDB.enabled then
+					eufCharacterDB.whoaFocusFrame = true
+					eufCharacterDB.bigFocusFrame = false
+					eufCharacterDB.defaultFocusFrame = false
+				else
+					eufDB.whoaFocusFrame = true
+					eufDB.bigFocusFrame = false
+					eufDB.defaultFocusFrame = false
+				end
+
+				StaticPopup_Show("RELOAD_UI")
+				UIDropDownMenu_SetText(focusFrameStyleDropdown, isCheckedFocusFrameStyle)
+			elseif arg1 == 2 then
+				isCheckedFocusFrameStyle = "Big Focus Style"
+				isCheckedFocusWhoaStyle = false
+				isCheckedFocusBigStyle = true
+				isCheckedFocusDefaultStyle = false
+
+				if eufCharacterDB.enabled then
+					eufCharacterDB.whoaFocusFrame = false
+					eufCharacterDB.bigFocusFrame = true
+					eufCharacterDB.defaultFocusFrame = false
+				else
+					eufDB.whoaFocusFrame = false
+					eufDB.bigFocusFrame = true
+					eufDB.defaultFocusFrame = false
+				end
+
+				StaticPopup_Show("RELOAD_UI")
+				UIDropDownMenu_SetText(focusFrameStyleDropdown, isCheckedFocusFrameStyle)
+			elseif arg1 == 3 then
+				isCheckedFocusFrameStyle = "Default Focus Style"
+				isCheckedFocusWhoaStyle = false
+				isCheckedFocusBigStyle = false
+				isCheckedFocusDefaultStyle = true
+
+				if eufCharacterDB.enabled then
+					eufCharacterDB.whoaFocusFrame = false
+					eufCharacterDB.bigFocusFrame = false
+					eufCharacterDB.defaultFocusFrame = true
+				else
+					eufDB.whoaFocusFrame = false
+					eufDB.bigFocusFrame = false
+					eufDB.defaultFocusFrame = true
+				end
+
+				StaticPopup_Show("RELOAD_UI")
+				UIDropDownMenu_SetText(focusFrameStyleDropdown, isCheckedFocusFrameStyle)
+			end
+		end
+
+		local function focusFrameStyleDropdownMenu(frame, level, menuList)
+			local info = UIDropDownMenu_CreateInfo()
+			info.func = focusFrameStyleDropdownMenuOnClick
+
+			info.text, info.arg1, info.checked = "Whoa Focus Style", 1, isCheckedFocusWhoaStyle
+			UIDropDownMenu_AddButton(info)
+			info.text, info.arg1, info.checked = "Big Focus Style", 2, isCheckedFocusBigStyle
+			UIDropDownMenu_AddButton(info)
+			info.text, info.arg1, info.checked = "Default Focus Style", 3, isCheckedFocusDefaultStyle
+			UIDropDownMenu_AddButton(info)
+		end
+
+		UIDropDownMenu_Initialize(focusFrameStyleDropdown, focusFrameStyleDropdownMenu)
+
+		-- Threat warning dropdown menu.
+
 		threatWarningDropdown = CreateFrame("Frame", "eufThreatWarningDropdown", self, "UIDropDownMenuTemplate")
 		threatWarningDropdown.title = threatWarningDropdown:CreateFontString("threatWarningDropdownLabel", "ARTWORK", "GameFontNormal")
 
-		threatWarningDropdown:SetPoint("TOPLEFT", playerFrameDropdown, "BOTTOMLEFT", 0, -37)
+		threatWarningDropdown:SetPoint("TOPLEFT", focusFrameStyleDropdown, "BOTTOMLEFT", 0, -37)
 		threatWarningDropdown.title:SetPoint("BOTTOMLEFT", threatWarningDropdown, "TOPLEFT", 15, 3)
 		threatWarningDropdown.title:SetText("Threat Warning")
 
@@ -645,12 +1012,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			wideTargetFrameCheckbox:SetChecked(true)
 		end
 
-		if eufCharacterDB.mirroredPositioning == true then
-			mirroredPositioningCheckbox:SetChecked(true)
+		if not isClassic() then
+			if eufCharacterDB.wideFocusFrame == true then
+				wideFocusFrameCheckbox:SetChecked(true)
+			end
 		end
 
-		if eufCharacterDB.upperCaseAbbreviation == true then
-			upperCaseAbbreviationCheckbox:SetChecked(true)
+		if eufCharacterDB.mirroredPositioning == true then
+			mirroredPositioningCheckbox:SetChecked(true)
 		end
 
 		if eufCharacterDB.classIconPortraits == true then
@@ -679,12 +1048,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			wideTargetFrameCheckbox:SetChecked(true)
 		end
 
-		if eufDB.mirroredPositioning == true then
-			mirroredPositioningCheckbox:SetChecked(true)
+		if not isClassic() then
+			if eufDB.wideFocusFrame == true then
+				wideFocusFrameCheckbox:SetChecked(true)
+			end
 		end
 
-		if eufDB.upperCaseAbbreviation == true then
-			upperCaseAbbreviationCheckbox:SetChecked(true)
+		if eufDB.mirroredPositioning == true then
+			mirroredPositioningCheckbox:SetChecked(true)
 		end
 
 		if eufDB.classIconPortraits == true then
@@ -728,8 +1099,6 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
-	local bigPlayerHealthBar = createCheckbox("bigPlayerHealthBar", self, "Big Player Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
-	local bigTargetHealthBar = createCheckbox("bigTargetHealthBar", self, "Big Target Health Bar", "Makes the health bar bigger using unimplemented textures made by Blizzard, hidden in the game files.")
 	local classHealthBarColor = createCheckbox("classHealthBarColor", self, "Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
 	local reactionHealthBarColor = createCheckbox("reactionHealthBarColor", self, "Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
 	local hidePowerAnimation = createCheckbox("hidePowerAnimation", self, "Hide Power Animations", "Hides the animation when the resource bar is full.")
@@ -742,9 +1111,7 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
-	bigPlayerHealthBar:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
-	bigTargetHealthBar:SetPoint("TOPLEFT", bigPlayerHealthBar, "BOTTOMLEFT", 0, -8)
-	classHealthBarColor:SetPoint("TOPLEFT", bigTargetHealthBar, "BOTTOMLEFT", 0, -8)
+	classHealthBarColor:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
 	hidePowerAnimation:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
 
@@ -755,50 +1122,6 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 	end
 
 	-- Applies scripts to the checkboxes.
-
-	bigPlayerHealthBar:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.bigPlayerHealthBar = true
-			else
-				eufDB.bigPlayerHealthBar = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.bigPlayerHealthBar = false
-			else
-				eufDB.bigPlayerHealthBar = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	bigTargetHealthBar:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.bigTargetHealthBar = true
-			else
-				eufDB.bigTargetHealthBar = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.bigTargetHealthBar = false
-			else
-				eufDB.bigTargetHealthBar = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
 
 	classHealthBarColor:SetScript("OnClick", function(self)
 		if self:GetChecked() then
@@ -901,14 +1224,6 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 	-- Initializes the options panel with saved variables.
 
 	if eufCharacterDB.enabled then
-		if eufCharacterDB.bigPlayerHealthBar == true then
-			bigPlayerHealthBarCheckbox:SetChecked(true)
-		end
-
-		if eufCharacterDB.bigTargetHealthBar == true then
-			bigTargetHealthBarCheckbox:SetChecked(true)
-		end
-
 		if eufCharacterDB.classHealthBarColor == true then
 			classHealthBarColorCheckbox:SetChecked(true)
 		end
@@ -935,14 +1250,6 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 			end
 		end
 	else
-		if eufDB.bigPlayerHealthBar == true then
-			bigPlayerHealthBarCheckbox:SetChecked(true)
-		end
-
-		if eufDB.bigTargetHealthBar == true then
-			bigTargetHealthBarCheckbox:SetChecked(true)
-		end
-
 		if eufDB.classHealthBarColor == true then
 			classHealthBarColorCheckbox:SetChecked(true)
 		end
@@ -986,14 +1293,39 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
 	description:SetText("Modifies the default unit frames for better visuals.")
 
+	-- Creates the focus frame width slider.
+
+	if not isClassic() then
+		wideFocusFrame = createSlider("wideFocusFrame", self, "Focus Width", 231, 400, 1, "Wide Focus Frame Width", "Changes the focus frame width.\nRequires \"Wide Focus Frame\" to be checked for changes to take effect.")
+		wideFocusFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -36)
+
+		if eufCharacterDB.enabled then
+			wideFocusFrameSlider:SetValue(eufCharacterDB.wideFocusFrameWidth)
+			wideFocusFrameSliderEditbox:SetText(eufCharacterDB.wideFocusFrameWidth)
+		else
+			wideFocusFrameSlider:SetValue(eufDB.wideFocusFrameWidth)
+			wideFocusFrameSliderEditbox:SetText(eufDB.wideFocusFrameWidth)
+		end
+
+		wideFocusFrame:HookScript("OnValueChanged", function(self, value)
+			value = floor(value)
+
+			if eufCharacterDB.enabled then
+				eufCharacterDB.wideFocusFrameWidth = value
+			else
+				eufDB.wideFocusFrameWidth = value
+			end
+		end)
+	end	
+
 	-- Creates the target frame width slider.
 
+	wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
+
 	if isClassic() then
-		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
 		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -36)
 	else
-		wideTargetFrame = createSlider("wideTargetFrame", self, "Target Width", 231, 400, 1, "Wide Target Frame Width", "Changes the target and focus frame width.\nRequires \"Wide Target Frame\" to be checked for changes to take effect.")
-		wideTargetFrame:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 1, -36)
+		wideTargetFrame:SetPoint("TOPLEFT", wideFocusFrame, "BOTTOMLEFT", 0, -70)
 	end
 
 	if eufCharacterDB.enabled then
@@ -1119,6 +1451,8 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
+	local upperCaseAbbreviation = createCheckbox("upperCaseAbbreviation", self, "Uppercase Abbreviation", "Changes whether long status text numbers are abbreviated with a capital letter at the end or not.")
+
 	if not isClassic() then
 		hideArenaStatusText = createCheckbox("hideArenaStatusText", self, "Hide Arena Status Text", "Hides the arena frame status bar text.")
 		hideBossStatusText = createCheckbox("hideBossStatusText", self, "Hide Boss Status Text", "Hides the boss frame status bar text.")
@@ -1133,13 +1467,15 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
+	upperCaseAbbreviation:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+
 	if not isClassic() then
-		hideArenaStatusText:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+		hideArenaStatusText:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
 		hideBossStatusText:SetPoint("TOPLEFT", hideArenaStatusText, "BOTTOMLEFT", 0, -8)
 		hideFocusStatusText:SetPoint("TOPLEFT", hideBossStatusText, "BOTTOMLEFT", 0, -8)
 		hidePartyStatusText:SetPoint("TOPLEFT", hideFocusStatusText, "BOTTOMLEFT", 0, -8)
 	else
-		hidePartyStatusText:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+		hidePartyStatusText:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
 	end
 
 	hidePetStatusText:SetPoint("TOPLEFT", hidePartyStatusText, "BOTTOMLEFT", 0, -8)
@@ -1148,6 +1484,28 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 	hideTargetStatusText:SetPoint("TOPLEFT", hidePowerBarStatusText, "BOTTOMLEFT", 0, -8)
 
 	-- Applies scripts to the checkboxes.
+
+	upperCaseAbbreviation:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.upperCaseAbbreviation = true
+			else
+				eufDB.upperCaseAbbreviation = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.upperCaseAbbreviation = false
+			else
+				eufDB.upperCaseAbbreviation = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
 
 	if not isClassic() then
 		hideArenaStatusText:SetScript("OnClick", function(self)
@@ -1332,12 +1690,7 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 	local statusTextDropdown = CreateFrame("Frame", "eufStatusTextDropdown", self, "UIDropDownMenuTemplate")
 	statusTextDropdown.title = statusTextDropdown:CreateFontString("statusTextDropdownLabel", "ARTWORK", "GameFontNormal")
 
-	if isClassic() then
-		statusTextDropdown:SetPoint("TOPLEFT", hidePartyStatusText, "BOTTOMLEFT", 273, 8)
-	else
-		statusTextDropdown:SetPoint("TOPLEFT", hideArenaStatusText, "BOTTOMLEFT", 273, 8)
-	end
-
+	statusTextDropdown:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 273, 8)
 	statusTextDropdown.title:SetPoint("BOTTOMLEFT", statusTextDropdown, "TOPLEFT", 15, 3)
 	statusTextDropdown.title:SetText("Status Text")
 
@@ -1739,6 +2092,10 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 	-- Initializes the options panel with saved variables.
 
 	if eufCharacterDB.enabled then
+		if eufCharacterDB.upperCaseAbbreviation == true then
+			upperCaseAbbreviationCheckbox:SetChecked(true)
+		end
+
 		if not isClassic() then
 			if eufCharacterDB.hideArenaStatusText == true then
 				hideArenaStatusTextCheckbox:SetChecked(true)
@@ -1773,6 +2130,10 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 			hideTargetStatusTextCheckbox:SetChecked(true)
 		end
 	else
+		if eufDB.upperCaseAbbreviation == true then
+			upperCaseAbbreviationCheckbox:SetChecked(true)
+		end
+
 		if not isClassic() then
 			if eufDB.hideArenaStatusText == true then
 				hideArenaStatusTextCheckbox:SetChecked(true)

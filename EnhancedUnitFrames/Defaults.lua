@@ -4,12 +4,16 @@ eufDB = {}
 eufCharacterDB = {}
 
 function SetDefaults()
-	if eufDB.bigPlayerHealthBar == nil then
-		eufDB.bigPlayerHealthBar = false
+	if eufDB.bigFocusFrame == nil then
+		eufDB.bigFocusFrame = false
 	end
 
-	if eufDB.bigTargetHealthBar == nil then
-		eufDB.bigTargetHealthBar = false
+	if eufDB.bigPlayerFrame == nil then
+		eufDB.bigPlayerFrame = false
+	end
+
+	if eufDB.bigTargetFrame == nil then
+		eufDB.bigTargetFrame = false
 	end
 
 	if eufDB.classHealthBarColor == nil then
@@ -18,6 +22,18 @@ function SetDefaults()
 
 	if eufDB.classIconPortraits == nil then
 		eufDB.classIconPortraits = false
+	end
+
+	if eufDB.defaultFocusFrame == nil then
+		eufDB.defaultFocusFrame = false
+	end
+
+	if eufDB.defaultPlayerFrame == nil then
+		eufDB.defaultPlayerFrame = false
+	end
+
+	if eufDB.defaultTargetFrame == nil then
+		eufDB.defaultTargetFrame = false
 	end
 
 	if eufDB.elitePlayerFrame == nil then
@@ -144,6 +160,26 @@ function SetDefaults()
 		eufDB.upperCaseAbbreviation = true
 	end
 
+	if eufDB.whoaFocusFrame == nil then
+		eufDB.whoaFocusFrame = true
+	end
+
+	if eufDB.whoaPlayerFrame == nil then
+		eufDB.whoaPlayerFrame = true
+	end
+
+	if eufDB.whoaTargetFrame == nil then
+		eufDB.whoaTargetFrame = true
+	end
+
+	if eufDB.wideFocusFrame == nil then
+		eufDB.wideFocusFrame = true
+	end
+
+	if eufDB.wideFocusFrameWidth == nil then
+		eufDB.wideFocusFrameWidth = 280
+	end	
+
 	if eufDB.wideTargetFrame == nil then
 		eufDB.wideTargetFrame = true
 	end
@@ -157,12 +193,16 @@ function SetDefaults()
 	end
 
 	if eufCharacterDB.enabled then
-		if eufCharacterDB.bigPlayerHealthBar == nil then
-			eufCharacterDB.bigPlayerHealthBar = eufDB.bigPlayerHealthBar
+		if eufCharacterDB.bigFocusFrame == nil then
+			eufCharacterDB.bigFocusFrame = eufDB.bigFocusFrame
 		end
 
-		if eufCharacterDB.bigTargetHealthBar == nil then
-			eufCharacterDB.bigTargetHealthBar = eufDB.bigTargetHealthBar
+		if eufCharacterDB.bigPlayerFrame == nil then
+			eufCharacterDB.bigPlayerFrame = eufDB.bigPlayerFrame
+		end
+
+		if eufCharacterDB.bigTargetFrame == nil then
+			eufCharacterDB.bigTargetFrame = eufDB.bigTargetFrame
 		end
 
 		if eufCharacterDB.classHealthBarColor == nil then
@@ -171,6 +211,18 @@ function SetDefaults()
 
 		if eufCharacterDB.classIconPortraits == nil then
 			eufCharacterDB.classIconPortraits = eufDB.classIconPortraits
+		end
+
+		if eufCharacterDB.defaultFocusFrame == nil then
+			eufCharacterDB.defaultFocusFrame = eufDB.defaultFocusFrame
+		end
+
+		if eufCharacterDB.defaultPlayerFrame == nil then
+			eufCharacterDB.defaultPlayerFrame = eufDB.defaultPlayerFrame
+		end
+
+		if eufCharacterDB.defaultTargetFrame == nil then
+			eufCharacterDB.defaultTargetFrame = eufDB.defaultTargetFrame
 		end
 
 		if eufCharacterDB.elitePlayerFrame == nil then
@@ -296,6 +348,26 @@ function SetDefaults()
 		if eufCharacterDB.upperCaseAbbreviation == nil then
 			eufCharacterDB.upperCaseAbbreviation = eufDB.upperCaseAbbreviation
 		end
+
+		if eufCharacterDB.whoaFocusFrame == nil then
+			eufCharacterDB.whoaFocusFrame = eufDB.whoaFocusFrame
+		end
+
+		if eufCharacterDB.whoaPlayerFrame == nil then
+			eufCharacterDB.whoaPlayerFrame = eufDB.whoaPlayerFrame
+		end
+
+		if eufCharacterDB.whoaTargetFrame == nil then
+			eufCharacterDB.whoaTargetFrame = eufDB.whoaTargetFrame
+		end
+
+		if eufCharacterDB.wideFocusFrame == nil then
+			eufCharacterDB.wideFocusFrame = eufDB.wideFocusFrame
+		end
+
+		if eufCharacterDB.wideFocusFrameWidth == nil then
+			eufCharacterDB.wideFocusFrameWidth = eufDB.wideFocusFrameWidth
+		end		
 
 		if eufCharacterDB.wideTargetFrame == nil then
 			eufCharacterDB.wideTargetFrame = eufDB.wideTargetFrame

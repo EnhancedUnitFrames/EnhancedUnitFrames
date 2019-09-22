@@ -108,12 +108,12 @@ function StatusTextStyling()
 	-- Hides the pet frame status bar text.
 
 	local function HidePetStatusText()
-		PetFrameHealthBarText:SetAlpha(0)
-		PetFrameHealthBarTextLeft:SetAlpha(0)
-		PetFrameHealthBarTextRight:SetAlpha(0)
-		PetFrameManaBarText:SetAlpha(0)
-		PetFrameManaBarTextLeft:SetAlpha(0)
-		PetFrameManaBarTextRight:SetAlpha(0)
+		PetFrameHealthBar.LeftText:SetAlpha(0)
+		PetFrameHealthBar.RightText:SetAlpha(0)
+		PetFrameHealthBar.TextString:SetAlpha(0)
+		PetFrameManaBar.LeftText:SetAlpha(0)
+		PetFrameManaBar.RightText:SetAlpha(0)
+		PetFrameManaBar.TextString:SetAlpha(0)
 	end
 
 	if eufCharacterDB.enabled then
@@ -264,6 +264,66 @@ function StatusTextStyling()
 		local valuePercentageDisplay = math.ceil((value / valueMax) * 100) .. "%"
 
 		local function isDeadOrGhost()
+			if not isClassic() then
+				if UnitExists("boss1") and UnitIsDead("boss1") then
+					Boss1TargetFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("boss2") and UnitIsDead("boss2") then
+					Boss2TargetFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("boss3") and UnitIsDead("boss3") then
+					Boss3TargetFrameTextureFrameHealthBarText:SetText("")
+				elseif UnitExists("boss4") and UnitIsDead("boss4") then
+					Boss4TargetFrameTextureFrameHealthBarText:SetText("")
+				end
+
+				if UnitIsDead("focus") or UnitIsGhost("focus") then
+					if eufCharacterDB.enabled then
+						if eufCharacterDB.statusTextBoth then
+							FocusFrameHealthBar.TextString:Show()
+						end
+					else
+						if eufDB.statusTextBoth then
+							FocusFrameHealthBar.TextString:Show()
+						end
+					end
+
+					if UnitIsDead("focus") then
+						FocusFrameHealthBar.TextString:SetText("Dead")
+					elseif UnitIsGhost("focus") then
+						FocusFrameHealthBar.TextString:SetText("Ghost")
+					end
+
+					FocusFrameHealthBar:SetAlpha(0)
+					FocusFrameHealthBar.LeftText:SetAlpha(0)
+					FocusFrameHealthBar.RightText:SetAlpha(0)
+					FocusFrameHealthBar.TextString:SetAlpha(1)
+					FocusFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
+					FocusFrameHealthBar.TextString:SetShadowOffset(1, -1)
+					FocusFrameManaBar:SetAlpha(0)
+					FocusFrameManaBar.LeftText:SetAlpha(0)
+					FocusFrameManaBar.RightText:SetAlpha(0)
+					FocusFrameManaBar.TextString:SetAlpha(0)
+				elseif not UnitIsDead("focus") or not UnitIsGhost("focus") then
+					if eufCharacterDB.enabled then
+						if eufCharacterDB.hideFocusStatusText then
+							HideFocusStatusText()
+						else
+							ShowFocusStatusText()
+						end
+					else
+						if eufDB.hideFocusStatusText then
+							HideFocusStatusText()
+						else
+							ShowFocusStatusText()
+						end
+					end
+
+					FocusFrameHealthBar:SetAlpha(1)
+					FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
+					FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+					FocusFrameManaBar:SetAlpha(1)
+				end
+			end
+
 			if UnitIsDead("player") or UnitIsGhost("player") then
 				if eufCharacterDB.enabled then
 					if eufCharacterDB.statusTextBoth then
@@ -380,66 +440,6 @@ function StatusTextStyling()
 				TargetFrameHealthBar:SetAlpha(1)
 				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 				TargetFrameManaBar:SetAlpha(1)
-			end
-
-			if not isClassic() then
-				if UnitExists("boss1") and UnitIsDead("boss1") then
-					Boss1TargetFrameTextureFrameHealthBarText:SetText("")
-				elseif UnitExists("boss2") and UnitIsDead("boss2") then
-					Boss2TargetFrameTextureFrameHealthBarText:SetText("")
-				elseif UnitExists("boss3") and UnitIsDead("boss3") then
-					Boss3TargetFrameTextureFrameHealthBarText:SetText("")
-				elseif UnitExists("boss4") and UnitIsDead("boss4") then
-					Boss4TargetFrameTextureFrameHealthBarText:SetText("")
-				end
-
-				if UnitIsDead("focus") or UnitIsGhost("focus") then
-					if eufCharacterDB.enabled then
-						if eufCharacterDB.statusTextBoth then
-							FocusFrameHealthBar.TextString:Show()
-						end
-					else
-						if eufDB.statusTextBoth then
-							FocusFrameHealthBar.TextString:Show()
-						end
-					end
-
-					if UnitIsDead("focus") then
-						FocusFrameHealthBar.TextString:SetText("Dead")
-					elseif UnitIsGhost("focus") then
-						FocusFrameHealthBar.TextString:SetText("Ghost")
-					end
-
-					FocusFrameHealthBar:SetAlpha(0)
-					FocusFrameHealthBar.LeftText:SetAlpha(0)
-					FocusFrameHealthBar.RightText:SetAlpha(0)
-					FocusFrameHealthBar.TextString:SetAlpha(1)
-					FocusFrameHealthBar.TextString:SetFontObject(GameFontNormalSmall)
-					FocusFrameHealthBar.TextString:SetShadowOffset(1, -1)
-					FocusFrameManaBar:SetAlpha(0)
-					FocusFrameManaBar.LeftText:SetAlpha(0)
-					FocusFrameManaBar.RightText:SetAlpha(0)
-					FocusFrameManaBar.TextString:SetAlpha(0)
-				elseif not UnitIsDead("focus") or not UnitIsGhost("focus") then
-					if eufCharacterDB.enabled then
-						if eufCharacterDB.hideFocusStatusText then
-							HideFocusStatusText()
-						else
-							ShowFocusStatusText()
-						end
-					else
-						if eufDB.hideFocusStatusText then
-							HideFocusStatusText()
-						else
-							ShowFocusStatusText()
-						end
-					end
-
-					FocusFrameHealthBar:SetAlpha(1)
-					FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
-					FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
-					FocusFrameManaBar:SetAlpha(1)
-				end
 			end
 		end
 

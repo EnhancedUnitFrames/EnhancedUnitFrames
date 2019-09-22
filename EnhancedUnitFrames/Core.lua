@@ -15,20 +15,21 @@ euf:RegisterEvent("PLAYER_ENTERING_WORLD")
 local function isLoaded(self, event, addon)
 	if event == "ADDON_LOADED" then
 		SetDefaults()
-		AuraStyling()
 		ClassIconPortraits()
 		MirroredPositioning()
 		PlayerFrameStyling()
 		StatusBarStyling()
 		TargetFrameStyling()
-		StatusTextStyling()
-		PowerBar()
 
 		if isClassic() then
 			ShamanClassColorFix()
 		else
 			BossFrameStyling()
+			FocusFrameStyling()
 		end
+
+		StatusTextStyling()
+		PowerBar()
 
 		euf:UnregisterEvent("ADDON_LOADED")
 	elseif event == "PLAYER_ENTERING_WORLD" then
