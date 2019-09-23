@@ -446,13 +446,19 @@ function StatusTextStyling()
 		if value and valueMax > 0 then
 			if eufCharacterDB.enabled then
 				if eufCharacterDB.statusTextNumeric then
-					statusFrame.LeftText:Hide()
-					statusFrame.RightText:Hide()
+					if statusFrame.LeftText and statusFrame.RightText then
+						statusFrame.LeftText:Hide()
+						statusFrame.RightText:Hide()
+					end
+
 					textString:SetText(valueDisplay)
 					textString:Show()
 				elseif eufCharacterDB.statusTextPercent then
-					statusFrame.LeftText:Hide()
-					statusFrame.RightText:Hide()
+					if statusFrame.LeftText and statusFrame.RightText then
+						statusFrame.LeftText:Hide()
+						statusFrame.RightText:Hide()
+					end
+
 					textString:SetText(valuePercentageDisplay)
 					textString:Show()
 				elseif eufCharacterDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
@@ -533,20 +539,29 @@ function StatusTextStyling()
 					statusFrame.RightText:Hide()
 					textString:Show()
 				elseif eufCharacterDB.statusTextNone then
-					statusFrame.LeftText:Hide()
-					statusFrame.RightText:Hide()
+					if statusFrame.LeftText and statusFrame.RightText then
+						statusFrame.LeftText:Hide()
+						statusFrame.RightText:Hide()
+					end
+
 					textString:Hide()
 					textString:SetText(valueDisplay)
 				end
 			else
 				if eufDB.statusTextNumeric then
-					statusFrame.LeftText:Hide()
-					statusFrame.RightText:Hide()
+					if statusFrame.LeftText and statusFrame.RightText then
+						statusFrame.LeftText:Hide()
+						statusFrame.RightText:Hide()
+					end
+
 					textString:SetText(valueDisplay)
 					textString:Show()
 				elseif eufDB.statusTextPercent then
-					statusFrame.LeftText:Hide()
-					statusFrame.RightText:Hide()
+					if statusFrame.LeftText and statusFrame.RightText then
+						statusFrame.LeftText:Hide()
+						statusFrame.RightText:Hide()
+					end
+
 					textString:SetText(valuePercentageDisplay)
 					textString:Show()
 				elseif eufDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
@@ -627,8 +642,11 @@ function StatusTextStyling()
 					statusFrame.RightText:Hide()
 					textString:Show()
 				elseif eufDB.statusTextNone then
-					statusFrame.LeftText:Hide()
-					statusFrame.RightText:Hide()
+					if statusFrame.LeftText and statusFrame.RightText then
+						statusFrame.LeftText:Hide()
+						statusFrame.RightText:Hide()
+					end
+
 					textString:Hide()
 					textString:SetText(valueDisplay)
 				end
