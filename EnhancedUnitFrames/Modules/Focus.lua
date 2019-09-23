@@ -532,23 +532,23 @@ function FocusFrameStyling()
 
 	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
 		local function FocusOneHundredPlus()
-			FocusFrameTextureFrameLevelText:ClearAllPoints()
-			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 52.5, -2.5)
+			FocusFrame.levelText:ClearAllPoints()
+			FocusFrame.levelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 52.5, -2.5)
 		end
 
 		local function FocusBelowOneHundred()
-			FocusFrameTextureFrameLevelText:ClearAllPoints()
-			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 53.5, -2.5)
+			FocusFrame.levelText:ClearAllPoints()
+			FocusFrame.levelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 53.5, -2.5)
 		end
 
 		local function FocusWhoaOneHundredPlus()
-			FocusFrameTextureFrameLevelText:ClearAllPoints()
-			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 52.5, -3.5)
+			FocusFrame.levelText:ClearAllPoints()
+			FocusFrame.levelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 52.5, -3.5)
 		end
 
 		local function FocusWhoaBelowOneHundred()
-			FocusFrameTextureFrameLevelText:ClearAllPoints()
-			FocusFrameTextureFrameLevelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 53.5, -3.5)
+			FocusFrame.levelText:ClearAllPoints()
+			FocusFrame.levelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 53.5, -3.5)
 		end
 
 		local function Focus()
@@ -576,7 +576,7 @@ function FocusFrameStyling()
 		else
 			if eufDB.bigFocusFrame or eufDB.defaultFocusFrame then
 				Focus()
-			elseif eufCharacterDB.whoaFocusFrame then
+			elseif eufDB.whoaFocusFrame then
 				FocusWhoa()
 			end
 		end

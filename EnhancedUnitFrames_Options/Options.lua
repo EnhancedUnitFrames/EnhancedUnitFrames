@@ -240,7 +240,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 			if eufCharacterDB.enabled then
 				eufCharacterDB.wideTargetFrame = true
 			else
-				eufDB.wideTargetFrame = false
+				eufDB.wideTargetFrame = true
 			end
 
 			PlaySound(856)
@@ -263,7 +263,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 				if eufCharacterDB.enabled then
 					eufCharacterDB.wideFocusFrame = true
 				else
-					eufDB.wideFocusFrame = false
+					eufDB.wideFocusFrame = true
 				end
 
 				PlaySound(856)

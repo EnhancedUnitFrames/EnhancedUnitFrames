@@ -554,23 +554,23 @@ function TargetFrameStyling()
 
 	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
 		local function TargetOneHundredPlus()
-			TargetFrameTextureFrameLevelText:ClearAllPoints()
-			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -2.5)
+			TargetFrame.levelText:ClearAllPoints()
+			TargetFrame.levelText:SetPoint("CENTER", TargetFrame.manabar, "BOTTOMRIGHT", 52.5, -2.5)
 		end
 
 		local function TargetBelowOneHundred()
-			TargetFrameTextureFrameLevelText:ClearAllPoints()
-			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -2.5)
+			TargetFrame.levelText:ClearAllPoints()
+			TargetFrame.levelText:SetPoint("CENTER", TargetFrame.manabar, "BOTTOMRIGHT", 53.5, -2.5)
 		end
 
 		local function TargetWhoaOneHundredPlus()
-			TargetFrameTextureFrameLevelText:ClearAllPoints()
-			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 52.5, -3.5)
+			TargetFrame.levelText:ClearAllPoints()
+			TargetFrame.levelText:SetPoint("CENTER", TargetFrame.manabar, "BOTTOMRIGHT", 52.5, -3.5)
 		end
 
 		local function TargetWhoaBelowOneHundred()
-			TargetFrameTextureFrameLevelText:ClearAllPoints()
-			TargetFrameTextureFrameLevelText:SetPoint("CENTER", TargetFrameManaBar, "BOTTOMRIGHT", 53.5, -3.5)
+			TargetFrame.levelText:ClearAllPoints()
+			TargetFrame.levelText:SetPoint("CENTER", TargetFrame.manabar, "BOTTOMRIGHT", 53.5, -3.5)
 		end
 
 		local function Target()
@@ -598,7 +598,7 @@ function TargetFrameStyling()
 		else
 			if eufDB.bigTargetFrame or eufDB.defaultTargetFrame then
 				Target()
-			elseif eufCharacterDB.whoaTargetFrame then
+			elseif eufDB.whoaTargetFrame then
 				TargetWhoa()
 			end
 		end
