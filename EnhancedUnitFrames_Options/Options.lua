@@ -1146,6 +1146,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			classIconPortraitsCheckbox:SetChecked(true)
 		end
 
+		if eufDB.classNameBackgroundColor == true then
+			classNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionNameBackgroundColor == true then
+			reactionNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
 		if eufDB.hideNameBackground == true then
 			hideNameBackgroundCheckbox:SetChecked(true)
 		end

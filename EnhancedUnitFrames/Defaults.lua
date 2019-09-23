@@ -116,7 +116,7 @@ function SetDefaults()
 
 	if eufDB.reactionNameBackgroundColor == nil then
 		eufDB.reactionNameBackgroundColor = true
-	end	
+	end
 
 	if isClassic() then
 		if eufDB.shamanClassColorFix == nil then
