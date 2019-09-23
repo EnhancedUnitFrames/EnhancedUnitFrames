@@ -62,6 +62,10 @@ function SetDefaults()
 		eufDB.hideHitIndicators = false
 	end
 
+	if eufDB.hideNameBackground == nil then
+		eufDB.hideNameBackground = false
+	end
+
 	if eufDB.hidePartyStatusText == nil then
 		eufDB.hidePartyStatusText = false
 	end
@@ -257,6 +261,10 @@ function SetDefaults()
 
 		if eufCharacterDB.hideHitIndicators == nil then
 			eufCharacterDB.hideHitIndicators = eufDB.hideHitIndicators
+		end
+
+		if eufCharacterDB.hideNameBackground == nil then
+			eufCharacterDB.hideNameBackground = eufDB.hideNameBackground
 		end
 
 		if eufCharacterDB.hidePartyStatusText == nil then

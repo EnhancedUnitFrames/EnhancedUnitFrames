@@ -183,6 +183,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
 	local classNameBackgroundColor = createCheckbox("classNameBackgroundColor", self, "Class Name BG Color", "Changes the unit frame name background color to the unit's class color.")
 	local reactionNameBackgroundColor = createCheckbox("reactionNameBackgroundColor", self, "Reaction Name BG Color", "Changes the unit frame name background color to the unit's reaction color.")
+	local hideNameBackground = createCheckbox("hideNameBackground", self, "Hide Name BG", "Hides the unit frame name background.")
 	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
 
@@ -208,7 +209,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 	classIconPortraits:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	classNameBackgroundColor:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
 	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
-	hideHitIndicators:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
+	hideNameBackground:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
+	hideHitIndicators:SetPoint("TOPLEFT", hideNameBackground, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 
 	if isClassic() then
@@ -364,7 +366,29 @@ eufOptions.general:SetScript("OnShow", function(self)
 			PlaySound(857)
 		end
 
-		StaticPopup_Show("RELOAD_UI")		
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	hideNameBackground:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideNameBackground = true
+			else
+				eufDB.hideNameBackground = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideNameBackground = false
+			else
+				eufDB.hideNameBackground = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
 	end)
 
 	hideHitIndicators:SetScript("OnClick", function(self)
@@ -1082,6 +1106,10 @@ eufOptions.general:SetScript("OnShow", function(self)
 			reactionNameBackgroundColorCheckbox:SetChecked(true)
 		end
 
+		if eufCharacterDB.hideNameBackground == true then
+			hideNameBackgroundCheckbox:SetChecked(true)
+		end
+
 		if eufCharacterDB.hideHitIndicators == true then
 			hideHitIndicatorsCheckbox:SetChecked(true)
 		end
@@ -1116,6 +1144,10 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 		if eufDB.classIconPortraits == true then
 			classIconPortraitsCheckbox:SetChecked(true)
+		end
+
+		if eufDB.hideNameBackground == true then
+			hideNameBackgroundCheckbox:SetChecked(true)
 		end
 
 		if eufDB.hideHitIndicators == true then

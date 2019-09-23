@@ -39,64 +39,38 @@ function ColorStyling()
 		end
 
 		local function ReactionColor()
+			local function Color()
+				if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
+					self:SetStatusBarColor(0.5, 0.5, 0.5)
+				elseif not UnitIsTapDenied(unit) then
+					local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
+
+					if reactionColor then
+						self:SetStatusBarColor(reactionColor.r, reactionColor.g, reactionColor.b)
+					else
+						self:SetStatusBarColor(0, 0.9, 0)
+					end
+				end
+			end
+
 			if eufCharacterDB.enabled then
 				if eufCharacterDB.reactionHealthBarColor and not eufCharacterDB.classHealthBarColor then
 					if UnitExists(unit) then
-						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self:SetStatusBarColor(0.5, 0.5, 0.5)
-						elseif not UnitIsTapDenied(unit) then
-							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
-
-							if reactionColor then
-								self:SetStatusBarColor(reactionColor.r, reactionColor.g, reactionColor.b)
-							else
-								self:SetStatusBarColor(0, 0.9, 0)
-							end
-						end
+						Color()
 					end
 				else
 					if UnitExists(unit) and not UnitIsPlayer(unit) then
-						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self:SetStatusBarColor(0.5, 0.5, 0.5)
-						elseif not UnitIsTapDenied(unit) then
-							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
-
-							if reactionColor then
-								self:SetStatusBarColor(reactionColor.r, reactionColor.g, reactionColor.b)
-							else
-								self:SetStatusBarColor(0, 0.9, 0)
-							end
-						end
+						Color()
 					end
 				end
 			else
 				if eufDB.reactionHealthBarColor and not eufDB.classHealthBarColor then
 					if UnitExists(unit) then
-						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self:SetStatusBarColor(0.5, 0.5, 0.5)
-						elseif not UnitIsTapDenied(unit) then
-							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
-
-							if reactionColor then
-								self:SetStatusBarColor(reactionColor.r, reactionColor.g, reactionColor.b)
-							else
-								self:SetStatusBarColor(0, 0.9, 0)
-							end
-						end
+						Color()
 					end
 				else
 					if UnitExists(unit) and not UnitIsPlayer(unit) then
-						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self:SetStatusBarColor(0.5, 0.5, 0.5)
-						elseif not UnitIsTapDenied(unit) then
-							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
-
-							if reactionColor then
-								self:SetStatusBarColor(reactionColor.r, reactionColor.g, reactionColor.b)
-							else
-								self:SetStatusBarColor(0, 0.9, 0)
-							end
-						end
+						Color()
 					end
 				end
 			end
@@ -231,5 +205,19 @@ function ColorStyling()
 
 	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
 		NameBackgroundColor(self, self.unit)
+	end)
+
+	-- Hides the unit frame name background.
+
+	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.hideNameBackground then
+				self.nameBackground:SetAlpha(0)
+			end
+		else
+			if eufDB.hideNameBackground then
+				self.nameBackground:SetAlpha(0)
+			end
+		end
 	end)
 end
