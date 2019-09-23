@@ -29,6 +29,15 @@ local function isLoaded(self, event, addon)
 		StatusTextStyling()
 		PowerBar()
 
+		if not eufDB.firstRunMessage then
+			local firstRunMessage = "|cff1eff00[EnhancedUnitFrames]|cff00aa00"
+
+			print("|cff00aa00" .. format(LOOT_ITEM_SELF, firstRunMessage))
+			print("|cffffff00Type /euf to open the options panel.")
+
+			eufDB.firstRunMessage = true
+		end
+
 		euf:UnregisterEvent("ADDON_LOADED")
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		hooksecurefunc("TextStatusBar_OnEvent", function(self, event, ...)

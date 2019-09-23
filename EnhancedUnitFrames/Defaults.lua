@@ -44,6 +44,10 @@ function SetDefaults()
 		eufDB.elitePlayerFrame = false
 	end
 
+	if eufDB.firstRunMessage == nil then
+		eufDB.firstRunMessage = false
+	end
+
 	if not isClassic() then
 		if eufDB.hideArenaStatusText == nil then
 			eufDB.hideArenaStatusText = false
