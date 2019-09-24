@@ -20,9 +20,13 @@ function SetDefaults()
 		eufDB.classHealthBarColor = true
 	end
 
+	if eufDB.classNameColor == nil then
+		eufDB.classNameColor = false
+	end
+
 	if eufDB.classNameBackgroundColor == nil then
 		eufDB.classNameBackgroundColor = false
-	end	
+	end
 
 	if eufDB.classIconPortraits == nil then
 		eufDB.classIconPortraits = false
@@ -116,6 +120,10 @@ function SetDefaults()
 
 	if eufDB.reactionHealthBarColor == nil then
 		eufDB.reactionHealthBarColor = true
+	end
+
+	if eufDB.reactionNameColor == nil then
+		eufDB.reactionNameColor = false
 	end
 
 	if eufDB.reactionNameBackgroundColor == nil then
@@ -225,9 +233,13 @@ function SetDefaults()
 			eufCharacterDB.classHealthBarColor = eufDB.classHealthBarColor
 		end
 
+		if eufCharacterDB.classNameColor == nil then
+			eufCharacterDB.classNameColor = eufDB.classNameColor
+		end
+
 		if eufCharacterDB.classNameBackgroundColor == nil then
 			eufCharacterDB.classNameBackgroundColor = eufDB.classNameBackgroundColor
-		end		
+		end
 
 		if eufCharacterDB.classIconPortraits == nil then
 			eufCharacterDB.classIconPortraits = eufDB.classIconPortraits
@@ -317,6 +329,10 @@ function SetDefaults()
 
 		if eufCharacterDB.reactionHealthBarColor == nil then
 			eufCharacterDB.reactionHealthBarColor = eufDB.reactionHealthBarColor
+		end
+
+		if eufCharacterDB.reactionNameColor == nil then
+			eufCharacterDB.reactionNameColor = eufDB.reactionNameColor
 		end
 
 		if eufCharacterDB.reactionNameBackgroundColor == nil then

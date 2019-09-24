@@ -181,6 +181,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	local mirroredPositioning = createCheckbox("mirroredPositioning", self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
 	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
+	local classNameColor = createCheckbox("classNameColor", self, "Class Color Name", "Changes the unit frame name color to the unit's class color.")
+	local reactionNameColor = createCheckbox("reactionNameColor", self, "Reaction Color Name", "Changes the unit frame name color to the unit's reaction color.")
 	local classNameBackgroundColor = createCheckbox("classNameBackgroundColor", self, "Class Color Name BG", "Changes the unit frame name background color to the unit's class color.")
 	local reactionNameBackgroundColor = createCheckbox("reactionNameBackgroundColor", self, "Reaction Color Name BG", "Changes the unit frame name background color to the unit's reaction color.")
 	local hideNameBackground = createCheckbox("hideNameBackground", self, "Hide Name BG", "Hides the unit frame name background.")
@@ -207,7 +209,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 	end
 
 	classIconPortraits:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
-	classNameBackgroundColor:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
+	classNameColor:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
+	reactionNameColor:SetPoint("TOPLEFT", classNameColor, "BOTTOMLEFT", 0, -8)
+	classNameBackgroundColor:SetPoint("TOPLEFT", reactionNameColor, "BOTTOMLEFT", 0, -8)
 	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
 	hideNameBackground:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", hideNameBackground, "BOTTOMLEFT", 0, -8)
@@ -317,6 +321,50 @@ eufOptions.general:SetScript("OnShow", function(self)
 				eufCharacterDB.classIconPortraits = false
 			else
 				eufDB.classIconPortraits = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	classNameColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameColor = true
+			else
+				eufDB.classNameColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameColor = false
+			else
+				eufDB.classNameColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionNameColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameColor = true
+			else
+				eufDB.reactionNameColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameColor = false
+			else
+				eufDB.reactionNameColor = false
 			end
 
 			PlaySound(857)
@@ -1098,6 +1146,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			classIconPortraitsCheckbox:SetChecked(true)
 		end
 
+		if eufCharacterDB.classNameColor == true then
+			classNameColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionNameColor == true then
+			reactionNameColorCheckbox:SetChecked(true)
+		end
+
 		if eufCharacterDB.classNameBackgroundColor == true then
 			classNameBackgroundColorCheckbox:SetChecked(true)
 		end
@@ -1144,6 +1200,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 		if eufDB.classIconPortraits == true then
 			classIconPortraitsCheckbox:SetChecked(true)
+		end
+
+		if eufDB.classNameColor == true then
+			classNameColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionNameColor == true then
+			reactionNameColorCheckbox:SetChecked(true)
 		end
 
 		if eufDB.classNameBackgroundColor == true then

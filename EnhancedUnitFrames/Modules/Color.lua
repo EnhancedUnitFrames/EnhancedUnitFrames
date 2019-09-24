@@ -26,7 +26,7 @@ function ColorStyling()
 	function HealthBarColor(self, unit)
 		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
-				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(self.unit))]
+				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(unit))]
 
 				if classColor then
 					self:SetStatusBarColor(classColor.r, classColor.g, classColor.b)
@@ -101,20 +101,128 @@ function ColorStyling()
 
 	hooksecurefunc("UnitFrameHealthBar_Update", HealthBarColor)
 
+	-- Changes the unit frame name color to the unit's class or reaction color.
+
+	function NameColor(self, unit)
+		local function ClassColor()
+			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
+				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(unit))]
+
+				if classColor then
+					self.name:SetTextColor(classColor.r, classColor.g, classColor.b)
+				end
+			elseif UnitIsPlayer(unit) and not UnitIsConnected(unit) then
+				self.name:SetTextColor(0.5, 0.5, 0.5)
+			else
+				self.name:SetTextColor(1, 0.82, 0)
+			end
+		end
+
+		local function ReactionColor()
+			if eufCharacterDB.enabled then
+				if eufCharacterDB.reactionNameColor and not eufCharacterDB.classNameColor then
+					if UnitExists(unit) then
+						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
+							self.name:SetTextColor(0.5, 0.5, 0.5)
+						elseif not UnitIsTapDenied(unit) then
+							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
+
+							if reactionColor then
+								self.name:SetTextColor(reactionColor.r, reactionColor.g, reactionColor.b)
+							else
+								self.name:SetTextColor(1, 0.82, 0)
+							end
+						end
+					end
+				else
+					if UnitExists(unit) and not UnitIsPlayer(unit) then
+						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
+							self.name:SetTextColor(0.5, 0.5, 0.5)
+						elseif not UnitIsTapDenied(unit) then
+							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
+
+							if reactionColor then
+								self.name:SetTextColor(reactionColor.r, reactionColor.g, reactionColor.b)
+							else
+								self.name:SetTextColor(1, 0.82, 0)
+							end
+						end
+					end
+				end
+			else
+				if eufDB.reactionNameColor and not eufDB.classNameColor then
+					if UnitExists(unit) then
+						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
+							self.name:SetTextColor(0.5, 0.5, 0.5)
+						elseif not UnitIsTapDenied(unit) then
+							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
+
+							if reactionColor then
+								self.name:SetTextColor(reactionColor.r, reactionColor.g, reactionColor.b)
+							else
+								self.name:SetTextColor(1, 0.82, 0)
+							end
+						end
+					end
+				else
+					if UnitExists(unit) and not UnitIsPlayer(unit) then
+						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
+							self.name:SetTextColor(0.5, 0.5, 0.5)
+						elseif not UnitIsTapDenied(unit) then
+							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
+
+							if reactionColor then
+								self.name:SetTextColor(reactionColor.r, reactionColor.g, reactionColor.b)
+							else
+								self.name:SetTextColor(1, 0.82, 0)
+							end
+						end
+					end
+				end
+			end
+		end
+
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.classNameColor then
+				ClassColor()
+			end
+
+			if eufCharacterDB.reactionNameColor then
+				ReactionColor()
+			end
+
+			if eufCharacterDB.bigPlayerFrame or eufCharacterDB.whoaPlayerFrame then
+				PlayerName:SetAlpha(0)
+			end
+		else
+			if eufDB.classNameColor then
+				ClassColor()
+			end
+
+			if eufDB.reactionNameColor then
+				ReactionColor()
+			end
+
+			if eufDB.bigPlayerFrame or eufDB.whoaPlayerFrame then
+				PlayerName:SetAlpha(0)
+			end
+		end
+	end	
+
 	-- Changes the unit frame name background colors to the unit's class or reaction color.
 
 	function NameBackgroundColor(self, unit)
 		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
-				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(self.unit))]
+				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(unit))]
 
 				if classColor then
-					self.nameBackground:SetVertexColor(classColor.r, classColor.g, classColor.b)
+					self.nameBackground:SetVertexColor(classColor.r, classColor.g, classColor.b, 1)
 				end
 			elseif UnitIsPlayer(unit) and not UnitIsConnected(unit) then
-				self.nameBackground:SetVertexColor(0.5, 0.5, 0.5)
+				self.nameBackground:SetVertexColor(0.5, 0.5, 0.5, 1)
 			else
-				self.nameBackground:SetVertexColor(0, 0.9, 0)
+				self.nameBackground:SetVertexColor(0, 0, 0, 0)
 			end
 		end
 
@@ -123,28 +231,28 @@ function ColorStyling()
 				if eufCharacterDB.reactionNameBackgroundColor and not eufCharacterDB.classNameBackgroundColor then
 					if UnitExists(unit) then
 						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5)
+							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5, 1)
 						elseif not UnitIsTapDenied(unit) then
 							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
 
 							if reactionColor then
-								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b)
+								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b, 1)
 							else
-								self.nameBackground:SetVertexColor(0, 0.9, 0)
+								self.nameBackground:SetVertexColor(0, 0, 0, 0)
 							end
 						end
 					end
 				else
 					if UnitExists(unit) and not UnitIsPlayer(unit) then
 						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5)
+							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5, 1)
 						elseif not UnitIsTapDenied(unit) then
 							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
 
 							if reactionColor then
-								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b)
+								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b, 1)
 							else
-								self.nameBackground:SetVertexColor(0, 0.9, 0)
+								self.nameBackground:SetVertexColor(0, 0, 0, 0)
 							end
 						end
 					end
@@ -153,28 +261,28 @@ function ColorStyling()
 				if eufDB.reactionNameBackgroundColor and not eufDB.classNameBackgroundColor then
 					if UnitExists(unit) then
 						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5)
+							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5, 1)
 						elseif not UnitIsTapDenied(unit) then
 							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
 
 							if reactionColor then
-								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b)
+								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b, 1)
 							else
-								self.nameBackground:SetVertexColor(0, 0.9, 0)
+								self.nameBackground:SetVertexColor(0, 0, 0, 0)
 							end
 						end
 					end
 				else
 					if UnitExists(unit) and not UnitIsPlayer(unit) then
 						if UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5)
+							self.nameBackground:SetVertexColor(0.5, 0.5, 0.5, 1)
 						elseif not UnitIsTapDenied(unit) then
 							local reactionColor = FACTION_BAR_COLORS[UnitReaction(unit, "player")]
 
 							if reactionColor then
-								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b)
+								self.nameBackground:SetVertexColor(reactionColor.r, reactionColor.g, reactionColor.b, 1)
 							else
-								self.nameBackground:SetVertexColor(0, 0.9, 0)
+								self.nameBackground:SetVertexColor(0, 0, 0, 0)
 							end
 						end
 					end
@@ -201,15 +309,13 @@ function ColorStyling()
 		end
 	end
 
-	-- Changes the unit frame name background colors to the unit's class or reaction color.
-
 	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
+		-- Changes the unit frame name background colors to the unit's class or reaction color.
+
 		NameBackgroundColor(self, self.unit)
-	end)
 
-	-- Hides the unit frame name background.
+		-- Hides the unit frame name background.
 
-	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
 		if eufCharacterDB.enabled then
 			if eufCharacterDB.hideNameBackground then
 				self.nameBackground:SetAlpha(0)
@@ -219,5 +325,11 @@ function ColorStyling()
 				self.nameBackground:SetAlpha(0)
 			end
 		end
+	end)
+
+	-- Changes the unit frame name colors to the unit's class or reaction color.
+
+	hooksecurefunc("UnitFrame_Update", function(self, isParty)
+		NameColor(self, self.unit)
 	end)
 end
