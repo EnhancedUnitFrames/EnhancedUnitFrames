@@ -171,6 +171,24 @@ function PlayerFrameStyling()
 		PlayerFrameManaBar.RightText:SetPoint("RIGHT", PlayerFrameManaBar, -3.5, 0)
 		PlayerFrameManaBar.TextString:ClearAllPoints()
 		PlayerFrameManaBar.TextString:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
+
+		-- Gives the player name an outline.
+
+		local font, size, style  = PlayerName:GetFont()
+
+		PlayerName:SetFont(font, size, "OUTLINE")
+		PlayerName:SetShadowOffset(0, 999999)
+
+		-- Changes the status bar text to reflect live.
+
+		if isClassic() then
+			PlayerFrameHealthBar.LeftText:SetFontObject(SystemFont_Outline_Small)
+			PlayerFrameHealthBar.RightText:SetFontObject(SystemFont_Outline_Small)
+			PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
+			PlayerFrameManaBar.LeftText:SetFontObject(SystemFont_Outline_Small)
+			PlayerFrameManaBar.RightText:SetFontObject(SystemFont_Outline_Small)
+			PlayerFrameManaBar.TextString:SetFontObject(SystemFont_Outline_Small)
+		end
 	end)
 
 	-- Styles the pet frame.
@@ -189,17 +207,6 @@ function PlayerFrameStyling()
 	PetFrameManaBar.RightText:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
 	PetFrameManaBar.TextString:ClearAllPoints()
 	PetFrameManaBar.TextString:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
-
-	-- Changes the status bar text to reflect live.
-
-	if isClassic() then
-		PlayerFrameHealthBar.LeftText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameHealthBar.RightText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBar.LeftText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBar.RightText:SetFontObject(SystemFont_Outline_Small)
-		PlayerFrameManaBar.TextString:SetFontObject(SystemFont_Outline_Small)
-	end
 
 	-- Fixes the vehicle frame.
 

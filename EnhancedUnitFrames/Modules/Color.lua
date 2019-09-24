@@ -104,6 +104,11 @@ function ColorStyling()
 	-- Changes the unit frame name color to the unit's class or reaction color.
 
 	function NameColor(self, unit)
+		local font, size, style  = self.name:GetFont()
+		
+		self.name:SetFont(font, size, "OUTLINE")
+		self.name:SetShadowOffset(0, 999999)
+
 		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(unit))]
