@@ -3,31 +3,38 @@
 eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
 eufOptions.general = CreateFrame("Frame", "eufOptionsGeneral", eufOptions)
 eufOptions.color = CreateFrame("Frame", "eufOptionsColor", eufOptions)
-eufOptions.healthBars = CreateFrame("Frame", "eufOptionsHealthBars", eufOptions)
 eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions)
 eufOptions.statusText = CreateFrame("Frame", "eufOptionsPanelStatusText", eufOptions)
 eufOptions.name = "EnhancedUnitFrames"
 eufOptions.general.name = "General"
 eufOptions.color.name = "Color"
-eufOptions.healthBars.name = "Health Bars"
 eufOptions.scaling.name = "Frame Scaling"
 eufOptions.statusText.name = "Status Text"
 eufOptions.general.parent = eufOptions.name
 eufOptions.color.parent = eufOptions.name
-eufOptions.healthBars.parent = eufOptions.name
 eufOptions.scaling.parent = eufOptions.name
 eufOptions.statusText.parent = eufOptions.name
 
 InterfaceOptions_AddCategory(eufOptions)
 InterfaceOptions_AddCategory(eufOptions.general)
 InterfaceOptions_AddCategory(eufOptions.color)
-InterfaceOptions_AddCategory(eufOptions.healthBars)
+
+if not isClassic() then
+	eufOptions.healthBars = CreateFrame("Frame", "eufOptionsHealthBars", eufOptions)
+	eufOptions.healthBars.name = "Health Bars"
+	eufOptions.healthBars.parent = eufOptions.name
+
+	InterfaceOptions_AddCategory(eufOptions.healthBars)
+
+	eufOptions.healthBars:Hide()
+end
+
 InterfaceOptions_AddCategory(eufOptions.scaling)
 InterfaceOptions_AddCategory(eufOptions.statusText)
+
 eufOptions:Hide()
 eufOptions.general:Hide()
 eufOptions.color:Hide()
-eufOptions.healthBars:Hide()
 eufOptions.scaling:Hide()
 eufOptions.statusText:Hide()
 
@@ -1168,6 +1175,8 @@ eufOptions.color:SetScript("OnShow", function(self)
 
 	-- Creates checkboxes.
 
+	local classHealthBarColor = createCheckbox("classHealthBarColor", self, "Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
+	local reactionHealthBarColor = createCheckbox("reactionHealthBarColor", self, "Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
 	local classNameColor = createCheckbox("classNameColor", self, "Class Color Name", "Changes the unit frame name color to the unit's class color.")
 	local reactionNameColor = createCheckbox("reactionNameColor", self, "Reaction Color Name", "Changes the unit frame name color to the unit's reaction color.")
 	local classNameBackgroundColor = createCheckbox("classNameBackgroundColor", self, "Class Color Name BG", "Changes the unit frame name background color to the unit's class color.")
@@ -1177,7 +1186,9 @@ eufOptions.color:SetScript("OnShow", function(self)
 
 	-- Positions the checkboxes created.
 
-	classNameColor:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+	classHealthBarColor:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
+	classNameColor:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
 	reactionNameColor:SetPoint("TOPLEFT", classNameColor, "BOTTOMLEFT", 0, -8)
 	classNameBackgroundColor:SetPoint("TOPLEFT", reactionNameColor, "BOTTOMLEFT", 0, -8)
 	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
@@ -1185,6 +1196,50 @@ eufOptions.color:SetScript("OnShow", function(self)
 	reactionLevelTextColor:SetPoint("TOPLEFT", classLevelTextColor, "BOTTOMLEFT", 0, -8)
 
 	-- Applies scripts to the checkboxes.
+
+	classHealthBarColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classHealthBarColor = true
+			else
+				eufDB.classHealthBarColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classHealthBarColor = false
+			else
+				eufDB.classHealthBarColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionHealthBarColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionHealthBarColor = true
+			else
+				eufDB.reactionHealthBarColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionHealthBarColor = false
+			else
+				eufDB.reactionHealthBarColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
 
 	classNameColor:SetScript("OnClick", function(self)
 		if self:GetChecked() then
@@ -1321,6 +1376,14 @@ eufOptions.color:SetScript("OnShow", function(self)
 	-- Initializes the options panel with saved variables.
 
 	if eufCharacterDB.enabled then
+		if eufCharacterDB.classHealthBarColor == true then
+			classHealthBarColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionHealthBarColor == true then
+			reactionHealthBarColorCheckbox:SetChecked(true)
+		end
+
 		if eufCharacterDB.classNameColor == true then
 			classNameColorCheckbox:SetChecked(true)
 		end
@@ -1345,6 +1408,14 @@ eufOptions.color:SetScript("OnShow", function(self)
 			reactionLevelTextColorCheckbox:SetChecked(true)
 		end
 	else
+		if eufDB.classHealthBarColor == true then
+			classHealthBarColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionHealthBarColor == true then
+			reactionHealthBarColorCheckbox:SetChecked(true)
+		end
+
 		if eufDB.classNameColor == true then
 			classNameColorCheckbox:SetChecked(true)
 		end
@@ -1375,88 +1446,34 @@ end)
 
 -- Draws the health bar option panel elements.
 
-eufOptions.healthBars:SetScript("OnShow", function(self)
-	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+if not isClassic() then
+	eufOptions.healthBars:SetScript("OnShow", function(self)
+		local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
-	title:SetPoint("TOPLEFT", self, 16, -16)
-	title:SetText("EnhancedUnitFrames")
+		title:SetPoint("TOPLEFT", self, 16, -16)
+		title:SetText("EnhancedUnitFrames")
 
-	local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
+		local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
 
-	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-	description:SetText("Modifies the default unit frames for better visuals.")
+		description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+		description:SetText("Modifies the default unit frames for better visuals.")
 
-	-- Creates checkboxes.
+		-- Creates checkboxes.
 
-	local classHealthBarColor = createCheckbox("classHealthBarColor", self, "Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
-	local reactionHealthBarColor = createCheckbox("reactionHealthBarColor", self, "Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
-	
-	if not isClassic() then
-		hidePowerAnimation = createCheckbox("hidePowerAnimation", self, "Hide Power Animations", "Hides the animation when the resource bar is full.")
-		predictedHealth = createCheckbox("predictedHealth", self, "Show Predicted Health", "Shows an animation when you lose health.")
-		showBuilderFeedback = createCheckbox("showBuilderFeedback", self, "Show Builder Feedback", "Shows an animation when you build your class resource.")
-		showSpenderFeedback = createCheckbox("showSpenderFeedback", self, "Show Spender Feedback", "Shows an animation when you spend your class resource.")
-	end
+		local hidePowerAnimation = createCheckbox("hidePowerAnimation", self, "Hide Power Animations", "Hides the animation when the resource bar is full.")
+		local predictedHealth = createCheckbox("predictedHealth", self, "Show Predicted Health", "Shows an animation when you lose health.")
+		local showBuilderFeedback = createCheckbox("showBuilderFeedback", self, "Show Builder Feedback", "Shows an animation when you build your class resource.")
+		local showSpenderFeedback = createCheckbox("showSpenderFeedback", self, "Show Spender Feedback", "Shows an animation when you spend your class resource.")
 
-	-- Positions the checkboxes created.
+		-- Positions the checkboxes created.
 
-	classHealthBarColor:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
-	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
-
-	if not isClassic() then
-		hidePowerAnimation:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
+		hidePowerAnimation:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 		predictedHealth:SetPoint("TOPLEFT", hidePowerAnimation, "BOTTOMLEFT", 0, -8)
 		showBuilderFeedback:SetPoint("TOPLEFT", predictedHealth, "BOTTOMLEFT", 0, -8)
 		showSpenderFeedback:SetPoint("TOPLEFT", showBuilderFeedback, "BOTTOMLEFT", 0, -8)
-	end
 
-	-- Applies scripts to the checkboxes.
+		-- Applies scripts to the checkboxes.
 
-	classHealthBarColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classHealthBarColor = true
-			else
-				eufDB.classHealthBarColor = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classHealthBarColor = false
-			else
-				eufDB.classHealthBarColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	reactionHealthBarColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionHealthBarColor = true
-			else
-				eufDB.reactionHealthBarColor = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionHealthBarColor = false
-			else
-				eufDB.reactionHealthBarColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	if not isClassic() then
 		hidePowerAnimation:SetScript("OnClick", function(self)
 			if self:GetChecked() then
 				if eufCharacterDB.enabled then
@@ -1508,20 +1525,10 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 				PlaySound(857)
 			end
 		end)
-	end
 
-	-- Initializes the options panel with saved variables.
+		-- Initializes the options panel with saved variables.
 
-	if eufCharacterDB.enabled then
-		if eufCharacterDB.classHealthBarColor == true then
-			classHealthBarColorCheckbox:SetChecked(true)
-		end
-
-		if eufCharacterDB.reactionHealthBarColor == true then
-			reactionHealthBarColorCheckbox:SetChecked(true)
-		end
-
-		if not isClassic() then
+		if eufCharacterDB.enabled then
 			if eufCharacterDB.hidePowerAnimation == true then
 				hidePowerAnimationCheckbox:SetChecked(true)
 			end
@@ -1537,17 +1544,7 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 			if C_CVar.GetCVar("showSpenderFeedback") == "1" then
 				showSpenderFeedbackCheckbox:SetChecked(true)
 			end
-		end
-	else
-		if eufDB.classHealthBarColor == true then
-			classHealthBarColorCheckbox:SetChecked(true)
-		end
-
-		if eufDB.reactionHealthBarColor == true then
-			reactionHealthBarColorCheckbox:SetChecked(true)
-		end
-
-		if not isClassic() then
+		else
 			if eufDB.hidePowerAnimation == true then
 				hidePowerAnimationCheckbox:SetChecked(true)
 			end
@@ -1564,10 +1561,10 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 				showSpenderFeedbackCheckbox:SetChecked(true)
 			end
 		end
-	end
 
-	self:SetScript("OnShow", nil)
-end)
+		self:SetScript("OnShow", nil)
+	end)
+end
 
 -- Draws the frame scaling option panel elements.
 
