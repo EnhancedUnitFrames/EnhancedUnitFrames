@@ -16,6 +16,10 @@ function SetDefaults()
 		eufDB.bigTargetFrame = false
 	end
 
+	if eufDB.classDeadTextColor == nil then
+		eufDB.classDeadTextColor = false
+	end
+
 	if eufDB.classHealthBarColor == nil then
 		eufDB.classHealthBarColor = true
 	end
@@ -126,6 +130,10 @@ function SetDefaults()
 
 	if eufDB.rareElitePlayerFrame == nil then
 		eufDB.rareElitePlayerFrame = false
+	end
+
+	if eufDB.reactionDeadTextColor == nil then
+		eufDB.reactionDeadTextColor = false
 	end
 
 	if eufDB.reactionHealthBarColor == nil then
@@ -243,6 +251,10 @@ function SetDefaults()
 			eufCharacterDB.bigTargetFrame = eufDB.bigTargetFrame
 		end
 
+		if eufCharacterDB.classDeadTextColor == nil then
+			eufCharacterDB.classDeadTextColor = eufDB.classDeadTextColor
+		end
+
 		if eufCharacterDB.classHealthBarColor == nil then
 			eufCharacterDB.classHealthBarColor = eufDB.classHealthBarColor
 		end
@@ -349,6 +361,10 @@ function SetDefaults()
 
 		if eufCharacterDB.rareElitePlayerFrame == nil then
 			eufCharacterDB.rareElitePlayerFrame = eufDB.rareElitePlayerFrame
+		end
+
+		if eufCharacterDB.reactionDeadTextColor == nil then
+			eufCharacterDB.reactionDeadTextColor = eufDB.reactionDeadTextColor
 		end
 
 		if eufCharacterDB.reactionHealthBarColor == nil then

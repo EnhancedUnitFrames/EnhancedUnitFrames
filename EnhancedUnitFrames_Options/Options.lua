@@ -1183,6 +1183,8 @@ eufOptions.color:SetScript("OnShow", function(self)
 	local reactionNameBackgroundColor = createCheckbox("reactionNameBackgroundColor", self, "Reaction Color Name BG", "Changes the unit frame name background color to the unit's reaction color.")
 	local classLevelTextColor = createCheckbox("classLevelTextColor", self, "Class Color Level Text", "Changes the unit frame level text color to the unit's class color.")
 	local reactionLevelTextColor = createCheckbox("reactionLevelTextColor", self, "Reaction Color Level Text", "Changes the unit frame level text color to the unit's reaction color.")
+	local classDeadTextColor = createCheckbox("classDeadTextColor", self, "Class Color Dead Text", "Changes the unit frame dead text color to the unit's class color.")
+	local reactionDeadTextColor = createCheckbox("reactionDeadTextColor", self, "Reaction Color Dead Text", "Changes the unit frame dead text color to the unit's reaction color.")
 
 	-- Positions the checkboxes created.
 
@@ -1194,6 +1196,8 @@ eufOptions.color:SetScript("OnShow", function(self)
 	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
 	classLevelTextColor:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
 	reactionLevelTextColor:SetPoint("TOPLEFT", classLevelTextColor, "BOTTOMLEFT", 0, -8)
+	classDeadTextColor:SetPoint("TOPLEFT", reactionLevelTextColor, "BOTTOMLEFT", 0, -8)
+	reactionDeadTextColor:SetPoint("TOPLEFT", classDeadTextColor, "BOTTOMLEFT", 0, -8)
 
 	-- Applies scripts to the checkboxes.
 
@@ -1373,6 +1377,50 @@ eufOptions.color:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
+	classDeadTextColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classDeadTextColor = true
+			else
+				eufDB.classDeadTextColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classDeadTextColor = false
+			else
+				eufDB.classDeadTextColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionDeadTextColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionDeadTextColor = true
+			else
+				eufDB.reactionDeadTextColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionDeadTextColor = false
+			else
+				eufDB.reactionDeadTextColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
 	-- Initializes the options panel with saved variables.
 
 	if eufCharacterDB.enabled then
@@ -1407,6 +1455,14 @@ eufOptions.color:SetScript("OnShow", function(self)
 		if eufCharacterDB.reactionLevelTextColor == true then
 			reactionLevelTextColorCheckbox:SetChecked(true)
 		end
+
+		if eufCharacterDB.classDeadTextColor == true then
+			classDeadTextColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionDeadTextColor == true then
+			reactionDeadTextColorCheckbox:SetChecked(true)
+		end
 	else
 		if eufDB.classHealthBarColor == true then
 			classHealthBarColorCheckbox:SetChecked(true)
@@ -1438,6 +1494,14 @@ eufOptions.color:SetScript("OnShow", function(self)
 
 		if eufDB.reactionLevelTextColor == true then
 			reactionLevelTextColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.classDeadTextColor == true then
+			classDeadTextColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionDeadTextColor == true then
+			reactionDeadTextColorCheckbox:SetChecked(true)
 		end
 	end
 

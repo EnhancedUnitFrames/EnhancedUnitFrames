@@ -292,6 +292,8 @@ function StatusTextStyling()
 						FocusFrameHealthBar.TextString:SetText("Ghost")
 					end
 
+					FocusDeadTextColor()
+
 					FocusFrameHealthBar:SetAlpha(0)
 					FocusFrameHealthBar.LeftText:SetAlpha(0)
 					FocusFrameHealthBar.RightText:SetAlpha(0)
@@ -320,6 +322,7 @@ function StatusTextStyling()
 					FocusFrameHealthBar:SetAlpha(1)
 					FocusFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 					FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+					FocusFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 					FocusFrameManaBar:SetAlpha(1)
 				end
 			end
@@ -349,7 +352,21 @@ function StatusTextStyling()
 				PlayerFrameHealthBar.TextString:SetShadowOffset(1, -1)
 
 				if isClassic() then
-					PlayerFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+					if eufCharacterDB.enabled then
+						if eufCharacterDB.classDeadTextColor or eufCharacterDB.reactionDeadTextColor then
+							PlayerDeadTextColor()
+						else
+							PlayerFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+						end
+					else
+						if eufDB.classDeadTextColor or eufDB.reactionDeadTextColor then
+							PlayerDeadTextColor()
+						else
+							PlayerFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+						end
+					end
+				else
+					PlayerDeadTextColor()
 				end
 
 				PlayerFrameManaBar:SetAlpha(0)
@@ -373,13 +390,13 @@ function StatusTextStyling()
 
 				if isClassic() then
 					PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
-					PlayerFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 				else
 					PlayerFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 				end
 
 				PlayerFrameHealthBar:SetAlpha(1)
 				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+				PlayerFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 				PlayerFrameManaBar:SetAlpha(1)
 			end
 
@@ -408,7 +425,21 @@ function StatusTextStyling()
 				TargetFrameHealthBar.TextString:SetShadowOffset(1, -1)
 
 				if isClassic() then
-					TargetFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+					if eufCharacterDB.enabled then
+						if eufCharacterDB.classDeadTextColor or eufCharacterDB.reactionDeadTextColor then
+							TargetDeadTextColor()
+						else
+							TargetFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+						end
+					else
+						if eufDB.classDeadTextColor or eufDB.reactionDeadTextColor then
+							TargetDeadTextColor()
+						else
+							TargetFrameHealthBar.TextString:SetTextColor(1, 0.82, 0)
+						end
+					end
+				else
+					TargetDeadTextColor()
 				end
 
 				TargetFrameManaBar:SetAlpha(0)
@@ -432,13 +463,13 @@ function StatusTextStyling()
 
 				if isClassic() then
 					TargetFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
-					TargetFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 				else
 					TargetFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 				end
 
 				TargetFrameHealthBar:SetAlpha(1)
 				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+				TargetFrameHealthBar.TextString:SetTextColor(1, 1, 1)
 				TargetFrameManaBar:SetAlpha(1)
 			end
 		end
