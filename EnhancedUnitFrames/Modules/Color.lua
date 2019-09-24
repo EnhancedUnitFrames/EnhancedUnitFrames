@@ -705,9 +705,11 @@ function ColorStyling()
 		end)	
 	end
 
-	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
+	hooksecurefunc("TargetFrame_CheckLevel", function(self)
 		LevelTextColor(self, self.unit)
+	end)
 
+	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
 		-- Changes the unit frame name background color to the unit's class or reaction color.
 
 		NameBackgroundColor(self, self.unit)
