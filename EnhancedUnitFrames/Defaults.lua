@@ -20,6 +20,10 @@ function SetDefaults()
 		eufDB.classHealthBarColor = true
 	end
 
+	if eufDB.classLevelTextColor == nil then
+		eufDB.classLevelTextColor = false
+	end
+
 	if eufDB.classNameColor == nil then
 		eufDB.classNameColor = false
 	end
@@ -122,6 +126,10 @@ function SetDefaults()
 
 	if eufDB.reactionHealthBarColor == nil then
 		eufDB.reactionHealthBarColor = true
+	end
+
+	if eufDB.reactionLevelTextColor == nil then
+		eufDB.reactionLevelTextColor = false
 	end
 
 	if eufDB.reactionNameColor == nil then
@@ -235,6 +243,10 @@ function SetDefaults()
 			eufCharacterDB.classHealthBarColor = eufDB.classHealthBarColor
 		end
 
+		if eufCharacterDB.classLevelTextColor == nil then
+			eufCharacterDB.classLevelTextColor = eufDB.classLevelTextColor
+		end
+
 		if eufCharacterDB.classNameColor == nil then
 			eufCharacterDB.classNameColor = eufDB.classNameColor
 		end
@@ -333,6 +345,10 @@ function SetDefaults()
 
 		if eufCharacterDB.reactionHealthBarColor == nil then
 			eufCharacterDB.reactionHealthBarColor = eufDB.reactionHealthBarColor
+		end
+
+		if eufCharacterDB.reactionLevelTextColor == nil then
+			eufCharacterDB.reactionLevelTextColor = eufDB.reactionLevelTextColor
 		end
 
 		if eufCharacterDB.reactionNameColor == nil then

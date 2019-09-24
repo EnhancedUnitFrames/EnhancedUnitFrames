@@ -185,6 +185,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 	local reactionNameColor = createCheckbox("reactionNameColor", self, "Reaction Color Name", "Changes the unit frame name color to the unit's reaction color.")
 	local classNameBackgroundColor = createCheckbox("classNameBackgroundColor", self, "Class Color Name BG", "Changes the unit frame name background color to the unit's class color.")
 	local reactionNameBackgroundColor = createCheckbox("reactionNameBackgroundColor", self, "Reaction Color Name BG", "Changes the unit frame name background color to the unit's reaction color.")
+	local classLevelTextColor = createCheckbox("classLevelTextColor", self, "Class Color Level Text", "Changes the unit frame level text color to the unit's class color.")
+	local reactionLevelTextColor = createCheckbox("reactionLevelTextColor", self, "Reaction Color Level Text", "Changes the unit frame level text color to the unit's reaction color.")
 	local hideNameBackground = createCheckbox("hideNameBackground", self, "Hide Name BG", "Hides the unit frame name background.")
 	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
@@ -213,7 +215,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 	reactionNameColor:SetPoint("TOPLEFT", classNameColor, "BOTTOMLEFT", 0, -8)
 	classNameBackgroundColor:SetPoint("TOPLEFT", reactionNameColor, "BOTTOMLEFT", 0, -8)
 	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
-	hideNameBackground:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
+	classLevelTextColor:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
+	reactionLevelTextColor:SetPoint("TOPLEFT", classLevelTextColor, "BOTTOMLEFT", 0, -8)
+	hideNameBackground:SetPoint("TOPLEFT", reactionLevelTextColor, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", hideNameBackground, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 
@@ -409,6 +413,50 @@ eufOptions.general:SetScript("OnShow", function(self)
 				eufCharacterDB.reactionNameBackgroundColor = false
 			else
 				eufDB.reactionNameBackgroundColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	classLevelTextColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classLevelTextColor = true
+			else
+				eufDB.classLevelTextColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classLevelTextColor = false
+			else
+				eufDB.classLevelTextColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionLevelTextColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionLevelTextColor = true
+			else
+				eufDB.reactionLevelTextColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionLevelTextColor = false
+			else
+				eufDB.reactionLevelTextColor = false
 			end
 
 			PlaySound(857)
@@ -1162,6 +1210,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			reactionNameBackgroundColorCheckbox:SetChecked(true)
 		end
 
+		if eufCharacterDB.classLevelTextColor == true then
+			classLevelTextColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionNameBackgroundColor == true then
+			reactionNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
 		if eufCharacterDB.hideNameBackground == true then
 			hideNameBackgroundCheckbox:SetChecked(true)
 		end
@@ -1216,6 +1272,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 		if eufDB.reactionNameBackgroundColor == true then
 			reactionNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.classLevelTextColor == true then
+			classLevelTextColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionLevelTextColor == true then
+			reactionLevelTextColorCheckbox:SetChecked(true)
 		end
 
 		if eufDB.hideNameBackground == true then
