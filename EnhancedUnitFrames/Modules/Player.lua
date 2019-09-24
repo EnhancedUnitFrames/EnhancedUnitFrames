@@ -172,13 +172,6 @@ function PlayerFrameStyling()
 		PlayerFrameManaBar.TextString:ClearAllPoints()
 		PlayerFrameManaBar.TextString:SetPoint("CENTER", PlayerFrameManaBar, 0, 0)
 
-		-- Gives the player name an outline.
-
-		local font, size, style  = PlayerName:GetFont()
-
-		PlayerName:SetFont(font, size, "OUTLINE")
-		PlayerName:SetShadowOffset(0, 999999)
-
 		-- Changes the status bar text to reflect live.
 
 		if isClassic() then

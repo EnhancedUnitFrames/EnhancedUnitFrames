@@ -2,26 +2,31 @@
 
 eufOptions = CreateFrame("Frame", "eufOptionsPanel", UIParent)
 eufOptions.general = CreateFrame("Frame", "eufOptionsGeneral", eufOptions)
+eufOptions.color = CreateFrame("Frame", "eufOptionsColor", eufOptions)
 eufOptions.healthBars = CreateFrame("Frame", "eufOptionsHealthBars", eufOptions)
 eufOptions.scaling = CreateFrame("Frame", "eufOptionsPanelScaling", eufOptions)
 eufOptions.statusText = CreateFrame("Frame", "eufOptionsPanelStatusText", eufOptions)
 eufOptions.name = "EnhancedUnitFrames"
 eufOptions.general.name = "General"
+eufOptions.color.name = "Color"
 eufOptions.healthBars.name = "Health Bars"
 eufOptions.scaling.name = "Frame Scaling"
 eufOptions.statusText.name = "Status Text"
 eufOptions.general.parent = eufOptions.name
+eufOptions.color.parent = eufOptions.name
 eufOptions.healthBars.parent = eufOptions.name
 eufOptions.scaling.parent = eufOptions.name
 eufOptions.statusText.parent = eufOptions.name
 
 InterfaceOptions_AddCategory(eufOptions)
 InterfaceOptions_AddCategory(eufOptions.general)
+InterfaceOptions_AddCategory(eufOptions.color)
 InterfaceOptions_AddCategory(eufOptions.healthBars)
 InterfaceOptions_AddCategory(eufOptions.scaling)
 InterfaceOptions_AddCategory(eufOptions.statusText)
 eufOptions:Hide()
 eufOptions.general:Hide()
+eufOptions.color:Hide()
 eufOptions.healthBars:Hide()
 eufOptions.scaling:Hide()
 eufOptions.statusText:Hide()
@@ -153,11 +158,11 @@ local createScaleSlider = function(name, parent, title, minVal, maxVal, valStep,
 	return slider
 end
 
--- Draws the option panel elements.
-
 eufOptions:SetScript("OnShow", function(self)
 	InterfaceOptionsFrame_OpenToCategory(eufOptions.general)
 end)
+
+-- Draws the general option panel elements.
 
 eufOptions.general:SetScript("OnShow", function(self)
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -181,12 +186,7 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	local mirroredPositioning = createCheckbox("mirroredPositioning", self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
 	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
-	local classNameColor = createCheckbox("classNameColor", self, "Class Color Name", "Changes the unit frame name color to the unit's class color.")
-	local reactionNameColor = createCheckbox("reactionNameColor", self, "Reaction Color Name", "Changes the unit frame name color to the unit's reaction color.")
-	local classNameBackgroundColor = createCheckbox("classNameBackgroundColor", self, "Class Color Name BG", "Changes the unit frame name background color to the unit's class color.")
-	local reactionNameBackgroundColor = createCheckbox("reactionNameBackgroundColor", self, "Reaction Color Name BG", "Changes the unit frame name background color to the unit's reaction color.")
-	local classLevelTextColor = createCheckbox("classLevelTextColor", self, "Class Color Level Text", "Changes the unit frame level text color to the unit's class color.")
-	local reactionLevelTextColor = createCheckbox("reactionLevelTextColor", self, "Reaction Color Level Text", "Changes the unit frame level text color to the unit's reaction color.")
+	local fontOutline = createCheckbox("fontOutline", self, "Font Outline", "Gives text strings modified by the \"Color\" section outlines to improve visibility.")
 	local hideNameBackground = createCheckbox("hideNameBackground", self, "Hide Name BG", "Hides the unit frame name background.")
 	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
@@ -211,13 +211,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 	end
 
 	classIconPortraits:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
-	classNameColor:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
-	reactionNameColor:SetPoint("TOPLEFT", classNameColor, "BOTTOMLEFT", 0, -8)
-	classNameBackgroundColor:SetPoint("TOPLEFT", reactionNameColor, "BOTTOMLEFT", 0, -8)
-	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
-	classLevelTextColor:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
-	reactionLevelTextColor:SetPoint("TOPLEFT", classLevelTextColor, "BOTTOMLEFT", 0, -8)
-	hideNameBackground:SetPoint("TOPLEFT", reactionLevelTextColor, "BOTTOMLEFT", 0, -8)
+	fontOutline:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
+	hideNameBackground:SetPoint("TOPLEFT", fontOutline, "BOTTOMLEFT", 0, -8)
 	hideHitIndicators:SetPoint("TOPLEFT", hideNameBackground, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
 
@@ -333,130 +328,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	classNameColor:SetScript("OnClick", function(self)
+	fontOutline:SetScript("OnClick", function(self)
 		if self:GetChecked() then
 			if eufCharacterDB.enabled then
-				eufCharacterDB.classNameColor = true
+				eufCharacterDB.fontOutline = true
 			else
-				eufDB.classNameColor = true
+				eufDB.fontOutline = true
 			end
 
 			PlaySound(856)
 		else
 			if eufCharacterDB.enabled then
-				eufCharacterDB.classNameColor = false
+				eufCharacterDB.fontOutline = false
 			else
-				eufDB.classNameColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	reactionNameColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionNameColor = true
-			else
-				eufDB.reactionNameColor = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionNameColor = false
-			else
-				eufDB.reactionNameColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	classNameBackgroundColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classNameBackgroundColor = true
-			else
-				eufDB.classNameBackgroundColor = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classNameBackgroundColor = false
-			else
-				eufDB.classNameBackgroundColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	reactionNameBackgroundColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionNameBackgroundColor = true
-			else
-				eufDB.reactionNameBackgroundColor = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionNameBackgroundColor = false
-			else
-				eufDB.reactionNameBackgroundColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	classLevelTextColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classLevelTextColor = true
-			else
-				eufDB.classLevelTextColor = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classLevelTextColor = false
-			else
-				eufDB.classLevelTextColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
-	reactionLevelTextColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionLevelTextColor = true
-			else
-				eufDB.reactionLevelTextColor = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.reactionLevelTextColor = false
-			else
-				eufDB.reactionLevelTextColor = false
+				eufDB.fontOutline = false
 			end
 
 			PlaySound(857)
@@ -1194,28 +1079,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 			classIconPortraitsCheckbox:SetChecked(true)
 		end
 
-		if eufCharacterDB.classNameColor == true then
-			classNameColorCheckbox:SetChecked(true)
-		end
-
-		if eufCharacterDB.reactionNameColor == true then
-			reactionNameColorCheckbox:SetChecked(true)
-		end
-
-		if eufCharacterDB.classNameBackgroundColor == true then
-			classNameBackgroundColorCheckbox:SetChecked(true)
-		end
-
-		if eufCharacterDB.reactionNameBackgroundColor == true then
-			reactionNameBackgroundColorCheckbox:SetChecked(true)
-		end
-
-		if eufCharacterDB.classLevelTextColor == true then
-			classLevelTextColorCheckbox:SetChecked(true)
-		end
-
-		if eufCharacterDB.reactionNameBackgroundColor == true then
-			reactionNameBackgroundColorCheckbox:SetChecked(true)
+		if eufCharacterDB.fontOutline == true then
+			fontOutlineCheckbox:SetChecked(true)
 		end
 
 		if eufCharacterDB.hideNameBackground == true then
@@ -1258,28 +1123,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 			classIconPortraitsCheckbox:SetChecked(true)
 		end
 
-		if eufDB.classNameColor == true then
-			classNameColorCheckbox:SetChecked(true)
-		end
-
-		if eufDB.reactionNameColor == true then
-			reactionNameColorCheckbox:SetChecked(true)
-		end
-
-		if eufDB.classNameBackgroundColor == true then
-			classNameBackgroundColorCheckbox:SetChecked(true)
-		end
-
-		if eufDB.reactionNameBackgroundColor == true then
-			reactionNameBackgroundColorCheckbox:SetChecked(true)
-		end
-
-		if eufDB.classLevelTextColor == true then
-			classLevelTextColorCheckbox:SetChecked(true)
-		end
-
-		if eufDB.reactionLevelTextColor == true then
-			reactionLevelTextColorCheckbox:SetChecked(true)
+		if eufDB.fontOutline == true then
+			fontOutlineCheckbox:SetChecked(true)
 		end
 
 		if eufDB.hideNameBackground == true then
@@ -1302,6 +1147,226 @@ eufOptions.general:SetScript("OnShow", function(self)
 			if C_CVar.GetCVar("threatShowNumeric") == "1" then
 				threatShowNumericCheckbox:SetChecked(true)
 			end
+		end
+	end
+
+	self:SetScript("OnShow", nil)
+end)
+
+-- Draws the color option panel elements.
+
+eufOptions.color:SetScript("OnShow", function(self)
+	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+
+	title:SetPoint("TOPLEFT", self, 16, -16)
+	title:SetText("EnhancedUnitFrames")
+
+	local description = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmallOutline")
+
+	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	description:SetText("Modifies the default unit frames for better visuals.")
+
+	-- Creates checkboxes.
+
+	local classNameColor = createCheckbox("classNameColor", self, "Class Color Name", "Changes the unit frame name color to the unit's class color.")
+	local reactionNameColor = createCheckbox("reactionNameColor", self, "Reaction Color Name", "Changes the unit frame name color to the unit's reaction color.")
+	local classNameBackgroundColor = createCheckbox("classNameBackgroundColor", self, "Class Color Name BG", "Changes the unit frame name background color to the unit's class color.")
+	local reactionNameBackgroundColor = createCheckbox("reactionNameBackgroundColor", self, "Reaction Color Name BG", "Changes the unit frame name background color to the unit's reaction color.")
+	local classLevelTextColor = createCheckbox("classLevelTextColor", self, "Class Color Level Text", "Changes the unit frame level text color to the unit's class color.")
+	local reactionLevelTextColor = createCheckbox("reactionLevelTextColor", self, "Reaction Color Level Text", "Changes the unit frame level text color to the unit's reaction color.")
+
+	-- Positions the checkboxes created.
+
+	classNameColor:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
+	reactionNameColor:SetPoint("TOPLEFT", classNameColor, "BOTTOMLEFT", 0, -8)
+	classNameBackgroundColor:SetPoint("TOPLEFT", reactionNameColor, "BOTTOMLEFT", 0, -8)
+	reactionNameBackgroundColor:SetPoint("TOPLEFT", classNameBackgroundColor, "BOTTOMLEFT", 0, -8)
+	classLevelTextColor:SetPoint("TOPLEFT", reactionNameBackgroundColor, "BOTTOMLEFT", 0, -8)
+	reactionLevelTextColor:SetPoint("TOPLEFT", classLevelTextColor, "BOTTOMLEFT", 0, -8)
+
+	-- Applies scripts to the checkboxes.
+
+	classNameColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameColor = true
+			else
+				eufDB.classNameColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameColor = false
+			else
+				eufDB.classNameColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionNameColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameColor = true
+			else
+				eufDB.reactionNameColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameColor = false
+			else
+				eufDB.reactionNameColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	classNameBackgroundColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameBackgroundColor = true
+			else
+				eufDB.classNameBackgroundColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classNameBackgroundColor = false
+			else
+				eufDB.classNameBackgroundColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionNameBackgroundColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameBackgroundColor = true
+			else
+				eufDB.reactionNameBackgroundColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionNameBackgroundColor = false
+			else
+				eufDB.reactionNameBackgroundColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	classLevelTextColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classLevelTextColor = true
+			else
+				eufDB.classLevelTextColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.classLevelTextColor = false
+			else
+				eufDB.classLevelTextColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	reactionLevelTextColor:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionLevelTextColor = true
+			else
+				eufDB.reactionLevelTextColor = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.reactionLevelTextColor = false
+			else
+				eufDB.reactionLevelTextColor = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	-- Initializes the options panel with saved variables.
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.classNameColor == true then
+			classNameColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionNameColor == true then
+			reactionNameColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.classNameBackgroundColor == true then
+			classNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionNameBackgroundColor == true then
+			reactionNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.classLevelTextColor == true then
+			classLevelTextColorCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.reactionLevelTextColor == true then
+			reactionLevelTextColorCheckbox:SetChecked(true)
+		end
+	else
+		if eufDB.classNameColor == true then
+			classNameColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionNameColor == true then
+			reactionNameColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.classNameBackgroundColor == true then
+			classNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionNameBackgroundColor == true then
+			reactionNameBackgroundColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.classLevelTextColor == true then
+			classLevelTextColorCheckbox:SetChecked(true)
+		end
+
+		if eufDB.reactionLevelTextColor == true then
+			reactionLevelTextColorCheckbox:SetChecked(true)
 		end
 	end
 
@@ -1504,7 +1569,7 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 	self:SetScript("OnShow", nil)
 end)
 
--- Draws the scaling option panel elements.
+-- Draws the frame scaling option panel elements.
 
 eufOptions.scaling:SetScript("OnShow", function(self)
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -1661,6 +1726,8 @@ eufOptions.scaling:SetScript("OnShow", function(self)
 
 	self:SetScript("OnShow", nil)
 end)
+
+-- Draws the status text option panel elements.
 
 eufOptions.statusText:SetScript("OnShow", function(self)
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")

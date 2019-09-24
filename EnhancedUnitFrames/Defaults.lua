@@ -56,6 +56,10 @@ function SetDefaults()
 		eufDB.firstRunMessage = false
 	end
 
+	if eufDB.fontOutline == nil then
+		eufDB.fontOutline = false
+	end
+
 	if not isClassic() then
 		if eufDB.hideArenaStatusText == nil then
 			eufDB.hideArenaStatusText = false
@@ -273,6 +277,10 @@ function SetDefaults()
 
 		if eufCharacterDB.elitePlayerFrame == nil then
 			eufCharacterDB.elitePlayerFrame = eufDB.elitePlayerFrame
+		end
+
+		if eufCharacterDB.fontOutline == nil then
+			eufCharacterDB.fontOutline = eufDB.fontOutline
 		end
 
 		if not isClassic() then

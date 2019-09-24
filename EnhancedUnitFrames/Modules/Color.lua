@@ -104,10 +104,21 @@ function ColorStyling()
 	-- Changes the player frame level text color to the unit's class or reaction color.
 
 	function PlayerLevelTextColor()
-		local font, size, style  = PlayerLevelText:GetFont()
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.fontOutline then
+				local font, size, style  = PlayerLevelText:GetFont()
 		
-		PlayerLevelText:SetFont(font, size, "OUTLINE")
-		PlayerLevelText:SetShadowOffset(0, 999999)
+				PlayerLevelText:SetFont(font, size, "OUTLINE")
+				PlayerLevelText:SetShadowOffset(0, 999999)
+			end
+		else
+			if eufDB.fontOutline then
+				local font, size, style  = PlayerLevelText:GetFont()
+		
+				PlayerLevelText:SetFont(font, size, "OUTLINE")
+				PlayerLevelText:SetShadowOffset(0, 999999)
+			end
+		end
 
 		local function ClassColor()
 			if UnitClass("player") then
@@ -165,10 +176,21 @@ function ColorStyling()
 	-- Changes the unit frame level text color to the unit's class or reaction color.
 
 	function LevelTextColor(self, unit)
-		local font, size, style  = self.levelText:GetFont()
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.fontOutline then
+				local font, size, style  = self.levelText:GetFont()
 		
-		self.levelText:SetFont(font, size, "OUTLINE")
-		self.levelText:SetShadowOffset(0, 999999)
+				self.levelText:SetFont(font, size, "OUTLINE")
+				self.levelText:SetShadowOffset(0, 999999)
+			end
+		else
+			if eufDB.fontOutline then
+				local font, size, style  = self.levelText:GetFont()
+		
+				self.levelText:SetFont(font, size, "OUTLINE")
+				self.levelText:SetShadowOffset(0, 999999)
+			end
+		end
 
 		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
@@ -244,10 +266,27 @@ function ColorStyling()
 	-- Changes the unit frame name color to the unit's class or reaction color.
 
 	function NameColor(self, unit)
-		local font, size, style  = self.name:GetFont()
-		
-		self.name:SetFont(font, size, "OUTLINE")
-		self.name:SetShadowOffset(0, 999999)
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.fontOutline then
+				local font, size, style  = self.name:GetFont()
+				local playerFont, playerSize, playerStyle  = PlayerName:GetFont()
+
+				PlayerName:SetFont(playerFont, playerSize, "OUTLINE")
+				PlayerName:SetShadowOffset(0, 999999)
+				self.name:SetFont(font, size, "OUTLINE")
+				self.name:SetShadowOffset(0, 999999)
+			end
+		else
+			if eufDB.fontOutline then
+				local font, size, style  = self.name:GetFont()
+				local playerFont, playerSize, playerStyle  = PlayerName:GetFont()
+
+				PlayerName:SetFont(playerFont, playerSize, "OUTLINE")
+				PlayerName:SetShadowOffset(0, 999999)
+				self.name:SetFont(font, size, "OUTLINE")
+				self.name:SetShadowOffset(0, 999999)
+			end
+		end
 
 		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
