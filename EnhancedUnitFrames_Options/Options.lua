@@ -1261,9 +1261,9 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	local classHealthBarColor = createCheckbox("classHealthBarColor", self, "Class Color HP", "Changes the unit frame health bar colors to the unit's class color.")
 	local reactionHealthBarColor = createCheckbox("reactionHealthBarColor", self, "Reaction Color HP", "Changes the unit frame health bar colors to the unit's reaction color.")
-	local hidePowerAnimation = createCheckbox("hidePowerAnimation", self, "Hide Power Animations", "Hides the animation when the resource bar is full.")
 	
 	if not isClassic() then
+		hidePowerAnimation = createCheckbox("hidePowerAnimation", self, "Hide Power Animations", "Hides the animation when the resource bar is full.")
 		predictedHealth = createCheckbox("predictedHealth", self, "Show Predicted Health", "Shows an animation when you lose health.")
 		showBuilderFeedback = createCheckbox("showBuilderFeedback", self, "Show Builder Feedback", "Shows an animation when you build your class resource.")
 		showSpenderFeedback = createCheckbox("showSpenderFeedback", self, "Show Spender Feedback", "Shows an animation when you spend your class resource.")
@@ -1273,9 +1273,9 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 
 	classHealthBarColor:SetPoint("TOPLEFT", description, "BOTTOMLEFT", -2, -22)
 	reactionHealthBarColor:SetPoint("TOPLEFT", classHealthBarColor, "BOTTOMLEFT", 0, -8)
-	hidePowerAnimation:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
 
 	if not isClassic() then
+		hidePowerAnimation:SetPoint("TOPLEFT", reactionHealthBarColor, "BOTTOMLEFT", 0, -8)
 		predictedHealth:SetPoint("TOPLEFT", hidePowerAnimation, "BOTTOMLEFT", 0, -8)
 		showBuilderFeedback:SetPoint("TOPLEFT", predictedHealth, "BOTTOMLEFT", 0, -8)
 		showSpenderFeedback:SetPoint("TOPLEFT", showBuilderFeedback, "BOTTOMLEFT", 0, -8)
@@ -1327,29 +1327,29 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	hidePowerAnimation:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.hidePowerAnimation = true
-			else
-				eufDB.hidePowerAnimation = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.hidePowerAnimation = false
-			else
-				eufDB.hidePowerAnimation = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
-
 	if not isClassic() then
+		hidePowerAnimation:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hidePowerAnimation = true
+				else
+					eufDB.hidePowerAnimation = true
+				end
+
+				PlaySound(856)
+			else
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hidePowerAnimation = false
+				else
+					eufDB.hidePowerAnimation = false
+				end
+
+				PlaySound(857)
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+		end)
+
 		predictedHealth:SetScript("OnClick", function(self)
 			if self:GetChecked() then
 				C_CVar.SetCVar("predictedHealth", 1)
@@ -1392,11 +1392,11 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 			reactionHealthBarColorCheckbox:SetChecked(true)
 		end
 
-		if eufCharacterDB.hidePowerAnimation == true then
-			hidePowerAnimationCheckbox:SetChecked(true)
-		end
-
 		if not isClassic() then
+			if eufCharacterDB.hidePowerAnimation == true then
+				hidePowerAnimationCheckbox:SetChecked(true)
+			end
+
 			if C_CVar.GetCVar("predictedHealth") == "1" then
 				predictedHealthCheckbox:SetChecked(true)
 			end
@@ -1418,11 +1418,11 @@ eufOptions.healthBars:SetScript("OnShow", function(self)
 			reactionHealthBarColorCheckbox:SetChecked(true)
 		end
 
-		if eufDB.hidePowerAnimation == true then
-			hidePowerAnimationCheckbox:SetChecked(true)
-		end
-
 		if not isClassic() then
+			if eufDB.hidePowerAnimation == true then
+				hidePowerAnimationCheckbox:SetChecked(true)
+			end
+
 			if C_CVar.GetCVar("predictedHealth") == "1" then
 				predictedHealthCheckbox:SetChecked(true)
 			end

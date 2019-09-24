@@ -86,8 +86,10 @@ function SetDefaults()
 		eufDB.hidePlayerStatusText = false
 	end
 
-	if eufDB.hidePowerAnimation == nil then
-		eufDB.hidePowerAnimation = false
+	if not isClassic() then
+		if eufDB.hidePowerAnimation == nil then
+			eufDB.hidePowerAnimation = false
+		end
 	end
 
 	if eufDB.hidePowerBarStatusText == nil then
@@ -295,8 +297,10 @@ function SetDefaults()
 			eufCharacterDB.hidePlayerStatusText = eufDB.hidePlayerStatusText
 		end
 
-		if eufCharacterDB.hidePowerAnimation == nil then
-			eufCharacterDB.hidePowerAnimation = eufDB.hidePowerAnimation
+		if not isClassic() then
+			if eufCharacterDB.hidePowerAnimation == nil then
+				eufCharacterDB.hidePowerAnimation = eufDB.hidePowerAnimation
+			end
 		end
 
 		if eufCharacterDB.hidePowerBarStatusText == nil then
