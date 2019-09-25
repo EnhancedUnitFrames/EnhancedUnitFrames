@@ -586,7 +586,7 @@ function FocusFrameStyling()
 
 	hooksecurefunc("TargetofTarget_Update", function(self, elapsed)
 		FocusFrameToTBackground:ClearAllPoints()
-		FocusFrameToTBackground:SetPoint("CENTER", TargetFrameToT, 21, 0)
+		FocusFrameToTBackground:SetPoint("CENTER", FocusFrameToT, 21, 0)
 		FocusFrameToTBackground:SetSize(46, 15)
 		FocusFrameToTTextureFrameDeadText:SetAlpha(0)
 	end)
