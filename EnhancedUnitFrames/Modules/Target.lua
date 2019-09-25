@@ -610,5 +610,6 @@ function TargetFrameStyling()
 		TargetFrameToTBackground:ClearAllPoints()
 		TargetFrameToTBackground:SetPoint("CENTER", TargetFrameToT, 21, 0)
 		TargetFrameToTBackground:SetSize(46, 15)
+		TargetFrameToTTextureFrameDeadText:SetAlpha(0)
 	end)
 end

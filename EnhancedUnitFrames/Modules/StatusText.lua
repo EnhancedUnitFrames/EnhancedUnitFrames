@@ -105,6 +105,29 @@ function StatusTextStyling()
 		end
 	end
 
+	-- Hides the party frame status bar text.
+
+	local function HidePartyStatusText()
+		for i = 1, 4 do
+			_G["PartyMemberFrame" .. i .. "HealthBarText"]:SetAlpha(0)
+			_G["PartyMemberFrame" .. i .. "HealthBarTextLeft"]:SetAlpha(0)
+			_G["PartyMemberFrame" .. i .. "HealthBarTextRight"]:SetAlpha(0)
+			_G["PartyMemberFrame" .. i .. "ManaBarText"]:SetAlpha(0)
+			_G["PartyMemberFrame" .. i .. "ManaBarTextLeft"]:SetAlpha(0)
+			_G["PartyMemberFrame" .. i .. "ManaBarTextRight"]:SetAlpha(0)
+		end
+	end
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePartyStatusText then
+			HidePartyStatusText()
+		end
+	else
+		if eufDB.hidePartyStatusText then
+			HidePartyStatusText()
+		end
+	end
+
 	-- Hides the pet frame status bar text.
 
 	local function HidePetStatusText()

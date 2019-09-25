@@ -588,5 +588,6 @@ function FocusFrameStyling()
 		FocusFrameToTBackground:ClearAllPoints()
 		FocusFrameToTBackground:SetPoint("CENTER", TargetFrameToT, 21, 0)
 		FocusFrameToTBackground:SetSize(46, 15)
+		FocusFrameToTTextureFrameDeadText:SetAlpha(0)
 	end)
 end
