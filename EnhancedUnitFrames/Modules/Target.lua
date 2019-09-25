@@ -608,7 +608,7 @@ function TargetFrameStyling()
 
 	hooksecurefunc("TargetofTarget_Update", function(self, elapsed)
 		TargetFrameToTBackground:ClearAllPoints()
-		TargetFrameToTBackground:SetPoint("CENTER", TargetFrameToT, 22, -1)
-		TargetFrameToTBackground:SetSize(46, 14)
+		TargetFrameToTBackground:SetPoint("CENTER", TargetFrameToT, 21, 0)
+		TargetFrameToTBackground:SetSize(46, 15)
 	end)
 end
