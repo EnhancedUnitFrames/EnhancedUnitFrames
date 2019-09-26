@@ -271,6 +271,61 @@ function StatusTextStyling()
 			focusValuePowerPercentageDisplay = math.ceil((focusValuePower / focusValuePowerMax) * 100) .. "%"
 		end
 
+		local party1PowerType = UnitPowerType("party1")
+		local party1ValueHealth = UnitHealth("party1")
+		local party1ValueHealthMax = UnitHealthMax("party1")
+		local party1ValuePower = UnitPower("party1")
+		local party1ValuePowerMax = UnitPowerMax("party1")
+		local party1ValueHealthDisplay = tostring(ReadableNumber(party1ValueHealth))
+		local party1ValueHealthMaxDisplay = tostring(ReadableNumber(party1ValueHealthMax))
+		local party1ValueHealthPercentageDisplay = math.ceil((party1ValueHealth / party1ValueHealthMax) * 100) .. "%"
+		local party1ValuePowerDisplay = tostring(ReadableNumber(party1ValuePower))
+		local party1ValuePowerMaxDisplay = tostring(ReadableNumber(party1ValuePowerMax))
+		local party1ValuePowerPercentageDisplay = math.ceil((party1ValuePower / party1ValuePowerMax) * 100) .. "%"
+		local party2PowerType = UnitPowerType("party2")
+		local party2ValueHealth = UnitHealth("party2")
+		local party2ValueHealthMax = UnitHealthMax("party2")
+		local party2ValuePower = UnitPower("party2")
+		local party2ValuePowerMax = UnitPowerMax("party2")
+		local party2ValueHealthDisplay = tostring(ReadableNumber(party2ValueHealth))
+		local party2ValueHealthMaxDisplay = tostring(ReadableNumber(party2ValueHealthMax))
+		local party2ValueHealthPercentageDisplay = math.ceil((party2ValueHealth / party2ValueHealthMax) * 100) .. "%"
+		local party2ValuePowerDisplay = tostring(ReadableNumber(party2ValuePower))
+		local party2ValuePowerMaxDisplay = tostring(ReadableNumber(party2ValuePowerMax))
+		local party2ValuePowerPercentageDisplay = math.ceil((party2ValuePower / party2ValuePowerMax) * 100) .. "%"
+		local party3PowerType = UnitPowerType("party3")
+		local party3ValueHealth = UnitHealth("party3")
+		local party3ValueHealthMax = UnitHealthMax("party3")
+		local party3ValuePower = UnitPower("party3")
+		local party3ValuePowerMax = UnitPowerMax("party3")
+		local party3ValueHealthDisplay = tostring(ReadableNumber(party3ValueHealth))
+		local party3ValueHealthMaxDisplay = tostring(ReadableNumber(party3ValueHealthMax))
+		local party3ValueHealthPercentageDisplay = math.ceil((party3ValueHealth / party3ValueHealthMax) * 100) .. "%"
+		local party3ValuePowerDisplay = tostring(ReadableNumber(party3ValuePower))
+		local party3ValuePowerMaxDisplay = tostring(ReadableNumber(party3ValuePowerMax))
+		local party3ValuePowerPercentageDisplay = math.ceil((party3ValuePower / party3ValuePowerMax) * 100) .. "%"
+		local party4PowerType = UnitPowerType("party4")
+		local party4ValueHealth = UnitHealth("party4")
+		local party4ValueHealthMax = UnitHealthMax("party4")
+		local party4ValuePower = UnitPower("party4")
+		local party4ValuePowerMax = UnitPowerMax("party4")
+		local party4ValueHealthDisplay = tostring(ReadableNumber(party4ValueHealth))
+		local party4ValueHealthMaxDisplay = tostring(ReadableNumber(party4ValueHealthMax))
+		local party4ValueHealthPercentageDisplay = math.ceil((party4ValueHealth / party4ValueHealthMax) * 100) .. "%"
+		local party4ValuePowerDisplay = tostring(ReadableNumber(party4ValuePower))
+		local party4ValuePowerMaxDisplay = tostring(ReadableNumber(party4ValuePowerMax))
+		local party4ValuePowerPercentageDisplay = math.ceil((party4ValuePower / party4ValuePowerMax) * 100) .. "%"
+		local petPowerType = UnitPowerType("pet")
+		local petValueHealth = UnitHealth("pet")
+		local petValueHealthMax = UnitHealthMax("pet")
+		local petValuePower = UnitPower("pet")
+		local petValuePowerMax = UnitPowerMax("pet")
+		local petValueHealthDisplay = tostring(ReadableNumber(petValueHealth))
+		local petValueHealthMaxDisplay = tostring(ReadableNumber(petValueHealthMax))
+		local petValueHealthPercentageDisplay = math.ceil((petValueHealth / petValueHealthMax) * 100) .. "%"
+		local petValuePowerDisplay = tostring(ReadableNumber(petValuePower))
+		local petValuePowerMaxDisplay = tostring(ReadableNumber(petValuePowerMax))
+		local petValuePowerPercentageDisplay = math.ceil((petValuePower / petValuePowerMax) * 100) .. "%"
 		local targetPowerType = UnitPowerType("target")
 		local targetValueHealth = UnitHealth("target")
 		local targetValueHealthMax = UnitHealthMax("target")
@@ -518,6 +573,56 @@ function StatusTextStyling()
 					statusFrame.RightText:SetText(valueDisplay)
 					statusFrame.RightText:Show()
 					textString:Hide()
+					PartyMemberFrame1HealthBarText:SetText(party1ValueHealthPercentageDisplay)
+					PartyMemberFrame2HealthBarText:SetText(party2ValueHealthPercentageDisplay)
+					PartyMemberFrame3HealthBarText:SetText(party3ValueHealthPercentageDisplay)
+					PartyMemberFrame4HealthBarText:SetText(party4ValueHealthPercentageDisplay)
+					PetFrameHealthBar.LeftText:Hide()
+					PetFrameHealthBar.RightText:Hide()
+					PetFrameManaBar.LeftText:Hide()
+					PetFrameManaBar.RightText:Hide()
+					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)
+					PetFrameHealthBar.TextString:Show()
+					PetFrameManaBar.TextString:Show()
+
+					for i = 1, 4 do
+						_G["PartyMemberFrame" .. i .. "HealthBarText"]:Show()
+						_G["PartyMemberFrame" .. i .. "HealthBarTextLeft"]:Hide()
+						_G["PartyMemberFrame" .. i .. "HealthBarTextRight"]:Hide()
+						_G["PartyMemberFrame" .. i .. "ManaBarText"]:Show()
+						_G["PartyMemberFrame" .. i .. "ManaBarTextLeft"]:Hide()
+						_G["PartyMemberFrame" .. i .. "ManaBarTextRight"]:Hide()
+					end
+
+					if party1PowerType == 0 then
+						PartyMemberFrame1ManaBarText:SetText(party1ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame1ManaBarText:SetText(party1ValuePowerDisplay)
+					end
+
+					if party2PowerType == 0 then
+						PartyMemberFrame2ManaBarText:SetText(party2ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame2ManaBarText:SetText(party2ValuePowerDisplay)
+					end
+
+					if party3PowerType == 0 then
+						PartyMemberFrame3ManaBarText:SetText(party3ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame3ManaBarText:SetText(party3ValuePowerDisplay)
+					end
+
+					if party4PowerType == 0 then
+						PartyMemberFrame4ManaBarText:SetText(party4ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame4ManaBarText:SetText(party4ValuePowerDisplay)
+					end
+
+					if petPowerType == 0 then
+						PetFrameManaBar.TextString:SetText(petValuePowerPercentageDisplay)
+					else
+						PetFrameManaBar.TextString:SetText(petValuePowerDisplay)
+					end
 				elseif eufCharacterDB.statusTextBothCondensed and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
 						textString:SetText(valuePercentageDisplay)
@@ -612,6 +717,56 @@ function StatusTextStyling()
 					statusFrame.RightText:SetText(valueDisplay)
 					statusFrame.RightText:Show()
 					textString:Hide()
+					PartyMemberFrame1HealthBarText:SetText(party1ValueHealthPercentageDisplay)
+					PartyMemberFrame2HealthBarText:SetText(party2ValueHealthPercentageDisplay)
+					PartyMemberFrame3HealthBarText:SetText(party3ValueHealthPercentageDisplay)
+					PartyMemberFrame4HealthBarText:SetText(party4ValueHealthPercentageDisplay)
+					PetFrameHealthBar.LeftText:Hide()
+					PetFrameHealthBar.RightText:Hide()
+					PetFrameManaBar.LeftText:Hide()
+					PetFrameManaBar.RightText:Hide()
+					PetFrameHealthBar.TextString:SetText(petValueHealthPercentageDisplay)
+					PetFrameHealthBar.TextString:Show()
+					PetFrameManaBar.TextString:Show()
+
+					for i = 1, 4 do
+						_G["PartyMemberFrame" .. i .. "HealthBarText"]:Show()
+						_G["PartyMemberFrame" .. i .. "HealthBarTextLeft"]:Hide()
+						_G["PartyMemberFrame" .. i .. "HealthBarTextRight"]:Hide()
+						_G["PartyMemberFrame" .. i .. "ManaBarText"]:Show()
+						_G["PartyMemberFrame" .. i .. "ManaBarTextLeft"]:Hide()
+						_G["PartyMemberFrame" .. i .. "ManaBarTextRight"]:Hide()
+					end
+
+					if party1PowerType == 0 then
+						PartyMemberFrame1ManaBarText:SetText(party1ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame1ManaBarText:SetText(party1ValuePowerDisplay)
+					end
+
+					if party2PowerType == 0 then
+						PartyMemberFrame2ManaBarText:SetText(party2ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame2ManaBarText:SetText(party2ValuePowerDisplay)
+					end
+
+					if party3PowerType == 0 then
+						PartyMemberFrame3ManaBarText:SetText(party3ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame3ManaBarText:SetText(party3ValuePowerDisplay)
+					end
+
+					if party4PowerType == 0 then
+						PartyMemberFrame4ManaBarText:SetText(party4ValuePowerPercentageDisplay)
+					else
+						PartyMemberFrame4ManaBarText:SetText(party4ValuePowerDisplay)
+					end
+
+					if petPowerType == 0 then
+						PetFrameManaBar.TextString:SetText(petValuePowerPercentageDisplay)
+					else
+						PetFrameManaBar.TextString:SetText(petValuePowerDisplay)
+					end
 				elseif eufDB.statusTextBothCondensed and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
 						textString:SetText(valuePercentageDisplay)

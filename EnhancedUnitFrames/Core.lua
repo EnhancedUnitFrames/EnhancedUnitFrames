@@ -18,6 +18,7 @@ local function isLoaded(self, event, addon)
 		ClassIconPortraits()
 		ColorStyling()
 		MirroredPositioning()
+		PartyFrameStyling()
 		PlayerFrameStyling()
 		TargetFrameStyling()
 
