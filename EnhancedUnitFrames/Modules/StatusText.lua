@@ -560,9 +560,14 @@ function StatusTextStyling()
 					textString:SetText(valueDisplay)
 					textString:Show()
 				elseif eufCharacterDB.statusTextPercent and statusFrame.LeftText and statusFrame.RightText then
+					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+						textString:SetText(valuePercentageDisplay)
+					else
+						textString:SetText(valueDisplay)
+					end
+
 					statusFrame.LeftText:Hide()
 					statusFrame.RightText:Hide()
-					textString:SetText(valuePercentageDisplay)
 					textString:Show()
 				elseif eufCharacterDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
@@ -698,15 +703,20 @@ function StatusTextStyling()
 					textString:SetText(valueDisplay)
 				end
 			else
-				if eufDB.statusTextNumeric  and statusFrame.LeftText and statusFrame.RightText then
+				if eufDB.statusTextNumeric and statusFrame.LeftText and statusFrame.RightText then
 					statusFrame.LeftText:Hide()
 					statusFrame.RightText:Hide()
 					textString:SetText(valueDisplay)
 					textString:Show()
 				elseif eufDB.statusTextPercent and statusFrame.LeftText and statusFrame.RightText then
+					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then
+						textString:SetText(valuePercentageDisplay)
+					else
+						textString:SetText(valueDisplay)
+					end
+
 					statusFrame.LeftText:Hide()
 					statusFrame.RightText:Hide()
-					textString:SetText(valuePercentageDisplay)
 					textString:Show()
 				elseif eufDB.statusTextBoth and statusFrame.LeftText and statusFrame.RightText then
 					if not statusFrame.powerToken or statusFrame.powerToken == "MANA" then

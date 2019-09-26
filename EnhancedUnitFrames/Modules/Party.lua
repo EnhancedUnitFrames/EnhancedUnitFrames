@@ -1,3 +1,5 @@
+-- Styles the party frame.
+
 function PartyFrameStyling()
 	for i = 1, 4 do
 		_G["PartyMemberFrame" .. i .. "HealthBarText"]:ClearAllPoints()
