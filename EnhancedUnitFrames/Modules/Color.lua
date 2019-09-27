@@ -587,10 +587,6 @@ function ColorStyling()
 			if eufCharacterDB.reactionNameColor then
 				ReactionColor()
 			end
-
-			if eufCharacterDB.bigPlayerFrame or eufCharacterDB.whoaPlayerFrame then
-				PlayerName:SetAlpha(0)
-			end
 		else
 			if eufDB.classNameColor then
 				ClassColor()
@@ -599,15 +595,13 @@ function ColorStyling()
 			if eufDB.reactionNameColor then
 				ReactionColor()
 			end
-
-			if eufDB.bigPlayerFrame or eufDB.whoaPlayerFrame then
-				PlayerName:SetAlpha(0)
-			end
 		end
 	end
 
 	hooksecurefunc("UnitFrame_Update", function(self, isParty)
-		NameColor(self, self.unit)
+		if self and not self:IsForbidden() then
+			NameColor(self, self.unit)
+		end
 	end)
 
 	-- Changes the unit frame name background color to the unit's class or reaction color.

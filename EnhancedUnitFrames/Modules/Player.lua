@@ -87,6 +87,10 @@ function PlayerFrameStyling()
 
 				WhoaStyling()
 			end
+
+			if eufCharacterDB.hidePowerAnimation then
+				PlayerFrameManaBar.FullPowerFrame:SetAlpha(0)
+			end
 		else
 			if eufDB.bigPlayerFrame then
 				if eufDB.elitePlayerFrame then
@@ -124,6 +128,10 @@ function PlayerFrameStyling()
 				end
 
 				WhoaStyling()
+			end
+
+			if eufDB.hidePowerAnimation then
+				PlayerFrameManaBar.FullPowerFrame:Hide()
 			end
 		end
 
@@ -186,14 +194,16 @@ function PlayerFrameStyling()
 
 	-- Styles the pet frame.
 
-	PetFrameHealthBar:ClearAllPoints()
-	PetFrameHealthBar:SetPoint("TOPLEFT", 45, -22)
-	PetFrameHealthBar.TextString:ClearAllPoints()
-	PetFrameHealthBar.TextString:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
-	PetFrameManaBar:ClearAllPoints()
-	PetFrameManaBar:SetPoint("TOPLEFT", 45, -29.5)
-	PetFrameManaBar.TextString:ClearAllPoints()
-	PetFrameManaBar.TextString:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
+	hooksecurefunc("PetFrame_Update", function(self, override)
+		PetFrameHealthBar:ClearAllPoints()
+		PetFrameHealthBar:SetPoint("TOPLEFT", 45, -22)
+		PetFrameHealthBar.TextString:ClearAllPoints()
+		PetFrameHealthBar.TextString:SetPoint("CENTER", PetFrameHealthBar, 0, 0.5)
+		PetFrameManaBar:ClearAllPoints()
+		PetFrameManaBar:SetPoint("TOPLEFT", 45, -29.5)
+		PetFrameManaBar.TextString:ClearAllPoints()
+		PetFrameManaBar.TextString:SetPoint("CENTER", PetFrameManaBar, 0, -1.5)
+	end)
 
 	-- Fixes the vehicle frame.
 

@@ -22,13 +22,14 @@ local function isLoaded(self, event, addon)
 		PlayerFrameStyling()
 		TargetFrameStyling()
 
-		if not isClassic() then
+		if isClassic() then
+			PowerBar()
+		else
 			BossFrameStyling()
 			FocusFrameStyling()
 		end
 
 		StatusTextStyling()
-		PowerBar()
 
 		if not eufDB.firstRunMessage then
 			local firstRunMessage = "|cff1eff00[EnhancedUnitFrames]|cff00aa00"
