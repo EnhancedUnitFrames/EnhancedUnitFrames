@@ -599,9 +599,11 @@ function ColorStyling()
 	end
 
 	hooksecurefunc("UnitFrame_Update", function(self, isParty)
-		if self and not self:IsForbidden() then
-			NameColor(self, self.unit)
-		end
+		NameColor(self, self.unit)
+	end)
+
+	hooksecurefunc("TargetFrame_CheckFaction", function(self)
+		NameColor(self, self.unit)
 	end)
 
 	-- Changes the unit frame name background color to the unit's class or reaction color.
@@ -678,7 +680,7 @@ function ColorStyling()
 		end
 	end
 
-	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
+	hooksecurefunc("TargetFrame_CheckFaction", function(self)
 		NameBackgroundColor(self, self.unit)
 
 		-- Hides the unit frame name background.
