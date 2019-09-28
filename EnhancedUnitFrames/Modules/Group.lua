@@ -41,11 +41,15 @@ function GroupStyling()
 
 		if eufCharacterDB.enabled then
 			if eufCharacterDB.hideRealmName then
-				self.name:SetText(unitName:match("[^-]+"))
+				if unitName then
+					self.name:SetText(unitName:match("[^-]+"))
+				end
 			end
 		else
 			if eufDB.hideRealmName then
-				self.name:SetText(unitName:match("[^-]+"))
+				if unitName then
+					self.name:SetText(unitName:match("[^-]+"))
+				end
 			end
 		end
 	end)

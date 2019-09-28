@@ -2,44 +2,48 @@ function FocusFrameStyling()
 	-- Changes the aura icon sizes and automatically changes their row's width based on the width of the focus frame.
 
 	local function AuraStyling()
-		hooksecurefunc("TargetFrame_UpdateAuraPositions", function(FocusFrame, auraName, numAuras, numOppositeAuras, largeAuraList, updateFunc, maxRowWidth, offsetX, mirrorAurasVertically)
-			local AURA_OFFSET_Y = 3
-			local AURA_ROW_WIDTH = 90 + (wideFocusFrameWidth - 230)
-			local NUM_TOT_AURA_ROWS = 2
-			local size
-			local offsetY = AURA_OFFSET_Y
-			local rowWidth = 0
-			local firstBuffOnRow = 1
-			local maxRowWidth = 90 + (wideFocusFrameWidth - 230)
+		hooksecurefunc("TargetFrame_UpdateAuraPositions", function(self, auraName, numAuras, numOppositeAuras, largeAuraList, updateFunc, maxRowWidth, offsetX, mirrorAurasVertically)
+			local selfName = self:GetName()
 
-			for i = 1, numAuras do
-				if largeAuraList[i] then
-					size = LARGE_AURA_SIZE
-					offsetY = AURA_OFFSET_Y + AURA_OFFSET_Y
-				else
-					size = SMALL_AURA_SIZE
-				end
+			if selfName and selfName:match("FocusFrame") then
+				local AURA_OFFSET_Y = 3
+				local AURA_ROW_WIDTH = 90 + (wideFocusFrameWidth - 230)
+				local NUM_TOT_AURA_ROWS = 2
+				local size
+				local offsetY = AURA_OFFSET_Y
+				local rowWidth = 0
+				local firstBuffOnRow = 1
+				local maxRowWidth = 90 + (wideFocusFrameWidth - 230)
 
-				if i == 1 then
-					rowWidth = size
-					FocusFrame.auraRows = FocusFrame.auraRows + 1
-				else
-					rowWidth = rowWidth + size + offsetX
-				end
-
-				if rowWidth > maxRowWidth then
-					updateFunc(FocusFrame, auraName, i, numOppositeAuras, firstBuffOnRow, size, offsetX, offsetY, mirrorAurasVertically)
-
-					rowWidth = size
-					FocusFrame.auraRows = FocusFrame.auraRows + 1
-					firstBuffOnRow = i
-					offsetY = AURA_OFFSET_Y
-
-					if FocusFrame.auraRows > NUM_TOT_AURA_ROWS then
-						maxRowWidth = AURA_ROW_WIDTH
+				for i = 1, numAuras do
+					if largeAuraList[i] then
+						size = LARGE_AURA_SIZE
+						offsetY = AURA_OFFSET_Y + AURA_OFFSET_Y
+					else
+						size = SMALL_AURA_SIZE
 					end
-				else
-					updateFunc(FocusFrame, auraName, i, numOppositeAuras, i - 1, size, offsetX, offsetY, mirrorAurasVertically)
+
+					if i == 1 then
+						rowWidth = size
+						FocusFrame.auraRows = FocusFrame.auraRows + 1
+					else
+						rowWidth = rowWidth + size + offsetX
+					end
+
+					if rowWidth > maxRowWidth then
+						updateFunc(FocusFrame, auraName, i, numOppositeAuras, firstBuffOnRow, size, offsetX, offsetY, mirrorAurasVertically)
+
+						rowWidth = size
+						FocusFrame.auraRows = FocusFrame.auraRows + 1
+						firstBuffOnRow = i
+						offsetY = AURA_OFFSET_Y
+
+						if FocusFrame.auraRows > NUM_TOT_AURA_ROWS then
+							maxRowWidth = AURA_ROW_WIDTH
+						end
+					else
+						updateFunc(FocusFrame, auraName, i, numOppositeAuras, i - 1, size, offsetX, offsetY, mirrorAurasVertically)
+					end
 				end
 			end
 		end)
