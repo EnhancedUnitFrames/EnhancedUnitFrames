@@ -40,6 +40,10 @@ function SetDefaults()
 		eufDB.classIconPortraits = false
 	end
 
+	if eufDB.classPvPTimerTextColor == nil then
+		eufDB.classPvPTimerTextColor = false
+	end
+
 	if eufDB.defaultFocusFrame == nil then
 		eufDB.defaultFocusFrame = false
 	end
@@ -277,6 +281,10 @@ function SetDefaults()
 
 		if eufCharacterDB.classIconPortraits == nil then
 			eufCharacterDB.classIconPortraits = eufDB.classIconPortraits
+		end
+
+		if eufCharacterDB.classPvPTimerTextColor == nil then
+			eufCharacterDB.classPvPTimerTextColor = eufDB.classPvPTimerTextColor
 		end
 
 		if eufCharacterDB.defaultFocusFrame == nil then

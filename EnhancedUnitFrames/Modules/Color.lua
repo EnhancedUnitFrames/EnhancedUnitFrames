@@ -2,22 +2,6 @@ function ColorStyling()
 	-- Changes the unit frame dead text color to the unit's class or reaction color.
 
 	function PlayerDeadTextColor()
-		if eufCharacterDB.enabled then
-			if eufCharacterDB.fontOutline then
-				local font, size, style  = PlayerFrameHealthBar.TextString:GetFont()
-		
-				PlayerFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
-				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
-			end
-		else
-			if eufDB.fontOutline then
-				local font, size, style = PlayerFrameHealthBar.TextString:GetFont()
-		
-				PlayerFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
-				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
-			end
-		end
-
 		local function ClassColor()
 			if UnitClass("player") then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("player"))]
@@ -60,6 +44,13 @@ function ColorStyling()
 			if eufCharacterDB.reactionDeadTextColor then
 				ReactionColor()
 			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = PlayerFrameHealthBar.TextString:GetFont()
+		
+				PlayerFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
+				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+			end
 		else
 			if eufDB.classDeadTextColor then
 				ClassColor()
@@ -68,26 +59,17 @@ function ColorStyling()
 			if eufDB.reactionDeadTextColor then
 				ReactionColor()
 			end
+
+			if eufDB.fontOutline then
+				local font, size, style = PlayerFrameHealthBar.TextString:GetFont()
+		
+				PlayerFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
+				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+			end
 		end
 	end
 
 	function FocusDeadTextColor()
-		if eufCharacterDB.enabled then
-			if eufCharacterDB.fontOutline then
-				local font, size, style = FocusFrameHealthBar.TextString:GetFont()
-		
-				FocusFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
-				FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
-			end
-		else
-			if eufDB.fontOutline then
-				local font, size, style = FocusFrameHealthBar.TextString:GetFont()
-		
-				FocusFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
-				FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
-			end
-		end
-
 		local function ClassColor()
 			if UnitIsPlayer("focus") and UnitIsConnected("focus") and UnitClass("focus") then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("focus"))]
@@ -148,6 +130,13 @@ function ColorStyling()
 			if eufCharacterDB.reactionDeadTextColor then
 				ReactionColor()
 			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = FocusFrameHealthBar.TextString:GetFont()
+		
+				FocusFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
+				FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+			end
 		else
 			if eufDB.classDeadTextColor then
 				ClassColor()
@@ -156,26 +145,17 @@ function ColorStyling()
 			if eufDB.reactionDeadTextColor then
 				ReactionColor()
 			end
+
+			if eufDB.fontOutline then
+				local font, size, style = FocusFrameHealthBar.TextString:GetFont()
+		
+				FocusFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
+				FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+			end
 		end
 	end
 
 	function TargetDeadTextColor()
-		if eufCharacterDB.enabled then
-			if eufCharacterDB.fontOutline then
-				local font, size, style = TargetFrameHealthBar.TextString:GetFont()
-		
-				TargetFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
-				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
-			end
-		else
-			if eufDB.fontOutline then
-				local font, size, style = TargetFrameHealthBar.TextString:GetFont()
-		
-				TargetFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
-				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
-			end
-		end
-
 		local function ClassColor()
 			if UnitIsPlayer("target") and UnitIsConnected("target") and UnitClass("target") then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("target"))]
@@ -236,6 +216,13 @@ function ColorStyling()
 			if eufCharacterDB.reactionDeadTextColor then
 				ReactionColor()
 			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = TargetFrameHealthBar.TextString:GetFont()
+		
+				TargetFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
+				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
+			end
 		else
 			if eufDB.classDeadTextColor then
 				ClassColor()
@@ -243,6 +230,13 @@ function ColorStyling()
 
 			if eufDB.reactionDeadTextColor then
 				ReactionColor()
+			end
+
+			if eufDB.fontOutline then
+				local font, size, style = TargetFrameHealthBar.TextString:GetFont()
+		
+				TargetFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
+				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 			end
 		end
 	end
@@ -331,22 +325,6 @@ function ColorStyling()
 	-- Changes the unit frame level text color to the unit's class or reaction color.
 
 	function PlayerLevelTextColor()
-		if eufCharacterDB.enabled then
-			if eufCharacterDB.fontOutline then
-				local font, size, style = PlayerLevelText:GetFont()
-		
-				PlayerLevelText:SetFont(font, size, "OUTLINE")
-				PlayerLevelText:SetShadowOffset(0, 999999)
-			end
-		else
-			if eufDB.fontOutline then
-				local font, size, style = PlayerLevelText:GetFont()
-		
-				PlayerLevelText:SetFont(font, size, "OUTLINE")
-				PlayerLevelText:SetShadowOffset(0, 999999)
-			end
-		end
-
 		local function ClassColor()
 			if UnitClass("player") then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("player"))]
@@ -389,6 +367,13 @@ function ColorStyling()
 			if eufCharacterDB.reactionLevelTextColor then
 				ReactionColor()
 			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = PlayerLevelText:GetFont()
+		
+				PlayerLevelText:SetFont(font, size, "OUTLINE")
+				PlayerLevelText:SetShadowOffset(0, 999999)
+			end
 		else
 			if eufDB.classLevelTextColor then
 				ClassColor()
@@ -397,26 +382,17 @@ function ColorStyling()
 			if eufDB.reactionLevelTextColor then
 				ReactionColor()
 			end
+
+			if eufDB.fontOutline then
+				local font, size, style = PlayerLevelText:GetFont()
+		
+				PlayerLevelText:SetFont(font, size, "OUTLINE")
+				PlayerLevelText:SetShadowOffset(0, 999999)
+			end
 		end
 	end
 
 	function LevelTextColor(self, unit)
-		if eufCharacterDB.enabled then
-			if eufCharacterDB.fontOutline then
-				local font, size, style = self.levelText:GetFont()
-		
-				self.levelText:SetFont(font, size, "OUTLINE")
-				self.levelText:SetShadowOffset(0, 999999)
-			end
-		else
-			if eufDB.fontOutline then
-				local font, size, style = self.levelText:GetFont()
-		
-				self.levelText:SetFont(font, size, "OUTLINE")
-				self.levelText:SetShadowOffset(0, 999999)
-			end
-		end
-
 		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(unit))]
@@ -477,6 +453,13 @@ function ColorStyling()
 			if eufCharacterDB.reactionLevelTextColor then
 				ReactionColor()
 			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = self.levelText:GetFont()
+		
+				self.levelText:SetFont(font, size, "OUTLINE")
+				self.levelText:SetShadowOffset(0, 999999)
+			end
 		else
 			if eufDB.classLevelTextColor then
 				ClassColor()
@@ -484,6 +467,13 @@ function ColorStyling()
 
 			if eufDB.reactionLevelTextColor then
 				ReactionColor()
+			end
+
+			if eufDB.fontOutline then
+				local font, size, style = self.levelText:GetFont()
+		
+				self.levelText:SetFont(font, size, "OUTLINE")
+				self.levelText:SetShadowOffset(0, 999999)
 			end
 		end
 	end
@@ -505,28 +495,6 @@ function ColorStyling()
 	-- Changes the unit frame name color to the unit's class or reaction color.
 
 	function NameColor(self, unit)
-		if eufCharacterDB.enabled then
-			if eufCharacterDB.fontOutline then
-				local font, size, style = self.name:GetFont()
-				local playerFont, playerSize, playerStyle  = PlayerName:GetFont()
-
-				PlayerName:SetFont(playerFont, playerSize, "OUTLINE")
-				PlayerName:SetShadowOffset(0, 999999)
-				self.name:SetFont(font, size, "OUTLINE")
-				self.name:SetShadowOffset(0, 999999)
-			end
-		else
-			if eufDB.fontOutline then
-				local font, size, style  = self.name:GetFont()
-				local playerFont, playerSize, playerStyle  = PlayerName:GetFont()
-
-				PlayerName:SetFont(playerFont, playerSize, "OUTLINE")
-				PlayerName:SetShadowOffset(0, 999999)
-				self.name:SetFont(font, size, "OUTLINE")
-				self.name:SetShadowOffset(0, 999999)
-			end
-		end
-
 		local function ClassColor()
 			if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
 				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(unit))]
@@ -587,6 +555,16 @@ function ColorStyling()
 			if eufCharacterDB.reactionNameColor then
 				ReactionColor()
 			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = self.name:GetFont()
+				local playerFont, playerSize, playerStyle = PlayerName:GetFont()
+
+				PlayerName:SetFont(playerFont, playerSize, "OUTLINE")
+				PlayerName:SetShadowOffset(0, 999999)
+				self.name:SetFont(font, size, "OUTLINE")
+				self.name:SetShadowOffset(0, 999999)
+			end
 		else
 			if eufDB.classNameColor then
 				ClassColor()
@@ -594,6 +572,16 @@ function ColorStyling()
 
 			if eufDB.reactionNameColor then
 				ReactionColor()
+			end
+
+			if eufDB.fontOutline then
+				local font, size, style = self.name:GetFont()
+				local playerFont, playerSize, playerStyle = PlayerName:GetFont()
+
+				PlayerName:SetFont(playerFont, playerSize, "OUTLINE")
+				PlayerName:SetShadowOffset(0, 999999)
+				self.name:SetFont(font, size, "OUTLINE")
+				self.name:SetShadowOffset(0, 999999)
 			end
 		end
 	end
@@ -716,4 +704,46 @@ function ColorStyling()
 			end
 		end
 	end
+
+	-- Changes the player frame PvP timer text to the player's class color.
+
+	hooksecurefunc("PlayerFrame_UpdatePvPStatus", function()
+		local function PvPTimerTextColor()
+			if UnitIsPlayer("player") and UnitIsConnected("player") and UnitClass("player") then
+				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("player"))]
+
+				if classColor then
+					PlayerPVPTimerText:SetTextColor(classColor.r, classColor.g, classColor.b)
+				end
+			elseif UnitIsPlayer("player") and not UnitIsConnected("player") then
+				PlayerPVPTimerText:SetTextColor(0.5, 0.5, 0.5)
+			else
+				PlayerPVPTimerText:SetTextColor(1, 0.82, 0)
+			end
+		end
+
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.classPvPTimerTextColor then
+				PvPTimerTextColor()
+			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = PlayerPVPTimerText:GetFont()
+		
+				PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
+				PlayerPVPTimerText:SetShadowOffset(0, 999999)
+			end
+		else
+			if eufDB.classPvPTimerTextColor then
+				PvPTimerTextColor()
+			end
+
+			if eufDB.fontOutline then
+				local font, size, style = PlayerPVPTimerText:GetFont()
+		
+				PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
+				PlayerPVPTimerText:SetShadowOffset(0, 999999)
+			end
+		end
+	end)
 end
