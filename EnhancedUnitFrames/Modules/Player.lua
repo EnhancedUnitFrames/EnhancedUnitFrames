@@ -285,20 +285,20 @@ function PlayerFrameStyling()
 		end
 	end)
 
-	-- Hides the damage/healing spam on player and pet frames.
+	-- Hides the damage/healing indicator on player and pet frames.
 
-	local function HitIndicators()
+	local function HitIndicator()
 		hooksecurefunc(PetHitIndicator, "Show", PetHitIndicator.Hide)
 		hooksecurefunc(PlayerHitIndicator, "Show", PlayerHitIndicator.Hide)
 	end
 
 	if eufCharacterDB.enabled then
-		if eufCharacterDB.hideHitIndicators then
-			HitIndicators()
+		if eufCharacterDB.hideHitIndicator then
+			HitIndicator()
 		end
 	else
-		if eufDB.hideHitIndicators then
-			HitIndicators()
+		if eufDB.hideHitIndicator then
+			HitIndicator()
 		end
 	end
 

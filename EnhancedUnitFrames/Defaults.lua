@@ -78,8 +78,8 @@ function SetDefaults()
 		end
 	end
 
-	if eufDB.hideHitIndicators == nil then
-		eufDB.hideHitIndicators = false
+	if eufDB.hideHitIndicator == nil then
+		eufDB.hideHitIndicator = false
 	end
 
 	if eufDB.hideNameBackground == nil then
@@ -110,6 +110,10 @@ function SetDefaults()
 
 	if eufDB.hideRestingIcon == nil then
 		eufDB.hideRestingIcon = false
+	end
+
+	if eufDB.hideRealmName == nil then
+		eufDB.hideRealmName = true
 	end
 
 	if eufDB.hideTargetStatusText == nil then
@@ -309,8 +313,8 @@ function SetDefaults()
 			end
 		end
 
-		if eufCharacterDB.hideHitIndicators == nil then
-			eufCharacterDB.hideHitIndicators = eufDB.hideHitIndicators
+		if eufCharacterDB.hideHitIndicator == nil then
+			eufCharacterDB.hideHitIndicator = eufDB.hideHitIndicator
 		end
 
 		if eufCharacterDB.hideNameBackground == nil then
@@ -342,6 +346,10 @@ function SetDefaults()
 		if eufCharacterDB.hideRestingIcon == nil then
 			eufCharacterDB.hideRestingIcon = eufDB.hideRestingIcon
 		end
+
+		if eufCharacterDB.hideRealmName == nil then
+			eufCharacterDB.hideRealmName = eufDB.hideRealmName
+		end	
 
 		if eufCharacterDB.hideTargetStatusText == nil then
 			eufCharacterDB.hideTargetStatusText = eufDB.hideTargetStatusText

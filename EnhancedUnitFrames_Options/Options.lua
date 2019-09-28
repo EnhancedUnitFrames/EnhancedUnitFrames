@@ -194,8 +194,9 @@ eufOptions.general:SetScript("OnShow", function(self)
 	local mirroredPositioning = createCheckbox("mirroredPositioning", self, "Mirrored Positioning", "Allows the easy mirrored positioning of the player and target frames.\n1. Right-click the player frame.\n2. Hover over \"Move Frame\".\n3. Select \"Unlock Frame\" to begin.\nSource: Focused by haggen.")
 	local classIconPortraits = createCheckbox("classIconPortraits", self, "Class Icon Portraits", "Changes the unit frame portraits to the unit's class icon.")
 	local fontOutline = createCheckbox("fontOutline", self, "Font Outline", "Gives text strings modified by the \"Color\" section outlines to improve visibility.")
+	local hideRealmName = createCheckbox("hideRealmName", self, "Hide Realm Name", "Hides unit frame realm names and labels.")
 	local hideNameBackground = createCheckbox("hideNameBackground", self, "Hide Name BG", "Hides the unit frame name background.")
-	local hideHitIndicators = createCheckbox("hideHitIndicators", self, "Hide Hit Indicators", "Hides the damage/healing spam on player and pet frames.")
+	local hideHitIndicator = createCheckbox("hideHitIndicator", self, "Hide Hit Indicator", "Hides the damage/healing indicator on player and pet frames.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
 
 	if isClassic() then
@@ -219,9 +220,10 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 	classIconPortraits:SetPoint("TOPLEFT", mirroredPositioning, "BOTTOMLEFT", 0, -8)
 	fontOutline:SetPoint("TOPLEFT", classIconPortraits, "BOTTOMLEFT", 0, -8)
-	hideNameBackground:SetPoint("TOPLEFT", fontOutline, "BOTTOMLEFT", 0, -8)
-	hideHitIndicators:SetPoint("TOPLEFT", hideNameBackground, "BOTTOMLEFT", 0, -8)
-	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicators, "BOTTOMLEFT", 0, -8)
+	hideRealmName:SetPoint("TOPLEFT", fontOutline, "BOTTOMLEFT", 0, -8)
+	hideNameBackground:SetPoint("TOPLEFT", hideRealmName, "BOTTOMLEFT", 0, -8)
+	hideHitIndicator:SetPoint("TOPLEFT", hideNameBackground, "BOTTOMLEFT", 0, -8)
+	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicator, "BOTTOMLEFT", 0, -8)
 
 	if isClassic() then
 		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
@@ -357,6 +359,28 @@ eufOptions.general:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
+	hideRealmName:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideRealmName = true
+			else
+				eufDB.hideRealmName = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hideRealmName = false
+			else
+				eufDB.hideRealmName = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
 	hideNameBackground:SetScript("OnClick", function(self)
 		if self:GetChecked() then
 			if eufCharacterDB.enabled then
@@ -379,20 +403,20 @@ eufOptions.general:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	hideHitIndicators:SetScript("OnClick", function(self)
+	hideHitIndicator:SetScript("OnClick", function(self)
 		if self:GetChecked() then
 			if eufCharacterDB.enabled then
-				eufCharacterDB.hideHitIndicators = true
+				eufCharacterDB.hideHitIndicator = true
 			else
-				eufDB.hideHitIndicators = true
+				eufDB.hideHitIndicator = true
 			end
 
 			PlaySound(856)
 		else
 			if eufCharacterDB.enabled then
-				eufCharacterDB.hideHitIndicators = false
+				eufCharacterDB.hideHitIndicator = false
 			else
-				eufDB.hideHitIndicators = false
+				eufDB.hideHitIndicator = false
 			end
 
 			PlaySound(857)
@@ -1090,12 +1114,16 @@ eufOptions.general:SetScript("OnShow", function(self)
 			fontOutlineCheckbox:SetChecked(true)
 		end
 
+		if eufCharacterDB.hideRealmName == true then
+			hideRealmNameCheckbox:SetChecked(true)
+		end
+
 		if eufCharacterDB.hideNameBackground == true then
 			hideNameBackgroundCheckbox:SetChecked(true)
 		end
 
-		if eufCharacterDB.hideHitIndicators == true then
-			hideHitIndicatorsCheckbox:SetChecked(true)
+		if eufCharacterDB.hideHitIndicator == true then
+			hideHitIndicatorCheckbox:SetChecked(true)
 		end
 
 		if eufCharacterDB.hideRestingIcon == true then
@@ -1134,12 +1162,16 @@ eufOptions.general:SetScript("OnShow", function(self)
 			fontOutlineCheckbox:SetChecked(true)
 		end
 
+		if eufDB.hideRealmName == true then
+			hideRealmNameCheckbox:SetChecked(true)
+		end
+
 		if eufDB.hideNameBackground == true then
 			hideNameBackgroundCheckbox:SetChecked(true)
 		end
 
-		if eufDB.hideHitIndicators == true then
-			hideHitIndicatorsCheckbox:SetChecked(true)
+		if eufDB.hideHitIndicator == true then
+			hideHitIndicatorCheckbox:SetChecked(true)
 		end
 
 		if eufDB.hideRestingIcon == true then

@@ -9,8 +9,8 @@
 Modules\Boss.lua
 Modules\Color.lua
 Modules\Focus.lua
+Modules\Group.lua
 Modules\Positioning.lua
-Modules\Party.lua
 Modules\Player.lua
 Modules\Portraits.lua
 Modules\PowerBar.lua
