@@ -255,7 +255,7 @@ function ColorStyling()
 			elseif UnitIsPlayer(unit) and not UnitIsConnected(unit) then
 				self:SetStatusBarColor(0.5, 0.5, 0.5)
 			else
-				self:SetStatusBarColor(0, 0.9, 0)
+				self:SetStatusBarColor(0, 0.6, 0.1)
 			end
 		end
 
@@ -269,7 +269,7 @@ function ColorStyling()
 					if reactionColor then
 						self:SetStatusBarColor(reactionColor.r, reactionColor.g, reactionColor.b)
 					else
-						self:SetStatusBarColor(0, 0.9, 0)
+						self:SetStatusBarColor(0, 0.6, 0.1)
 					end
 				end
 			end
