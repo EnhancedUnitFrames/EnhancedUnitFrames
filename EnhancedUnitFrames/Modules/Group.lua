@@ -1,11 +1,13 @@
 function GroupStyling()
 	-- Styles the party frame.
 
-	for i = 1, 4 do
-		_G["PartyMemberFrame" .. i .. "HealthBarText"]:ClearAllPoints()
-		_G["PartyMemberFrame" .. i .. "HealthBarText"]:SetPoint("CENTER", _G["PartyMemberFrame" .. i .. "HealthBar"], 0, -0.5)
-		_G["PartyMemberFrame" .. i .. "ManaBarText"]:ClearAllPoints()
-		_G["PartyMemberFrame" .. i .. "ManaBarText"]:SetPoint("CENTER", _G["PartyMemberFrame" .. i .. "ManaBar"], 0, -0.5)
+	if not isClassic() then
+		for i = 1, 4 do
+			_G["PartyMemberFrame" .. i .. "HealthBarText"]:ClearAllPoints()
+			_G["PartyMemberFrame" .. i .. "HealthBarText"]:SetPoint("CENTER", _G["PartyMemberFrame" .. i .. "HealthBar"], 0, -0.5)
+			_G["PartyMemberFrame" .. i .. "ManaBarText"]:ClearAllPoints()
+			_G["PartyMemberFrame" .. i .. "ManaBarText"]:SetPoint("CENTER", _G["PartyMemberFrame" .. i .. "ManaBar"], 0, -0.5)
+		end
 	end
 
 	-- Hides unit frame realm names and labels.

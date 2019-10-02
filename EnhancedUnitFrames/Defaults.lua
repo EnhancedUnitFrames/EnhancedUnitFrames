@@ -40,8 +40,10 @@ function SetDefaults()
 		eufDB.classIconPortraits = false
 	end
 
-	if eufDB.classPvPTimerTextColor == nil then
-		eufDB.classPvPTimerTextColor = false
+	if not isClassic() then
+		if eufDB.classPvPTimerTextColor == nil then
+			eufDB.classPvPTimerTextColor = false
+		end
 	end
 
 	if eufDB.defaultFocusFrame == nil then
@@ -90,8 +92,10 @@ function SetDefaults()
 		eufDB.hideNameBackground = false
 	end
 
-	if eufDB.hidePartyStatusText == nil then
-		eufDB.hidePartyStatusText = false
+	if not isClassic() then
+		if eufDB.hidePartyStatusText == nil then
+			eufDB.hidePartyStatusText = false
+		end
 	end
 
 	if eufDB.hidePetStatusText == nil then
@@ -283,8 +287,10 @@ function SetDefaults()
 			eufCharacterDB.classIconPortraits = eufDB.classIconPortraits
 		end
 
-		if eufCharacterDB.classPvPTimerTextColor == nil then
-			eufCharacterDB.classPvPTimerTextColor = eufDB.classPvPTimerTextColor
+		if not isClassic() then
+			if eufCharacterDB.classPvPTimerTextColor == nil then
+				eufCharacterDB.classPvPTimerTextColor = eufDB.classPvPTimerTextColor
+			end
 		end
 
 		if eufCharacterDB.defaultFocusFrame == nil then
@@ -329,8 +335,10 @@ function SetDefaults()
 			eufCharacterDB.hideNameBackground = eufDB.hideNameBackground
 		end
 
-		if eufCharacterDB.hidePartyStatusText == nil then
-			eufCharacterDB.hidePartyStatusText = eufDB.hidePartyStatusText
+		if not isClassic() then
+			if eufCharacterDB.hidePartyStatusText == nil then
+				eufCharacterDB.hidePartyStatusText = eufDB.hidePartyStatusText
+			end
 		end
 
 		if eufCharacterDB.hidePetStatusText == nil then

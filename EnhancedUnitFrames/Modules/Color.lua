@@ -565,6 +565,12 @@ function ColorStyling()
 				self.name:SetFont(font, size, "OUTLINE")
 				self.name:SetShadowOffset(0, 999999)
 			end
+
+			if isClassic() then
+				if eufCharacterDB.bigPlayerFrame or eufCharacterDB.whoaPlayerFrame then
+					PlayerName:SetAlpha(0)
+				end
+			end
 		else
 			if eufDB.classNameColor then
 				ClassColor()
@@ -582,6 +588,12 @@ function ColorStyling()
 				PlayerName:SetShadowOffset(0, 999999)
 				self.name:SetFont(font, size, "OUTLINE")
 				self.name:SetShadowOffset(0, 999999)
+			end
+
+			if isClassic() then
+				if eufDB.bigPlayerFrame or eufDB.whoaPlayerFrame then
+					PlayerName:SetAlpha(0)
+				end
 			end
 		end
 	end
@@ -707,43 +719,45 @@ function ColorStyling()
 
 	-- Changes the player frame PvP timer text to the player's class color.
 
-	hooksecurefunc("PlayerFrame_UpdatePvPStatus", function()
-		local function PvPTimerTextColor()
-			if UnitIsPlayer("player") and UnitIsConnected("player") and UnitClass("player") then
-				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("player"))]
+	if not isClassic() then
+		hooksecurefunc("PlayerFrame_UpdatePvPStatus", function()
+			local function PvPTimerTextColor()
+				if UnitIsPlayer("player") and UnitIsConnected("player") and UnitClass("player") then
+					local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("player"))]
 
-				if classColor then
-					PlayerPVPTimerText:SetTextColor(classColor.r, classColor.g, classColor.b)
+					if classColor then
+						PlayerPVPTimerText:SetTextColor(classColor.r, classColor.g, classColor.b)
+					end
+				elseif UnitIsPlayer("player") and not UnitIsConnected("player") then
+					PlayerPVPTimerText:SetTextColor(0.5, 0.5, 0.5)
+				else
+					PlayerPVPTimerText:SetTextColor(1, 0.82, 0)
 				end
-			elseif UnitIsPlayer("player") and not UnitIsConnected("player") then
-				PlayerPVPTimerText:SetTextColor(0.5, 0.5, 0.5)
+			end
+
+			if eufCharacterDB.enabled then
+				if eufCharacterDB.classPvPTimerTextColor then
+					PvPTimerTextColor()
+				end
+
+				if eufCharacterDB.fontOutline then
+					local font, size, style = PlayerPVPTimerText:GetFont()
+		
+					PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
+					PlayerPVPTimerText:SetShadowOffset(0, 999999)
+				end
 			else
-				PlayerPVPTimerText:SetTextColor(1, 0.82, 0)
-			end
-		end
+				if eufDB.classPvPTimerTextColor then
+					PvPTimerTextColor()
+				end
 
-		if eufCharacterDB.enabled then
-			if eufCharacterDB.classPvPTimerTextColor then
-				PvPTimerTextColor()
-			end
-
-			if eufCharacterDB.fontOutline then
-				local font, size, style = PlayerPVPTimerText:GetFont()
+				if eufDB.fontOutline then
+					local font, size, style = PlayerPVPTimerText:GetFont()
 		
-				PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
-				PlayerPVPTimerText:SetShadowOffset(0, 999999)
+					PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
+					PlayerPVPTimerText:SetShadowOffset(0, 999999)
+				end
 			end
-		else
-			if eufDB.classPvPTimerTextColor then
-				PvPTimerTextColor()
-			end
-
-			if eufDB.fontOutline then
-				local font, size, style = PlayerPVPTimerText:GetFont()
-		
-				PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
-				PlayerPVPTimerText:SetShadowOffset(0, 999999)
-			end
-		end
-	end)
+		end)
+	end
 end

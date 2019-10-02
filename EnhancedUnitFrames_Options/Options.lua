@@ -1217,7 +1217,10 @@ eufOptions.color:SetScript("OnShow", function(self)
 	local reactionLevelTextColor = createCheckbox("reactionLevelTextColor", self, "Reaction Color Level Text", "Changes the unit frame level text color to the unit's reaction color.")
 	local classDeadTextColor = createCheckbox("classDeadTextColor", self, "Class Color Dead Text", "Changes the unit frame dead text color to the unit's class color.")
 	local reactionDeadTextColor = createCheckbox("reactionDeadTextColor", self, "Reaction Color Dead Text", "Changes the unit frame dead text color to the unit's reaction color.")
-	local classPvPTimerTextColor = createCheckbox("classPvPTimerTextColor", self, "Class Color PvP Timer Text", "Changes the player frame PvP timer text to the player's class color.")
+
+	if not isClassic() then
+		classPvPTimerTextColor = createCheckbox("classPvPTimerTextColor", self, "Class Color PvP Timer Text", "Changes the player frame PvP timer text to the player's class color.")
+	end
 
 	-- Positions the checkboxes created.
 
@@ -1231,7 +1234,10 @@ eufOptions.color:SetScript("OnShow", function(self)
 	reactionLevelTextColor:SetPoint("TOPLEFT", classLevelTextColor, "BOTTOMLEFT", 0, -8)
 	classDeadTextColor:SetPoint("TOPLEFT", reactionLevelTextColor, "BOTTOMLEFT", 0, -8)
 	reactionDeadTextColor:SetPoint("TOPLEFT", classDeadTextColor, "BOTTOMLEFT", 0, -8)
-	classPvPTimerTextColor:SetPoint("TOPLEFT", reactionDeadTextColor, "BOTTOMLEFT", 0, -8)
+
+	if not isClassic() then
+		classPvPTimerTextColor:SetPoint("TOPLEFT", reactionDeadTextColor, "BOTTOMLEFT", 0, -8)
+	end
 
 	-- Applies scripts to the checkboxes.
 
@@ -1455,27 +1461,29 @@ eufOptions.color:SetScript("OnShow", function(self)
 		StaticPopup_Show("RELOAD_UI")
 	end)
 
-	classPvPTimerTextColor:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classPvPTimerTextColor = true
+	if not isClassic() then
+		classPvPTimerTextColor:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				if eufCharacterDB.enabled then
+					eufCharacterDB.classPvPTimerTextColor = true
+				else
+					eufDB.classPvPTimerTextColor = true
+				end
+
+				PlaySound(856)
 			else
-				eufDB.classPvPTimerTextColor = true
+				if eufCharacterDB.enabled then
+					eufCharacterDB.classPvPTimerTextColor = false
+				else
+					eufDB.classPvPTimerTextColor = false
+				end
+
+				PlaySound(857)
 			end
 
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.classPvPTimerTextColor = false
-			else
-				eufDB.classPvPTimerTextColor = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
+			StaticPopup_Show("RELOAD_UI")
+		end)
+	end
 
 	-- Initializes the options panel with saved variables.
 
@@ -1520,8 +1528,10 @@ eufOptions.color:SetScript("OnShow", function(self)
 			reactionDeadTextColorCheckbox:SetChecked(true)
 		end
 
-		if eufCharacterDB.classPvPTimerTextColor == true then
-			classPvPTimerTextColorCheckbox:SetChecked(true)
+		if not isClassic() then
+			if eufCharacterDB.classPvPTimerTextColor == true then
+				classPvPTimerTextColorCheckbox:SetChecked(true)
+			end
 		end
 	else
 		if eufDB.classHealthBarColor == true then
@@ -1564,8 +1574,10 @@ eufOptions.color:SetScript("OnShow", function(self)
 			reactionDeadTextColorCheckbox:SetChecked(true)
 		end
 
-		if eufDB.classPvPTimerTextColor == true then
-			classPvPTimerTextColor:SetChecked(true)
+		if not isClassic() then
+			if eufDB.classPvPTimerTextColor == true then
+				classPvPTimerTextColor:SetChecked(true)
+			end
 		end
 	end
 
@@ -1873,9 +1885,9 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 		hideArenaStatusText = createCheckbox("hideArenaStatusText", self, "Hide Arena Status Text", "Hides the arena frame status bar text.")
 		hideBossStatusText = createCheckbox("hideBossStatusText", self, "Hide Boss Status Text", "Hides the boss frame status bar text.")
 		hideFocusStatusText = createCheckbox("hideFocusStatusText", self, "Hide Focus Status Text", "Hides the focus frame status bar text.")
+		hidePartyStatusText = createCheckbox("hidePartyStatusText", self, "Hide Party Status Text", "Hides the party frame status bar text.")
 	end
 
-	local hidePartyStatusText = createCheckbox("hidePartyStatusText", self, "Hide Party Status Text", "Hides the party frame status bar text.")
 	local hidePetStatusText = createCheckbox("hidePetStatusText", self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
 	local hidePlayerStatusText = createCheckbox("hidePlayerStatusText", self, "Hide Player Status Text", "Hides the player frame status bar text.")
 	local hidePowerBarStatusText = createCheckbox("hidePowerBarStatusText", self, "Hide Power Bar Status Text", "Hides the alternate power bar status bar text.")
@@ -1890,11 +1902,11 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 		hideBossStatusText:SetPoint("TOPLEFT", hideArenaStatusText, "BOTTOMLEFT", 0, -8)
 		hideFocusStatusText:SetPoint("TOPLEFT", hideBossStatusText, "BOTTOMLEFT", 0, -8)
 		hidePartyStatusText:SetPoint("TOPLEFT", hideFocusStatusText, "BOTTOMLEFT", 0, -8)
+		hidePetStatusText:SetPoint("TOPLEFT", hidePartyStatusText, "BOTTOMLEFT", 0, -8)
 	else
-		hidePartyStatusText:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
+		hidePetStatusText:SetPoint("TOPLEFT", upperCaseAbbreviation, "BOTTOMLEFT", 0, -8)
 	end
 
-	hidePetStatusText:SetPoint("TOPLEFT", hidePartyStatusText, "BOTTOMLEFT", 0, -8)
 	hidePlayerStatusText:SetPoint("TOPLEFT", hidePetStatusText, "BOTTOMLEFT", 0, -8)
 	hidePowerBarStatusText:SetPoint("TOPLEFT", hidePlayerStatusText, "BOTTOMLEFT", 0, -8)
 	hideTargetStatusText:SetPoint("TOPLEFT", hidePowerBarStatusText, "BOTTOMLEFT", 0, -8)
@@ -1989,29 +2001,29 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 
 			StaticPopup_Show("RELOAD_UI")
 		end)
+
+		hidePartyStatusText:SetScript("OnClick", function(self)
+			if self:GetChecked() then
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hidePartyStatusText = true
+				else
+					eufDB.hidePartyStatusText = true
+				end
+
+				PlaySound(856)
+			else
+				if eufCharacterDB.enabled then
+					eufCharacterDB.hidePartyStatusText = false
+				else
+					eufDB.hidePartyStatusText = false
+				end
+
+				PlaySound(857)
+			end
+
+			StaticPopup_Show("RELOAD_UI")
+		end)
 	end
-
-	hidePartyStatusText:SetScript("OnClick", function(self)
-		if self:GetChecked() then
-			if eufCharacterDB.enabled then
-				eufCharacterDB.hidePartyStatusText = true
-			else
-				eufDB.hidePartyStatusText = true
-			end
-
-			PlaySound(856)
-		else
-			if eufCharacterDB.enabled then
-				eufCharacterDB.hidePartyStatusText = false
-			else
-				eufDB.hidePartyStatusText = false
-			end
-
-			PlaySound(857)
-		end
-
-		StaticPopup_Show("RELOAD_UI")
-	end)
 
 	hidePetStatusText:SetScript("OnClick", function(self)
 		if self:GetChecked() then
@@ -2524,10 +2536,10 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 			if eufCharacterDB.hideFocusStatusText == true then
 				hideFocusStatusTextCheckbox:SetChecked(true)
 			end
-		end
 
-		if eufCharacterDB.hidePartyStatusText == true then
-			hidePartyStatusTextCheckbox:SetChecked(true)
+			if eufCharacterDB.hidePartyStatusText == true then
+				hidePartyStatusTextCheckbox:SetChecked(true)
+			end
 		end
 
 		if eufCharacterDB.hidePetStatusText == true then
@@ -2562,10 +2574,10 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 			if eufDB.hideFocusStatusText == true then
 				hideFocusStatusTextCheckbox:SetChecked(true)
 			end
-		end
 
-		if eufDB.hidePartyStatusText == true then
-			hidePartyStatusTextCheckbox:SetChecked(true)
+			if eufDB.hidePartyStatusText == true then
+				hidePartyStatusTextCheckbox:SetChecked(true)
+			end
 		end
 
 		if eufDB.hidePetStatusText == true then
