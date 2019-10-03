@@ -115,14 +115,6 @@ function PowerBar()
 		bar.LeftText = bar:CreateFontString(nil, "OVERLAY", "TextStatusBarText")
 		bar.RightText = bar:CreateFontString(nil, "OVERLAY", "TextStatusBarText")
 
-		bar.LeftText:SetJustifyH("RIGHT")
-		bar.LeftText:SetWidth(40)
-		bar.LeftText:SetPoint("LEFT", -6.5, 0)
-		bar.RightText:SetJustifyH("RIGHT")
-		bar.RightText:SetWidth(75)
-		bar.RightText:SetPoint("RIGHT")
-		bar.TextString:SetPoint("CENTER")
-
 		bar:SetScript("OnEvent", AlternatePowerBar_OnEvent)
 		bar:SetScript("OnUpdate", AlternatePowerBar_OnUpdate)
 

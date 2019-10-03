@@ -74,6 +74,29 @@ function StatusTextStyling()
 	end
 
 	if not isClassic() then
+		-- Hides the boss frame status bar text.
+
+		local function HideBossStatusText()
+			for i = 1, MAX_BOSS_FRAMES do
+				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarText"]:SetAlpha(0)
+				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarTextLeft"]:SetAlpha(0)
+				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarTextRight"]:SetAlpha(0)
+				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarText"]:SetAlpha(0)
+				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarTextLeft"]:SetAlpha(0)
+				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarTextRight"]:SetAlpha(0)
+			end
+		end
+
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.hideBossStatusText then
+				HideBossStatusText()
+			end
+		else
+			if eufDB.hideBossStatusText then
+				HideBossStatusText()
+			end
+		end
+
 		-- Hides or shows the focus frame status bar text.
 
 		function HideFocusStatusText()
@@ -178,6 +201,30 @@ function StatusTextStyling()
 	else
 		if eufDB.hidePlayerStatusText then
 			HidePlayerStatusText()
+		end
+	end
+
+	-- Hides the alternate power status bar text.
+
+	local function HidePowerBarStatusText()
+		if isClassic() then
+			PlayerFrameAlternatePowerBar.LeftText:SetAlpha(0)
+			PlayerFrameAlternatePowerBar.RightText:SetAlpha(0)
+			PlayerFrameAlternatePowerBar.TextString:SetAlpha(0)
+		else
+			PlayerFrameAlternateManaBar.LeftText:SetAlpha(0)
+			PlayerFrameAlternateManaBar.RightText:SetAlpha(0)
+			PlayerFrameAlternateManaBar.TextString:SetAlpha(0)
+		end
+	end
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePowerBarStatusText then
+			HidePowerBarStatusText()
+		end
+	else
+		if eufDB.hidePowerBarStatusText then
+			HidePowerBarStatusText()
 		end
 	end
 
@@ -351,12 +398,39 @@ function StatusTextStyling()
 				if not isClassic() then
 					if UnitExists("boss1") and UnitIsDead("boss1") then
 						Boss1TargetFrameTextureFrameHealthBarText:SetText("")
+						Boss1TargetFrameTextureFrameHealthBarTextLeft:SetText("")
+						Boss1TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss1TargetFrameTextureFrameManaBarText:SetText("")
+						Boss1TargetFrameTextureFrameManaBarTextLeft:SetText("")
+						Boss1TargetFrameTextureFrameManaBarTextRight:SetText("")
 					elseif UnitExists("boss2") and UnitIsDead("boss2") then
 						Boss2TargetFrameTextureFrameHealthBarText:SetText("")
+						Boss2TargetFrameTextureFrameHealthBarTextLeft:SetText("")
+						Boss2TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss2TargetFrameTextureFrameManaBarText:SetText("")
+						Boss2TargetFrameTextureFrameManaBarTextLeft:SetText("")
+						Boss2TargetFrameTextureFrameManaBarTextRight:SetText("")
 					elseif UnitExists("boss3") and UnitIsDead("boss3") then
 						Boss3TargetFrameTextureFrameHealthBarText:SetText("")
+						Boss3TargetFrameTextureFrameHealthBarTextLeft:SetText("")
+						Boss3TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss3TargetFrameTextureFrameManaBarText:SetText("")
+						Boss3TargetFrameTextureFrameManaBarTextLeft:SetText("")
+						Boss3TargetFrameTextureFrameManaBarTextRight:SetText("")
 					elseif UnitExists("boss4") and UnitIsDead("boss4") then
 						Boss4TargetFrameTextureFrameHealthBarText:SetText("")
+						Boss4TargetFrameTextureFrameHealthBarTextLeft:SetText("")
+						Boss4TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss4TargetFrameTextureFrameManaBarText:SetText("")
+						Boss4TargetFrameTextureFrameManaBarTextLeft:SetText("")
+						Boss4TargetFrameTextureFrameManaBarTextRight:SetText("")
+					elseif UnitExists("boss5") and UnitIsDead("boss5") then
+						Boss5TargetFrameTextureFrameHealthBarText:SetText("")
+						Boss5TargetFrameTextureFrameHealthBarTextLeft:SetText("")
+						Boss5TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss5TargetFrameTextureFrameManaBarText:SetText("")
+						Boss5TargetFrameTextureFrameManaBarTextLeft:SetText("")
+						Boss5TargetFrameTextureFrameManaBarTextRight:SetText("")
 					end
 
 					if UnitIsDead("focus") or UnitIsGhost("focus") then
@@ -428,6 +502,12 @@ function StatusTextStyling()
 						PlayerFrameHealthBar.TextString:SetText("Ghost")
 					end
 
+					if isClassic() then
+						PlayerFrameAlternatePowerBar:SetAlpha(0)
+					else
+						PlayerFrameAlternateManaBar:SetAlpha(0)
+					end
+
 					PlayerFrameHealthBar:SetAlpha(0)
 					PlayerFrameHealthBar.LeftText:SetAlpha(0)
 					PlayerFrameHealthBar.RightText:SetAlpha(0)
@@ -473,8 +553,10 @@ function StatusTextStyling()
 					end
 
 					if isClassic() then
+						PlayerFrameAlternatePowerBar:SetAlpha(1)
 						PlayerFrameHealthBar.TextString:SetFontObject(SystemFont_Outline_Small)
 					else
+						PlayerFrameAlternateManaBar:SetAlpha(1)
 						PlayerFrameHealthBar.TextString:SetFontObject(TextStatusBarText)
 					end
 

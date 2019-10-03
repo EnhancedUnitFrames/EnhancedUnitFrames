@@ -546,7 +546,7 @@ function FocusFrameStyling()
 
 	-- Fixes the level text positioning on the focus frame.
 
-	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
+	local function LevelTextStyling()
 		local function FocusOneHundredPlus()
 			FocusFrame.levelText:ClearAllPoints()
 			FocusFrame.levelText:SetPoint("CENTER", FocusFrame.manabar, "BOTTOMRIGHT", 52.5, -2.5)
@@ -596,6 +596,14 @@ function FocusFrameStyling()
 				FocusWhoa()
 			end
 		end
+	end
+
+	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
+		LevelTextStyling()
+	end)
+
+	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
+		LevelTextStyling()
 	end)
 
 	-- Fixes the focus frame target of target background.

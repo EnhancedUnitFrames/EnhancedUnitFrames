@@ -568,7 +568,7 @@ function TargetFrameStyling()
 
 	-- Fixes the level text positioning on the target frame.
 
-	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
+	local function LevelTextStyling()
 		local function TargetOneHundredPlus()
 			TargetFrame.levelText:ClearAllPoints()
 			TargetFrame.levelText:SetPoint("CENTER", TargetFrame.manabar, "BOTTOMRIGHT", 52.5, -2.5)
@@ -618,6 +618,14 @@ function TargetFrameStyling()
 				TargetWhoa()
 			end
 		end
+	end
+
+	hooksecurefunc("TargetFrame_CheckClassification", function(self, forceNormalTexture)
+		LevelTextStyling()
+	end)
+
+	hooksecurefunc("TargetFrame_UpdateLevelTextAnchor", function(self, targetLevel)
+		LevelTextStyling()
 	end)
 
 	-- Fixes the target frame target of target background.

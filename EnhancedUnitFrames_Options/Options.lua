@@ -1922,7 +1922,7 @@ eufOptions.statusText:SetScript("OnShow", function(self)
 
 	local hidePetStatusText = createCheckbox("hidePetStatusText", self, "Hide Pet Status Text", "Hides the pet frame status bar text.")
 	local hidePlayerStatusText = createCheckbox("hidePlayerStatusText", self, "Hide Player Status Text", "Hides the player frame status bar text.")
-	local hidePowerBarStatusText = createCheckbox("hidePowerBarStatusText", self, "Hide Power Bar Status Text", "Hides the alternate power bar status bar text.")
+	local hidePowerBarStatusText = createCheckbox("hidePowerBarStatusText", self, "Hide Power Bar Status Text", "Hides the alternate power status bar text.")
 	local hideTargetStatusText = createCheckbox("hideTargetStatusText", self, "Hide Target Status Text", "Hides the target frame status bar text.")
 
 	-- Positions the checkboxes created.

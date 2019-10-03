@@ -2,7 +2,7 @@
 
 function BossFrameStyling()
 	local function BossStyling()
-		for i = 1, 4 do
+		for i = 1, MAX_BOSS_FRAMES do
 			_G["Boss" .. i .. "TargetFrameHealthBar"]:SetSize(117, 27)
 			_G["Boss" .. i .. "TargetFrameHealthBar"]:ClearAllPoints()
 			_G["Boss" .. i .. "TargetFrameHealthBar"]:SetPoint("LEFT", _G["Boss" .. i .. "TargetFrame"], 7, 12)
