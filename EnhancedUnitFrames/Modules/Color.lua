@@ -357,7 +357,11 @@ function ColorStyling()
 	end
 
 	hooksecurefunc("HealthBar_OnValueChanged", function(self)
-		HealthBarColor(self, self.unit)
+		local selfName = self:GetName()
+
+		if selfName and not selfName:match("GameTooltipStatusBar") then
+			HealthBarColor(self, self.unit)
+		end
 	end)
 
 	hooksecurefunc("UnitFrameHealthBar_Update", HealthBarColor)
