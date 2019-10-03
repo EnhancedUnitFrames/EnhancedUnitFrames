@@ -332,13 +332,32 @@ function PlayerFrameStyling()
 	-- Hides the resting glow and resting icon on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateStatus", function()
+		local function HideRestingIconOnEnter()
+			local hideRestingIconFrame = CreateFrame("Frame", nil, PlayerFrame)
+
+			hideRestingIconFrame:SetPoint("TOPLEFT", 39, -50)
+			hideRestingIconFrame:SetSize(31, 31)
+
+			hideRestingIconFrame:SetScript("OnEnter", function()
+				PlayerRestIcon:SetAlpha(0)
+			end)
+
+			hideRestingIconFrame:SetScript("OnLeave", function()
+				PlayerRestIcon:SetAlpha(1)
+			end)
+		end
+
 		if eufCharacterDB.enabled then
 			if eufCharacterDB.hideRestingIcon then
 				PlayerRestIcon:SetAlpha(0)
+			else
+				HideRestingIconOnEnter()
 			end
 		else
 			if eufDB.hideRestingIcon then
 				PlayerRestIcon:SetAlpha(0)
+			else
+				HideRestingIconOnEnter()
 			end
 		end
 
