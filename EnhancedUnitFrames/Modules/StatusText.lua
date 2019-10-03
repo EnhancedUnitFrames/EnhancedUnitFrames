@@ -397,40 +397,73 @@ function StatusTextStyling()
 			local function isDeadOrGhost()
 				if not isClassic() then
 					if UnitExists("boss1") and UnitIsDead("boss1") then
+						Boss1TargetFrameTextureFrameHealthBar:SetAlpha(0)
 						Boss1TargetFrameTextureFrameHealthBarText:SetText("")
 						Boss1TargetFrameTextureFrameHealthBarTextLeft:SetText("")
 						Boss1TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss1TargetFrameTextureFrameManaBar:SetAlpha(0)
 						Boss1TargetFrameTextureFrameManaBarText:SetText("")
 						Boss1TargetFrameTextureFrameManaBarTextLeft:SetText("")
 						Boss1TargetFrameTextureFrameManaBarTextRight:SetText("")
-					elseif UnitExists("boss2") and UnitIsDead("boss2") then
+					elseif UnitExists("boss1") and not UnitIsDead("boss1") then
+						Boss1TargetFrameTextureFrameHealthBar:SetAlpha(1)
+						Boss1TargetFrameTextureFrameManaBar:SetAlpha(1)
+					end
+
+					if UnitExists("boss2") and UnitIsDead("boss2") then
+						Boss2TargetFrameTextureFrameHealthBar:SetAlpha(0)
 						Boss2TargetFrameTextureFrameHealthBarText:SetText("")
 						Boss2TargetFrameTextureFrameHealthBarTextLeft:SetText("")
 						Boss2TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss2TargetFrameTextureFrameManaBar:SetAlpha(0)
 						Boss2TargetFrameTextureFrameManaBarText:SetText("")
 						Boss2TargetFrameTextureFrameManaBarTextLeft:SetText("")
 						Boss2TargetFrameTextureFrameManaBarTextRight:SetText("")
-					elseif UnitExists("boss3") and UnitIsDead("boss3") then
+					elseif UnitExists("boss2") and not UnitIsDead("boss2") then
+						Boss2TargetFrameTextureFrameHealthBar:SetAlpha(1)
+						Boss2TargetFrameTextureFrameManaBar:SetAlpha(1)
+					end
+
+					if UnitExists("boss3") and UnitIsDead("boss3") then
+						Boss3TargetFrameTextureFrameHealthBar:SetAlpha(0)
 						Boss3TargetFrameTextureFrameHealthBarText:SetText("")
 						Boss3TargetFrameTextureFrameHealthBarTextLeft:SetText("")
 						Boss3TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss3TargetFrameTextureFrameManaBar:SetAlpha(0)
 						Boss3TargetFrameTextureFrameManaBarText:SetText("")
 						Boss3TargetFrameTextureFrameManaBarTextLeft:SetText("")
 						Boss3TargetFrameTextureFrameManaBarTextRight:SetText("")
-					elseif UnitExists("boss4") and UnitIsDead("boss4") then
+					elseif UnitExists("boss3") and not UnitIsDead("boss3") then
+						Boss3TargetFrameTextureFrameHealthBar:SetAlpha(1)
+						Boss3TargetFrameTextureFrameManaBar:SetAlpha(1)
+					end
+
+					if UnitExists("boss4") and UnitIsDead("boss4") then
+						Boss4TargetFrameTextureFrameHealthBar:SetAlpha(0)
 						Boss4TargetFrameTextureFrameHealthBarText:SetText("")
 						Boss4TargetFrameTextureFrameHealthBarTextLeft:SetText("")
 						Boss4TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss4TargetFrameTextureFrameManaBar:SetAlpha(0)
 						Boss4TargetFrameTextureFrameManaBarText:SetText("")
 						Boss4TargetFrameTextureFrameManaBarTextLeft:SetText("")
 						Boss4TargetFrameTextureFrameManaBarTextRight:SetText("")
-					elseif UnitExists("boss5") and UnitIsDead("boss5") then
+					elseif UnitExists("boss4") and not UnitIsDead("boss4") then
+						Boss4TargetFrameTextureFrameHealthBar:SetAlpha(1)
+						Boss4TargetFrameTextureFrameManaBar:SetAlpha(1)
+					end
+
+					if UnitExists("boss5") and UnitIsDead("boss5") then
+						Boss5TargetFrameTextureFrameHealthBar:SetAlpha(0)
 						Boss5TargetFrameTextureFrameHealthBarText:SetText("")
 						Boss5TargetFrameTextureFrameHealthBarTextLeft:SetText("")
 						Boss5TargetFrameTextureFrameHealthBarTextRight:SetText("")
+						Boss5TargetFrameTextureFrameManaBar:SetAlpha(0)
 						Boss5TargetFrameTextureFrameManaBarText:SetText("")
 						Boss5TargetFrameTextureFrameManaBarTextLeft:SetText("")
 						Boss5TargetFrameTextureFrameManaBarTextRight:SetText("")
+					elseif UnitExists("boss5") and not UnitIsDead("boss5") then
+						Boss5TargetFrameTextureFrameHealthBar:SetAlpha(1)
+						Boss5TargetFrameTextureFrameManaBar:SetAlpha(1)
 					end
 
 					if UnitIsDead("focus") or UnitIsGhost("focus") then
