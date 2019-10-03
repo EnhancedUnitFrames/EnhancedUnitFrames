@@ -519,51 +519,75 @@ function StatusTextStyling()
 				end
 
 				if UnitIsDead("party1") or UnitIsGhost("party1") then
+					if not isClassic() then
+						PartyMemberFrame1HealthBarText:SetAlpha(0)
+						PartyMemberFrame1ManaBarText:SetAlpha(0)
+					end
+
 					PartyMemberFrame1HealthBar:SetAlpha(0)
-					PartyMemberFrame1HealthBarText:SetAlpha(0)
 					PartyMemberFrame1ManaBar:SetAlpha(0)
-					PartyMemberFrame1ManaBarText:SetAlpha(0)
 				elseif not UnitIsDead("party1") or not UnitIsGhost("party1") then
+					if not isClassic() then
+						PartyMemberFrame1HealthBarText:SetAlpha(1)
+						PartyMemberFrame1ManaBarText:SetAlpha(1)
+					end
+
 					PartyMemberFrame1HealthBar:SetAlpha(1)
-					PartyMemberFrame1HealthBarText:SetAlpha(1)
 					PartyMemberFrame1ManaBar:SetAlpha(1)
-					PartyMemberFrame1ManaBarText:SetAlpha(1)
 				end
 
 				if UnitIsDead("party2") or UnitIsGhost("party2") then
+					if not isClassic() then
+						PartyMemberFrame2HealthBarText:SetAlpha(0)
+						PartyMemberFrame2ManaBarText:SetAlpha(0)
+					end
+
 					PartyMemberFrame2HealthBar:SetAlpha(0)
-					PartyMemberFrame2HealthBarText:SetAlpha(0)
 					PartyMemberFrame2ManaBar:SetAlpha(0)
-					PartyMemberFrame2ManaBarText:SetAlpha(0)
 				elseif not UnitIsDead("party2") or not UnitIsGhost("party2") then
+					if not isClassic() then
+						PartyMemberFrame2HealthBarText:SetAlpha(1)
+						PartyMemberFrame2ManaBarText:SetAlpha(1)
+					end
+
 					PartyMemberFrame2HealthBar:SetAlpha(1)
-					PartyMemberFrame2HealthBarText:SetAlpha(1)
 					PartyMemberFrame2ManaBar:SetAlpha(1)
-					PartyMemberFrame2ManaBarText:SetAlpha(1)
 				end
 
 				if UnitIsDead("party3") or UnitIsGhost("party3") then
+					if not isClassic() then
+						PartyMemberFrame3HealthBarText:SetAlpha(0)
+						PartyMemberFrame3ManaBarText:SetAlpha(0)
+					end
+
 					PartyMemberFrame3HealthBar:SetAlpha(0)
-					PartyMemberFrame3HealthBarText:SetAlpha(0)
 					PartyMemberFrame3ManaBar:SetAlpha(0)
-					PartyMemberFrame3ManaBarText:SetAlpha(0)
 				elseif not UnitIsDead("party3") or not UnitIsGhost("party3") then
+					if not isClassic() then
+						PartyMemberFrame3HealthBarText:SetAlpha(1)
+						PartyMemberFrame3ManaBarText:SetAlpha(1)
+					end
+
 					PartyMemberFrame3HealthBar:SetAlpha(1)
-					PartyMemberFrame3HealthBarText:SetAlpha(1)
 					PartyMemberFrame3ManaBar:SetAlpha(1)
-					PartyMemberFrame3ManaBarText:SetAlpha(1)
 				end
 
 				if UnitIsDead("party4") or UnitIsGhost("party4") then
+					if not isClassic() then
+						PartyMemberFrame4HealthBarText:SetAlpha(0)
+						PartyMemberFrame4ManaBarText:SetAlpha(0)
+					end
+
 					PartyMemberFrame4HealthBar:SetAlpha(0)
-					PartyMemberFrame4HealthBarText:SetAlpha(0)
 					PartyMemberFrame4ManaBar:SetAlpha(0)
-					PartyMemberFrame4ManaBarText:SetAlpha(0)
 				elseif not UnitIsDead("party4") or not UnitIsGhost("party4") then
+					if not isClassic() then
+						PartyMemberFrame4HealthBarText:SetAlpha(1)
+						PartyMemberFrame4ManaBarText:SetAlpha(1)
+					end
+
 					PartyMemberFrame4HealthBar:SetAlpha(1)
-					PartyMemberFrame4HealthBarText:SetAlpha(1)
 					PartyMemberFrame4ManaBar:SetAlpha(1)
-					PartyMemberFrame4ManaBarText:SetAlpha(1)
 				end
 
 				if UnitIsDead("player") or UnitIsGhost("player") then
