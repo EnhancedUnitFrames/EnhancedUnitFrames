@@ -20,6 +20,10 @@ function SetDefaults()
 		eufDB.classDeadTextColor = false
 	end
 
+	if eufDB.classGroupIndicatorTextColor == nil then
+		eufDB.classGroupIndicatorTextColor = false
+	end
+
 	if eufDB.classHealthBarColor == nil then
 		eufDB.classHealthBarColor = true
 	end
@@ -265,6 +269,10 @@ function SetDefaults()
 
 		if eufCharacterDB.classDeadTextColor == nil then
 			eufCharacterDB.classDeadTextColor = eufDB.classDeadTextColor
+		end
+
+		if eufCharacterDB.classGroupIndicatorTextColor == nil then
+			eufCharacterDB.classGroupIndicatorTextColor = eufDB.classGroupIndicatorTextColor
 		end
 
 		if eufCharacterDB.classHealthBarColor == nil then

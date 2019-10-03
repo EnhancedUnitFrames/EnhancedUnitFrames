@@ -241,6 +241,46 @@ function ColorStyling()
 		end
 	end
 
+	-- Changes the player frame group indicator text color to the player's class color.
+
+	hooksecurefunc("PlayerFrame_UpdateGroupIndicator", function()
+		local function ClassColor()
+			if UnitClass("player") then
+				local classColor = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass("player"))]
+
+				if classColor then
+					PlayerFrameGroupIndicatorText:SetTextColor(classColor.r, classColor.g, classColor.b)
+				end
+			else
+				PlayerFrameGroupIndicatorText:SetTextColor(1, 0.82, 0)
+			end
+		end
+
+		if eufCharacterDB.enabled then
+			if eufCharacterDB.classGroupIndicatorTextColor then
+				ClassColor()
+			end
+
+			if eufCharacterDB.fontOutline then
+				local font, size, style = PlayerLevelText:GetFont()
+		
+				PlayerFrameGroupIndicatorText:SetFont(font, size, "OUTLINE")
+				PlayerFrameGroupIndicatorText:SetShadowOffset(0, 999999)
+			end
+		else
+			if eufDB.classGroupIndicatorTextColor then
+				ClassColor()
+			end
+
+			if eufDB.fontOutline then
+				local font, size, style = PlayerLevelText:GetFont()
+		
+				PlayerFrameGroupIndicatorText:SetFont(font, size, "OUTLINE")
+				PlayerFrameGroupIndicatorText:SetShadowOffset(0, 999999)
+			end
+		end
+	end)
+
 	-- Source: whoa UnitFrames by whoarrior & smokked_.
 	-- Changes the unit frame health bar colors to the unit's class or reaction color.
 
