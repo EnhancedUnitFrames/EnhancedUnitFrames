@@ -935,12 +935,14 @@ function StatusTextStyling()
 					TargetFrameManaBar:SetAlpha(1)
 				end
 
-				if UnitIsDead("focustarget") or UnitIsGhost("focustarget") then
-					FocusFrameToT.healthbar:SetAlpha(0)
-					FocusFrameToT.manabar:SetAlpha(0)
-				elseif not UnitIsDead("focustarget") or not UnitIsGhost("focustarget") then
-					FocusFrameToT.healthbar:SetAlpha(1)
-					FocusFrameToT.manabar:SetAlpha(1)
+				if not isClassic() then
+					if UnitIsDead("focustarget") or UnitIsGhost("focustarget") then
+						FocusFrameToT.healthbar:SetAlpha(0)
+						FocusFrameToT.manabar:SetAlpha(0)
+					elseif not UnitIsDead("focustarget") or not UnitIsGhost("focustarget") then
+						FocusFrameToT.healthbar:SetAlpha(1)
+						FocusFrameToT.manabar:SetAlpha(1)
+					end
 				end
 
 				if UnitIsDead("targettarget") or UnitIsGhost("targettarget") then
