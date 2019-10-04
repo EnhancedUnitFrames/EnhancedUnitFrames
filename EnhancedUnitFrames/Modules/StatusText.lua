@@ -76,7 +76,7 @@ function StatusTextStyling()
 	if not isClassic() then
 		-- Hides the boss frame status bar text.
 
-		local function HideBossStatusText()
+		function HideBossStatusText()
 			for i = 1, MAX_BOSS_FRAMES do
 				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarText"]:SetAlpha(0)
 				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarTextLeft"]:SetAlpha(0)
@@ -84,6 +84,17 @@ function StatusTextStyling()
 				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarText"]:SetAlpha(0)
 				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarTextLeft"]:SetAlpha(0)
 				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarTextRight"]:SetAlpha(0)
+			end
+		end
+
+		function ShowBossStatusText()
+			for i = 1, MAX_BOSS_FRAMES do
+				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarText"]:SetAlpha(1)
+				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarTextLeft"]:SetAlpha(1)
+				_G["Boss" .. i .. "TargetFrameTextureFrameHealthBarTextRight"]:SetAlpha(1)
+				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarText"]:SetAlpha(1)
+				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarTextLeft"]:SetAlpha(1)
+				_G["Boss" .. i .. "TargetFrameTextureFrameManaBarTextRight"]:SetAlpha(1)
 			end
 		end
 
@@ -397,73 +408,253 @@ function StatusTextStyling()
 			local function isDeadOrGhost()
 				if not isClassic() then
 					if UnitExists("boss1") and UnitIsDead("boss1") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.statusTextBoth then
+								Boss1TargetFrameTextureFrameHealthBarText:Show()
+							end
+						else
+							if eufDB.statusTextBoth then
+								Boss1TargetFrameTextureFrameHealthBarText:Show()
+							end
+						end
+
+						if UnitIsDead("boss1") then
+							Boss1TargetFrameTextureFrameHealthBarText:SetText("Dead")
+						elseif UnitIsGhost("focus") then
+							Boss1TargetFrameTextureFrameHealthBarText:SetText("Ghost")
+						end
+
 						Boss1TargetFrameHealthBar:SetAlpha(0)
 						Boss1TargetFrameManaBar:SetAlpha(0)
-						Boss1TargetFrameTextureFrameHealthBarText:SetText("")
-						Boss1TargetFrameTextureFrameHealthBarTextLeft:SetText("")
-						Boss1TargetFrameTextureFrameHealthBarTextRight:SetText("")
-						Boss1TargetFrameTextureFrameManaBarText:SetText("")
-						Boss1TargetFrameTextureFrameManaBarTextLeft:SetText("")
-						Boss1TargetFrameTextureFrameManaBarTextRight:SetText("")
+						Boss1TargetFrameTextureFrameHealthBarText:SetFontObject(GameFontNormalSmall)
+						Boss1TargetFrameTextureFrameHealthBarText:SetShadowOffset(1, -1)
+						Boss1TargetFrameTextureFrameHealthBarTextLeft:SetAlpha(0)
+						Boss1TargetFrameTextureFrameHealthBarTextRight:SetAlpha(0)
+						Boss1TargetFrameTextureFrameManaBarText:SetAlpha(0)
+						Boss1TargetFrameTextureFrameManaBarTextLeft:SetAlpha(0)
+						Boss1TargetFrameTextureFrameManaBarTextRight:SetAlpha(0)
+
+						Boss1DeadTextColor()
 					elseif UnitExists("boss1") and not UnitIsDead("boss1") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						else
+							if eufDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						end
+
 						Boss1TargetFrameHealthBar:SetAlpha(1)
 						Boss1TargetFrameManaBar:SetAlpha(1)
+						Boss1TargetFrameTextureFrameHealthBarText:SetFontObject(TextStatusBarText)
+						Boss1TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
+						Boss1TargetFrameTextureFrameHealthBarText:SetTextColor(1, 1, 1)
 					end
 
 					if UnitExists("boss2") and UnitIsDead("boss2") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.statusTextBoth then
+								Boss2TargetFrameTextureFrameHealthBarText:Show()
+							end
+						else
+							if eufDB.statusTextBoth then
+								Boss2TargetFrameTextureFrameHealthBarText:Show()
+							end
+						end
+
+						if UnitIsDead("boss2") then
+							Boss2TargetFrameTextureFrameHealthBarText:SetText("Dead")
+						elseif UnitIsGhost("focus") then
+							Boss2TargetFrameTextureFrameHealthBarText:SetText("Ghost")
+						end
+
 						Boss2TargetFrameHealthBar:SetAlpha(0)
 						Boss2TargetFrameManaBar:SetAlpha(0)
-						Boss2TargetFrameTextureFrameHealthBarText:SetText("")
-						Boss2TargetFrameTextureFrameHealthBarTextLeft:SetText("")
-						Boss2TargetFrameTextureFrameHealthBarTextRight:SetText("")
-						Boss2TargetFrameTextureFrameManaBarText:SetText("")
-						Boss2TargetFrameTextureFrameManaBarTextLeft:SetText("")
-						Boss2TargetFrameTextureFrameManaBarTextRight:SetText("")
+						Boss2TargetFrameTextureFrameHealthBarText:SetFontObject(GameFontNormalSmall)
+						Boss2TargetFrameTextureFrameHealthBarText:SetShadowOffset(1, -1)
+						Boss2TargetFrameTextureFrameHealthBarTextLeft:SetAlpha(0)
+						Boss2TargetFrameTextureFrameHealthBarTextRight:SetAlpha(0)
+						Boss2TargetFrameTextureFrameManaBarText:SetAlpha(0)
+						Boss2TargetFrameTextureFrameManaBarTextLeft:SetAlpha(0)
+						Boss2TargetFrameTextureFrameManaBarTextRight:SetAlpha(0)
+
+						Boss2DeadTextColor()
 					elseif UnitExists("boss2") and not UnitIsDead("boss2") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						else
+							if eufDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						end
+
 						Boss2TargetFrameHealthBar:SetAlpha(1)
 						Boss2TargetFrameManaBar:SetAlpha(1)
+						Boss2TargetFrameTextureFrameHealthBarText:SetFontObject(TextStatusBarText)
+						Boss2TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
+						Boss2TargetFrameTextureFrameHealthBarText:SetTextColor(1, 1, 1)
 					end
 
 					if UnitExists("boss3") and UnitIsDead("boss3") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.statusTextBoth then
+								Boss3TargetFrameTextureFrameHealthBarText:Show()
+							end
+						else
+							if eufDB.statusTextBoth then
+								Boss3TargetFrameTextureFrameHealthBarText:Show()
+							end
+						end
+
+						if UnitIsDead("boss3") then
+							Boss3TargetFrameTextureFrameHealthBarText:SetText("Dead")
+						elseif UnitIsGhost("focus") then
+							Boss3TargetFrameTextureFrameHealthBarText:SetText("Ghost")
+						end
+
 						Boss3TargetFrameHealthBar:SetAlpha(0)
 						Boss3TargetFrameManaBar:SetAlpha(0)
-						Boss3TargetFrameTextureFrameHealthBarText:SetText("")
-						Boss3TargetFrameTextureFrameHealthBarTextLeft:SetText("")
-						Boss3TargetFrameTextureFrameHealthBarTextRight:SetText("")
-						Boss3TargetFrameTextureFrameManaBarText:SetText("")
-						Boss3TargetFrameTextureFrameManaBarTextLeft:SetText("")
-						Boss3TargetFrameTextureFrameManaBarTextRight:SetText("")
+						Boss3TargetFrameTextureFrameHealthBarText:SetFontObject(GameFontNormalSmall)
+						Boss3TargetFrameTextureFrameHealthBarText:SetShadowOffset(1, -1)
+						Boss3TargetFrameTextureFrameHealthBarTextLeft:SetAlpha(0)
+						Boss3TargetFrameTextureFrameHealthBarTextRight:SetAlpha(0)
+						Boss3TargetFrameTextureFrameManaBarText:SetAlpha(0)
+						Boss3TargetFrameTextureFrameManaBarTextLeft:SetAlpha(0)
+						Boss3TargetFrameTextureFrameManaBarTextRight:SetAlpha(0)
+
+						Boss3DeadTextColor()
 					elseif UnitExists("boss3") and not UnitIsDead("boss3") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						else
+							if eufDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						end
+
 						Boss3TargetFrameHealthBar:SetAlpha(1)
 						Boss3TargetFrameManaBar:SetAlpha(1)
+						Boss3TargetFrameTextureFrameHealthBarText:SetFontObject(TextStatusBarText)
+						Boss3TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
+						Boss3TargetFrameTextureFrameHealthBarText:SetTextColor(1, 1, 1)
 					end
 
 					if UnitExists("boss4") and UnitIsDead("boss4") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.statusTextBoth then
+								Boss4TargetFrameTextureFrameHealthBarText:Show()
+							end
+						else
+							if eufDB.statusTextBoth then
+								Boss4TargetFrameTextureFrameHealthBarText:Show()
+							end
+						end
+
+						if UnitIsDead("boss4") then
+							Boss4TargetFrameTextureFrameHealthBarText:SetText("Dead")
+						elseif UnitIsGhost("focus") then
+							Boss4TargetFrameTextureFrameHealthBarText:SetText("Ghost")
+						end
+
 						Boss4TargetFrameHealthBar:SetAlpha(0)
 						Boss4TargetFrameManaBar:SetAlpha(0)
-						Boss4TargetFrameTextureFrameHealthBarText:SetText("")
-						Boss4TargetFrameTextureFrameHealthBarTextLeft:SetText("")
-						Boss4TargetFrameTextureFrameHealthBarTextRight:SetText("")
-						Boss4TargetFrameTextureFrameManaBarText:SetText("")
-						Boss4TargetFrameTextureFrameManaBarTextLeft:SetText("")
-						Boss4TargetFrameTextureFrameManaBarTextRight:SetText("")
+						Boss4TargetFrameTextureFrameHealthBarText:SetFontObject(GameFontNormalSmall)
+						Boss4TargetFrameTextureFrameHealthBarText:SetShadowOffset(1, -1)
+						Boss4TargetFrameTextureFrameHealthBarTextLeft:SetAlpha(0)
+						Boss4TargetFrameTextureFrameHealthBarTextRight:SetAlpha(0)
+						Boss4TargetFrameTextureFrameManaBarText:SetAlpha(0)
+						Boss4TargetFrameTextureFrameManaBarTextLeft:SetAlpha(0)
+						Boss4TargetFrameTextureFrameManaBarTextRight:SetAlpha(0)
+
+						Boss4DeadTextColor()
 					elseif UnitExists("boss4") and not UnitIsDead("boss4") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						else
+							if eufDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						end
+
 						Boss4TargetFrameHealthBar:SetAlpha(1)
 						Boss4TargetFrameManaBar:SetAlpha(1)
+						Boss4TargetFrameTextureFrameHealthBarText:SetFontObject(TextStatusBarText)
+						Boss4TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
+						Boss4TargetFrameTextureFrameHealthBarText:SetTextColor(1, 1, 1)
 					end
 
 					if UnitExists("boss5") and UnitIsDead("boss5") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.statusTextBoth then
+								Boss5TargetFrameTextureFrameHealthBarText:Show()
+							end
+						else
+							if eufDB.statusTextBoth then
+								Boss5TargetFrameTextureFrameHealthBarText:Show()
+							end
+						end
+
+						if UnitIsDead("boss5") then
+							Boss5TargetFrameTextureFrameHealthBarText:SetText("Dead")
+						elseif UnitIsGhost("focus") then
+							Boss5TargetFrameTextureFrameHealthBarText:SetText("Ghost")
+						end
+
 						Boss5TargetFrameHealthBar:SetAlpha(0)
 						Boss5TargetFrameManaBar:SetAlpha(0)
-						Boss5TargetFrameTextureFrameHealthBarText:SetText("")
-						Boss5TargetFrameTextureFrameHealthBarTextLeft:SetText("")
-						Boss5TargetFrameTextureFrameHealthBarTextRight:SetText("")
-						Boss5TargetFrameTextureFrameManaBarText:SetText("")
-						Boss5TargetFrameTextureFrameManaBarTextLeft:SetText("")
-						Boss5TargetFrameTextureFrameManaBarTextRight:SetText("")
+						Boss5TargetFrameTextureFrameHealthBarText:SetFontObject(GameFontNormalSmall)
+						Boss5TargetFrameTextureFrameHealthBarText:SetShadowOffset(1, -1)
+						Boss5TargetFrameTextureFrameHealthBarTextLeft:SetAlpha(0)
+						Boss5TargetFrameTextureFrameHealthBarTextRight:SetAlpha(0)
+						Boss5TargetFrameTextureFrameManaBarText:SetAlpha(0)
+						Boss5TargetFrameTextureFrameManaBarTextLeft:SetAlpha(0)
+						Boss5TargetFrameTextureFrameManaBarTextRight:SetAlpha(0)
+
+						Boss5DeadTextColor()
 					elseif UnitExists("boss5") and not UnitIsDead("boss5") then
+						if eufCharacterDB.enabled then
+							if eufCharacterDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						else
+							if eufDB.hideFocusStatusText then
+								HideBossStatusText()
+							else
+								ShowBossStatusText()
+							end
+						end
+
 						Boss5TargetFrameHealthBar:SetAlpha(1)
 						Boss5TargetFrameManaBar:SetAlpha(1)
+						Boss5TargetFrameTextureFrameHealthBarText:SetFontObject(TextStatusBarText)
+						Boss5TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
+						Boss5TargetFrameTextureFrameHealthBarText:SetTextColor(1, 1, 1)
 					end
 
 					if UnitIsDead("focus") or UnitIsGhost("focus") then
@@ -483,8 +674,6 @@ function StatusTextStyling()
 							FocusFrameHealthBar.TextString:SetText("Ghost")
 						end
 
-						FocusDeadTextColor()
-
 						FocusFrameHealthBar:SetAlpha(0)
 						FocusFrameHealthBar.LeftText:SetAlpha(0)
 						FocusFrameHealthBar.RightText:SetAlpha(0)
@@ -495,6 +684,8 @@ function StatusTextStyling()
 						FocusFrameManaBar.LeftText:SetAlpha(0)
 						FocusFrameManaBar.RightText:SetAlpha(0)
 						FocusFrameManaBar.TextString:SetAlpha(0)
+
+						FocusDeadTextColor()
 					elseif not UnitIsDead("focus") or not UnitIsGhost("focus") then
 						if eufCharacterDB.enabled then
 							if eufCharacterDB.hideFocusStatusText then
