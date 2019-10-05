@@ -198,6 +198,8 @@ eufOptions.general:SetScript("OnShow", function(self)
 	local hideNameBackground = createCheckbox("hideNameBackground", self, "Hide Name BG", "Hides the unit frame name background.")
 	local hideHitIndicator = createCheckbox("hideHitIndicator", self, "Hide Hit Indicator", "Hides the damage/healing indicator on player and pet frames.")
 	local hideRestingIcon = createCheckbox("hideRestingIcon", self, "Hide Resting Icon", "Hides the resting icon on the player frame.")
+	local hidePetAttackGlow = createCheckbox("hidePetAttackGlow", self, "Hide Pet Attack Glow", "Hides the red glowing animation on the pet frame if your pet is attacking.")
+	local hidePetName = createCheckbox("hidePetName", self, "Hide Pet Name", "Hides the pet name.")
 
 	if isClassic() then
 		shamanClassColorFix = createCheckbox("shamanClassColorFix", self, "Shaman Class Color Fix", "Changes the Shaman class color to reflect live.")
@@ -224,11 +226,13 @@ eufOptions.general:SetScript("OnShow", function(self)
 	hideNameBackground:SetPoint("TOPLEFT", hideRealmName, "BOTTOMLEFT", 0, -8)
 	hideHitIndicator:SetPoint("TOPLEFT", hideNameBackground, "BOTTOMLEFT", 0, -8)
 	hideRestingIcon:SetPoint("TOPLEFT", hideHitIndicator, "BOTTOMLEFT", 0, -8)
+	hidePetAttackGlow:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
+	hidePetName:SetPoint("TOPLEFT", hidePetAttackGlow, "BOTTOMLEFT", 0, -8)
 
 	if isClassic() then
-		shamanClassColorFix:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
+		shamanClassColorFix:SetPoint("TOPLEFT", hidePetName, "BOTTOMLEFT", 0, -8)
 	else
-		threatShowNumeric:SetPoint("TOPLEFT", hideRestingIcon, "BOTTOMLEFT", 0, -8)
+		threatShowNumeric:SetPoint("TOPLEFT", hidePetName, "BOTTOMLEFT", 0, -8)
 	end
 
 	-- Applies scripts to the checkboxes.
@@ -439,6 +443,50 @@ eufOptions.general:SetScript("OnShow", function(self)
 				eufCharacterDB.hideRestingIcon = false
 			else
 				eufDB.hideRestingIcon = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	hidePetAttackGlow:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePetAttackGlow = true
+			else
+				eufDB.hidePetAttackGlow = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePetAttackGlow = false
+			else
+				eufDB.hidePetAttackGlow = false
+			end
+
+			PlaySound(857)
+		end
+
+		StaticPopup_Show("RELOAD_UI")
+	end)
+
+	hidePetName:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePetName = true
+			else
+				eufDB.hidePetName = true
+			end
+
+			PlaySound(856)
+		else
+			if eufCharacterDB.enabled then
+				eufCharacterDB.hidePetName = false
+			else
+				eufDB.hidePetName = false
 			end
 
 			PlaySound(857)
@@ -1130,6 +1178,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 			hideRestingIconCheckbox:SetChecked(true)
 		end
 
+		if eufCharacterDB.hidePetAttackGlow == true then
+			hidePetAttackGlowCheckbox:SetChecked(true)
+		end
+
+		if eufCharacterDB.hidePetName == true then
+			hidePetNameCheckbox:SetChecked(true)
+		end
+
 		if isClassic() then
 			if eufCharacterDB.shamanClassColorFix == true then
 				shamanClassColorFixCheckbox:SetChecked(true)
@@ -1176,6 +1232,14 @@ eufOptions.general:SetScript("OnShow", function(self)
 
 		if eufDB.hideRestingIcon == true then
 			hideRestingIconCheckbox:SetChecked(true)
+		end
+
+		if eufDB.hidePetAttackGlow == true then
+			hidePetAttackGlowCheckbox:SetChecked(true)
+		end
+
+		if eufDB.hidePetName == true then
+			hidePetNameCheckbox:SetChecked(true)
 		end
 
 		if isClassic() then

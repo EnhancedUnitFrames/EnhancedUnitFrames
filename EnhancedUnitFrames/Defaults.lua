@@ -102,6 +102,14 @@ function SetDefaults()
 		end
 	end
 
+	if eufDB.hidePetAttackGlow == nil then
+		eufDB.hidePetAttackGlow = false
+	end
+
+	if eufDB.hidePetName == nil then
+		eufDB.hidePetName = false
+	end
+
 	if eufDB.hidePetStatusText == nil then
 		eufDB.hidePetStatusText = false
 	end
@@ -347,6 +355,14 @@ function SetDefaults()
 			if eufCharacterDB.hidePartyStatusText == nil then
 				eufCharacterDB.hidePartyStatusText = eufDB.hidePartyStatusText
 			end
+		end
+
+		if eufCharacterDB.hidePetAttackGlow == nil then
+			eufCharacterDB.hidePetAttackGlow = eufDB.hidePetAttackGlow
+		end
+
+		if eufCharacterDB.hidePetName == nil then
+			eufCharacterDB.hidePetName = eufDB.hidePetName
 		end
 
 		if eufCharacterDB.hidePetStatusText == nil then

@@ -8,6 +8,7 @@
 
 Modules\Boss.lua
 Modules\Color.lua
+Modules\Dead.lua
 Modules\Focus.lua
 Modules\Group.lua
 Modules\Positioning.lua

@@ -329,6 +329,36 @@ function PlayerFrameStyling()
 		end
 	end
 
+	-- Hides the attack mode glow on the pet frame.
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePetAttackGlow then
+			hooksecurefunc(PetAttackModeTexture, "Show", PetAttackModeTexture.Hide)
+		end
+	else
+		if eufDB.hidePetAttackGlow then
+			hooksecurefunc(PetAttackModeTexture, "Show", PetAttackModeTexture.Hide)
+		end
+	end
+
+	-- Hides the pet name.
+
+	local function HidePetName()
+		hooksecurefunc("PetFrame_Update", function(self, override)
+			PetName:SetAlpha(0)
+		end)
+	end
+
+	if eufCharacterDB.enabled then
+		if eufCharacterDB.hidePetName then
+			HidePetName()
+		end
+	else
+		if eufDB.hidePetName then
+			HidePetName()
+		end
+	end
+
 	-- Hides the resting glow and resting icon on the player frame.
 
 	hooksecurefunc("PlayerFrame_UpdateStatus", function()
