@@ -1,6 +1,11 @@
 # EnhancedUnitFrames
 Modifies the default unit frames for better visuals.
 
+# Issues not Migrated Yet
+
+See:
+https://github.com/M1ch431/EnhancedUnitFrames/issues
+
 # Warning
 
 This is a work-in-progress addon for classic and live. The addon is reaching completion, but things may not always be in a 100% usable state as I add the final features.
