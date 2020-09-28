@@ -1,10 +1,13 @@
 # EnhancedUnitFrames
 Modifies the default unit frames for better visuals.
 
+# Looking for Developers
+
+I no longer play WoW, so please message me on Discord (copy and paste there is a special character: Michaеl#5887) or reddit (Mlch431) if you're willing to pitch in a hand. I greatly appreciate any and all commits, no matter how small.
+
 # Issues not Migrated Yet
 
-See:
-https://github.com/M1ch431/EnhancedUnitFrames/issues
+See: https://github.com/M1ch431/EnhancedUnitFrames/issues
 
 # Warning
 
