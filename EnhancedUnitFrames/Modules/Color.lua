@@ -32,7 +32,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					if UnitExists("boss1") then
 						Color()
 					end
@@ -65,7 +65,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = Boss1TargetFrameTextureFrameHealthBarText:GetFont()
-		
+
 				Boss1TargetFrameTextureFrameHealthBarText:SetFont(font, size, "OUTLINE")
 				Boss1TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
 			end
@@ -118,7 +118,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					if UnitExists("boss2") then
 						Color()
 					end
@@ -151,7 +151,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = Boss2TargetFrameTextureFrameHealthBarText:GetFont()
-		
+
 				Boss2TargetFrameTextureFrameHealthBarText:SetFont(font, size, "OUTLINE")
 				Boss2TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
 			end
@@ -204,7 +204,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					if UnitExists("boss3") then
 						Color()
 					end
@@ -237,7 +237,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = Boss3TargetFrameTextureFrameHealthBarText:GetFont()
-		
+
 				Boss3TargetFrameTextureFrameHealthBarText:SetFont(font, size, "OUTLINE")
 				Boss3TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
 			end
@@ -290,7 +290,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					if UnitExists("boss4") then
 						Color()
 					end
@@ -323,7 +323,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = Boss4TargetFrameTextureFrameHealthBarText:GetFont()
-		
+
 				Boss4TargetFrameTextureFrameHealthBarTextSetFont(font, size, "OUTLINE")
 				Boss4TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
 			end
@@ -376,7 +376,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					if UnitExists("boss5") then
 						Color()
 					end
@@ -409,7 +409,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = Boss5TargetFrameTextureFrameHealthBarText:GetFont()
-		
+
 				Boss5TargetFrameTextureFrameHealthBarText:SetFont(font, size, "OUTLINE")
 				Boss5TargetFrameTextureFrameHealthBarText:SetShadowOffset(0, 999999)
 			end
@@ -458,7 +458,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					Color()
 				end
 			else
@@ -479,7 +479,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = PlayerFrameHealthBar.TextString:GetFont()
-		
+
 				PlayerFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
 				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 			end
@@ -494,7 +494,7 @@ function ColorStyling()
 
 			if eufDB.fontOutline then
 				local font, size, style = PlayerFrameHealthBar.TextString:GetFont()
-		
+
 				PlayerFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
 				PlayerFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 			end
@@ -532,7 +532,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					if UnitExists("focus") then
 						Color()
 					end
@@ -565,7 +565,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = FocusFrameHealthBar.TextString:GetFont()
-		
+
 				FocusFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
 				FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 			end
@@ -580,7 +580,7 @@ function ColorStyling()
 
 			if eufDB.fontOutline then
 				local font, size, style = FocusFrameHealthBar.TextString:GetFont()
-		
+
 				FocusFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
 				FocusFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 			end
@@ -618,7 +618,7 @@ function ColorStyling()
 			end
 
 			if eufCharacterDB.enabled then
-				if eufCharacterDB.reactionLevelTextColor and not eufCharacterDB.classLevelTextColor then
+				if eufCharacterDB.reactionDeadTextColor and not eufCharacterDB.classDeadTextColor then
 					if UnitExists("target") then
 						Color()
 					end
@@ -651,7 +651,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = TargetFrameHealthBar.TextString:GetFont()
-		
+
 				TargetFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
 				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 			end
@@ -666,7 +666,7 @@ function ColorStyling()
 
 			if eufDB.fontOutline then
 				local font, size, style = TargetFrameHealthBar.TextString:GetFont()
-		
+
 				TargetFrameHealthBar.TextString:SetFont(font, size, "OUTLINE")
 				TargetFrameHealthBar.TextString:SetShadowOffset(0, 999999)
 			end
@@ -695,7 +695,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = PlayerLevelText:GetFont()
-		
+
 				PlayerFrameGroupIndicatorText:SetFont(font, size, "OUTLINE")
 				PlayerFrameGroupIndicatorText:SetShadowOffset(0, 999999)
 			end
@@ -706,7 +706,7 @@ function ColorStyling()
 
 			if eufDB.fontOutline then
 				local font, size, style = PlayerLevelText:GetFont()
-		
+
 				PlayerFrameGroupIndicatorText:SetFont(font, size, "OUTLINE")
 				PlayerFrameGroupIndicatorText:SetShadowOffset(0, 999999)
 			end
@@ -846,7 +846,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = PlayerLevelText:GetFont()
-		
+
 				PlayerLevelText:SetFont(font, size, "OUTLINE")
 				PlayerLevelText:SetShadowOffset(0, 999999)
 			end
@@ -861,7 +861,7 @@ function ColorStyling()
 
 			if eufDB.fontOutline then
 				local font, size, style = PlayerLevelText:GetFont()
-		
+
 				PlayerLevelText:SetFont(font, size, "OUTLINE")
 				PlayerLevelText:SetShadowOffset(0, 999999)
 			end
@@ -932,7 +932,7 @@ function ColorStyling()
 
 			if eufCharacterDB.fontOutline then
 				local font, size, style = self.levelText:GetFont()
-		
+
 				self.levelText:SetFont(font, size, "OUTLINE")
 				self.levelText:SetShadowOffset(0, 999999)
 			end
@@ -947,7 +947,7 @@ function ColorStyling()
 
 			if eufDB.fontOutline then
 				local font, size, style = self.levelText:GetFont()
-		
+
 				self.levelText:SetFont(font, size, "OUTLINE")
 				self.levelText:SetShadowOffset(0, 999999)
 			end
@@ -961,7 +961,7 @@ function ColorStyling()
 	else
 		hooksecurefunc("PlayerFrame_UpdateLevel", function()
 			PlayerLevelTextColor()
-		end)	
+		end)
 	end
 
 	hooksecurefunc("TargetFrame_CheckLevel", function(self)
@@ -1218,7 +1218,7 @@ function ColorStyling()
 
 				if eufCharacterDB.fontOutline then
 					local font, size, style = PlayerPVPTimerText:GetFont()
-		
+
 					PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
 					PlayerPVPTimerText:SetShadowOffset(0, 999999)
 				end
@@ -1229,7 +1229,7 @@ function ColorStyling()
 
 				if eufDB.fontOutline then
 					local font, size, style = PlayerPVPTimerText:GetFont()
-		
+
 					PlayerPVPTimerText:SetFont(font, size, "OUTLINE")
 					PlayerPVPTimerText:SetShadowOffset(0, 999999)
 				end
