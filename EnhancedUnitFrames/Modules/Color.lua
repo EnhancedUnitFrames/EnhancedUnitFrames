@@ -462,7 +462,7 @@ function ColorStyling()
 					Color()
 				end
 			else
-				if eufDB.reactionLevelTextColor and not eufDB.classLevelTextColor then
+				if eufDB.reactionDeadTextColor and not eufDB.classDeadTextColor then
 					Color()
 				end
 			end
