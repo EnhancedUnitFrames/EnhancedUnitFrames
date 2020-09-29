@@ -705,15 +705,36 @@ function StatusTextStyling()
 						end
 
 						if eufDB.statusTextBothCondensedBar then
+							PlayerFrameHealthBar.TextString:SetText(playerValueHealthDisplay .. " | " .. playerValueHealthPercentageDisplay)
 							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " | " .. targetValueHealthPercentageDisplay)
 						elseif eufDB.statusTextBothCondensedBrackets then
+							PlayerFrameHealthBar.TextString:SetText(playerValueHealthDisplay .. " [" .. playerValueHealthPercentageDisplay .. "]")
 							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " [" .. targetValueHealthPercentageDisplay .. "]")
 						elseif eufDB.statusTextBothCondensedDash then
+							PlayerFrameHealthBar.TextString:SetText(playerValueHealthDisplay .. " - " .. playerValueHealthPercentageDisplay)
 							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " - " .. targetValueHealthPercentageDisplay)
 						elseif eufDB.statusTextBothCondensedParentheses then
+							PlayerFrameHealthBar.TextString:SetText(playerValueHealthDisplay .. " (" .. playerValueHealthPercentageDisplay .. ")")
 							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " (" .. targetValueHealthPercentageDisplay .. ")")
 						elseif eufDB.statusTextBothCondensedSlash then
+							PlayerFrameHealthBar.TextString:SetText(playerValueHealthDisplay .. " / " .. playerValueHealthPercentageDisplay)
 							TargetFrameHealthBar.TextString:SetText(targetValueHealthDisplay .. " / " .. targetValueHealthPercentageDisplay)
+						end
+
+						if playerPowerType == 0 then
+							if eufDB.statusTextBothCondensedBar then
+								PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay .. " | " .. playerValuePowerPercentageDisplay)
+							elseif eufDB.statusTextBothCondensedBrackets then
+								PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay .. " [" .. playerValuePowerPercentageDisplay .. "]")
+							elseif eufDB.statusTextBothCondensedDash then
+								PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay .. " - " .. playerValuePowerPercentageDisplay)
+							elseif eufDB.statusTextBothCondensedParentheses then
+								PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay .. " (" .. playerValuePowerPercentageDisplay .. ")")
+							elseif eufDB.statusTextBothCondensedSlash then
+								PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay .. " / " .. playerValuePowerPercentageDisplay)
+							end
+						else
+							PlayerFrameManaBar.TextString:SetText(playerValuePowerDisplay)
 						end
 
 						if targetPowerType == 0 then
